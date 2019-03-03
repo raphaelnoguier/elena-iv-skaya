@@ -3,6 +3,7 @@
     <div>
       <h1 class="title">{{document.title}}</h1>
       <h2 class="subtitle">{{document.title}}</h2>
+      <img v-for="img in document.images" :src="img.img.url">
     </div>
   </section>
 </template>
@@ -24,6 +25,7 @@ export default {
   created() {
     getPage(this.$prismic).then(document => {
       this.document = document.data;
+      this.document.images = this.document.body[0].items;
     });
   },
 

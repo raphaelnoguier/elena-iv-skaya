@@ -1,22 +1,24 @@
 <template>
   <div>
+    <Loader/>
     <Navigation/>
     <nuxt/>
   </div>
 </template>
 <script>
 import Navigation from "~/components/Navigation";
+import Loader from "~/components/Loader";
 
 export default {
   components: {
-    Navigation
+    Navigation,
+    Loader
   },
   mounted() {
     const app = this.$el;
     const smooth = new Smooth({
       native: true,
-      section: app,
-      ease: 0.4
+      section: app
     });
     smooth.init();
   }
