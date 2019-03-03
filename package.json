@@ -21,7 +21,4 @@
     "nodemon": "^1.18.9",
     "sass-loader": "^7.1.0"
   },
-  "engines": {
-    "node": "10.15.0"
-  }
 }
