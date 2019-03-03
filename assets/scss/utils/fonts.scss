@@ -1,0 +1,6 @@
+@mixin argentThin($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
+  font-family: "Argent-Thin", Arial, Helvetica, sans-serif;
+  font-size: $size;
+  line-height: $lineHeight;
+  letter-spacing: $letterSpacing;
+}

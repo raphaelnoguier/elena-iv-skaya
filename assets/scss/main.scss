@@ -1,0 +1,11 @@
+/* UTILS */
+
+@import 'utils/reset','utils/fonts','utils/mixins', 'utils/sizes';
+
+
+/* PAGES */
+@import 'pages/home';
+
+
+/* COMPONENTS */
+@import 'components/container', 'components/nav';

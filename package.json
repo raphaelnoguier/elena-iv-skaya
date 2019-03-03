@@ -1,0 +1,24 @@
+{
+  "name": "elena-iv-skaya",
+  "version": "1.0.0",
+  "description": "Portfolio of Elena Iv-Skaya",
+  "author": "Raphael Ait El Alim",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.4.0",
+    "prismic-nuxt": "^0.4.0",
+    "smooth-scrolling": "^2.3.11"
+  },
+  "devDependencies": {
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
+    "sass-loader": "^7.1.0"
+  }
+}
