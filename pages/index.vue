@@ -1,40 +1,29 @@
 <template>
   <section class="container home">
     <div>
-      <h1 class="title">{{document.title}}</h1>
-      <h2 class="subtitle">{{document.title}}</h2>
-      <img v-for="img in document.images" :src="img.img.url">
+      <h1>{{doc.title}}</h1>
+      <p>{{doc.description}}</p>
+      <img v-for="(img, index) in doc.images" :src="img.img.url" :key="index">
     </div>
   </section>
 </template>
 <script>
-function getPage(prismic) {
-  return prismic.api.getByUID("page", "home");
-}
 export default {
-  async asyncData({ app, error }) {
-    let document = await getPage(app.$prismic);
-
-    if (document) {
-      return { document };
-    } else {
-      error({ statusCode: 404, message: "Page not found" });
-    }
-  },
-
-  created() {
-    getPage(this.$prismic).then(document => {
-      this.document = document.data;
-      this.document.images = this.document.body[0].items;
-    });
-  },
-
   head() {
     return {
       title: ""
     };
   },
 
-  methods: {}
+  computed: {
+    doc() {
+      let currentDoc = this.$store.getters.currentDoc.data;
+      return {
+        title: currentDoc.title[0].text,
+        description: currentDoc.description[0].text,
+        images: currentDoc.body[0].items
+      };
+    }
+  }
 };
 </script>

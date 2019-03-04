@@ -47,9 +47,18 @@ module.exports = {
   modules: [
     ['prismic-nuxt', {
       endpoint: 'https://elena-iv-skaya.cdn.prismic.io/api/v2',
-      deferLoad: true, //Optionally defer loading the prismic preview script
+      deferLoad: true,
       linkResolver: function (doc, ctx) {
-        return '/'
+        if (doc.type === 'home') {
+          return '/';
+        }
+        if (doc.type === 'about') {
+          return '/about';
+        }
+        if (doc.type === 'series') {
+          return '/series';
+        }
+        return '/';
       },
       htmlSerializer: function (type, element, content, children) {
         // Optional HTML Serializer

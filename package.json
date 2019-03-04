@@ -14,6 +14,7 @@
     "cross-env": "^5.2.0",
     "nuxt": "^2.4.0",
     "prismic-nuxt": "^0.4.0",
+    "prismic-vue": "^1.3.0",
     "smooth-scrolling": "^2.3.11"
   },
   "devDependencies": {

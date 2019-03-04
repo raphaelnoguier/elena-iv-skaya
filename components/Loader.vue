@@ -17,20 +17,20 @@ export default {
   },
 
   mounted() {
-    setTimeout(() => {
+    this.$nextTick(() => {
       this.launchLoading();
-    }, 200);
+    });
   },
 
   methods: {
-    launchLoading(cl) {
+    launchLoading() {
       const assets = document.querySelectorAll("img");
-      console.log(assets);
-      let promisesResolved = 0; // number of promises resolved updated at each iteration
+      let resolved = 0;
       for (let elm of assets) {
+        console.log("el");
         this.loadAssets(elm).then(value => {
-          promisesResolved += 1;
-          this.updateLoadProgress(promisesResolved, assets.length);
+          resolved += 1;
+          this.updateLoadProgress(resolved, assets.length);
         });
       }
     },
@@ -39,28 +39,28 @@ export default {
         if (elm.complete === true) {
           resolve();
         }
-        elm.addEventListener("load", () => {
-          resolve();
-        });
+        // elm.addEventListener("load", function() {
+        //   resolve();
+        // });
       });
-    },
-    stopPreloadingAnim() {
-      this.hideLoader = true;
     },
     updateLoadProgress(loaded, total) {
       return new Promise(resolve => {
         const progress = Math.round((100 / total) * loaded);
-        const percentElm = this.$el.querySelector(".percent");
-        const loadingProgress = this.$el.querySelector(".progress");
+        const percent = this.$el.querySelector(".percent");
+        const bar = this.$el.querySelector(".progress");
 
-        percentElm.innerHTML = progress;
-        loadingProgress.style.width = progress + "%";
+        percent.innerHTML = progress;
+        bar.style.width = progress + "%";
 
         if (progress >= 100 && loaded === total) {
           this.stopPreloadingAnim();
           resolve();
         }
       });
+    },
+    stopPreloadingAnim() {
+      this.hideLoader = true;
     }
   }
 };
