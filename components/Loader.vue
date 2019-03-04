@@ -24,24 +24,22 @@ export default {
 
   methods: {
     launchLoading() {
-      const assets = document.querySelectorAll("img");
+      const assets = this.$store.getters.currentDoc.data.body[0].items;
       let resolved = 0;
       for (let elm of assets) {
-        console.log("el");
-        this.loadAssets(elm).then(value => {
+        let src = elm.img.url;
+        elm = new Image();
+        this.loadAssets(elm, src).then(value => {
           resolved += 1;
           this.updateLoadProgress(resolved, assets.length);
         });
       }
     },
-    loadAssets(elm) {
+    loadAssets(elm, src) {
       return new Promise(resolve => {
-        if (elm.complete === true) {
-          resolve();
-        }
-        // elm.addEventListener("load", function() {
-        //   resolve();
-        // });
+        console.log(elm);
+        elm.src = src;
+        resolve();
       });
     },
     updateLoadProgress(loaded, total) {
