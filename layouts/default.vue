@@ -24,8 +24,8 @@ export default {
     scrollbar.remove(container);
   },
   methods: {
-    onScroll() {
-      console.log("scroll");
+    onScroll(e) {
+      console.log(e);
     }
   }
 };

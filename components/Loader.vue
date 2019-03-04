@@ -24,6 +24,10 @@ export default {
 
   methods: {
     launchLoading() {
+      if (!this.$store.getters.currentDoc.data.body[0]) {
+        this.stopPreloadingAnim();
+        return;
+      }
       const assets = this.$store.getters.currentDoc.data.body[0].items;
       let resolved = 0;
       for (let elm of assets) {
