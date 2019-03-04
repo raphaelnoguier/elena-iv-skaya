@@ -28,7 +28,7 @@ export default {
       let resolved = 0;
       for (let elm of assets) {
         let src = elm.img.url;
-        elm = new Image();
+        elm = document.createElement("img");
         this.loadAssets(elm, src).then(value => {
           resolved += 1;
           this.updateLoadProgress(resolved, assets.length);
