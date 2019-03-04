@@ -28,6 +28,7 @@
       background: red;
       width: 0%;
       left:0;
+      transition: width 0.2s ease;
     }
   }
   &.hide {

@@ -37,9 +37,10 @@ export default {
     },
     loadAssets(elm, src) {
       return new Promise(resolve => {
-        console.log(elm);
         elm.src = src;
-        resolve();
+        elm.addEventListener("load", function() {
+          resolve();
+        });
       });
     },
     updateLoadProgress(loaded, total) {
@@ -50,7 +51,6 @@ export default {
 
         percent.innerHTML = progress;
         bar.style.width = progress + "%";
-
         if (progress >= 100 && loaded === total) {
           this.stopPreloadingAnim();
           resolve();
