@@ -5,13 +5,13 @@ const defaultProps = {
   damping: 0.15
 }
 
-const add = function (el, listener, props = defaultProps) {
+const add = function (el, listener, props = defaultProps) {
   const scrollbar = Scrollbar.init(el, props)
   listener && scrollbar.addListener(listener)
   return scrollbar
 }
 
-const remove = function (el, listener) {
+const remove = function (el, listener) {
   const scrollbar = Scrollbar.get(el)
   listener && scrollbar.removeListener(listener)
   Scrollbar.destroy(el)
