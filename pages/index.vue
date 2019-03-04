@@ -1,6 +1,6 @@
 <template>
   <section class="container home">
-    <div>
+    <div class="content">
       <h1>{{doc.title}}</h1>
       <p>{{doc.description}}</p>
       <img v-for="(img, index) in doc.images" :src="img.img.url" :key="index">

@@ -8,6 +8,7 @@
   height: 100vh;
   opacity: 1;
   transition: opacity 0.5s ease;
+  z-index: 1;
   .content {
     position: relative;
     top:50%;

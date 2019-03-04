@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:100vw;height:100vh;">
     <Navigation/>
     <Loader/>
     <nuxt/>
@@ -8,6 +8,7 @@
 <script>
 import Navigation from "~/components/Navigation";
 import Loader from "~/components/Loader";
+import scrollbar from '~/utils/scrollbar.js';
 
 export default {
   components: {
@@ -15,12 +16,18 @@ export default {
     Loader
   },
   mounted() {
-    const app = this.$el;
-    const smooth = new Smooth({
-      native: true,
-      section: app
-    });
-    smooth.init();
+    const container = this.$el
+    console.log(container)
+    scrollbar.add(container, this.onScroll)
+  },
+  beforeDestroy() {
+    const container = this.$el
+    scrollbar.remove(container)
+  },
+  methods : {
+    onScroll() {
+      console.log('scroll')
+    }
   }
 };
 </script>

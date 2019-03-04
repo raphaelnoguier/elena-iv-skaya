@@ -1,10 +1,15 @@
 .home {
-  background: blue;
-  padding: 0 10vw;
   margin: auto;
   text-align: center;
 
+  .content {
+    width: 60%;
+    margin: auto;
+  }
+
   img {
     margin-top: 20px;
+    width: 100%;
+    display: block;
   }
 }
