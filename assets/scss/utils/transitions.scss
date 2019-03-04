@@ -4,5 +4,5 @@
 
 .page-enter, .page-leave-active {
   opacity: 0;
-  transform: translateY(20vh)
+  transform: translate3d(-20vw, 0, 0)
 }

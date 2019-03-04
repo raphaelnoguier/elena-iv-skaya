@@ -24,14 +24,14 @@ export default {
 
   methods: {
     launchLoading() {
-      if (!this.$store.getters.currentDoc.data.body[0]) {
+      if (!this.$store.getters.currentDoc.data.gallery) {
         this.stopPreloadingAnim();
         return;
       }
-      const assets = this.$store.getters.currentDoc.data.body[0].items;
+      const assets = this.$store.getters.currentDoc.data.gallery;
       let resolved = 0;
       for (let elm of assets) {
-        let src = elm.img.url;
+        let src = elm.images.url;
         elm = document.createElement("img");
         elm.src = src;
         this.loadAssets(elm, src).then(value => {

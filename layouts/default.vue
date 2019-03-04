@@ -20,8 +20,10 @@ export default {
     scrollbar.add(container, this.onScroll);
   },
   beforeDestroy() {
+    console.log("hello");
     const container = this.$el;
     scrollbar.remove(container);
+    console.log("removed");
   },
   methods: {
     onScroll(e) {

@@ -3,7 +3,7 @@
     <div class="content">
       <h1>{{doc.title}}</h1>
       <p>{{doc.description}}</p>
-      <img v-for="(img, index) in doc.images" :src="img.img.url" :key="index">
+      <img v-for="(item, index) in doc.images" :src="item.images.url" :key="index">
     </div>
   </section>
 </template>
@@ -11,7 +11,14 @@
 export default {
   head() {
     return {
-      title: ""
+      title: this.doc.seo.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.doc.seo.description
+        }
+      ]
     };
   },
 
@@ -21,7 +28,11 @@ export default {
       return {
         title: currentDoc.title[0].text,
         description: currentDoc.description[0].text,
-        images: currentDoc.body[0].items
+        images: currentDoc.gallery,
+        seo: {
+          title: currentDoc.seo_title,
+          description: currentDoc.seo_description
+        }
       };
     }
   }
