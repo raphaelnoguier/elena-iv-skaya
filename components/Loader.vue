@@ -29,6 +29,7 @@ export default {
       for (let elm of assets) {
         let src = elm.img.url;
         elm = document.createElement("img");
+        elm.src = src;
         this.loadAssets(elm, src).then(value => {
           resolved += 1;
           this.updateLoadProgress(resolved, assets.length);
@@ -37,7 +38,6 @@ export default {
     },
     loadAssets(elm, src) {
       return new Promise(resolve => {
-        elm.src = src;
         elm.addEventListener("load", function() {
           resolve();
         });
@@ -52,8 +52,10 @@ export default {
         percent.innerHTML = progress;
         bar.style.width = progress + "%";
         if (progress >= 100 && loaded === total) {
-          this.stopPreloadingAnim();
           resolve();
+          setTimeout(() => {
+            this.stopPreloadingAnim();
+          }, 300);
         }
       });
     },
