@@ -17,7 +17,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit, error }, { req }) {
+  async nuxtServerInit({ commit, error }) {
     if (process.server) {
       let path = this.$router.currentRoute.path
       let route = this.$router.currentRoute.name
