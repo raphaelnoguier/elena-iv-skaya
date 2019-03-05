@@ -36,7 +36,6 @@ module.exports = {
   */
   plugins: [
   ],
-
   /*
   ** Nuxt.js modules
   */
@@ -45,16 +44,19 @@ module.exports = {
       endpoint: 'https://elena-iv-skaya.cdn.prismic.io/api/v2',
       deferLoad: true,
       linkResolver: function (doc, ctx) {
-        if (doc.type === 'home') {
-          return '/';
+        if (doc.type === 'page') {
+          switch(doc.uid) {
+            case 'index':
+              return '/';
+            case 'about':
+              return '/about';
+            default:
+              return '/';
+          }
         }
-        if (doc.type === 'about') {
-          return '/about';
+        else if (doc.type === 'serie') {
+          return '/serie/' + doc.uid;
         }
-        if (doc.type === 'series') {
-          return '/series';
-        }
-        return '/';
       },
       htmlSerializer: function (type, element, content, children) {
         // Optional HTML Serializer
