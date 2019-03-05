@@ -1,5 +1,5 @@
 <template>
-  <div class="loader" :class="hideLoader ? 'hide' : ''">
+  <div class="loader hide" :class="hideLoader ? 'hide' : ''">
     <div class="content">
       <h1>Loading</h1>
       <span class="percent">0</span>
@@ -24,9 +24,9 @@ export default {
 
   methods: {
     launchLoading() {
+      return;
       if (!this.$store.getters.currentDoc.data.gallery) {
         this.stopPreloadingAnim();
-        return;
       }
       const assets = this.$store.getters.currentDoc.data.gallery;
       let resolved = 0;
