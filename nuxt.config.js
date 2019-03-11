@@ -1,11 +1,13 @@
 const pkg = require('./package')
+const Prismic = require('prismic-javascript');
+const apiEndpoint = "https://elena-iv-skaya.cdn.prismic.io/api/v2";
 
 
 module.exports = {
   mode: 'universal',
 
   /*
-  ** Headers of the page
+  ** Headers
   */
   head: {
     title: pkg.name,
@@ -18,12 +20,6 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
-  /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
-
   /*
   ** Global CSS
   */
@@ -32,7 +28,7 @@ module.exports = {
   ],
 
   /*
-  ** Plugins to load before mounting the App
+  ** Plugins
   */
   plugins: [
   ],
@@ -41,7 +37,7 @@ module.exports = {
   */
   modules: [
     ['prismic-nuxt', {
-      endpoint: 'https://elena-iv-skaya.cdn.prismic.io/api/v2',
+      endpoint: apiEndpoint,
       deferLoad: true,
       linkResolver: function (doc, ctx) {
         if (doc.type === 'page') {
@@ -59,18 +55,32 @@ module.exports = {
         }
       },
       htmlSerializer: function (type, element, content, children) {
-        // Optional HTML Serializer
       }
     }]
   ],
-
+  generate: {
+    routes: function (callback) {
+      Prismic.getApi(apiEndpoint)
+      .then((api) => {
+        return api.query("");
+      }).then((response) => {
+        let routes = response.results.map((doc) => {
+          if(doc.type === 'page') {
+            return '/' + doc.uid
+          }
+          else if (doc.type === 'serie') {
+            return '/serie/' + doc.uid
+          }
+        })
+        callback(null, routes)
+      })
+      .catch(callback)
+    }
+  },
   /*
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
 
     }

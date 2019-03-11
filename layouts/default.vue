@@ -3,17 +3,20 @@
     <Navigation/>
     <Loader/>
     <nuxt/>
+    <Footer/>
   </div>
 </template>
 <script>
 import Navigation from "~/components/Navigation";
+import Footer from "~/components/Footer";
 import Loader from "~/components/Loader";
 import scrollbar from "~/utils/scrollbar.js";
 
 export default {
   components: {
     Navigation,
-    Loader
+    Loader,
+    Footer
   },
   mounted() {
     const container = this.$el;
@@ -25,7 +28,6 @@ export default {
   },
   methods: {
     onScroll(e) {
-      console.log(e);
     }
   }
 };

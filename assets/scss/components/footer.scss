@@ -1,0 +1,38 @@
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #EFECE8;
+  padding: 4vh 8vw;
+  text-transform: uppercase;
+  position: relative;
+
+  @include sofiaProMedium(10px);
+  letter-spacing: 2px;
+  line-height: 30px;
+
+  a {
+    text-decoration: underline;
+  }
+
+  ul{
+    display: flex;
+    li:not(:first-child) {
+      margin-left: 2vw
+    }
+  }
+
+  .socials,
+  .credits,
+  .copyrights {
+    flex-basis: calc(100vw / 3);
+  }
+
+  .credits{
+    text-align: center;
+  }
+
+  .copyrights {
+    text-align: right;
+  }
+}

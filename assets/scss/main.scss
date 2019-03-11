@@ -1,6 +1,6 @@
 /* UTILS */
 
-@import 'utils/reset', 'utils/fonts', 'utils/mixins', 'utils/sizes', 'utils/transitions', 'utils/general';
+@import 'utils/reset', 'utils/mixins', 'utils/sizes', 'utils/transitions', 'utils/general', 'utils/fonts';
 
 
 /* PAGES */
@@ -8,4 +8,4 @@
 
 
 /* COMPONENTS */
-@import 'components/container', 'components/nav', 'components/loader';
+@import 'components/container', 'components/nav', 'components/loader', 'components/footer';

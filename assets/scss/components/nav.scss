@@ -1,9 +1,16 @@
 .nav {
-  padding: 2vh 4vw;
+  padding: 8vh 8vw;
 
   ul {
     display:flex;
     justify-content: space-between;
     align-items: center;
+
+    li {
+      @include sofiaProMedium(14px);
+      letter-spacing: 2px;
+      line-height: 30px;
+      text-transform: uppercase;
+    }
   }
 }

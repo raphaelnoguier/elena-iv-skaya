@@ -1,7 +1,7 @@
 // global store
 
 export const state = () => ({
-  doc: []
+  doc: [],
 })
 
 export const getters = {
@@ -21,8 +21,15 @@ export const actions = {
     let path = this.$router.currentRoute.path
     let route = this.$router.currentRoute.name
     let isSerie = path.includes('serie');
-    let serieRoute = this.$router.currentRoute.path.replace('/serie/', '');
-    let document = await this.$prismic.api.getByUID(isSerie ? 'serie' : 'page', isSerie ? serieRoute : route);
+    let serieRoute = path.replace('/serie/', '');
+    let document = null;
+    if(isSerie) {
+      document = await this.$prismic.api.getByUID('serie', serieRoute);
+    } else {
+      document = await this.$prismic.api.getByUID('page', route);
+      //document = await this.$prismic.predicates.any('document.type', ['page', 'serie']);
+    }
+
     if (document) {
       commit('SET_DOC', document)
     } else {

@@ -4,9 +4,9 @@
   @font-face {
     font-family: $name;
     src:
-      url('/static/fonts/#{$font}/#{$name}.eot?#iefix') format('embedded-opentype'),
-      url('/static/fonts/#{$font}/#{$name}.otf') format('opentype'),
-      url('/static/fonts/#{$font}/#{$name}.ttf') format('truetype');
+      url('~assets/fonts/#{$font}/#{$name}/#{$name}.eot?#iefix') format('embedded-opentype'),
+      url('~assets/fonts/#{$font}/#{$name}/#{$name}.otf') format('opentype'),
+      url('~assets/fonts/#{$font}/#{$name}/#{$name}.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
