@@ -23,11 +23,14 @@ export const actions = {
     let isSerie = path.includes('serie');
     let serieRoute = path.replace('/serie/', '');
     let document = null;
+    let isHome = route === 'index';
+
     if(isSerie) {
       document = await this.$prismic.api.getByUID('serie', serieRoute);
+    } else if(isHome){
+      document = await this.$prismic.api.query();
     } else {
       document = await this.$prismic.api.getByUID('page', route);
-      //document = await this.$prismic.predicates.any('document.type', ['page', 'serie']);
     }
 
     if (document) {

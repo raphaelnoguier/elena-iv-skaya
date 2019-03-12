@@ -1,41 +1,14 @@
 <template>
   <section class="home">
-    <div class="page-introduction">
-      <div :style="`background-image: url(${doc.images[0].images.url})`" class="featured-image"></div>
-      <div class="right-col">
-        <div class="slider">
-          <div class="slide" v-for="(item, index) in doc.images.slice(0,1)" :key="index" :style="`background-image: url('${item.images.url}')`"></div>
-          <div class="controls">
-            <div class="left"><img src="~assets/img/ui/arrow.svg"><span>previous</span></div>
-            <div class="dots"></div>
-            <div class="right"><span>next</span><img src="~assets/img/ui/arrow.svg"></div>
-          </div>
-        </div>
-        <div class="serie-infos">
-          <div class="title">
-            <h3>{{doc.title}}</h3>
-          </div>
-          <div class="date">
-            <span>© 2019</span>
-          </div>
-        </div>
-        <div class="chevron">
-          <img src="~assets/img/ui/chevron.svg">
-        </div>
-        <div class="update-status">
-          <div class="line" />
-          <span>LAST UPDATED - FEB 2019</span>
-        </div>
-      </div>
-    </div>
+    <HomeSlider :series="doc.currentSeries" />
     <div class="page-content" :class="dragMode ? 'black' : ''">
       <div class="gallery">
         <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
-          <div class="gallery-item" v-for="(item, index) in doc.images" :key="index">
-            <img :src="item.images.url" >
+          <div v-for="(serie, index) in doc.currentSeries" :key="index" class="gallery-item" :class="serie.cover_ratio.includes('Big') ? 'full' : ''">
+            <img :src="serie.cover_serie_image.url" >
             <div class="item-title">
-              <h3>The spirit of carmen</h3>
-              <span>commercial</span>
+              <h3>{{serie.title[0].text}}</h3>
+              <span>{{serie.category}}</span>
             </div>
           </div>
         </div>
@@ -45,7 +18,11 @@
 </template>
 <script>
 import scrollbar from "~/utils/scrollbar.js";
+import HomeSlider from "~/components/HomeSlider";
 export default {
+  components: {
+    HomeSlider
+  },
   head() {
     return {
       title: this.doc.seo.title,
@@ -69,6 +46,7 @@ export default {
   },
 
   mounted () {
+    console.log(this.doc.currentSeries)
     let gallery = document.querySelector(".gallery");
     gallery.addEventListener("mousedown", this.down);
     gallery.addEventListener("mousemove", this.move);
@@ -117,16 +95,27 @@ export default {
 
   computed: {
     doc() {
-      let currentDoc = this.$store.getters.currentDoc.data;
-      return {
-        title: currentDoc.title[0].text,
-        description: currentDoc.description[0].text,
-        slider: currentDoc.slider,
-        images: currentDoc.gallery,
-        seo: {
-          title: currentDoc.seo_title,
-          description: currentDoc.seo_description
+      let currentDoc = [];
+      let currentSeries = []
+
+      this.$store.getters.currentDoc.results.forEach(result => {
+        if(result.uid === 'index') {
+          currentDoc.push(result.data)
         }
+        if(result.type === 'serie') {
+          currentSeries.push(result.data)
+        }
+      });
+
+      return {
+        title: currentDoc[0].title[0].text,
+        description: currentDoc[0].description[0].text,
+        slider: currentDoc[0].slider,
+        seo: {
+          title: currentDoc[0].seo_title,
+          description: currentDoc[0].seo_description
+        },
+        currentSeries
       };
     }
   }

@@ -1,107 +1,5 @@
 .home {
   .page {
-    &-introduction {
-      display: flex;
-      justify-content: space-between;
-      padding-right: 8vw;
-      height: 80vh;
-
-      .featured-image {
-        width: 35%;
-        background-size: cover;
-      }
-
-      .right-col {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        width: calc(65% - 140px);
-        justify-content: space-between;
-
-        .slider {
-          height: 25%;
-
-          .slide {
-            height: 100%;
-            background-size:100%;
-            background-position-y: 30%;
-          }
-
-          .controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 30px;
-
-            @include sofiaProMedium(14px);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-
-
-            .left img {
-              top:2px;
-              position: relative;
-              margin-right: 20px;
-            }
-
-            .right img {
-              top:2px;
-              position: relative;
-              margin-left: 20px;
-              transform: rotate(180deg);
-            }
-          }
-        }
-
-        .serie-infos {
-          margin-top:123px;
-          flex-direction: column;
-
-          .title {
-            @include actaDisplay(90px);
-
-            h3{
-              line-height: 100px;
-            }
-          }
-
-          .date {
-            @include sofiaProMedium(14px);
-            margin-top:15px;
-            letter-spacing: 2px;
-            line-height: 30px;
-          }
-        }
-
-        .chevron {
-          justify-self: flex-end;
-        }
-
-        .update-status {
-          display:flex;
-          align-items: center;
-          position: fixed;
-          right: 8vw;
-          top: 63vh;
-          writing-mode: vertical-rl;
-          text-orientation: mixed;
-
-          .line {
-            height: 65px;
-            background: black;
-            width: 1px;
-            margin-bottom: 23px;
-          }
-
-          span {
-            @include sofiaProLight(12px);
-            letter-spacing: 2px;
-            line-height: 14px;
-            text-transform: uppercase;
-          }
-        }
-      }
-    }
     &-content {
       margin-top: 200px;
       padding-bottom: 100px;
@@ -115,7 +13,7 @@
         display:flex;
         flex-direction: column;
         margin: auto;
-        max-width: 920px;
+        padding: 0 8vw;
 
         &.drag-mode {
           .gallery-item {
@@ -128,15 +26,38 @@
 
         .gallery-item {
           transition: all 0.5s ease;
-          align-self: flex-start;
-          width: 50%;
+          width: calc(50% - 240px);
           position: relative;
+          margin-left: 240px;
+          margin-right: auto;
+
+          &.full {
+            width: 100%;
+            margin-left:0;
+
+            .item-title {
+              position: relative;
+              right: 0;
+              writing-mode: initial;
+              text-orientation: initial;
+              transform: rotate(0deg);
+              justify-content: center;
+              align-items: center;
+              margin-top: 40px;
+
+              span {
+                margin-top: 0;
+                margin-left: 20px;
+              }
+            }
+          }
 
           &:not(:first-child) {
             margin-top: 111px;
           }
           &:nth-child(even) {
-            align-self: flex-end;
+            margin-right: 240px;
+            margin-left: auto;
           }
 
           img {
@@ -147,7 +68,7 @@
           .item-title {
             display: flex;
             position: absolute;
-            bottom: 0;
+            bottom: 5px;
             right: -33px;
             text-align: right;
             writing-mode: vertical-rl;

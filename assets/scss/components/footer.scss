@@ -17,9 +17,7 @@ footer {
 
   ul{
     display: flex;
-    li:not(:first-child) {
-      margin-left: 2vw
-    }
+    justify-content: space-between;
   }
 
   .socials,

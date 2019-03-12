@@ -1,0 +1,101 @@
+.page-introduction {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 8vw;
+  height: 80vh;
+
+  canvas {
+    width: 35%;
+  }
+
+  .right-col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: calc(65% - 140px);
+    justify-content: space-between;
+
+    .serie-infos {
+      margin-top:123px;
+      flex-direction: column;
+
+      .title {
+        @include actaDisplay(90px);
+
+        h3{
+          line-height: 100px;
+        }
+      }
+
+      .date {
+        @include sofiaProMedium(14px);
+        margin-top:15px;
+        letter-spacing: 2px;
+        line-height: 30px;
+      }
+    }
+
+    .chevron {
+      justify-self: flex-end;
+    }
+
+    .update-status {
+      display:flex;
+      align-items: center;
+      position: fixed;
+      right: 8vw;
+      top: 63vh;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+
+      .line {
+        height: 65px;
+        background: black;
+        width: 1px;
+        margin-bottom: 23px;
+      }
+
+      span {
+        @include sofiaProLight(12px);
+        letter-spacing: 2px;
+        line-height: 14px;
+        text-transform: uppercase;
+      }
+    }
+
+    .home-slider {
+      height: 25%;
+
+      .slide {
+        height: 100%;
+        background-size:100%;
+        background-position-y: 30%;
+      }
+
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 30px;
+
+        @include sofiaProMedium(14px);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+
+        .left img {
+          top:2px;
+          position: relative;
+          margin-right: 20px;
+        }
+
+        .right img {
+          top:2px;
+          position: relative;
+          margin-left: 20px;
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 const pkg = require('./package')
 const Prismic = require('prismic-javascript');
+const PrismicDOM = require('prismic-dom');
 const apiEndpoint = "https://elena-iv-skaya.cdn.prismic.io/api/v2";
 
 
@@ -55,6 +56,8 @@ module.exports = {
         }
       },
       htmlSerializer: function (type, element, content, children) {
+        // console.log(type,element, content, children);
+        // PrismicDOM.RichText.asHtml(content, linkResolver, htmlSerializer)
       }
     }]
   ],
