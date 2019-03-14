@@ -1,14 +1,20 @@
 <template>
   <div class="page-introduction">
-    <canvas id="home-slider"></canvas>
+    <div class="featured-images">
+      <div class="slide" v-for="(serie, index) in series" :key="index" :style="`z-index: ${-index + 1}`" :data-slide="index + 1" :class="index + 1  === 1 ? 'active': ' '">
+        <div class="image" :style="`background-image: url('${serie.cover_serie_image.url}')`"></div>
+      </div>
+    </div>
     <div class="right-col">
       <div class="home-slider">
-        <div class="slide" v-for="(serie, index) in series.slice(0,1)" :key="index" :style="`background-image: url('${serie.cover_serie_image.url}')`"></div>
-        <div class="controls">
-          <div v-on:click="slide" class="left"><img src="~assets/img/ui/arrow.svg"><span>previous</span></div>
-          <div class="dots"></div>
-          <div class="right"><span>next</span><img src="~assets/img/ui/arrow.svg"></div>
+        <div class="slide" v-for="(serie, index) in series" :key="index" :style="`z-index: ${-index + 1}`" :data-slide="index + 1" :class="index + 1  === 1 ? 'active': ' '">
+          <div class="image" :style="`background-image: url('${serie.cover_serie_image.url}')`"></div>
         </div>
+      </div>
+      <div class="controls">
+        <div class="left"><img src="~assets/img/ui/arrow.svg"><span>previous</span></div>
+        <div class="dots"></div>
+        <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg"></div>
       </div>
       <div v-for="(serie, index) in series.slice(0,1)"  :key="index" class="serie-infos">
         <div class="title">
@@ -36,52 +42,64 @@ import anime from 'animejs'
 export default {
   data() {
     return {
-      lineTo: 0
+      slideIndex: 0
     }
   },
   mounted() {
-    this.draw();
+
   },
   methods: {
-    draw() {
-      let canvas = document.getElementById('home-slider');
-      let ctx = canvas.getContext('2d');
+    nextSlide() {
+      let sliderWrapper = this.$el.querySelector('.featured-images');
+      let slides = sliderWrapper.querySelectorAll(".slide");
+      let activeSlide = sliderWrapper.querySelector(".active");
+      let activeSlideIndex = activeSlide.dataset.slide;
+      activeSlideIndex++;
 
-      let bounds = canvas.getBoundingClientRect();
+      if (activeSlideIndex <= slides.length) {
+        let nextSlide = sliderWrapper.querySelector(
+            ".slide[data-slide='" + activeSlideIndex + "']"
+          );
+          activeSlide.classList.add("sliding");
+          nextSlide.classList.add("active");
+          activeSlide.addEventListener('animationend', function() {
+            activeSlide.classList.remove('active');
+            nextSlide.classList.add("active");
+          })
+      } else {
+        let nextSlide = sliderWrapper.querySelector(".slide[data-slide='1']");
+        activeSlide.classList.remove("active");
+        activeSlide.classList.remove("sliding");
+        nextSlide.classList.add("active");
+        activeSlideIndex = 0;
+      }
 
-      let currentImg = document.createElement('IMG');
-      currentImg.src = this.series[0].cover_serie_image.url
-
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(0, bounds.height);
-      ctx.lineTo(100, 0);
-      ctx.closePath();
-      // Clip to the current path
-      ctx.drawImage(currentImg, 0, 0, 300, bounds.height);
-      ctx.clip();
-      ctx.restore();
+      this.mirror();
     },
-    next() {
-      let canvas = document.getElementById('home-slider');
-      let ctx = canvas.getContext('2d');
+    mirror() {
+      let sliderWrapper = this.$el.querySelector('.home-slider');
+      let slides = sliderWrapper.querySelectorAll(".slide");
+      let activeSlide = sliderWrapper.querySelector(".active");
+      let activeSlideIndex = activeSlide.dataset.slide;
+      activeSlideIndex++;
 
-      let bounds = canvas.getBoundingClientRect()
-
-      let nextImage = document.createElement('IMG');
-      nextImage.src = this.series[1].cover_serie_image.url
-
-      // Clip to the current path
-      ctx.drawImage(nextImage, 0, 0, bounds.width, bounds.height);
-      ctx.clip();
-      ctx.restore();
-    },
-    slide(){
-      let _this = this
-      setInterval((i) => {
-        _this.lineTo = _this.lineTo + 50;
-        this.next();
-      }, 1);
+      if (activeSlideIndex <= slides.length) {
+        let nextSlide = sliderWrapper.querySelector(
+            ".slide[data-slide='" + activeSlideIndex + "']"
+          );
+          activeSlide.classList.add("sliding");
+          nextSlide.classList.add("active");
+          activeSlide.addEventListener('animationend', function() {
+            activeSlide.classList.remove('active');
+            nextSlide.classList.add("active");
+          })
+      } else {
+        let nextSlide = sliderWrapper.querySelector(".slide[data-slide='1']");
+        activeSlide.classList.remove("active");
+        activeSlide.classList.remove("sliding");
+        nextSlide.classList.add("active");
+        activeSlideIndex = 0;
+      }
     }
   },
   props: { series: Array }

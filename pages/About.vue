@@ -54,9 +54,6 @@
 </template>
 <script>
 export default {
-  mounted() {
-    // console.log(this.$store.getters.currentDoc.data);
-  },
   async asyncData ({ app, params, error, store}) {
     try {
       let entry = await store.dispatch('GET_DOC', app.context.route);
@@ -77,19 +74,6 @@ export default {
     }
   },
   computed: {
-    // doc() {
-    //   let currentDoc = this.$store.getters.currentDoc.data;
-    //   return {
-    //     main_image: currentDoc.main_image.url,
-    //     title: currentDoc.title[0].text,
-    //     social_links: currentDoc.social_links,
-    //     first_paragraph: currentDoc.first_paragraph[0].text,
-    //     column_1: currentDoc.column_1[0].text,
-    //     column_2: currentDoc.column_2[0].text,
-    //     agency_representations: currentDoc.agency_representations,
-    //     credits: currentDoc.credits
-    //   };
-    // }
   }
 };
 </script>

@@ -4,8 +4,38 @@
   padding-right: 8vw;
   height: 80vh;
 
-  canvas {
+  .featured-images {
     width: 35%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    .slide {
+      height: 100%;
+      width: calc(100% + 20px);
+      position: absolute;
+      transform: skew(0, 0);
+      margin-left: auto;
+      right: -20px;
+      z-index: 1;
+
+      &.active {
+        z-index: 2;
+      }
+
+
+      &.sliding {
+        animation: slide 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      }
+
+      .image {
+        height: 100%;
+        width: 100%;
+        background-size:cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+      }
+    }
   }
 
   .right-col {
@@ -65,37 +95,71 @@
 
     .home-slider {
       height: 25%;
+      position: relative;
 
       .slide {
         height: 100%;
-        background-size:100%;
-        background-position-y: 30%;
-      }
+        width: calc(100% + 20px);
+        position: absolute;
+        transform: skew(0, 0);
+        margin-left: auto;
+        right: -20px;
+        z-index: 1;
 
-      .controls {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 30px;
-
-        @include sofiaProMedium(14px);
-        letter-spacing: 2px;
-        text-transform: uppercase;
-
-
-        .left img {
-          top:2px;
-          position: relative;
-          margin-right: 20px;
+        &.active {
+          z-index: 2;
         }
 
-        .right img {
-          top:2px;
-          position: relative;
-          margin-left: 20px;
-          transform: rotate(180deg);
+
+        &.sliding {
+          animation: slide 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards 0.2s;
+        }
+
+        .image {
+          height: 100%;
+          width: 100%;
+          background-size:cover;
+          background-attachment: fixed;
+          background-repeat: no-repeat;
         }
       }
     }
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 30px;
+
+      @include sofiaProMedium(14px);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+
+      .left img {
+        top:2px;
+        position: relative;
+        margin-right: 20px;
+      }
+
+      .right img {
+        top:2px;
+        position: relative;
+        margin-left: 20px;
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+@keyframes slide{
+  0% {
+    transform: skew(0);
+  }
+  25% {
+    transform: skew(3deg);
+  }
+  100%{
+    width:0%;
+    transform: skew(0);
   }
 }
