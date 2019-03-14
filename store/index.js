@@ -1,7 +1,7 @@
 // global store
 
 export const state = () => ({
-  doc: [],
+  doc: {},
 })
 
 export const getters = {
@@ -17,24 +17,29 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit, error }) {
-    let path = this.$router.currentRoute.path
-    let route = this.$router.currentRoute.name
-    let isSerie = path.includes('serie');
+  async GET_DOC({ commit, error }, params) {
+    let path = params.path
+    let route = params.name
     let serieRoute = path.replace('/serie/', '');
     let document = null;
-    let isHome = route === 'index';
+
+    let isSerie = path.includes('serie');
+    let isHome = path === '/';
+    let isAbout = route === 'about';
+
 
     if(isSerie) {
       document = await this.$prismic.api.getByUID('serie', serieRoute);
     } else if(isHome){
       document = await this.$prismic.api.query();
-    } else {
+    } else if(isAbout){
       document = await this.$prismic.api.getByUID('about', route);
     }
 
+
     if (document) {
       commit('SET_DOC', document)
+      return document;
     } else {
       error({ statusCode: 404, message: "Page not found" });
     }

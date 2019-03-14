@@ -1,5 +1,6 @@
 <template>
   <section class="container serie">
+    <nuxt-link to="/about">about</nuxt-link>
     <!-- <div class="serie-infos">
       <div class="featured-image">
         <img :src="doc.featuredImage.url">

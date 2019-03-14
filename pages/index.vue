@@ -1,10 +1,10 @@
 <template>
   <section class="home">
-    <HomeSlider :series="doc.currentSeries" />
+    <HomeSlider :series="currentSeries" />
     <div class="page-content" :class="dragMode ? 'black' : ''">
       <div class="gallery">
         <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
-          <div v-for="(serie, index) in doc.currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
+          <div v-for="(serie, index) in currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
            <img :src="serie.cover_serie_image.url" />
             <div class="item-title">
               <h3>{{serie.title[0].text}}</h3>
@@ -20,19 +20,49 @@
 import scrollbar from "~/utils/scrollbar.js";
 import HomeSlider from "~/components/HomeSlider";
 export default {
+  async asyncData ({ app, params, error, store}) {
+    try {
+      let entry = await store.dispatch('GET_DOC', app.context.route);
+
+      let currentDoc = [];
+      let currentSeries = []
+
+      entry.results.forEach(result => {
+        if(result.uid === 'index') {
+          currentDoc.push(result.data)
+        }
+        if(result.type === 'serie') {
+          currentSeries.push(result.data)
+        }
+      });
+
+      return {
+        title: currentDoc[0].title[0].text,
+        description: currentDoc[0].description[0].text,
+        slider: currentDoc[0].slider,
+        seo: {
+          title: currentDoc[0].seo_title,
+          description: currentDoc[0].seo_description
+        },
+        currentSeries
+      };
+    } catch (err) {
+      error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
+    }
+  },
   components: {
     HomeSlider
   },
   head() {
     return {
-      title: this.doc.seo.title,
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.doc.seo.description
-        }
-      ]
+      // title: this.doc.seo.title,
+      // meta: [
+      //   {
+      //     hid: "description",
+      //     name: "description",
+      //     content: this.doc.seo.description
+      //   }
+      // ]
     };
   },
 
@@ -105,30 +135,6 @@ export default {
   },
 
   computed: {
-    doc() {
-      let currentDoc = [];
-      let currentSeries = []
-
-      this.$store.getters.currentDoc.results.forEach(result => {
-        if(result.uid === 'index') {
-          currentDoc.push(result.data)
-        }
-        if(result.type === 'serie') {
-          currentSeries.push(result.data)
-        }
-      });
-
-      return {
-        title: currentDoc[0].title[0].text,
-        description: currentDoc[0].description[0].text,
-        slider: currentDoc[0].slider,
-        seo: {
-          title: currentDoc[0].seo_title,
-          description: currentDoc[0].seo_description
-        },
-        currentSeries
-      };
-    }
   }
 };
 </script>

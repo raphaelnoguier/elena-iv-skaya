@@ -1,7 +1,7 @@
 const pkg = require('./package')
 const Prismic = require('prismic-javascript');
 const PrismicDOM = require('prismic-dom');
-const apiEndpoint = "https://elena-iv-skaya.cdn.prismic.io/api/v2";
+const prismicConfig = require('./prismic.config.js');
 
 
 module.exports = {
@@ -38,23 +38,8 @@ module.exports = {
   */
   modules: [
     ['prismic-nuxt', {
-      endpoint: apiEndpoint,
-      deferLoad: true,
-      linkResolver: function (doc, ctx) {
-        if (doc.type === 'page' || doc.type === 'about') {
-          switch(doc.uid) {
-            case 'index':
-              return '/';
-            case 'about':
-              return '/about';
-            default:
-              return '/';
-          }
-        }
-        else if (doc.type === 'serie') {
-          return '/serie/' + doc.uid;
-        }
-      },
+      endpoint: prismicConfig.apiEndpoint,
+      linkResolver:prismicConfig.linkResolver,
       htmlSerializer: function (type, element, content, children) {
         // console.log(type,element, content, children);
         // PrismicDOM.RichText.asHtml(content, linkResolver, htmlSerializer)
