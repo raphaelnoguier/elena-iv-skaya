@@ -4,8 +4,8 @@
     <div class="page-content" :class="dragMode ? 'black' : ''">
       <div class="gallery">
         <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
-          <div v-for="(serie, index) in doc.currentSeries" :key="index" class="gallery-item" :class="serie.cover_ratio.includes('Big') ? 'full' : ''">
-            <img :src="serie.cover_serie_image.url" >
+          <div v-for="(serie, index) in doc.currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
+           <img :src="serie.cover_serie_image.url" />
             <div class="item-title">
               <h3>{{serie.title[0].text}}</h3>
               <span>{{serie.category}}</span>
@@ -40,14 +40,13 @@ export default {
     return {
       timerID: '',
       counter: 0,
-      pressHoldDuration: 10,
       dragMode: false
     }
   },
 
   mounted () {
-    console.log(this.doc.currentSeries)
     let gallery = document.querySelector(".gallery");
+    if(!gallery) return;
     gallery.addEventListener("mousedown", this.down);
     gallery.addEventListener("mousemove", this.move);
     gallery.addEventListener("mouseleave", this.up);
@@ -58,6 +57,7 @@ export default {
 
   beforeDestroy() {
     let gallery = document.querySelector(".gallery");
+    if(!gallery) return;
     gallery.removeEventListener("mousedown", this.down);
     gallery.removeEventListener("mousemove", this.move);
     gallery.removeEventListener("mouseup", this.up);
@@ -67,6 +67,17 @@ export default {
   },
 
   methods: {
+    getClass(ratio) {
+      if(ratio.includes('Big')){
+        return 'full'
+      }
+      if (ratio.includes('Landscape')) {
+        return 'landscape'
+      }
+      if (ratio.includes('Portrait')) {
+        return 'portrait'
+      }
+    },
     down(e) {
       requestAnimationFrame(this.timer);
       e.preventDefault();
@@ -79,7 +90,7 @@ export default {
     },
     timer() {
       let gallery = document.querySelector(".gallery");
-      if (this.counter < this.pressHoldDuration) {
+      if (this.counter < 0) {
         this.timerID = requestAnimationFrame(this.timer);
         this.counter++;
       } else {

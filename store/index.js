@@ -30,7 +30,7 @@ export const actions = {
     } else if(isHome){
       document = await this.$prismic.api.query();
     } else {
-      document = await this.$prismic.api.getByUID('page', route);
+      document = await this.$prismic.api.getByUID('about', route);
     }
 
     if (document) {

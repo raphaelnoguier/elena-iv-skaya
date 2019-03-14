@@ -13,29 +13,27 @@
         display:flex;
         flex-direction: column;
         margin: auto;
+        align-items: center;
         padding: 0 8vw;
 
-        &.drag-mode {
-          .gallery-item {
-            align-self: center !important;
-            &:not(:first-child) {
-              margin-top: 0;
-            }
-          }
-        }
-
         .gallery-item {
-          transition: all 0.5s ease;
-          width: calc(50% - 240px);
+          transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+          width: calc(50% - 5vw);
           position: relative;
-          margin-left: 240px;
-          margin-right: auto;
+          transform: translate3d(-10vw,0,0);
+
+          &:not(:first-child) {
+            margin-top: 111px;
+          }
+          &:nth-child(even) {
+            transform: translate3d(10vw,0,0);
+          }
 
           &.full {
             width: 100%;
-            margin-left:0;
+            transform: translate3d(0,0,0);
 
-            .item-title {
+            .gallery-cover .item-title {
               position: relative;
               right: 0;
               writing-mode: initial;
@@ -52,14 +50,6 @@
             }
           }
 
-          &:not(:first-child) {
-            margin-top: 111px;
-          }
-          &:nth-child(even) {
-            margin-right: 240px;
-            margin-left: auto;
-          }
-
           img {
             width: 100%;
             height: 100%;
@@ -69,12 +59,13 @@
             display: flex;
             position: absolute;
             bottom: 5px;
-            right: -33px;
+            right: 0;
             text-align: right;
             writing-mode: vertical-rl;
             text-orientation: mixed;
             transform: rotate(180deg);
             text-transform: uppercase;
+            right: -30px;
 
             h3 {
               @include sofiaProMedium(14px);
@@ -84,6 +75,25 @@
               @include sofiaProLight(12px);
               display: block;
               margin-top: 20px;
+            }
+          }
+        }
+
+        &.drag-mode {
+          .gallery-item {
+            transform: translate3d(0,0,0);
+
+            &:nth-child(even) {
+              transform: translate3d(0,0,0);
+            }
+            &:not(:first-child) {
+              margin-top:0;
+            }
+            &.full {
+              width: calc(50% - 5vw);
+              .item-title{
+                display: none;
+              }
             }
           }
         }

@@ -7,6 +7,12 @@ footer {
   text-transform: uppercase;
   position: relative;
 
+  .dark & {
+    background: #121212;
+    color:white;
+    border-top: 1px solid black;
+  }
+
   @include sofiaProMedium(10px);
   letter-spacing: 2px;
   line-height: 30px;

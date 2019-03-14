@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="$route.name === 'about' ? 'dark' : ''">
     <Navigation/>
     <Loader/>
     <nuxt/>
