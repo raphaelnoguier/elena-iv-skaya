@@ -41,7 +41,7 @@ module.exports = {
       endpoint: apiEndpoint,
       deferLoad: true,
       linkResolver: function (doc, ctx) {
-        if (doc.type === 'page') {
+        if (doc.type === 'page' || doc.type === 'about') {
           switch(doc.uid) {
             case 'index':
               return '/';
@@ -68,7 +68,8 @@ module.exports = {
         return api.query("");
       }).then((response) => {
         let routes = response.results.map((doc) => {
-          if(doc.type === 'page') {
+          console.log(response.results)
+          if(doc.type === 'page' || doc.type === 'about') {
             return '/' + doc.uid
           }
           else if (doc.type === 'serie') {

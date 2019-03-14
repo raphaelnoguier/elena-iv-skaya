@@ -1,6 +1,6 @@
 <template>
   <section class="container serie">
-    <div class="serie-infos">
+    <!-- <div class="serie-infos">
       <div class="featured-image">
         <img :src="doc.featuredImage.url">
       </div>
@@ -40,24 +40,24 @@
     </div>
     <div class="serie-gallery">
       <img v-for="(image, i) in doc.gallery" :key="i" :src="image.image.url">
-    </div>
+    </div> -->
   </section>
 </template>
 <script>
 export default {
   computed: {
     doc() {
-      let currentDoc = this.$store.getters.currentDoc.data;
-      return {
-        title: currentDoc.title[0].text,
-        description: currentDoc.about_serie[0].text,
-        date: currentDoc.date,
-        models: currentDoc.models,
-        roles: currentDoc.roles,
-        makeups: currentDoc.make_up,
-        featuredImage: currentDoc.featured_image,
-        gallery: currentDoc.gallery
-      };
+      // let currentDoc = this.$store.getters.currentDoc.data;
+      // return {
+      //   title: currentDoc.title[0].text,
+      //   description: currentDoc.about_serie[0].text,
+      //   date: currentDoc.date,
+      //   models: currentDoc.models,
+      //   roles: currentDoc.roles,
+      //   makeups: currentDoc.make_up,
+      //   featuredImage: currentDoc.featured_image,
+      //   gallery: currentDoc.gallery
+      // };
     }
   }
 };
