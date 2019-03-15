@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <HomeSlider :series="currentSeries" />
+    <HomeHeader :series="currentSeries" />
     <div class="page-content" :class="dragMode ? 'black' : ''">
       <div class="gallery">
         <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
@@ -18,7 +18,8 @@
 </template>
 <script>
 import scrollbar from "~/utils/scrollbar.js";
-import HomeSlider from "~/components/HomeSlider";
+import HomeHeader from "~/components/HomeHeader";
+
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
@@ -51,7 +52,7 @@ export default {
     }
   },
   components: {
-    HomeSlider
+    HomeHeader
   },
   head() {
     return {
@@ -133,8 +134,5 @@ export default {
       console.log(e.pageY)
     }
   },
-
-  computed: {
-  }
 };
 </script>

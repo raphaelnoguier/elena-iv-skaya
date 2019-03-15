@@ -8,7 +8,7 @@
     </ul>
   </div>
   <div class="credits">
-    <p>website by <a href="#">robin noguier</a> & <a href="#">raphael ait el alim</a></p>
+    <p>website by <a href="#">robin noguier</a> & <a href="#">raphael ait-el-alim</a></p>
   </div>
   <div class="copyrights">
     <p>© 2019 All rights Reserved</p>

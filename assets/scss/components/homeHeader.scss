@@ -1,0 +1,61 @@
+.page-introduction {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 8vw;
+  height: 80vh;
+
+  .right-col {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: calc(65% - 140px);
+
+    .serie-infos {
+      margin-top:123px;
+      flex-direction: column;
+
+      .title {
+        @include actaDisplay(90px);
+
+        h3{
+          line-height: 100px;
+        }
+      }
+
+      .date {
+        @include sofiaProMedium(14px);
+        margin-top:15px;
+        letter-spacing: 2px;
+        line-height: 30px;
+      }
+    }
+
+    .chevron {
+      justify-self: flex-end;
+    }
+  }
+}
+
+.update-status {
+  display:flex;
+  align-items: center;
+  position: fixed;
+  right: 8vw;
+  top: 63vh;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+
+  .line {
+    height: 65px;
+    background: black;
+    width: 1px;
+    margin-bottom: 23px;
+  }
+
+  span {
+    @include sofiaProLight(12px);
+    letter-spacing: 2px;
+    line-height: 14px;
+    text-transform: uppercase;
+  }
+}

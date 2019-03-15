@@ -1,0 +1,12 @@
+@keyframes slide{
+  0% {
+    transform: skew(0);
+  }
+  25% {
+    transform: skew(3deg);
+  }
+  100%{
+    width:0%;
+    transform: skew(0);
+  }
+}

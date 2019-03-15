@@ -7,15 +7,19 @@ footer {
   text-transform: uppercase;
   position: relative;
 
+  @include sofiaProMedium(10px);
+  letter-spacing: 2px;
+  line-height: 30px;
+
+  @include max(lg) {
+    padding: 4vh 4vw;
+  }
+
   .dark & {
     background: #121212;
     color:white;
     border-top: 1px solid black;
   }
-
-  @include sofiaProMedium(10px);
-  letter-spacing: 2px;
-  line-height: 30px;
 
   a {
     text-decoration: underline;
@@ -26,17 +30,23 @@ footer {
     justify-content: space-between;
   }
 
+  .socials ul {
+    justify-content: flex-start;
+
+    li:not(:first-child) {
+      margin-left: 1vw;
+    }
+  }
+
   .socials,
-  .credits,
-  .copyrights {
-    flex-basis: calc(100vw / 3);
-  }
-
-  .credits{
-    text-align: center;
+  .credits {
+    flex-basis: 37.5vw;
   }
 
   .copyrights {
+    flex-basis: 25vw;
+    @include sofiaProLight(10px);
+    letter-spacing: 2px;
     text-align: right;
   }
 }

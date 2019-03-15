@@ -1,0 +1,80 @@
+.small-slider {
+  height: 25%;
+  position: relative;
+
+  .slide {
+    height: 100%;
+    width: calc(100% + 20px);
+    position: absolute;
+    transform: skew(0, 0);
+    margin-left: auto;
+    right: -20px;
+    z-index: 1;
+
+    &.active {
+      z-index: 2;
+    }
+
+
+    &.sliding {
+      animation: slide 1s $ease-in-out-quart forwards 0.2s;
+    }
+
+    .image {
+      height: 100%;
+      width: 100%;
+      background-size:cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+
+.right-col {
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+
+    @include sofiaProMedium(14px);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    .left,
+    .dots,
+    .right {
+      cursor: pointer;
+    }
+
+    .left img {
+      top: 2px;
+      position: relative;
+      margin-right: 20px;
+    }
+
+    .dots {
+      width: 100px;
+
+      ul {
+        display: flex;
+        justify-content: space-between;
+
+        li {
+          width: 5px;
+          height: 5px;
+          background-color: black;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .right img {
+      top: 2px;
+      position: relative;
+      margin-left: 20px;
+      transform: rotate(180deg);
+    }
+  }
+}
