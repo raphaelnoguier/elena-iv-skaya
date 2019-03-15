@@ -53,9 +53,12 @@ module.exports = {
         return api.query("");
       }).then((response) => {
         let routes = response.results.map((doc) => {
-          console.log(response.results)
-          if(doc.type === 'page' || doc.type === 'about') {
-            return '/' + doc.uid
+          console.log(doc.type, doc.uid)
+          if(doc.type === 'page') {
+            return '/index'
+          }
+          if(doc.type === 'about') {
+            return '/about'
           }
           else if (doc.type === 'serie') {
             return '/serie/' + doc.uid
