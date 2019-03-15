@@ -31,7 +31,9 @@
     }
 
     .chevron {
-      justify-self: flex-end;
+      position: absolute;
+      bottom:0;
+      left:0;
     }
   }
 }
