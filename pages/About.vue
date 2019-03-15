@@ -68,12 +68,9 @@ export default {
         agency_representations: data.agency_representations,
         credits: data.credits
       }
-      console.log('url', data.main_image.url);
     } catch (err) {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
-  computed: {
-  }
 };
 </script>

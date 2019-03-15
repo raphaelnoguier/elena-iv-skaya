@@ -32,7 +32,6 @@ module.exports = {
   ** Plugins
   */
   plugins: [
-    '@plugins/axios-middleware.js'
   ],
   /*
   ** Nuxt.js modules
@@ -54,12 +53,8 @@ module.exports = {
         return api.query("");
       }).then((response) => {
         let routes = response.results.map((doc) => {
-          console.log(doc.type, doc.uid)
-          if(doc.type === 'page') {
-            return '/index'
-          }
-          if(doc.type === 'about') {
-            return '/about'
+          if(doc.type === 'page' || doc.type === 'about') {
+            return '/' + doc.uid
           }
           else if (doc.type === 'serie') {
             return '/serie/' + doc.uid
