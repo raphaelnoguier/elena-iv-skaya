@@ -47,23 +47,23 @@ module.exports = {
     }]
   ],
   generate: {
-    routes: function (callback) {
-      Prismic.getApi(prismicConfig.apiEndpoint)
-      .then((api) => {
-        return api.query("");
-      }).then((response) => {
-        let routes = response.results.map((doc) => {
-          if(doc.type === 'page' || doc.type === 'about') {
-            return '/' + doc.uid
-          }
-          else if (doc.type === 'serie') {
-            return '/serie/' + doc.uid
-          }
-        })
-        callback(null, routes)
-      })
-      .catch(callback)
-    }
+    // routes: function (callback) {
+    //   Prismic.getApi(prismicConfig.apiEndpoint)
+    //   .then((api) => {
+    //     return api.query("");
+    //   }).then((response) => {
+    //     let routes = response.results.map((doc) => {
+    //       if(doc.type === 'page' || doc.type === 'about') {
+    //         return '/' + doc.uid
+    //       }
+    //       else if (doc.type === 'serie') {
+    //         return '/serie/' + doc.uid
+    //       }
+    //     })
+    //     callback(null, routes)
+    //   })
+    //   .catch(callback)
+    // }
   },
   /*
   ** Build configuration
