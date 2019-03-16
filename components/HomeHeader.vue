@@ -7,7 +7,7 @@
         <div class="left"><img src="~assets/img/ui/arrow.svg"><span>previous</span></div>
         <div class="dots">
           <ul>
-            <li v-for="(serie, index) in series" :key="index"></li>
+            <li v-for="(serie, index) in series" :key="index" :class="index + 1  === 1 ? 'active': ' '">•</li>
           </ul>
         </div>
         <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg"></div>
@@ -17,7 +17,7 @@
           <h3>{{serie.title[0].text}}</h3>
         </div>
         <div class="date">
-          <span>© 2019</span>
+          <p><span class="copyright">©</span> 2019</p>
         </div>
       </div>
       <div class="chevron">

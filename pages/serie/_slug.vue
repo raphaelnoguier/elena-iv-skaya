@@ -1,5 +1,5 @@
 <template>
-  <section class="container serie">
+  <section class="serie-page">
     <nuxt-link to="/about">about</nuxt-link>
     <!-- <div class="serie-infos">
       <div class="featured-image">

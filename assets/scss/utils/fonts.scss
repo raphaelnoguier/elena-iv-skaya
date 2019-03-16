@@ -29,6 +29,7 @@
 
 @include font-face('Acta-Display', 'Regular');
 @include font-face('Acta-Display', 'Medium');
+@include font-face('Acta-Display', 'Light');
 
 @mixin actaDisplayMedium($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Medium";
@@ -39,6 +40,13 @@
 
 @mixin actaDisplay($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Regular";
+  font-size: $size;
+  line-height: $lineHeight;
+  letter-spacing: $letterSpacing;
+}
+
+@mixin actaDisplayLight($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
+  font-family: "Acta-Display-Light";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;

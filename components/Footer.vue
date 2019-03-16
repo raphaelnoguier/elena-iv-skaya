@@ -12,6 +12,9 @@
   </div>
   <div class="copyrights">
     <p>© 2019 All rights Reserved</p>
+    <div class="chevron-up">
+      <img src="~/assets/img/ui/chevron.svg">
+    </div>
   </div>
  </footer>
 </template>

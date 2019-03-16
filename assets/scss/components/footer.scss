@@ -2,7 +2,6 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #EFECE8;
   padding: 4vh 8vw;
   text-transform: uppercase;
   position: relative;
@@ -40,13 +39,20 @@ footer {
 
   .socials,
   .credits {
-    flex-basis: 37.5vw;
+    flex-basis: 39vw;
   }
 
   .copyrights {
-    flex-basis: 25vw;
     @include sofiaProLight(10px);
+
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 22vw;
     letter-spacing: 2px;
     text-align: right;
+
+    .chevron-up {
+      transform: rotate(180deg) translate3d(0, 2px, 0);
+    }
   }
 }
