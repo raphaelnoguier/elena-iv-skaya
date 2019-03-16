@@ -27,27 +27,19 @@ export const actions = {
     let isHome = path === '/';
     let isAbout = route === 'About';
 
-    console.log('route: ', route);
-
-
     if(isSerie) {
-      console.log('isSerie', isSerie);
       document = await this.$prismic.api.getByUID('serie', serieRoute);
     } else if(isHome){
-      console.log('isHome', isHome);
       document = await this.$prismic.api.query();
     } else if(isAbout){
-      console.log('isAbout', isAbout);
       document = await this.$prismic.api.getByUID('about', 'about');
     }
 
 
     if (document) {
       commit('SET_DOC', document)
-      console.log('i get the document in store: ', document);
       return document;
     } else {
-      console.log('i dont get the document in store: ', document);
       error({ statusCode: 404, message: "Page not found" });
     }
   }

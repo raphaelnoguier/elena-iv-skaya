@@ -56,7 +56,6 @@
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
-      console.log('try 3');
       let entry = await store.dispatch('GET_DOC', app.context.route);
       let data = entry.data;
       return {
@@ -70,7 +69,7 @@ export default {
         credits: data.credits
       }
     } catch (err) {
-      console.log('about catch 3', err);
+      error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
 };

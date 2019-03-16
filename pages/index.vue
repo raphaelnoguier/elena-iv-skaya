@@ -48,8 +48,7 @@ export default {
         currentSeries
       };
     } catch (err) {
-      console.log('index page catch', err);
-      //error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
+      error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
   components: {
