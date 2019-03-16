@@ -54,9 +54,9 @@ module.exports = {
       }).then((response) => {
         let routes = response.results.map((doc) => {
           if(doc.type === 'page' || doc.type === 'about') {
-            return '/' + doc.uid
+            return '/about' , '/'
           }
-          else if (doc.type === 'serie') {
+          if (doc.type === 'serie') {
             return '/serie/' + doc.uid
           }
         })
