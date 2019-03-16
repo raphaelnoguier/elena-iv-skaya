@@ -1,8 +1,7 @@
 import Scrollbar from 'smooth-scrollbar';
 
 const defaultProps = {
-  alwaysShowTracks: true,
-  damping: 0.07
+  alwaysShowTracks: true
 }
 
 const add = function (el, listener, props = defaultProps) {

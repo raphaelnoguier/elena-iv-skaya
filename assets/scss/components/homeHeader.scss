@@ -8,23 +8,26 @@
     height: 82vh;
   }
 
+  .home-slider-wrapper {
+    height: 100%;
+  }
+
   .right-col {
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: calc(65% - 140px);
 
     .serie-infos {
-      margin-top:110px;
       flex-direction: column;
-      flex-grow: 1;
-      max-width: 680px;
+      max-width: 550px;
 
       .title {
-        @include actaDisplayLight(90px);
+        @include actaDisplayLight(70px);
 
         h3{
-          line-height: 100px;
+          line-height: 80px;
         }
       }
 
@@ -38,37 +41,36 @@
           @include sofiaProBold(20px);
           position: relative;
           top: 2px;
+          padding-right: 10px;
         }
       }
     }
 
     .chevron {
-      position: absolute;
-      bottom:5px;
-      left:0;
+      transform: translate3d(0, -50px, 0)
     }
-  }
-}
 
-.update-status {
-  display:flex;
-  align-items: center;
-  position: absolute;
-  bottom: 5px;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+    .update-status {
+      display:flex;
+      align-items: center;
+      position: absolute;
+      bottom: 50px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
 
-  .line {
-    height: 65px;
-    background: black;
-    width: 1px;
-    margin-bottom: 23px;
-  }
+      .line {
+        height: 65px;
+        background: black;
+        width: 1px;
+        margin-bottom: 23px;
+      }
 
-  span {
-    @include sofiaProLight(12px);
-    letter-spacing: 2px;
-    line-height: 14px;
-    text-transform: uppercase;
+      span {
+        @include sofiaProLight(12px);
+        letter-spacing: 2px;
+        line-height: 14px;
+        text-transform: uppercase;
+      }
+    }
   }
 }
