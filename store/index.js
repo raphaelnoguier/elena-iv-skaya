@@ -27,12 +27,15 @@ export const actions = {
     let isHome = path === '/';
     let isAbout = route === 'about';
 
+    console.log('route: ', route);
+
 
     if(isSerie) {
       document = await this.$prismic.api.getByUID('serie', serieRoute);
     } else if(isHome){
       document = await this.$prismic.api.query();
     } else if(isAbout){
+      console.log('isAbout', isAbout);
       document = await this.$prismic.api.getByUID('about', route);
     }
 
