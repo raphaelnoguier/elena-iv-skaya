@@ -42,6 +42,7 @@ export const actions = {
 
     if (document) {
       commit('SET_DOC', document)
+      console.log('i get the document in store: ', document);
       return document;
     } else {
       error({ statusCode: 404, message: "Page not found" });
