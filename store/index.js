@@ -47,6 +47,7 @@ export const actions = {
       console.log('i get the document in store: ', document);
       return document;
     } else {
+      console.log('i dont get the document in store: ', document);
       error({ statusCode: 404, message: "Page not found" });
     }
   }
