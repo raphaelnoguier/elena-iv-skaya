@@ -48,17 +48,19 @@ module.exports = {
   ],
   generate: {
     routes: function (callback) {
-      Prismic.getApi(prismicConfig.apiEndpoint)
+      return Prismic.getApi(prismicConfig.apiEndpoint)
       .then((api) => {
         return api.query("");
       }).then((response) => {
         let routes = response.results.map((doc) => {
-          if(doc.type === 'page' || doc.type === 'about') {
-            return '/' + doc.uid
-          }
-          else if (doc.type === 'serie') {
+          if (doc.type === 'serie') {
             return '/serie/' + doc.uid
           }
+          return [
+            '/',
+            '/index',
+            '/about'
+          ];
         })
         callback(null, routes)
       })
