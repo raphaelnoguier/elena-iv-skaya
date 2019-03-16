@@ -56,7 +56,7 @@
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
-      console.log('try 2');
+      console.log('try 3');
       let entry = await store.dispatch('GET_DOC', app.context.route);
       let data = entry.data;
       return {
@@ -70,19 +70,7 @@ export default {
         credits: data.credits
       }
     } catch (err) {
-      let entry = await store.dispatch('GET_DOC', app.context.route);
-      let data = entry.data;
-      return {
-        main_image: data.main_image.url,
-        title: data.title[0].text,
-        social_links: data.social_links,
-        first_paragraph: data.first_paragraph[0].text,
-        column_1: data.column_1[0].text,
-        column_2: data.column_2[0].text,
-        agency_representations: data.agency_representations,
-        credits: data.credits
-      }
-      console.log('about catch 2', err);
+      console.log('about catch 3', err);
     }
   },
 };

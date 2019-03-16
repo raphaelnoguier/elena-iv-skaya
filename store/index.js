@@ -25,7 +25,7 @@ export const actions = {
 
     let isSerie = path.includes('serie');
     let isHome = path === '/';
-    let isAbout = route === 'about';
+    let isAbout = route === 'About';
 
     console.log('route: ', route);
 
