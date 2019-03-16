@@ -1,6 +1,6 @@
 <template>
   <section class="page about">
-    <!-- <div class="about-wrapper">
+    <div class="about-wrapper">
       <div class="about-image">
         <img :src="main_image" />
         <div class="about-quote">
@@ -49,28 +49,24 @@
           </ul>
         </div>
       </div>
-    </div> -->
+    </div>
   </section>
 </template>
 <script>
-// export default {
-//   async asyncData ({ app, params, error, store}) {
-//     try {
-//       let entry = await store.dispatch('GET_DOC', app.context.route);
-//       let data = entry.data;
-//       return {
-//         main_image: data.main_image.url,
-//         title: data.title[0].text,
-//         social_links: data.social_links,
-//         first_paragraph: data.first_paragraph[0].text,
-//         column_1: data.column_1[0].text,
-//         column_2: data.column_2[0].text,
-//         agency_representations: data.agency_representations,
-//         credits: data.credits
-//       }
-//     } catch (err) {
-//       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
-//     }
-//   },
-// };
+export default {
+  async asyncData ({ app, params, error, store}) {
+    let entry = await store.dispatch('GET_DOC', app.context.route);
+    let data = entry.data;
+    return {
+      main_image: data.main_image.url,
+      title: data.title[0].text,
+      social_links: data.social_links,
+      first_paragraph: data.first_paragraph[0].text,
+      column_1: data.column_1[0].text,
+      column_2: data.column_2[0].text,
+      agency_representations: data.agency_representations,
+      credits: data.credits
+    }
+  },
+};
 </script>
