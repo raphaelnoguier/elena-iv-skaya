@@ -62,7 +62,7 @@ module.exports = {
         })
         callback(null, routes)
       }), function(err) {
-        console.log(err);
+        console(err);
       };
     }
   },
