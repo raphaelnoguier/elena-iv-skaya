@@ -31,8 +31,10 @@ export const actions = {
 
 
     if(isSerie) {
+      console.log('isSerie', isSerie);
       document = await this.$prismic.api.getByUID('serie', serieRoute);
     } else if(isHome){
+      console.log('isHome', isHome);
       document = await this.$prismic.api.query();
     } else if(isAbout){
       console.log('isAbout', isAbout);
