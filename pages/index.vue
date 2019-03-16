@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <HomeHeader :series="currentSeries" />
+    <HomeHeader v-if="currentSeries" :series="currentSeries" />
     <div class="page-content" :class="dragMode ? 'black' : ''">
       <div class="gallery">
         <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
