@@ -31,7 +31,8 @@
           </div>
         </div>
       </div>
-      <div class="about-footer">
+    </div>
+    <div class="about-footer">
         <div class="agency-representations">
           <span>Agency representations</span>
           <ul>
@@ -49,10 +50,10 @@
           </ul>
         </div>
       </div>
-    </div>
   </section>
 </template>
 <script>
+import scrollbar from "~/utils/scrollbar.js";
 export default {
   async asyncData ({ app, params, error, store}) {
     try {

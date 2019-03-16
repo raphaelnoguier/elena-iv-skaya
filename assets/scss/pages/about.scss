@@ -1,6 +1,6 @@
 .page.about {
-  background: #121212;
-  padding-right: 8vw;
+  max-width: 1400px;
+  margin: auto;
 
   .about-wrapper {
     display:flex;
@@ -9,7 +9,7 @@
 
     .about-image {
       height: 80vh;
-      min-height: 835px;
+      max-height: 835px;
       width: 35%;
       position: relative;
       display: flex;
@@ -41,7 +41,7 @@
       display: flex;
       color:white;
       width: calc(65% - 220px);
-      margin-top: 35%;
+      //transform: translate3d(0, 25%, 0);
 
 
       .about-right {

@@ -1,4 +1,6 @@
 .home {
+  max-width: $grid-width;
+  margin: auto;
   .page {
     &-content {
       margin-top: 200px;
@@ -20,13 +22,13 @@
           transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
           width: 100%;
           position: relative;
-          transform: translate3d(-14vw,0,0);
+          transform: translate3d(-200px,0,0);
 
           &:not(:first-child) {
             margin-top: 110px;
           }
           &:nth-child(even) {
-            transform: translate3d(14vw,0,0);
+            transform: translate3d(200px,0,0);
           }
 
           &.portrait {

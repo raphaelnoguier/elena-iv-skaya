@@ -3,6 +3,8 @@ footer {
   align-items: center;
   justify-content: space-between;
   padding: 4vh 8vw;
+  max-width: $grid-width;
+  margin: auto;
   text-transform: uppercase;
   position: relative;
 

@@ -25,7 +25,7 @@ export const actions = {
 
     let isSerie = path.includes('serie');
     let isHome = path === '/';
-    let isAbout = route === 'About';
+    let isAbout = route === 'About' || route === 'about';
 
     if(isSerie) {
       document = await this.$prismic.api.getByUID('serie', serieRoute);

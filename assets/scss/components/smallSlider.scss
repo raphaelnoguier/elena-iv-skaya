@@ -6,13 +6,18 @@
     height: 15%;
   }
 
+  .home-slider-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
   .slide {
     height: 100%;
-    width: calc(100% + 20px);
+    width: 100%;
     position: absolute;
     transform: skew(0, 0);
     margin-left: auto;
-    right: -20px;
+    right: 0;
     z-index: 1;
 
     &.active {
