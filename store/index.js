@@ -38,7 +38,7 @@ export const actions = {
       document = await this.$prismic.api.query();
     } else if(isAbout){
       console.log('isAbout', isAbout);
-      document = await this.$prismic.api.getByUID('About', 'about');
+      document = await this.$prismic.api.getByUID('about', 'about');
     }
 
 
