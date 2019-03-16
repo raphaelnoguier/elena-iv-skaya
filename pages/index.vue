@@ -48,6 +48,7 @@ export default {
         currentSeries
       };
     } catch (err) {
+      console.log('teube', err);
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
