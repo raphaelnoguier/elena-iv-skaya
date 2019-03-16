@@ -54,9 +54,9 @@
 </template>
 <script>
 export default {
-  async asyncData ({ app, params, error, store}) {
+  asyncData ({ app, params, error, store}) {
     try {
-      let entry = await store.dispatch('GET_DOC', app.context.route);
+      let entry = store.dispatch('GET_DOC', app.context.route);
       let data = entry.data;
       return {
         main_image: data.main_image.url,
