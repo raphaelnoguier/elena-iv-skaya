@@ -1,24 +1,28 @@
 <template>
-  <section class="page home">
-    <HomeHeader v-if="currentSeries" :series="currentSeries" />
-    <div class="page-content" :class="dragMode ? 'black' : ''">
-      <div class="gallery">
-        <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
-          <div v-for="(serie, index) in currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
-           <img :src="serie.cover_serie_image.url" />
-            <div class="item-title">
-              <h3>{{serie.title[0].text}}</h3>
-              <span>{{serie.category}}</span>
+  <div>
+    <section class="page home">
+      <HomeHeader v-if="currentSeries" :series="currentSeries" />
+      <div class="page-content" :class="dragMode ? 'black' : ''">
+        <div class="gallery">
+          <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
+            <div v-for="(serie, index) in currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
+            <img :src="serie.cover_serie_image.url" />
+              <div class="item-title">
+                <h3>{{serie.title[0].text}}</h3>
+                <span>{{serie.category}}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+    <Footer/>
+  </div>
 </template>
 <script>
 import scrollbar from "~/utils/scrollbar.js";
 import HomeHeader from "~/components/HomeHeader";
+import Footer from "~/components/Footer";
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -52,7 +56,8 @@ export default {
     }
   },
   components: {
-    HomeHeader
+    HomeHeader,
+    Footer
   },
   head() {
     return {

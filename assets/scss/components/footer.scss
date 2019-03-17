@@ -8,9 +8,9 @@ footer {
   text-transform: uppercase;
   position: relative;
 
-  @include sofiaProMedium(10px);
-  letter-spacing: 2px;
-  line-height: 30px;
+  @include sofiaProMedium(0.625vw);
+  letter-spacing: 0.125vw;
+  line-height: 1.875vw;
 
   @include max(lg) {
     padding: 4vh 4vw;
@@ -19,7 +19,7 @@ footer {
   .dark & {
     background: #121212;
     color:white;
-    border-top: 1px solid black;
+    border-top: 0.0625vw solid black;
   }
 
   a {
@@ -45,16 +45,16 @@ footer {
   }
 
   .copyrights {
-    @include sofiaProLight(10px);
+    @include sofiaProLight(0.625vw);
 
     display: flex;
     justify-content: space-between;
     flex-basis: 22vw;
-    letter-spacing: 2px;
+    letter-spacing: 0.125vw;
     text-align: right;
 
     .chevron-up {
-      transform: rotate(180deg) translate3d(0, 2px, 0);
+      transform: rotate(180deg) translate3d(0, 0.125vw, 0);
     }
   }
 }

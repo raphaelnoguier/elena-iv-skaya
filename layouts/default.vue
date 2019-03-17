@@ -1,22 +1,19 @@
 <template>
-  <div id="app" :class="$route.name === 'About' || $route.name === 'about' ? 'dark' : ''">
+  <div id="app">
     <Navigation/>
     <Loader/>
     <nuxt/>
-    <Footer/>
   </div>
 </template>
 <script>
 import Navigation from "~/components/Navigation";
-import Footer from "~/components/Footer";
 import Loader from "~/components/Loader";
 import scrollbar from "~/utils/scrollbar.js";
 
 export default {
   components: {
     Navigation,
-    Loader,
-    Footer
+    Loader
   },
   mounted() {
     const container = this.$el;
