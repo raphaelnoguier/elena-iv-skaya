@@ -3,6 +3,7 @@
     display:flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
 
     .about-image {
       max-height: 52.1875vw;
@@ -33,12 +34,46 @@
     }
 
     .about-content {
-      position: relative;
       display: flex;
       color:white;
       width: calc(65% - 8.75vw);
       margin-top: 30vw;
 
+      .about-issue{
+        position:absolute;
+        top: 0;
+        right: 0;
+
+        .circle {
+          width: 6.375vw;
+          height: 6.375vw;
+          border: 0.125vw solid white;
+          border-radius: 100%;
+          position: relative;
+          transition: transform 1s $ease-in-out-quart;
+
+          &.spinning {
+            transform: rotate(360deg)
+          }
+
+          @for $i from 1 through 50 {
+            span:nth-child(#{$i}) {
+              transform: (rotate(($i*14)+deg))
+            }
+          }
+          span {
+            @include sofiaProMedium(0.625vw);
+            text-transform: uppercase;
+            position: absolute;
+            display: block;
+            height: 2.7vw;
+            left: 3vw;
+            top: 0.5vw;
+            text-align: center;
+            transform-origin: bottom center;
+          }
+        }
+      }
 
       .about-right {
         display: flex;

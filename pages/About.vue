@@ -8,6 +8,11 @@
         </div>
       </div>
       <div class="about-content">
+        <div class="about-issue">
+          <div class="circle">
+            <span v-for="(letter, i) in issue" :key="i">{{letter}}</span>
+          </div>
+        </div>
         <div class="about-right">
           <div class="social-links">
             <ul>
@@ -53,7 +58,10 @@
   </section>
 </template>
 <script>
+import splittedText from "~/utils/splittedText.js";
 import scrollbar from "~/utils/scrollbar.js";
+import { nextTick } from 'q';
+
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
@@ -62,6 +70,7 @@ export default {
       return {
         main_image: data.main_image.url,
         title: data.title[0].text,
+        issue: splittedText.make(data.issue[0].text),
         social_links: data.social_links,
         first_paragraph: data.first_paragraph[0].text,
         column_1: data.column_1[0].text,
@@ -73,5 +82,17 @@ export default {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
+  mounted() {
+    this.$nextTick(() => {
+      const container = this.$el.ownerDocument.getElementById('app');
+      scrollbar.listen(container, this.onScroll);
+    });
+  },
+  methods: {
+    onScroll(e) {
+      let circle = this.$el.querySelector('.circle');
+      !circle.classList.contains('spinning') && circle.classList.add('spinning');
+    }
+  }
 };
 </script>

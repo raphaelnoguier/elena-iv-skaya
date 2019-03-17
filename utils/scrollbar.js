@@ -10,6 +10,12 @@ const add = function (el, listener, props = defaultProps) {
   return scrollbar
 }
 
+const listen = function (el, listener) {
+  const scrollbar = Scrollbar.get(el)
+  scrollbar && listener && scrollbar.addListener(listener)
+  return scrollbar
+}
+
 const remove = function (el, listener) {
   const scrollbar = Scrollbar.get(el)
   listener && scrollbar.removeListener(listener)
@@ -24,5 +30,6 @@ const setPosition = function (el, x, y) {
 export default {
   add,
   remove,
+  listen,
   setPosition
 }
