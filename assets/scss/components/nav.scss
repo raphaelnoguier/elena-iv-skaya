@@ -14,9 +14,9 @@
     align-items: center;
 
     li {
-      @include sofiaProMedium(14px);
-      letter-spacing: 2px;
-      line-height: 30px;
+      @include sofiaProMedium(0.875vw);
+      letter-spacing: 0.125vw;
+      line-height: 1.875vw;
       text-transform: uppercase;
 
       a {

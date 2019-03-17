@@ -2,10 +2,6 @@
   height: 20%;
   position: relative;
 
-  @include min(xxl) {
-    height: 15%;
-  }
-
   .home-slider-wrapper {
     overflow: hidden;
     position: relative;
@@ -45,10 +41,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 25px;
+    margin-top: 2.75vh;
 
-    @include sofiaProMedium(14px);
-    letter-spacing: 2px;
+    @include sofiaProMedium(0.875vw);
+    letter-spacing: 0.125vw;
     text-transform: uppercase;
 
     .left,
@@ -58,13 +54,14 @@
     }
 
     .left img {
-      top: 2px;
+      top: 0.125vw;
       position: relative;
-      margin-right: 20px;
+      margin-right: 1.25vw;
+      width: 1.2vw;
     }
 
     .dots {
-      width: 100px;
+      width: 6.25vw;
 
       ul {
         display: flex;
@@ -78,18 +75,19 @@
           padding: 0.2vw 0.2vw 0.2vw 0.3vw;
 
           &.active {
-            border: 2px solid black;
-            border-radius: 100px;
+            border: 0.125vw solid black;
+            border-radius: 6.25vw;
           }
         }
       }
     }
 
     .right img {
-      top: 2px;
+      top: 0.125vw;
       position: relative;
-      margin-left: 20px;
+      margin-left: 1.25vw;
       transform: rotate(180deg);
+      width: 1.2vw;
     }
   }
 }

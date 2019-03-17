@@ -3,4 +3,11 @@
   height: 100%;
 }
 
-$grid-width: 1550px;
+$grid-width: 100%;
+
+
+.page {
+  max-width: $grid-width;
+  padding: 0 8vw;
+  margin: auto;
+}

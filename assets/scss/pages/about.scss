@@ -1,7 +1,4 @@
 .page.about {
-  max-width: 1400px;
-  margin: auto;
-
   .about-wrapper {
     display:flex;
     justify-content: space-between;
@@ -13,6 +10,7 @@
       width: 35%;
       position: relative;
       display: flex;
+      transform: translate3d(-100px, 0, 0);
 
       img {
         width:100%;
@@ -29,7 +27,7 @@
         // transform: translate3d(-130px, 130px, 0);
 
         h3 {
-          @include actaLight(90px);
+          @include actaDisplayLight(90px);
           color: white;
           line-height: 100px;
         }
@@ -40,8 +38,8 @@
       position: relative;
       display: flex;
       color:white;
-      width: calc(65% - 220px);
-      //transform: translate3d(0, 25%, 0);
+      width: calc(65% - 140px);
+      transform: translate3d(0, 430px, 0);
 
 
       .about-right {
@@ -80,7 +78,6 @@
   }
   .about-footer {
     align-self: flex-end;
-    padding-left: 8vw;
     color:white;
     padding-bottom: 130px;
 

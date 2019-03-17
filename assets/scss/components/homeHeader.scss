@@ -1,12 +1,7 @@
 .page-introduction {
   display: flex;
   justify-content: space-between;
-  padding-right: 8vw;
   height: 80vh;
-
-  @include min(xxl) {
-    height: 82vh;
-  }
 
   .home-slider-wrapper {
     height: 100%;
@@ -17,58 +12,61 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(65% - 140px);
+    width: calc(65% - 5.2vw);
 
     .serie-infos {
       flex-direction: column;
-      max-width: 550px;
+      max-width: 45vw;
 
       .title {
-        @include actaDisplayLight(70px);
+        @include actaDisplayLight(7vw);
 
         h3{
-          line-height: 80px;
+          line-height: 7.5vw;
         }
       }
 
       .date {
-        @include sofiaProMedium(14px);
-        margin-top:15px;
-        letter-spacing: 2px;
-        line-height: 30px;
+        @include sofiaProMedium(0.875vw);
+        margin-top: 0.9375vw;
+        letter-spacing: 0.125vw;
+        line-height: 1.875vw;
 
         .copyright {
-          @include sofiaProBold(20px);
+          @include sofiaProBold(1.25vw);
           position: relative;
-          top: 2px;
-          padding-right: 10px;
+          top: 0.125vw;
+          padding-right: 0.625vw;
         }
       }
     }
 
     .chevron {
-      transform: translate3d(0, -50px, 0)
+      transform: translate3d(0, -3.125vw, 0);
+      img {
+        width: 0.875vw;
+      }
     }
 
     .update-status {
       display:flex;
       align-items: center;
       position: absolute;
-      bottom: 50px;
+      bottom: 3.125vw;
       writing-mode: vertical-rl;
       text-orientation: mixed;
 
       .line {
-        height: 65px;
+        height: 4.0625vw;
         background: black;
-        width: 1px;
-        margin-bottom: 23px;
+        width: 0.0625vw;
+        margin-bottom: 1.4375vw;
       }
 
       span {
-        @include sofiaProLight(12px);
-        letter-spacing: 2px;
-        line-height: 14px;
+        @include sofiaProLight(0.75vw);
+        letter-spacing: 0.125vw;
+        line-height: 0.875vw;
         text-transform: uppercase;
       }
     }

@@ -3,14 +3,15 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  transform: translate3d(-8vw, 0, 0);
 
   .slide {
     height: 100%;
-    width: calc(100% + 20px);
+    width: calc(100% + 1.25vw);
     position: absolute;
     transform: skew(0, 0);
     margin-left: auto;
-    right: -20px;
+    right: -1.25vw;
     z-index: 1;
 
     &.active {

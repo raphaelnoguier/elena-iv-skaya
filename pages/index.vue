@@ -1,5 +1,5 @@
 <template>
-  <section class="home">
+  <section class="page home">
     <HomeHeader v-if="currentSeries" :series="currentSeries" />
     <div class="page-content" :class="dragMode ? 'black' : ''">
       <div class="gallery">

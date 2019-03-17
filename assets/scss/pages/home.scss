@@ -1,10 +1,8 @@
 .home {
-  max-width: $grid-width;
-  margin: auto;
   .page {
     &-content {
-      margin-top: 200px;
-      padding-bottom: 100px;
+      margin-top: 12.5vw;
+      padding-bottom: 6.25vw;
       transition: all 0.5s ease;
 
       &.black {
@@ -22,34 +20,34 @@
           transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
           width: 100%;
           position: relative;
-          transform: translate3d(-200px,0,0);
+          transform: translate3d(-12.5vw,0,0);
 
           &:not(:first-child) {
-            margin-top: 110px;
+            margin-top: 6.875vw;
           }
           &:nth-child(even) {
-            transform: translate3d(200px,0,0);
+            transform: translate3d(12.5vw,0,0);
           }
 
           &.portrait {
-            max-width: 560px;
-            height: 700px;
+            max-width: 35vw;
+            height: 43.75vw;
           }
           &.landscape {
-            max-width: 560px;
+            max-width: 35vw;
 
             .item-title {
-              bottom: 3px;
+              bottom: 0.1875vw
             }
           }
 
           &.full {
             transform: translate3d(0,0,0);
-            margin-top: 195px;
-            margin-bottom: 100px;
+            margin-top: 12.1875vw;
+            margin-bottom: 6.25vw;
 
             img {
-              max-height: 800px;
+              max-height: 50vw;
             }
 
             .item-title {
@@ -60,11 +58,11 @@
               transform: rotate(0deg);
               justify-content: center;
               align-items: center;
-              margin-top: 25px;
+              margin-top: 1.5625vw;
 
               span {
                 margin-top: 0;
-                margin-left: 20px;
+                margin-left: 1.25vw;
               }
             }
           }
@@ -86,19 +84,19 @@
             text-orientation: mixed;
             transform: rotate(180deg);
             text-transform: uppercase;
-            right: -34px;
-            line-height: 30px;
+            right: -2.125vw;
+            line-height: 1.875vw;
 
             h3 {
-              @include sofiaProMedium(14px);
-              letter-spacing: 2px;
+              @include sofiaProMedium(0.875vw);
+              letter-spacing: 0.125vw;
             }
 
             span {
-              @include sofiaProLight(12px);
+              @include sofiaProLight(0.75vw);
               display: block;
-              margin-top: 20px;
-              letter-spacing: 2px;
+              margin-top: 1.25vw;
+              letter-spacing: 0.125vw;
             }
           }
         }
