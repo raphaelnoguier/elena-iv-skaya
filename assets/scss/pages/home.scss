@@ -21,6 +21,10 @@
           position: relative;
           transform: translate3d(-12.5vw,0,0);
 
+          a {
+            text-decoration: none;
+          }
+
           &:not(:first-child) {
             margin-top: 6.875vw;
           }
@@ -73,15 +77,12 @@
           }
 
           .item-title {
+            @include verticalText(180);
             display: flex;
             align-items: flex-end;
             position: absolute;
             bottom: 0;
             right: 0;
-            text-align: right;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
             text-transform: uppercase;
             right: -2.25vw;
             line-height: 1.875vw;

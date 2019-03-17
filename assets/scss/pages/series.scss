@@ -1,30 +1,265 @@
-.serie-page {
-  .featured-image {
-    width: 30%;
-
-    img {
-      width:100%;
-    }
-  }
-  .serie-infos {
+.serie {
+  .serie-page-header {
     display: flex;
     justify-content: space-between;
 
-    @include max(md) {
-      flex-direction: column;
-    }
+    .featured-image {
+      width: 40%;
+      height: 56.563vw;
+      transform: translate3d(-8vw, 0, 0);
 
-    span {
-      display: block;
-      margin-bottom: 2em;
-      font-weight: bolder;
+      img {
+        width:100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .serie-hero {
+      display: flex;
+      flex-direction: column;
+      width: calc(60% - 2vw);
+      padding-top: 9.5vw;
+      position: relative;
+
+      .back-link {
+        display: flex;
+        align-items: center;
+        a {
+          text-decoration: none;
+          text-transform: uppercase;
+
+          img {
+            top: 0.125vw;
+            position: relative;
+            width: 1.2vw;
+            margin-right: 1.250vw;
+          }
+          span {
+            @include sofiaProMedium(0.875vw);
+            line-height: 1.875vw;
+            letter-spacing: 0.125vw;
+          }
+        }
+      }
+
+      .serie-title {
+        flex-direction: column;
+        max-width: 45vw;
+        margin-top: 3.25vw;
+
+        .title {
+          @include actaDisplayLight(5.625vw);
+
+          h3{
+            line-height: 6.250vw;
+          }
+        }
+
+        .date {
+          @include sofiaProMedium(0.875vw);
+          margin-top: 0.5vw;
+          letter-spacing: 0.125vw;
+          line-height: 1.875vw;
+
+          .copyright {
+            @include sofiaProBold(1.25vw);
+            position: relative;
+            top: 0.125vw;
+            padding-right: 0.625vw;
+          }
+        }
+      }
+
+      .serie-infos {
+        display: flex;
+        justify-content: space-between;
+        padding-right: 3.75vw;
+        margin-top: 8.5vw;
+
+        &-column {
+
+          &.description {
+            width: 41.87%;
+          }
+
+          &.roles {
+            width: 29%;
+          }
+
+          &.models {
+            width: 21.5%;
+          }
+
+          p {
+            @include sofiaProLight(1.125vw);
+            line-height: 1.875vw;
+          }
+
+          span {
+            display: block;
+            @include sofiaProBold(0.875vw);
+            line-height: 1.3125vw;
+            letter-spacing: 0.125vw;
+            text-transform: uppercase;
+            margin-bottom: 0.45vw;
+          }
+
+          ul {
+            &:not(:last-of-type) {
+              margin-bottom: 1.5vw;
+            }
+            li {
+              @include sofiaProLight(1.125vw);
+              line-height: 1.875vw;
+            }
+          }
+        }
+      }
+      .chevron {
+        position: absolute;
+        bottom: 1.563vw;
+        img {
+          width: 0.875vw;
+        }
+      }
     }
   }
   .serie-gallery {
-    margin-top: 2em;
+    margin-top: 13.438vw;
+    margin-bottom: 12.5vw;
+    max-width: 72.5vw;
 
-    img {
-      width: 100%;
+    .gallery-item {
+      display: flex;
+      &:not(:first-child) {
+        margin-top: 9.375vw;
+      }
+      &:nth-child(even):not(.duo):not(.landscape){
+        justify-content: flex-end;
+        margin-right: 7.5vw;
+      }
+      &.portrait {
+        max-width: 42.5vw;
+      }
+      &.landscape {
+        max-width: 57.5vw;
+        max-height: 43.750vw;
+        margin-left: 7.5vw;
+      }
+      &.duo {
+        display: flex;
+
+        img {
+          max-width: 35vw;
+        }
+
+        img:last-child {
+          margin-left: 2.5vw
+        }
+      }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+      }
+    }
+  }
+  .serie-footer {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    @include verticalText(360);
+
+    span {
+      @include sofiaProLight(0.750vw);
+      text-transform: uppercase;
+      line-height: 0.875vw;
+      letter-spacing: 0.125vw;
+      display: block;
+    }
+
+    .line {
+      margin-top: 2vw;
+      transform: rotate(180deg);
+      height:8.125vw;
+      border: 0.063vw solid black;
+      opacity: 0.1;
+    }
+  }
+}
+
+.serie-slider-wrapper {
+  background: #121212;
+  padding-top: 11.875vw;
+  overflow: hidden;
+  position: relative;
+
+  .line {
+    position: absolute;
+    display: inline-block;
+    left:0;
+    right: 0;
+    margin: auto;
+    transform: rotate(270deg);
+    width: calc(100% - 30vw);
+    border: 0.063vw solid white;
+    opacity: 0.1;
+  }
+
+  .serie-slider-title {
+    @include actaDisplayLight(5.625vw);
+    line-height: 6.250vw;
+    text-align: center;
+    color:white;
+  }
+
+  .serie-slider {
+    transform: translate3d(40%, -2.25vw, 0);
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 8.125vw;
+
+    .slider-item {
+      width: 20vw;
+      height: 25vw;
+
+      &:not(:first-child){
+        margin-left: 2.5vw;
+      }
+
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  .slider-controls {
+    padding: 0 8vw 5vw;
+
+    .upper {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      .play {
+        transform: rotate(-90deg);
+      }
+      .title {
+        @include sofiaProBold(0.875vw);
+        letter-spacing: 0.125vw;
+        line-height: 1.313vw;
+        text-transform: uppercase;
+      }
+      .index {
+        @include sofiaProMedium(0.875vw);
+        line-height: 1.875vw
+      }
+    }
+    .bottom {
+      height: 0.063vw;
+      background: #2A2A2A;
+      margin-top: 1vw;
     }
   }
 }

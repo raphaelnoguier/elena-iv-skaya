@@ -6,11 +6,13 @@
         <div class="gallery">
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
             <div v-for="(serie, index) in currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
-            <img :src="serie.cover_serie_image.url" />
-              <div class="item-title">
-                <h3>{{serie.title[0].text}}</h3>
-                <span>{{serie.category}}</span>
-              </div>
+              <nuxt-link :to="`/serie/${serie.uid}`">
+                <img :src="serie.cover_serie_image.url" />
+                <div class="item-title">
+                  <h3>{{serie.title[0].text}}</h3>
+                  <span>{{serie.category}}</span>
+                </div>
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -37,6 +39,7 @@ export default {
           currentDoc.push(result.data)
         }
         if(result.type === 'serie') {
+          result.data.uid = result.uid
           currentSeries.push(result.data)
         }
       });
@@ -81,6 +84,7 @@ export default {
   },
 
   mounted () {
+    console.log(this.currentSeries);
     // let gallery = document.querySelector(".gallery");
     // if(!gallery) return;
     // gallery.addEventListener("mousedown", this.down);

@@ -29,3 +29,10 @@
     @content;
   }
 }
+
+@mixin verticalText($deg){
+  text-align: right;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate($deg+deg);
+}

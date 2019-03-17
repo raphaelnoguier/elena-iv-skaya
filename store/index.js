@@ -38,6 +38,7 @@ export const actions = {
 
     if (document) {
       commit('SET_DOC', document)
+      console.log(document);
       return document;
     } else {
       error({ statusCode: 404, message: "Page not found" });

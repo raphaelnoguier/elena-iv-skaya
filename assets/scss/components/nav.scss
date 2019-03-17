@@ -1,6 +1,19 @@
 .nav {
-  padding: 8vh 8vw;
+  padding: 3vh 8vw;
   margin: auto;
+
+  &.serie-page{
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+
+    ul {
+      width:100%;
+      li:first-child {
+        color:white;
+      }
+    }
+  }
 
   .dark & {
     background: #121212;

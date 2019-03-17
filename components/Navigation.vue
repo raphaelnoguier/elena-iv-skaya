@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <div class="nav" :class="$route.path.includes('serie') ? 'serie-page' : ''">
     <ul>
       <li>
         <nuxt-link to="/">Elena Iv-Skaya</nuxt-link>

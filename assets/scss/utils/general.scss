@@ -1,6 +1,7 @@
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 #__nuxt, #__layout, #app {
@@ -11,4 +12,8 @@
 .page {
   padding: 0 8vw;
   margin: auto;
+
+  &:not(.serie) {
+    padding-top: 3.125vw;
+  }
 }
