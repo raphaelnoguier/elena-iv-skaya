@@ -6,11 +6,11 @@
 
     .about-image {
       height: 80vh;
-      max-height: 835px;
+      max-height: 52.1875vw;
       width: 35%;
       position: relative;
       display: flex;
-      transform: translate3d(-100px, 0, 0);
+      transform: translate3d(-6.25vw, 0, 0);
 
       img {
         width:100%;
@@ -21,15 +21,15 @@
       .about-quote {
         position: absolute;
         width: 41vw;
-        max-width: 490px;
-        left: calc(100% - 130px);
-        top:130px;
+        max-width: 30.625vw;
+        left: calc(100% - 8.125vw);
+        top: 8.125vw;
         // transform: translate3d(-130px, 130px, 0);
 
         h3 {
-          @include actaDisplayLight(90px);
+          @include actaDisplayLight(5.625vw);
           color: white;
-          line-height: 100px;
+          line-height: 6.25vw;
         }
       }
     }
@@ -38,8 +38,8 @@
       position: relative;
       display: flex;
       color:white;
-      width: calc(65% - 140px);
-      transform: translate3d(0, 430px, 0);
+      width: calc(65% - 8.75vw);
+      margin-top: 25vw;
 
 
       .about-right {
@@ -50,27 +50,29 @@
       .social-links {
         ul {
           li a{
-            @include actaBook(32px);
-            line-height: 50px;
+            @include actaBook(2vw);
+            line-height: 3.125vw;
           }
         }
       }
 
       .content-text {
-        margin-top: 45px;
+        margin-top: 2.8125vw;
+
         .paragraph {
-          @include actaBook(32px);
-          line-height: 50px;
+          @include actaBook(2vw);
+          line-height: 3.125vw;
         }
+
         .two-col {
           display: flex;
           justify-content: space-between;
-          margin-top: 60px;
+          margin-top: 3.75vw;
 
           .text {
-            width: calc(50% - 20px);
-            @include sofiaProLight(18px);
-            line-height: 30px;
+            width: calc(50% - 1.25vw);
+            @include sofiaProLight(1.125vw);
+            line-height: 1.875vw;
           }
         }
       }
@@ -79,24 +81,25 @@
   .about-footer {
     align-self: flex-end;
     color:white;
-    padding-bottom: 130px;
+    margin-top: 8.75vw;
+    padding-bottom: 8.125vw;
 
     span {
       display: block;
-      @include sofiaProBold(14px);
-      line-height: 21px;
-      letter-spacing: 2px;
+      @include sofiaProBold(0.875vw);
+      line-height: 1.3125vw;
+      letter-spacing: 0.125vw;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 0.625vw;
     }
 
     ul li {
-      @include sofiaProLight(18px);
-      line-height: 30px;
+      @include sofiaProLight(1.125vw);
+      line-height: 1.875vw;
     }
 
     .credits {
-      margin-top: 50px;
+      margin-top: 3.125vw;
     }
   }
 }
