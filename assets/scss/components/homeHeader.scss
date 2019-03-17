@@ -1,7 +1,7 @@
 .page-introduction {
   display: flex;
   justify-content: space-between;
-  height: 80vh;
+  height: 82vh;
 
   .home-slider-wrapper {
     height: 100%;
@@ -12,17 +12,17 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(65% - 5.2vw);
+    width: calc(60% - 2vw);
 
     .serie-infos {
       flex-direction: column;
       max-width: 45vw;
 
       .title {
-        @include actaDisplayLight(7vw);
+        @include actaDisplayLight(5.625vw);
 
         h3{
-          line-height: 7.5vw;
+          line-height: 6.250vw;
         }
       }
 
@@ -64,7 +64,7 @@
       }
 
       span {
-        @include sofiaProLight(0.75vw);
+        @include sofiaProLight(12px);
         letter-spacing: 0.125vw;
         line-height: 0.875vw;
         text-transform: uppercase;

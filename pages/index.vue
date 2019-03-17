@@ -81,25 +81,25 @@ export default {
   },
 
   mounted () {
-    let gallery = document.querySelector(".gallery");
-    if(!gallery) return;
-    gallery.addEventListener("mousedown", this.down);
-    gallery.addEventListener("mousemove", this.move);
-    gallery.addEventListener("mouseleave", this.up);
-    gallery.addEventListener("mouseup", this.up);
-    gallery.addEventListener("touchstart", this.down);
-    gallery.addEventListener("touchend", this.up);
+    // let gallery = document.querySelector(".gallery");
+    // if(!gallery) return;
+    // gallery.addEventListener("mousedown", this.down);
+    // gallery.addEventListener("mousemove", this.move);
+    // gallery.addEventListener("mouseleave", this.up);
+    // gallery.addEventListener("mouseup", this.up);
+    // gallery.addEventListener("touchstart", this.down);
+    // gallery.addEventListener("touchend", this.up);
   },
 
   beforeDestroy() {
-    let gallery = document.querySelector(".gallery");
-    if(!gallery) return;
-    gallery.removeEventListener("mousedown", this.down);
-    gallery.removeEventListener("mousemove", this.move);
-    gallery.removeEventListener("mouseup", this.up);
-    gallery.removeEventListener("mouseleave", this.up);
-    gallery.removeEventListener("touchstart", this.down);
-    gallery.removeEventListener("touchend", this.up);
+    // let gallery = document.querySelector(".gallery");
+    // if(!gallery) return;
+    // gallery.removeEventListener("mousedown", this.down);
+    // gallery.removeEventListener("mousemove", this.move);
+    // gallery.removeEventListener("mouseup", this.up);
+    // gallery.removeEventListener("mouseleave", this.up);
+    // gallery.removeEventListener("touchstart", this.down);
+    // gallery.removeEventListener("touchend", this.up);
   },
 
   methods: {

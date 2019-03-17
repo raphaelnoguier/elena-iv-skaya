@@ -4,21 +4,21 @@
 @include font-face('Acta', 'Medium');
 @include font-face('Acta', 'Book');
 
-@mixin actaLight($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin actaLight($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Light";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
 }
 
-@mixin actaMedium($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin actaMedium($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Medium";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
 }
 
-@mixin actaBook($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin actaBook($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Book";
   font-size: $size;
   line-height: $lineHeight;
@@ -31,21 +31,21 @@
 @include font-face('Acta-Display', 'Medium');
 @include font-face('Acta-Display', 'Light');
 
-@mixin actaDisplayMedium($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin actaDisplayMedium($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Medium";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
 }
 
-@mixin actaDisplay($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin actaDisplay($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Regular";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
 }
 
-@mixin actaDisplayLight($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin actaDisplayLight($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Light";
   font-size: $size;
   line-height: $lineHeight;
@@ -58,21 +58,21 @@
 @include font-face('Sofia', 'Pro-Medium');
 @include font-face('Sofia', 'Pro-Bold');
 
-@mixin sofiaProLight($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin sofiaProLight($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Sofia-Pro-Light";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
 }
 
-@mixin sofiaProMedium($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin sofiaProMedium($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Sofia-Pro-Medium";
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
 }
 
-@mixin sofiaProBold($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
+@mixin sofiaProBold($size: 14px, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Sofia-Pro-Bold";
   font-size: $size;
   line-height: $lineHeight;

@@ -7,7 +7,7 @@
 
     .about-image {
       max-height: 52.1875vw;
-      width: 35%;
+      width: 40%;
       position: relative;
       display: flex;
       transform: translate3d(-8vw, 0, 0);
@@ -22,13 +22,13 @@
         position: absolute;
         width: 40vw;
         max-width: 30.625vw;
-        left: calc(100% - 6.95vw);
-        top: 6.5vw;
+        left: calc(100% - 6.25vw);
+        top: 8vw;
 
         h3 {
-          @include actaDisplayLight(5.625vw);
+          @include actaDisplayLight(5.05vw);
           color: white;
-          line-height: 6.25vw;
+          line-height: 5.6vw;
         }
       }
     }
@@ -36,8 +36,8 @@
     .about-content {
       display: flex;
       color:white;
-      width: calc(65% - 8.75vw);
-      margin-top: 30vw;
+      width: calc(65% - 11.25vw);
+      margin-top: 25.75vw;
 
       .about-issue{
         position:absolute;
@@ -65,11 +65,10 @@
             @include sofiaProMedium(0.625vw);
             text-transform: uppercase;
             position: absolute;
-            display: block;
             height: 2.7vw;
-            left: 3vw;
+            width: 0.156vw;
+            left: 3.15vw;
             top: 0.5vw;
-            text-align: center;
             transform-origin: bottom center;
           }
         }
