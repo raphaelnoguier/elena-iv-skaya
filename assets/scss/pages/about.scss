@@ -5,7 +5,6 @@
     flex-wrap: wrap;
 
     .about-image {
-      height: 80vh;
       max-height: 52.1875vw;
       width: 35%;
       position: relative;
@@ -20,10 +19,10 @@
 
       .about-quote {
         position: absolute;
-        width: 41vw;
+        width: 40vw;
         max-width: 30.625vw;
-        left: calc(100% - 8.125vw);
-        top: 8.125vw;
+        left: calc(100% - 6.95vw);
+        top: 6.5vw;
 
         h3 {
           @include actaDisplayLight(5.625vw);
@@ -38,7 +37,7 @@
       display: flex;
       color:white;
       width: calc(65% - 8.75vw);
-      margin-top: 25vw;
+      margin-top: 30vw;
 
 
       .about-right {
@@ -48,7 +47,7 @@
 
       .social-links {
         ul {
-          li a{
+          li {
             @include actaBook(2vw);
             line-height: 3.125vw;
           }
@@ -56,7 +55,7 @@
       }
 
       .content-text {
-        margin-top: 2.8125vw;
+        margin-top: 6.875vw;
 
         .paragraph {
           @include actaBook(2vw);
