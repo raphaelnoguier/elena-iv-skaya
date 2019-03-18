@@ -27,22 +27,6 @@
               <span>about the serie</span>
               <p>{{description}}</p>
             </div>
-            <div class="serie-infos-column roles">
-              <span>elena's role</span>
-              <ul>
-                <li v-for="(role, i) in roles" :key="i">{{role.role[0].text}}</li>
-              </ul>
-            </div>
-            <div class="serie-infos-column models">
-              <span>models</span>
-              <ul>
-                <li v-for="(model, i) in models" :key="i">{{model.model[0].text}}</li>
-              </ul>
-              <span>make up</span>
-              <ul>
-                <li v-for="(makeup, i) in makeups" :key="i">{{makeup.name[0].text}}</li>
-              </ul>
-            </div>
           </div>
           <div class="chevron">
             <img src="~assets/img/ui/chevron.svg">
@@ -53,6 +37,15 @@
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
           <img :src="image.image.url">
           <img v-if="image.ratio === 'Duo'" :src="image.duo_image.url">
+        </div>
+      </div>
+      <div class="serie-credits-wrapper">
+        <div class="serie-credits">
+          <span>credits</span>
+          <ul>
+            <li v-for="(model, i) in models" :key="i">{{model.model[0].text}}</li>
+            <li v-for="(makeup, i) in makeups" :key="i">{{makeup.name[0].text}}</li>
+          </ul>
         </div>
       </div>
       <div class="serie-footer">

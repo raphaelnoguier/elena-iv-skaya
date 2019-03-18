@@ -5,7 +5,7 @@
 
     .featured-image {
       width: 40%;
-      height: 56.563vw;
+      height: 100vh;
       transform: translate3d(-8vw, 0, 0);
 
       img {
@@ -79,15 +79,7 @@
         &-column {
 
           &.description {
-            width: 41.87%;
-          }
-
-          &.roles {
-            width: 29%;
-          }
-
-          &.models {
-            width: 21.5%;
+            flex-basis: 44.5%;
           }
 
           p {
@@ -102,16 +94,6 @@
             letter-spacing: 0.125vw;
             text-transform: uppercase;
             margin-bottom: 0.45vw;
-          }
-
-          ul {
-            &:not(:last-of-type) {
-              margin-bottom: 1.5vw;
-            }
-            li {
-              @include sofiaProLight(1.125vw);
-              line-height: 1.875vw;
-            }
           }
         }
       }
@@ -161,6 +143,25 @@
       img {
         object-fit: cover;
         width: 100%;
+      }
+    }
+  }
+  .serie-credits-wrapper {
+    margin: 12.5vw 0;
+    .serie-credits {
+      span {
+        @include sofiaProBold(0.875vw);
+        display: block;
+        line-height: 1.3125vw;
+        letter-spacing: 0.125vw;
+        text-transform: uppercase;
+        margin-bottom: 0.45vw;
+      }
+      ul {
+        li {
+          @include sofiaProLight(1.125vw);
+          line-height: 1.875vw;
+        }
       }
     }
   }
