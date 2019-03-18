@@ -116,8 +116,8 @@
       &:not(:first-child) {
         margin-top: 9.375vw;
       }
-      &:nth-child(even):not(.duo):not(.landscape){
-        justify-content: flex-end;
+      &:nth-child(even):not(.duo){
+        margin-left: auto;
         margin-right: 7.5vw;
       }
       &.portrait {
@@ -125,7 +125,6 @@
       }
       &.landscape {
         max-width: 57.5vw;
-        max-height: 43.750vw;
         margin-left: 7.5vw;
       }
       &.duo {
@@ -141,8 +140,9 @@
       }
 
       img {
-        object-fit: cover;
+        object-fit: contain;
         width: 100%;
+        height: 100%;
       }
     }
   }
@@ -216,8 +216,8 @@
   }
 
   .serie-slider {
-    transform: translate3d(40%, -2.25vw, 0);
-    display: flex;
+    transform: translate3d(40vw, -2.25vw, 0);
+    display: inline-flex;
     overflow: hidden;
     margin-bottom: 8.125vw;
 

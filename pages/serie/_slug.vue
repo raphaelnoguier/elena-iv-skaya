@@ -3,13 +3,13 @@
     <div class="page serie">
       <div class="serie-page-header">
         <div class="featured-image">
-          <img :src="featuredImage.url">
+          <img class="preload" :src="featuredImage.url">
         </div>
         <div class="serie-hero">
           <div class="row">
             <div class="back-link">
               <nuxt-link to="/">
-                <img src="~assets/img/ui/arrow.svg">
+                <img class="preload" src="~assets/img/ui/arrow.svg">
                 <span>Back to gallery </span>
               </nuxt-link>
             </div>
@@ -29,22 +29,21 @@
             </div>
           </div>
           <div class="chevron">
-            <img src="~assets/img/ui/chevron.svg">
+            <img class="preload" src="~assets/img/ui/chevron.svg">
           </div>
         </div>
       </div>
       <div class="serie-gallery">
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img :src="image.image.url">
-          <img v-if="image.ratio === 'Duo'" :src="image.duo_image.url">
+          <img class="preload" :src="image.image.url">
+          <img v-if="image.ratio === 'Duo'" :src="image.duo_image.url" class="preload">
         </div>
       </div>
       <div class="serie-credits-wrapper">
         <div class="serie-credits">
           <span>credits</span>
           <ul>
-            <li v-for="(model, i) in models" :key="i">{{model.model[0].text}}</li>
-            <li v-for="(makeup, i) in makeups" :key="i">{{makeup.name[0].text}}</li>
+            <li v-for="(credit, i) in credits" :key="i">{{credit.text[0].text}}</li>
           </ul>
         </div>
       </div>
@@ -60,13 +59,13 @@
       </div>
       <div class="serie-slider">
         <div class="slider-item" v-for="(image, i) in gallery" :key="i">
-          <img :src="image.image.url">
+          <img class="preload" :src="image.image.url">
         </div>
       </div>
       <div class="slider-controls">
         <div class="upper">
           <div class="play">
-            <img src="~/assets/img/ui/play.svg">
+            <img class="preload" src="~/assets/img/ui/play.svg">
           </div>
           <div class="title">
             <span>A somewhat classic beauty</span>
@@ -93,9 +92,7 @@ export default {
         title: data.title[0].text,
         description: data.about_serie[0].text,
         date: data.date,
-        models: data.models,
-        roles: data.roles,
-        makeups: data.make_up,
+        credits: data.credits,
         featuredImage: data.cover_serie_image,
         gallery: data.gallery
       }

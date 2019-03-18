@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="image-loader">
-      <img :src="imageLoader">
+      <img :src="imageLoader" class="preload">
     </div>
   </div>
 </template>
@@ -39,11 +39,15 @@ export default {
             this.imageLoader = doc.data.loader_image.url
           }
         });
-        break;
+      break;
       case 'about':
         docs = this.$store.getters.currentDoc.data;
         this.imageLoader = docs.loader_image.url
-        break;
+      break;
+      default:
+        docs = this.$store.getters.currentDoc.data;
+        this.imageLoader = docs.loader_image.url
+      break;
     }
     this.$nextTick(() => {
       this.launchLoading();
