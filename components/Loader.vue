@@ -30,6 +30,7 @@ export default {
   },
 
   mounted() {
+    this.disableScroll();
     let docs = []
     switch(this.$route.name) {
       case 'index':
@@ -55,6 +56,31 @@ export default {
   },
 
   methods: {
+    preventDefault(e) {
+      const o = e || loadingContainer.event;
+      if (o.preventDefault) {
+        o.preventDefault();
+        o.returnValue = false;
+      }
+    },
+    disableScroll() {
+      const loadingContainer = this.$el;
+      if (loadingContainer.addEventListener) {
+        loadingContainer.addEventListener('DOMMouseScroll', this.preventDefault, false);
+        loadingContainer.onwheel = this.preventDefault;
+        loadingContainer.onmousewheel = loadingContainer.onmousewheel = this.preventDefault;
+        loadingContainer.ontouchmove = this.preventDefault;
+      }
+    },
+    enableScroll() {
+      const loadingContainer = this.$el;
+      if (loadingContainer.removeEventListener) {
+        loadingContainer.removeEventListener('DOMMouseScroll', this.preventDefault, false);
+        loadingContainer.onmousewheel = loadingContainer.onmousewheel = null;
+        loadingContainer.onwheel = null;
+        loadingContainer.ontouchmove = null;
+      }
+    },
     launchLoading() {
       const assets = this.$el.ownerDocument.querySelectorAll('.preload');
       let resolved = 0;
@@ -118,6 +144,7 @@ export default {
           loader.style.top = 0;
           image.classList.add('hide');
           this.hideLoader = true;
+          this.enableScroll();
         }
       })
       .add({
