@@ -28,7 +28,7 @@
               <p>{{description}}</p>
             </div>
           </div>
-          <div class="chevron">
+          <div v-on:click="scrollDown" class="chevron">
             <img class="preload" src="~assets/img/ui/chevron.svg">
           </div>
         </div>
@@ -82,6 +82,8 @@
   </div>
 </template>
 <script>
+import scrollbar from "~/utils/scrollbar.js";
+import calcOffset from '~/utils/offset.js';
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
@@ -112,6 +114,12 @@ export default {
         return 'duo'
       }
     },
+    scrollDown() {
+      const container = this.$el.ownerDocument.getElementById('app');
+      const destination = this.$el.querySelector('.serie-gallery');
+      let offset = calcOffset.computeOffset(destination).top;
+      scrollbar.scrollTo(container, offset)
+    }
   }
 };
 </script>

@@ -1,4 +1,5 @@
 import Scrollbar from 'smooth-scrollbar';
+import easing from '~/utils/easing.js'
 
 const defaultProps = {
   alwaysShowTracks: true
@@ -22,14 +23,16 @@ const remove = function (el, listener) {
   scrollbar.destroy(el)
 }
 
-const setPosition = function (el, x, y) {
+const scrollTo = function (el,y) {
   const scrollbar = Scrollbar.get(el)
-  scrollbar.setPosition(x,y)
+  scrollbar.scrollTo(0, y, 500, {
+    easing: easing.easeInOutQuad,
+  });
 }
 
 export default {
   add,
   remove,
   listen,
-  setPosition
+  scrollTo
 }

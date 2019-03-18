@@ -21,7 +21,7 @@
           <p><span class="copyright">©</span> 2019</p>
         </div>
       </div>
-      <div class="chevron">
+      <div v-on:click="scrollDown" class="chevron">
         <img src="~assets/img/ui/chevron.svg" class="preload">
       </div>
       <div class="update-status">
@@ -36,6 +36,8 @@
 <script>
 import anime from 'animejs'
 import HomeSlider from '~/components/HomeSlider'
+import scrollbar from "~/utils/scrollbar.js";
+import calcOffset from '~/utils/offset.js';
 
 export default {
   components: {
@@ -101,6 +103,12 @@ export default {
         nextSlide.classList.add("active");
         activeSlideIndex = 0;
       }
+    },
+    scrollDown() {
+      const container = this.$el.ownerDocument.getElementById('app');
+      const destination = this.$el.ownerDocument.querySelector('.page-content');
+      let offset = calcOffset.computeOffset(destination).top;
+      scrollbar.scrollTo(container, offset)
     }
   },
   props: { series: Array }

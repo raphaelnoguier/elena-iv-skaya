@@ -42,6 +42,7 @@
     }
 
     .chevron {
+      cursor: pointer;
       transform: translate3d(0, -3.125vw, 0);
       img {
         width: 0.875vw;
