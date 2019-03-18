@@ -26,9 +26,9 @@
         top: 8vw;
 
         h3 {
-          @include actaDisplayLight(5.05vw);
+          @include actaDisplayLight(5.625VW);
           color: white;
-          line-height: 5.6vw;
+          line-height: 6.25vw;
         }
       }
     }
@@ -67,8 +67,8 @@
             position: absolute;
             height: 2.7vw;
             width: 0.156vw;
-            left: 3.15vw;
-            top: 0.5vw;
+            left: 3vw;
+            top: 0.35vw;
             transform-origin: bottom center;
           }
         }

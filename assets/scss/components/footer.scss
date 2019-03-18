@@ -7,14 +7,6 @@ footer {
   text-transform: uppercase;
   position: relative;
 
-  @include sofiaProMedium(0.625vw);
-  letter-spacing: 0.125vw;
-  line-height: 1.875vw;
-
-  @include max(lg) {
-    padding: 4vh 4vw;
-  }
-
   .dark & {
     background: #121212;
     color:white;
@@ -25,35 +17,12 @@ footer {
     text-decoration: underline;
   }
 
-  ul{
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .socials ul {
-    justify-content: flex-start;
-
-    li:not(:first-child) {
-      margin-left: 1vw;
-    }
-  }
-
-  .socials,
   .credits {
-    flex-basis: 39vw;
-  }
+    width: 100%;
+    text-align: center;
 
-  .copyrights {
-    @include sofiaProLight(10px);
-
-    display: flex;
-    justify-content: space-between;
-    flex-basis: 22vw;
+    @include sofiaProMedium(0.625vw);
     letter-spacing: 0.125vw;
-    text-align: right;
-
-    .chevron-up {
-      transform: rotate(180deg) translate3d(0, 0.125vw, 0);
-    }
+    line-height: 1.875vw;
   }
 }

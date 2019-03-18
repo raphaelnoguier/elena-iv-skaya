@@ -6,10 +6,9 @@
         <HomeSlider :type="'Small'" :series="series" />
         <div class="controls">
           <div class="left"><img src="~assets/img/ui/arrow.svg" class="preload"><span>previous</span></div>
-          <div class="dots">
-            <ul>
-              <li v-for="(serie, index) in series" :key="index" :class="index + 1  === 1 ? 'active': ''">•</li>
-            </ul>
+          <div class="index">
+            <span class="current">1 / </span>
+            <span class="total">4</span>
           </div>
           <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg" class="preload"></div>
         </div>

@@ -1,7 +1,7 @@
 .page-introduction {
   display: flex;
   justify-content: space-between;
-  height: 82vh;
+  height: calc(88vh - 5.6vw);
 
   .home-slider-wrapper {
     height: 100%;
@@ -64,7 +64,7 @@
       }
 
       span {
-        @include sofiaProLight(12px);
+        @include sofiaProLight(0.75vw);
         letter-spacing: 0.125vw;
         line-height: 0.875vw;
         text-transform: uppercase;
