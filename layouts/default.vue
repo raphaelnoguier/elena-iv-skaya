@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="$route.name === 'About' || $route.name === 'about' ? 'dark' : ''">
-    <Navigation/>
     <Loader/>
+    <Navigation/>
     <nuxt/>
   </div>
 </template>

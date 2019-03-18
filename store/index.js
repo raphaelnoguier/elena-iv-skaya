@@ -26,7 +26,6 @@ export const actions = {
     let isSerie = path.includes('serie');
     let isHome = path === '/';
     let isAbout = route === 'About' || route === 'about';
-
     if(isSerie) {
       document = await this.$prismic.api.getByUID('serie', serieRoute);
     } else if(isHome){
@@ -38,11 +37,10 @@ export const actions = {
 
     if (document) {
       commit('SET_DOC', document)
-      console.log(document);
       return document;
     } else {
       error({ statusCode: 404, message: "Page not found" });
     }
-  }
+  },
 }
 

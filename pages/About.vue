@@ -2,7 +2,7 @@
   <section class="page about">
     <div class="about-wrapper">
       <div class="about-image">
-        <img :src="main_image" />
+        <img :src="main_image" class="preload"/>
         <div class="about-quote">
           <h3>{{title}}</h3>
         </div>

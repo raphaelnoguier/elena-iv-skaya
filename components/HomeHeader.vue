@@ -5,13 +5,13 @@
       <div class="small-slider-wrapper">
         <HomeSlider :type="'Small'" :series="series" />
         <div class="controls">
-          <div class="left"><img src="~assets/img/ui/arrow.svg"><span>previous</span></div>
+          <div class="left"><img src="~assets/img/ui/arrow.svg" class="preload"><span>previous</span></div>
           <div class="dots">
             <ul>
               <li v-for="(serie, index) in series" :key="index" :class="index + 1  === 1 ? 'active': ''">•</li>
             </ul>
           </div>
-          <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg"></div>
+          <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg" class="preload"></div>
         </div>
       </div>
       <div v-for="(serie, index) in series.slice(0,1)"  :key="index" class="serie-infos">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="chevron">
-        <img src="~assets/img/ui/chevron.svg">
+        <img src="~assets/img/ui/chevron.svg" class="preload">
       </div>
       <div class="update-status">
         <div class="line" />

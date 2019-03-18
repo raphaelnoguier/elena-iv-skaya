@@ -7,7 +7,7 @@
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
             <div v-for="(serie, index) in currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
               <nuxt-link :to="`/serie/${serie.uid}`">
-                <img :src="serie.cover_serie_image.url" />
+                <img :src="serie.cover_serie_image.url" class="preload" />
                 <div class="item-title">
                   <h3>{{serie.title[0].text}}</h3>
                   <span>{{serie.category}}</span>
@@ -84,7 +84,6 @@ export default {
   },
 
   mounted () {
-    console.log(this.currentSeries);
     // let gallery = document.querySelector(".gallery");
     // if(!gallery) return;
     // gallery.addEventListener("mousedown", this.down);

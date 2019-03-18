@@ -1,22 +1,50 @@
 <template>
-  <div class="loader hide" :class="hideLoader ? 'hide' : ''">
-    <div class="content">
-      <h1>Loading</h1>
-      <span class="percent">0</span>
-      <div class="progress"></div>
+  <div class="loader-wrapper" :class="hideLoader ? 'hide' : ''">
+    <div class="loader">
+      <div class="content">
+        <span class="percent">0</span>
+        <div class="title">
+          <h1>
+            elena iv-skaya
+            <span>
+            photographer
+            </span>
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div class="image-loader">
+      <img :src="imageLoader">
     </div>
   </div>
 </template>
 
 <script>
+import anime from 'animejs'
 export default {
   data() {
     return {
-      hideLoader: false
+      hideLoader: false,
+      imageLoader: ''
     };
   },
 
   mounted() {
+    let docs = []
+    switch(this.$route.name) {
+      case 'index':
+        docs = this.$store.getters.currentDoc.results
+        docs.forEach(doc => {
+          if(doc.uid === 'index' && doc.type === 'page') {
+            this.imageLoader = doc.data.loader_image.url
+          }
+        });
+        break;
+      case 'about':
+        docs = this.$store.getters.currentDoc.data;
+        this.imageLoader = docs.loader_image.url
+        break;
+    }
     this.$nextTick(() => {
       this.launchLoading();
     });
@@ -24,14 +52,12 @@ export default {
 
   methods: {
     launchLoading() {
-      return;
-      if (!this.$store.getters.currentDoc.data.gallery) {
-        this.stopPreloadingAnim();
-      }
-      const assets = this.$store.getters.currentDoc.data.gallery;
+      const assets = this.$el.ownerDocument.querySelectorAll('.preload');
       let resolved = 0;
+      this.fadeInContent();
       for (let elm of assets) {
-        let src = elm.images.url;
+        let src = elm.src;
+        elm.classList.remove('preload');
         elm = document.createElement("img");
         elm.src = src;
         this.loadAssets(elm, src).then(value => {
@@ -40,32 +66,65 @@ export default {
         });
       }
     },
+    fadeInContent() {
+      const els = this.$el.querySelectorAll('.percent, .title');
+      els.forEach(el => {
+        el.classList.add('fade-in');
+      });
+    },
     loadAssets(elm, src) {
       return new Promise(resolve => {
-        elm.addEventListener("load", function() {
+        if(elm.ready === true) {
+          resolve();
+        }
+        elm.addEventListener("load", () => {
           resolve();
         });
       });
     },
+    round5(x) {
+      return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
+    },
     updateLoadProgress(loaded, total) {
       return new Promise(resolve => {
-        const progress = Math.round((100 / total) * loaded);
+        let progress = Math.round((100 / total) * (loaded));
         const percent = this.$el.querySelector(".percent");
-        const bar = this.$el.querySelector(".progress");
 
+        console.log(this.round5(progress));
         percent.innerHTML = progress;
-        bar.style.width = progress + "%";
-        if (progress >= 100 && loaded === total) {
+        if (progress >= 95 && loaded === total) {
           resolve();
           setTimeout(() => {
-            this.stopPreloadingAnim();
+            this.animate('grow');
           }, 300);
         }
       });
     },
-    stopPreloadingAnim() {
-      this.hideLoader = true;
-    }
+    animate() {
+      var tl = anime.timeline({
+        easing: 'easeInOutQuad',
+        duration: 500
+      });
+
+      let loader = this.$el.querySelector('.image-loader');
+      let image = this.$el.querySelector('.image-loader img');
+
+      loader.classList.add('animating');
+
+      tl.add({
+        targets: loader,
+        height: '100vh',
+        complete: () => {
+          loader.style.top = 0;
+          image.classList.add('hide');
+          this.hideLoader = true;
+        }
+      })
+      .add({
+        targets: loader,
+        height: 0,
+      })
+    },
   }
 };
 </script>

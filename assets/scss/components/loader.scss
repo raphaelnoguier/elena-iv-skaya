@@ -1,42 +1,102 @@
-.loader {
-  position: absolute;
-  background:black;
-  top:0;
-  bottom: 0;
-  width:100%;
+.loader-wrapper {
   height: 100vh;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-  z-index: 1;
-
-  .content {
-    position: relative;
-    top:50%;
-    transform: translateY(-50%);
-    text-align: center;
-
-    h1 {
-      color:white;
-    }
-
-    .percent {
-      font-size: 20px;
-      display: block;
-      color:white;
-    }
-
-    .progress {
-      position: absolute;
-      height: 10px;
-      background: red;
-      width: 0%;
-      left:0;
-      transition: width 0.2s ease;
-    }
-  }
+  position: relative;
+  transition: height 500ms $ease-in-out-quad;
+  overflow: hidden;
 
   &.hide {
     pointer-events: none;
-    opacity: 0;
+    height: 0;
+
+    .loader {
+      display: none;
+    }
+  }
+
+  .loader {
+    position: absolute;
+    background:#121212;
+    top:0;
+    bottom: 0;
+    width:100%;
+    height: 100vh;
+    opacity: 1;
+    z-index: 3;
+
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8vw;
+      color:white;
+      height: 100%;
+
+      .percent {
+        @include actaDisplayMedium(37.5vw);
+        position: relative;
+        line-height: 37.5vw;
+        opacity: 0;
+        transition: opacity 500ms ease;
+
+        &.fade-in {
+          opacity: 1;
+        }
+      }
+
+      .title {
+        position: absolute;
+        bottom: 3.125vw;
+        width: 100%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: opacity 500ms ease;
+
+        &.fade-in {
+          opacity: 1;
+        }
+
+        h1 {
+          @include sofiaProBold(0.875vw);
+          letter-spacing: 0.125vw;
+          line-height: 1.313vw;
+        }
+        span{
+          @include sofiaProMedium(0.875vw);
+          letter-spacing: 0.125vw;
+          line-height: 1.875vw;
+        }
+      }
+    }
+  }
+
+  .image-loader {
+    position: absolute;
+    height: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    width: 100%;
+    z-index: 9;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.1);
+      transition: transform 500ms $ease-in-out-quad 0.1s;
+
+      &.hide {
+        transform: translateY(-200px)
+      }
+    }
+
+    &.animating {
+      img {
+        transform: scale(1);
+      }
+    }
   }
 }
