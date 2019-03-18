@@ -78,9 +78,6 @@ export default {
     },
     loadAssets(elm, src) {
       return new Promise(resolve => {
-        if(elm.ready === true) {
-          resolve();
-        }
         elm.addEventListener("load", () => {
           resolve();
         });
@@ -91,16 +88,15 @@ export default {
     },
     updateLoadProgress(loaded, total) {
       return new Promise(resolve => {
-        let progress = Math.round((100 / total) * (loaded));
+        let progress = Math.round((95 / total) * loaded );
         const percent = this.$el.querySelector(".percent");
 
-        console.log(this.round5(progress));
-        percent.innerHTML = progress;
+        percent.innerHTML = this.round5(progress);
         if (progress >= 95 && loaded === total) {
           resolve();
           setTimeout(() => {
             this.animate('grow');
-          }, 300);
+          }, 500);
         }
       });
     },

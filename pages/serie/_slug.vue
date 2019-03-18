@@ -35,7 +35,7 @@
       </div>
       <div class="serie-gallery">
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img class="preload" :src="image.image.url">
+          <img :src="image.image.url" class="preload" >
           <img v-if="image.ratio === 'Duo'" :src="image.duo_image.url" class="preload">
         </div>
       </div>
