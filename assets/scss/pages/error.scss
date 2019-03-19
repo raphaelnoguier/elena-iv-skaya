@@ -1,0 +1,50 @@
+.error-wrapper {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  .error {
+    position: absolute;
+    background:#121212;
+    top:0;
+    bottom: 0;
+    width:100%;
+    height: 100vh;
+    opacity: 1;
+    z-index: 3;
+
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8vw;
+      color:white;
+      height: 100%;
+
+      .number {
+        @include actaDisplayMedium(37.5vw);
+        position: relative;
+        line-height: 37.5vw;
+        opacity: 0;
+      }
+
+      .text {
+        position: absolute;
+        bottom: 3.125vw;
+        width: 100%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        text-transform: uppercase;
+        opacity: 0;
+
+        a {
+          @include sofiaProBold(0.875vw);
+          letter-spacing: 0.125vw;
+          line-height: 1.313vw;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

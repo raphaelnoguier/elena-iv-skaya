@@ -22,6 +22,7 @@
 <script>
 import anime from 'animejs'
 export default {
+  layout: 'default',
   data() {
     return {
       hideLoader: false,

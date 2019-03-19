@@ -89,7 +89,6 @@ export default {
     try {
       let entry = await store.dispatch('GET_DOC', app.context.route);
       let data = entry.data;
-      console.log(data.gallery);
       return {
         title: data.title[0].text,
         description: data.about_serie[0].text,
