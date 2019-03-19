@@ -60,6 +60,7 @@ module.exports = {
             return '/serie/' + doc.uid
           }
         })
+        routes.push('404');
         callback(null, routes)
       }), function(err) {
         console(err);
