@@ -44,6 +44,10 @@ export default {
         }
       });
 
+      series.sort(function(a, b) { 
+        return a.data.rank- b.data.rank;
+      })
+
       series.forEach(serie => {
         tmp[0].forEach((slide) => {
           if(serie.uid === slide.serie.uid){

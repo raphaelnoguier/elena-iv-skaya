@@ -1,11 +1,11 @@
 @keyframes slide{
-  from {
-    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+  0% {
+    clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0% 100%);
   }
-  25% {
-    clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%);
+  50% {
+    clip-path: polygon(20% 0, 100% 0%, 100% 100%, 10% 100%);
   }
-  to{
+  100%{
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
   }
 }

@@ -80,7 +80,7 @@
         &-column {
 
           &.description {
-            flex-basis: 44.5%;
+            flex-basis: 61.5%;
           }
 
           p {
@@ -133,6 +133,7 @@
         display: flex;
 
         img {
+          max-height: 43.75vw;
           max-width: 35vw;
         }
 

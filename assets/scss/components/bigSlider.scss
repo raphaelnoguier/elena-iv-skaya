@@ -23,7 +23,7 @@
     &.sliding {
       width: 0;
       .image {
-        animation: slide 1s $ease-in-out-quart forwards;
+        animation: slide 1s ease forwards;
       }
     }
 

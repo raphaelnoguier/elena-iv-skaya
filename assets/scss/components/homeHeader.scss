@@ -43,7 +43,7 @@
 
     .chevron {
       cursor: pointer;
-      transform: translate3d(0, -3.125vw, 0);
+      transform: translate3d(0, -2.125vw, 0);
       img {
         width: 0.875vw;
       }
@@ -53,7 +53,7 @@
       display:flex;
       align-items: center;
       position: absolute;
-      bottom: 3.125vw;
+      bottom: 2.125vw;
       writing-mode: vertical-rl;
       text-orientation: mixed;
 
