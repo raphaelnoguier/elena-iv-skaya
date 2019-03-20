@@ -6,7 +6,7 @@
         <div class="gallery">
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
             <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.data.cover_ratio)">
-              <nuxt-link to="#">
+              <nuxt-link :to="`/serie/${serie.uid}`">
                 <img :src="serie.data.cover_serie_image.url" class="preload" />
                 <div class="item-title">
                   <h3>{{serie.data.title[0].text}}</h3>
