@@ -1,16 +1,16 @@
 <template>
   <div>
     <section class="page home">
-      <HomeHeader v-if="currentSeries" :series="currentSeries" />
+      <HomeHeader v-if="featured" :featured="featured" />
       <div class="page-content" :class="dragMode ? 'black' : ''">
         <div class="gallery">
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
-            <div v-for="(serie, index) in currentSeries" :key="index" class="gallery-item" :class="getClass(serie.cover_ratio)">
-              <nuxt-link :to="`/serie/${serie.uid}`">
-                <img :src="serie.cover_serie_image.url" class="preload" />
+            <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.data.cover_ratio)">
+              <nuxt-link to="#">
+                <img :src="serie.data.cover_serie_image.url" class="preload" />
                 <div class="item-title">
-                  <h3>{{serie.title[0].text}}</h3>
-                  <span>{{serie.category}}</span>
+                  <h3>{{serie.data.title[0].text}}</h3>
+                  <span>{{serie.data.category}}</span>
                 </div>
               </nuxt-link>
             </div>
@@ -29,31 +29,38 @@ import Footer from "~/components/Footer";
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
-      let entry = await store.dispatch('GET_DOC', app.context.route);
+      let data = await store.dispatch('GET_DOC', app.context.route);
 
-      let currentDoc = [];
-      let currentSeries = []
+      let tmp = [];
+      let series = []
+      let featured = []
 
-      entry.results.forEach(result => {
-        if(result.uid === 'index') {
-          currentDoc.push(result.data)
+      data.forEach(data => {
+        if(data.type === 'page') {
+          tmp.push(data.data.slides)
         }
-        if(result.type === 'serie') {
-          result.data.uid = result.uid
-          currentSeries.push(result.data)
+        if(data.type === 'serie') {
+          series.push(data);
         }
       });
 
+      series.forEach(serie => {
+        tmp[0].forEach((slide) => {
+          if(serie.uid === slide.serie.uid){
+            featured.push({stripe: slide.stripe, data: serie.data});
+          }
+        });
+      });
+
       return {
-        title: currentDoc[0].title[0].text,
-        description: currentDoc[0].description[0].text,
-        slider: currentDoc[0].slider,
+        featured: featured,
         seo: {
-          title: currentDoc[0].seo_title,
-          description: currentDoc[0].seo_description
+          title: data.seo_title,
+          description: data.seo_description
         },
-        currentSeries
+        series: series
       };
+
     } catch (err) {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }

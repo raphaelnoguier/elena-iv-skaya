@@ -1,9 +1,9 @@
 <template>
   <div class="page-introduction">
-    <HomeSlider :type="'Big'" :series="series"/>
+    <HomeSlider :type="'Big'" :featured="featured"/>
     <div class="right-col">
       <div class="small-slider-wrapper">
-        <HomeSlider :type="'Small'" :series="series" />
+        <HomeSlider :type="'Small'" :featured="featured" />
         <div class="controls">
           <div class="left"><img src="~assets/img/ui/arrow.svg" class="preload"><span>previous</span></div>
           <div class="index">
@@ -13,9 +13,9 @@
           <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg" class="preload"></div>
         </div>
       </div>
-      <div v-for="(serie, index) in series.slice(0,1)"  :key="index" class="serie-infos">
+      <div v-for="(serie, index) in featured.slice(0,1)"  :key="index" class="serie-infos">
         <div class="title">
-          <h3>{{serie.title[0].text}}</h3>
+          <h3>{{serie.data.title[0].text}}</h3>
         </div>
         <div class="date">
           <p><span class="copyright">©</span> 2019</p>
@@ -47,9 +47,6 @@ export default {
     return {
       slideIndex: 0
     }
-  },
-  mounted() {
-
   },
   methods: {
     nextSlide() {
@@ -111,7 +108,7 @@ export default {
       scrollbar.scrollTo(container, offset)
     }
   },
-  props: { series: Array }
+  props: { featured: Array }
 }
 </script>
 

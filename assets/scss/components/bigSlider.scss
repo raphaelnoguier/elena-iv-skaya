@@ -13,6 +13,7 @@
     margin-left: auto;
     right: -1.25vw;
     z-index: 1;
+    transition: width 1s $ease-in-out-quart 1s;
 
     &.active {
       z-index: 2;
@@ -20,15 +21,19 @@
 
 
     &.sliding {
-      animation: slide 1s $ease-in-out-quart forwards;
+      width: 0;
+      .image {
+        animation: slide 1s $ease-in-out-quart forwards;
+      }
     }
 
     .image {
       height: 100%;
       width: 100%;
       background-size: cover;
-      //background-attachment: fixed;
       background-repeat: no-repeat;
+      -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
     }
   }
 }

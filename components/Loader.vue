@@ -32,25 +32,16 @@ export default {
 
   mounted() {
     this.disableScroll();
-    let docs = []
-    switch(this.$route.name) {
-      case 'index':
-        docs = this.$store.getters.currentDoc.results
-        docs.forEach(doc => {
-          if(doc.uid === 'index' && doc.type === 'page') {
-            this.imageLoader = doc.data.loader_image.url
-          }
-        });
-      break;
-      case 'about':
-        docs = this.$store.getters.currentDoc.data;
-        this.imageLoader = docs.loader_image.url
-      break;
-      default:
-        docs = this.$store.getters.currentDoc.data;
-        this.imageLoader = docs.loader_image.url
-      break;
+    let doc = null;
+
+    if(this.$route.name === 'index') {
+      doc = this.$store.getters.currentDoc[0].data;
+    } else {
+      doc = this.$store.getters.currentDoc.data;
     }
+
+    this.imageLoader = doc.loader_image.url
+
     this.$nextTick(() => {
       this.launchLoading();
     });

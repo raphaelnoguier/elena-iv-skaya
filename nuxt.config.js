@@ -1,6 +1,5 @@
 const pkg = require('./package')
 const Prismic = require('prismic-javascript');
-const PrismicDOM = require('prismic-dom');
 const prismicConfig = require('./prismic.config.js');
 
 
@@ -37,14 +36,6 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    ['prismic-nuxt', {
-      endpoint: prismicConfig.apiEndpoint,
-      linkResolver:prismicConfig.linkResolver,
-      htmlSerializer: function (type, element, content, children) {
-        // console.log(type,element, content, children);
-        // PrismicDOM.RichText.asHtml(content, linkResolver, htmlSerializer)
-      }
-    }]
   ],
   generate: {
     routes: function (callback) {

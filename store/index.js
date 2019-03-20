@@ -1,4 +1,7 @@
 // global store
+import queryApi from '../utils/queryApi.js'
+import Prismic from 'prismic-javascript'
+import prismicConfig from '../prismic.config.js'
 
 export const state = () => ({
   doc: {},
@@ -26,14 +29,28 @@ export const actions = {
     let isSerie = path.includes('serie');
     let isHome = path === '/';
     let isAbout = route === 'About' || route === 'about';
-    if(isSerie) {
-      document = await this.$prismic.api.getByUID('serie', serieRoute);
-    } else if(isHome){
-      document = await this.$prismic.api.query();
-    } else if(isAbout){
-      document = await this.$prismic.api.getByUID('about', 'about');
-    }
 
+    if(isSerie) {
+      await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+        return api.getByUID('serie', serieRoute);
+      }).then((response) => {
+        document = response
+      });
+    } else if(isHome){
+      await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+        return api.query(
+          Prismic.Predicates.any('document.type', ['page', 'serie'])
+        ).then((response) => {
+          document = response.results
+        });
+      });
+    } else if(isAbout){
+      await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+        return api.getByUID('about', 'about');
+      }).then((response) => {
+        document = response
+      });
+    }
 
     if (document) {
       commit('SET_DOC', document)

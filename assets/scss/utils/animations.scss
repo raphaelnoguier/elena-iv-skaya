@@ -1,12 +1,11 @@
 @keyframes slide{
-  0% {
-    transform: skew(0);
+  from {
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
   }
   25% {
-    transform: skew(3deg);
+    clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0 100%);
   }
-  100%{
-    width:0%;
-    transform: skew(0);
+  to{
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
   }
 }
