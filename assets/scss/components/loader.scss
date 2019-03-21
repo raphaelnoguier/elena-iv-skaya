@@ -42,6 +42,10 @@
           font-size: 52vw;
         }
 
+        @include max(sm) {
+          font-size: 53.333vw;
+        }
+
         &.fade-in {
           opacity: 1;
         }
@@ -58,6 +62,10 @@
         opacity: 0;
         transition: opacity 500ms ease;
 
+        @include max(sm) {
+          bottom: 13.333vw;
+        }
+
         &.fade-in {
           opacity: 1;
         }
@@ -70,6 +78,11 @@
           @include max(md) {
             font-size: 2.083vw;
           }
+
+          @include max(sm) {
+            font-size: 4.267vw;
+            line-height: 6.4vw;
+          }
         }
         span{
           @include sofiaProMedium(0.875vw);
@@ -78,6 +91,10 @@
 
           @include max(md) {
             font-size: 2.083vw;
+          }
+
+          @include max(sm) {
+            display: none;
           }
         }
       }

@@ -28,6 +28,10 @@
         height: 93.09vw;
       }
 
+      @include max(sm) {
+        height: 97.333vw;
+      }
+
       img {
         opacity: 0.94;
         width:100%;
@@ -51,6 +55,10 @@
           transform: translate3d(0, 75%, 0);
         }
 
+        @include max(sm) {
+          width: 81.333vw;
+        }
+
         h3 {
           @include actaDisplayLight(5.625vw);
           color: white;
@@ -59,6 +67,11 @@
           @include max(md) {
             font-size: 10.41vw;
             line-height: 11.719vw;
+          }
+
+          @include max(sm) {
+            font-size: 13.333vw;
+            line-height: 16vw;
           }
         }
       }
@@ -73,6 +86,11 @@
       @include max(md) {
         width: 100%;
         padding: 0 6.510vw;
+      }
+
+      @include max(sm) {
+        margin-top: 44.5vw;
+        padding: 0 9.333vw;
       }
 
       .about-issue{
@@ -129,6 +147,11 @@
               font-size: 4.688vw;
               line-height: 6.510vw;
             }
+
+            @include max(sm) {
+              font-size: 6.400vw;
+              line-height: 10.667vw;
+            }
           }
         }
       }
@@ -140,6 +163,10 @@
           margin-top: 9.115vw;
         }
 
+        @include max(sm) {
+          margin-top: 22.5vw;
+        }
+
         .paragraph {
           @include actaBook(2vw);
           line-height: 3.125vw;
@@ -147,6 +174,11 @@
           @include max(md) {
             font-size: 4.688vw;
             line-height: 6.510vw;
+          }
+
+          @include max(sm) {
+            font-size: 6.4vw;
+            line-height: 10.667vw;
           }
         }
 
@@ -159,14 +191,31 @@
             margin-top: 12.370vw;
           }
 
+          @include max(sm) {
+            flex-direction: column;
+            margin-top: 24.533vw;
+          }
+
           .text {
             @include sofiaProLight(1.125vw);
             width: calc(50% - 1.25vw);
             line-height: 1.875vw;
 
+            &:last-of-type{
+              @include max(sm) {
+                margin-top: 9.333vw;
+              }
+            }
+
             @include max(md){
               font-size: 2.604vw;
               line-height: 3.906vw;
+            }
+
+            @include max(sm) {
+              width: 100%;
+              font-size: 4.8vw;
+              line-height: 8vw;
             }
           }
         }
@@ -185,9 +234,18 @@
       margin-top: 11.068vw;
     }
 
+    @include max(sm) {
+      flex-direction: column;
+      margin-top: 22.667vw;
+      padding: 0 9.333vw 25.333vw;
+    }
+
     .agency-representations, .credits {
       @include max(md) {
         width: 50%;
+      }
+      @include max(sm) {
+        width: 100%;
       }
     }
 
@@ -204,6 +262,12 @@
         line-height: 3.125vw;
         margin-bottom: 1.953vw;
       }
+
+      @include max(sm) {
+        font-size: 4.267vw;
+        line-height: 6.4vw;
+        margin-bottom: 4.5vw;
+      }
     }
 
     ul li {
@@ -214,6 +278,11 @@
         font-size: 2.604vw;
         line-height: 3.906vw;
       }
+
+      @include max(sm) {
+        font-size: 4.8vw;
+        line-height: 8vw;
+      }
     }
 
     .credits {
@@ -221,6 +290,10 @@
 
       @include max(md) {
         margin-top: 0;
+      }
+
+      @include max(sm) {
+        margin-top: 25.333vw;
       }
     }
   }
