@@ -6,6 +6,10 @@
     padding: 5vh 6.5vw;
   }
 
+  @include max(sm) {
+    padding: 4.25vh 9.333vw;
+  }
+
   &.serie-page{
     position: absolute;
     width: 100%;
@@ -46,6 +50,12 @@
 
       @include max(md) {
         font-size: 2.083vw;
+        line-height: 3.906vw;
+      }
+
+      @include max(sm) {
+        font-size: 3.733vw;
+        line-height: 8vw;
       }
 
       a {
