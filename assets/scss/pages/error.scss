@@ -30,6 +30,10 @@
         @include max(md) {
           font-size: 52vw;
         }
+
+        @include max(sm) {
+          font-size: 53.333vw;
+        }
       }
 
       .text {
@@ -42,6 +46,14 @@
         text-transform: uppercase;
         opacity: 0;
 
+        @include max(md) {
+          bottom: 5.208vw;
+        }
+
+        @include max(sm) {
+          bottom: 14.667vw;
+        }
+
         a {
           @include sofiaProBold(0.875vw);
           letter-spacing: 0.125vw;
@@ -50,6 +62,12 @@
 
           @include max(md) {
             font-size: 2.083vw;
+            line-height: 3.125vw;
+          }
+
+          @include max(sm) {
+            font-size: 4.267vw;
+            line-height: 6.4vw;
           }
         }
       }
