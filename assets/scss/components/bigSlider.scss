@@ -5,20 +5,31 @@
   overflow: hidden;
   transform: translate3d(-8vw, 0, 0);
 
+  @include max(md) {
+    height: 108.984vw;
+    width: 100%;
+    transform: translate3d(0, 0, 0);
+    padding: 0 6.510vw;
+    margin-top: 12.370vw;
+  }
+
   .slide {
     height: 100%;
-    width: calc(100% + 1.25vw);
+    width: 100%;
     position: absolute;
     transform: skew(0, 0);
     margin-left: auto;
-    right: -1.25vw;
     z-index: 1;
     transition: width 1s $ease-in-out-quart 1s;
+
+    @include max(md) {
+      width: calc(100% - 6.510vw);
+      margin: auto;
+    }
 
     &.active {
       z-index: 2;
     }
-
 
     &.sliding {
       width: 0;

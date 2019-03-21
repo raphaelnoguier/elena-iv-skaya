@@ -1,4 +1,7 @@
 .home {
+  @include max(md) {
+    padding: 0;
+  }
   .page {
     &-content {
       margin-top: 12.5vw;

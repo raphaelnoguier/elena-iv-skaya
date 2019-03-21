@@ -3,6 +3,11 @@
   justify-content: space-between;
   height: calc(90vh - 4.5vw);
 
+  @include max(md) {
+    height: auto;
+    flex-direction: column-reverse;
+  }
+
   .home-slider-wrapper {
     height: 100%;
   }
@@ -14,15 +19,33 @@
     justify-content: space-between;
     width: calc(60% - 2vw);
 
+    @include max(md) {
+      width: 100%;
+    }
+
     .serie-infos {
       flex-direction: column;
       max-width: 45vw;
 
+      @include max(md) {
+        margin-top: 15.625vw;
+        max-width: none;
+        padding: 0 6.510vw;
+      }
+
       .title {
         @include actaDisplayLight(5.625vw);
 
+        @include max(md) {
+          font-size: 10.417vw;
+        }
+
         h3{
           line-height: 6.250vw;
+
+          @include max(md) {
+            line-height: 11.719vw;
+          }
         }
       }
 
@@ -32,11 +55,19 @@
         letter-spacing: 0.125vw;
         line-height: 1.875vw;
 
+        @include max(md) {
+          font-size: 2.083vw;
+        }
+
         .copyright {
           @include sofiaProBold(1.25vw);
           position: relative;
           top: 0.125vw;
           padding-right: 0.625vw;
+
+          @include max(md) {
+            font-size: 2.604vw;
+          }
         }
       }
     }
@@ -44,6 +75,11 @@
     .chevron {
       cursor: pointer;
       transform: translate3d(0, -2.125vw, 0);
+
+      @include max(md) {
+        display: none;
+      }
+
       img {
         width: 0.875vw;
       }

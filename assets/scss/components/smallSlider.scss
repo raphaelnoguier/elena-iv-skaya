@@ -2,6 +2,10 @@
   height: 17.5%;
   position: relative;
 
+  @include max(md) {
+    height: 15.625vw;
+  }
+
   .home-slider-wrapper {
     overflow: hidden;
     position: relative;
@@ -46,6 +50,11 @@
     letter-spacing: 0.125vw;
     text-transform: uppercase;
 
+    @include max(md) {
+      padding: 0 6.510vw;
+      font-size: 2.083vw;
+    }
+
     .left,
     .dots,
     .right {
@@ -62,6 +71,10 @@
     .index {
       span {
         @include sofiaProMedium(0.875vw);
+
+        @include max(md) {
+          font-size: 2.083vw;
+        }
       }
     }
 

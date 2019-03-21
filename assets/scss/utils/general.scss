@@ -15,5 +15,9 @@
 
   &:not(.serie) {
     padding-top: 2.75vw;
+
+    @include max(md) {
+      padding-top: 0;
+    }
   }
 }
