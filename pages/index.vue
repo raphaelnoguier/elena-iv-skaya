@@ -44,12 +44,13 @@ export default {
         }
       });
 
-      series.sort(function(a, b) { 
+      series.sort(function(a, b) {
         return a.data.rank- b.data.rank;
       })
 
       series.forEach(serie => {
         tmp[0].forEach((slide) => {
+          console.log(slide)
           if(serie.uid === slide.serie.uid){
             featured.push({stripe: slide.stripe, data: serie.data});
           }

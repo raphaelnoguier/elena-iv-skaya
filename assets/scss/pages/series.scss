@@ -21,6 +21,10 @@
       padding-top: 6.5vw;
       position: relative;
 
+      .row {
+        z-index: 2;
+      }
+      
       .back-link {
         display: flex;
         align-items: center;
