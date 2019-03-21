@@ -2,6 +2,10 @@
   padding: 5vh 8vw;
   margin: auto;
 
+  @include max(md) {
+    padding: 5vh 6.5vw;
+  }
+
   &.serie-page{
     position: absolute;
     width: 100%;
@@ -9,6 +13,7 @@
 
     ul {
       width:100%;
+
       li:first-child {
         color:white;
       }
@@ -30,6 +35,10 @@
       letter-spacing: 0.125vw;
       line-height: 1.875vw;
       text-transform: uppercase;
+
+      @include max(md) {
+        font-size: 2.083vw;
+      }
 
       a {
         text-decoration: none;

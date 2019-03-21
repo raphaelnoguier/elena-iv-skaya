@@ -38,6 +38,10 @@
         opacity: 0;
         transition: opacity 500ms ease;
 
+        @include max(md) {
+          font-size: 52vw;
+        }
+
         &.fade-in {
           opacity: 1;
         }
@@ -62,11 +66,19 @@
           @include sofiaProBold(0.875vw);
           letter-spacing: 0.125vw;
           line-height: 1.313vw;
+
+          @include max(md) {
+            font-size: 2.083vw;
+          }
         }
         span{
           @include sofiaProMedium(0.875vw);
           letter-spacing: 0.125vw;
           line-height: 1.875vw;
+
+          @include max(md) {
+            font-size: 2.083vw;
+          }
         }
       }
     }
