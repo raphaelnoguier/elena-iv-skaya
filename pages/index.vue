@@ -5,12 +5,12 @@
       <div class="page-content" :class="dragMode ? 'black' : ''">
         <div class="gallery">
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
-            <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.data.cover_ratio)">
-              <nuxt-link :to="`/serie/${serie.uid}`">
-                <img :src="serie.data.cover_serie_image.url" class="preload" />
+            <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
+              <nuxt-link :to="`/serie/${serie.serie.uid}`">
+                <img :src="serie.serie.data.cover_serie_image.url" class="preload" />
                 <div class="item-title">
-                  <h3>{{serie.data.title[0].text}}</h3>
-                  <span>{{serie.data.category}}</span>
+                  <h3>{{serie.serie.data.title[0].text}}</h3>
+                  <span>{{serie.serie.data.category}}</span>
                 </div>
               </nuxt-link>
             </div>
@@ -29,41 +29,19 @@ import Footer from "~/components/Footer";
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
-      let data = await store.dispatch('GET_DOC', app.context.route);
+      let entry = await store.dispatch('GET_DOC', app.context.route);
+      let data = entry.data
 
-      let tmp = [];
-      let series = []
-      let featured = []
-
-      data.forEach(data => {
-        if(data.type === 'page') {
-          tmp.push(data.data.slides)
-        }
-        if(data.type === 'serie') {
-          series.push(data);
-        }
-      });
-
-      series.sort(function(a, b) {
-        return a.data.rank- b.data.rank;
-      })
-
-      series.forEach(serie => {
-        tmp[0].forEach((slide) => {
-          console.log(slide)
-          if(serie.uid === slide.serie.uid){
-            featured.push({stripe: slide.stripe, data: serie.data});
-          }
-        });
-      });
+      let series = data.series;
+      let featured = data.slides;
 
       return {
         featured: featured,
-        seo: {
-          title: data.seo_title,
-          description: data.seo_description
-        },
         series: series
+        // seo: {
+        //   title: data.seo_title,
+        //   description: data.seo_description
+        // },
       };
 
     } catch (err) {

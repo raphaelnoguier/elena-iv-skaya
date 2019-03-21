@@ -32,14 +32,7 @@ export default {
 
   mounted() {
     this.disableScroll();
-    let doc = null;
-
-    if(this.$route.name === 'index') {
-      doc = this.$store.getters.currentDoc[0].data;
-    } else {
-      doc = this.$store.getters.currentDoc.data;
-    }
-
+    let doc = this.$store.getters.currentDoc.data;
     this.imageLoader = doc.loader_image.url
 
     this.$nextTick(() => {

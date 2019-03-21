@@ -39,9 +39,10 @@ export const actions = {
     } else if(isHome){
       await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
         return api.query(
-          Prismic.Predicates.any('document.type', ['page', 'serie'])
+          Prismic.Predicates.at('document.type', 'page'),
+          { fetchLinks : ['serie.title', 'serie.category', 'serie.cover_ratio', 'serie.date', 'serie.cover_serie_image'] }
         ).then((response) => {
-          document = response.results
+          document = response.results[0]
         });
       });
     } else if(isAbout){

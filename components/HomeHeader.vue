@@ -15,10 +15,10 @@
       </div>
       <div v-for="(serie, index) in featured.slice(0,1)"  :key="index" class="serie-infos">
         <div class="title">
-          <h3>{{serie.data.title[0].text}}</h3>
+          <h3>{{serie.serie.data.title[0].text}}</h3>
         </div>
         <div class="date">
-          <p><span class="copyright">©</span> 2019</p>
+          <p><span class="copyright">©</span> {{serie.serie.data.date}}</p>
         </div>
       </div>
       <div v-on:click="scrollDown" class="chevron">
