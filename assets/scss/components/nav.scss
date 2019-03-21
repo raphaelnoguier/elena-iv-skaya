@@ -11,11 +11,19 @@
     width: 100%;
     z-index: 2;
 
+    @include max(md) {
+      position: relative;
+    }
+
     ul {
       width:100%;
 
       li:first-child {
         color:white;
+
+        @include max(md) {
+          color: black;
+        }
       }
     }
   }

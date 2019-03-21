@@ -1,12 +1,26 @@
 .serie {
+  @include max(md) {
+    padding: 0 6.5vw;
+  }
+
   .serie-page-header {
     display: flex;
     justify-content: space-between;
+
+    @include max(md) {
+      flex-direction: column;
+    }
 
     .featured-image {
       width: 40%;
       height: 100vh;
       transform: translate3d(-8vw, 0, 0);
+
+      @include max(md) {
+        width: 100%;
+        transform: translate3d(0, 0, 0);
+        height: 89.323vw;
+      }
 
       img {
         width:100%;
@@ -21,13 +35,24 @@
       padding-top: 6.5vw;
       position: relative;
 
+      @include max(md) {
+        padding-top: 0;
+        margin-top: 12.021vw;
+        width: 100%;
+      }
+
       .row {
         z-index: 2;
       }
-      
+
       .back-link {
         display: flex;
         align-items: center;
+
+        @include max(md) {
+          display: none;
+        }
+
         a {
           text-decoration: none;
           text-transform: uppercase;
@@ -51,11 +76,24 @@
         max-width: 45vw;
         margin-top: 3.25vw;
 
+        @include max(md) {
+          margin-top: 0;
+          max-width: none;
+        }
+
         .title {
           @include actaDisplayLight(5.625vw);
 
+          @include max(md) {
+            font-size: 10.417vw;
+          }
+
           h3{
             line-height: 6.250vw;
+
+            @include max(md) {
+              line-height: 11.719vw;
+            }
           }
         }
 
@@ -65,11 +103,20 @@
           letter-spacing: 0.125vw;
           line-height: 1.875vw;
 
+          @include max(md) {
+            font-size: 2.083vw;
+            margin-top: 2.25vw;
+          }
+
           .copyright {
             @include sofiaProBold(1.25vw);
             position: relative;
             top: 0.125vw;
             padding-right: 0.625vw;
+
+            @include max(md) {
+              font-size: 2.604vw;
+            }
           }
         }
       }
@@ -81,6 +128,10 @@
         margin-top: 6.5vw;
         z-index: 2;
 
+        @include max(md) {
+          margin-top: 11vw;
+        }
+
         &-column {
 
           &.description {
@@ -90,6 +141,11 @@
           p {
             @include sofiaProLight(1.125vw);
             line-height: 1.875vw;
+
+            @include max(md) {
+              font-size: 2.604vw;
+              line-height: 3.906vw;
+            }
           }
 
           span {
@@ -99,6 +155,12 @@
             letter-spacing: 0.125vw;
             text-transform: uppercase;
             margin-bottom: 0.45vw;
+
+            @include max(md) {
+              margin-bottom: 1.55vw;
+              font-size: 2.083vw;
+              line-height: 3.125vw;
+            }
           }
         }
       }
@@ -106,43 +168,86 @@
         cursor: pointer;
         position: absolute;
         bottom: 1.563vw;
+
+        @include max(md) {
+          display: none;
+        }
+
         img {
           width: 0.875vw;
         }
       }
     }
   }
+
   .serie-gallery {
     margin-top: 13.438vw;
     margin-bottom: 12.5vw;
     max-width: 72.5vw;
 
+    @include max(md) {
+      margin-top: 25.5vw;
+      max-width: none;
+    }
+
     .gallery-item {
       display: flex;
+
       &:not(:first-child) {
         margin-top: 9.375vw;
+
+        @include max(md) {
+          margin-top: 19.531vw;
+        }
       }
+
       &:nth-child(even):not(.duo){
         margin-left: auto;
         margin-right: 7.5vw;
+
+        @include max(md) {
+          margin-right: 0;
+        }
       }
+
       &.portrait {
         max-width: 42.5vw;
+
+        @include max(md) {
+          max-width: 64.193vw;
+        }
       }
+
       &.landscape {
         max-width: 57.5vw;
         margin-left: 7.5vw;
+
+        @include max(md) {
+          margin-left: 0;
+          max-width: 64.193vw;
+        }
       }
+
       &.duo {
         display: flex;
 
         img {
           max-height: 43.75vw;
           max-width: 35vw;
+
+          @include max(md) {
+            max-width: 41.146vw;
+            max-height: 51.172vw;
+            object-fit: cover;
+          }
         }
 
         img:last-child {
-          margin-left: 2.5vw
+          margin-left: 2.5vw;
+
+          @include max(md) {
+            margin-left: 4.297vw
+          }
         }
       }
 
@@ -155,6 +260,11 @@
   }
   .serie-credits-wrapper {
     margin: 12.5vw 0;
+
+    @include max(md) {
+      margin: 26.042vw 0;
+    }
+
     .serie-credits {
       span {
         @include sofiaProBold(0.875vw);
@@ -163,11 +273,23 @@
         letter-spacing: 0.125vw;
         text-transform: uppercase;
         margin-bottom: 0.45vw;
+
+        @include max(md) {
+          margin-bottom: 1.55vw;
+          font-size: 2.083vw;
+          line-height: 3.125vw;
+        }
       }
+
       ul {
         li {
           @include sofiaProLight(1.125vw);
           line-height: 1.875vw;
+
+          @include max(md) {
+            font-size: 2.604vw;
+            line-height: 3.906vw;
+          }
         }
       }
     }
@@ -179,12 +301,20 @@
     align-items: center;
     @include verticalText(360);
 
+    @include max(md) {
+      padding-bottom: 19.531vw;
+    }
+
     span {
       @include sofiaProLight(0.750vw);
       text-transform: uppercase;
       line-height: 0.875vw;
       letter-spacing: 0.125vw;
       display: block;
+
+      @include max(md) {
+        font-size: 1.823vw;
+      }
     }
 
     .line {
@@ -193,6 +323,10 @@
       height:8.125vw;
       border: 0.063vw solid black;
       opacity: 0.1;
+
+      @include max(md) {
+        display: none;
+      }
     }
   }
 }
@@ -203,6 +337,10 @@
   overflow: hidden;
   position: relative;
 
+  @include max(md) {
+    padding-top: 26.042vw;
+  }
+
   .line {
     position: absolute;
     display: inline-block;
@@ -211,8 +349,16 @@
     margin: auto;
     transform: rotate(270deg);
     width: calc(100% - 30vw);
-    border: 0.063vw solid white;
+    border-left: 0.063vw solid white;
     opacity: 0.1;
+
+    @include max(md) {
+      top: 0;
+      transform: rotate(0);
+      width: 0.130vw;
+      height: calc(100% - 24.740vw);
+      border-left: 0.130vw solid white;
+    }
   }
 
   .serie-slider-title {
@@ -220,6 +366,11 @@
     line-height: 6.250vw;
     text-align: center;
     color:white;
+
+    @include max(md) {
+      font-size: 10.417vw;
+      line-height: 11.719vw;
+    }
   }
 
   .serie-slider {
@@ -228,12 +379,27 @@
     overflow: hidden;
     margin-bottom: 8.125vw;
 
+    @include max(md) {
+      margin-top: 3.25vw;
+      margin-bottom: 27.995vw;
+      transform: translate3d(28vw, 0, 0);
+    }
+
     .slider-item {
       width: 20vw;
       height: 25vw;
 
+      @include max(md) {
+        width: 41.406vw;
+        height: 51.563vw;
+      }
+
       &:not(:first-child){
         margin-left: 2.5vw;
+
+        @include max(md) {
+          margin-left: 3.906vw;
+        }
       }
 
       img{
@@ -243,6 +409,7 @@
       }
     }
   }
+
   .slider-controls {
     padding: 0 8vw 5vw;
 
@@ -250,24 +417,42 @@
       display: flex;
       justify-content: space-between;
       color: white;
+
       .play {
         transform: rotate(-90deg);
       }
+
       .title {
         @include sofiaProBold(0.875vw);
         letter-spacing: 0.125vw;
         line-height: 1.313vw;
         text-transform: uppercase;
+
+        @include max(md) {
+          font-size: 2.083vw;
+          line-height: 3.125vw;
+        }
       }
+
       .index {
         @include sofiaProMedium(0.875vw);
-        line-height: 1.875vw
+        line-height: 1.875vw;
+
+        @include max(md) {
+          font-size: 2.083vw;
+          line-height: 3.125vw;
+        }
       }
     }
     .bottom {
       height: 0.063vw;
       background: #2A2A2A;
       margin-top: 1vw;
+
+      @include max(md) {
+        height: 0.130vw;
+        margin-top: 2.604vw;
+      }
     }
   }
 }
