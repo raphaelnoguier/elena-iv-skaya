@@ -3,6 +3,10 @@
     padding: 0 6.5vw;
   }
 
+  @include max(sm) {
+    padding: 0;
+  }
+
   .serie-page-header {
     display: flex;
     justify-content: space-between;
@@ -22,6 +26,10 @@
         height: 89.323vw;
       }
 
+      @include max(sm) {
+        height: 125.333vw;
+      }
+
       img {
         width:100%;
         height: 100%;
@@ -39,6 +47,10 @@
         padding-top: 0;
         margin-top: 12.021vw;
         width: 100%;
+      }
+
+      @include max(sm) {
+        padding: 0 9.333vw;
       }
 
       .row {
@@ -88,11 +100,19 @@
             font-size: 10.417vw;
           }
 
+          @include max(sm) {
+            font-size: 13.333vw;
+          }
+
           h3{
             line-height: 6.250vw;
 
             @include max(md) {
               line-height: 11.719vw;
+            }
+
+            @include max(sm) {
+              line-height: 16vw;
             }
           }
         }
@@ -108,6 +128,10 @@
             margin-top: 2.25vw;
           }
 
+          @include max(sm) {
+            font-size: 3.733vw;
+          }
+
           .copyright {
             @include sofiaProBold(1.25vw);
             position: relative;
@@ -116,6 +140,10 @@
 
             @include max(md) {
               font-size: 2.604vw;
+            }
+
+            @include max(sm) {
+              font-size: 5.333vw;
             }
           }
         }
@@ -132,10 +160,19 @@
           margin-top: 11vw;
         }
 
+        @include max(sm) {
+          margin-top: 24vw;
+          padding: 0;
+        }
+
         &-column {
 
           &.description {
             flex-basis: 61.5%;
+
+            @include max(sm) {
+              flex-basis: 100%;
+            }
           }
 
           p {
@@ -145,6 +182,11 @@
             @include max(md) {
               font-size: 2.604vw;
               line-height: 3.906vw;
+            }
+
+            @include max(sm) {
+              font-size: 4.8vw;
+              line-height: 8vw;
             }
           }
 
@@ -160,6 +202,12 @@
               margin-bottom: 1.55vw;
               font-size: 2.083vw;
               line-height: 3.125vw;
+            }
+
+            @include max(sm) {
+              font-size: 4.267vw;
+              line-height: 6.4vw;
+              margin-bottom: 4vw;
             }
           }
         }
@@ -190,6 +238,10 @@
       max-width: none;
     }
 
+    @include max(sm) {
+      margin-top: 50.667vw;
+    }
+
     .gallery-item {
       display: flex;
 
@@ -198,6 +250,10 @@
 
         @include max(md) {
           margin-top: 19.531vw;
+        }
+
+        @include max(sm) {
+          margin-top: 26.667vw;
         }
       }
 
@@ -216,6 +272,10 @@
         @include max(md) {
           max-width: 64.193vw;
         }
+
+        @include max(sm) {
+          max-width: 81.333vw;
+        }
       }
 
       &.landscape {
@@ -225,6 +285,10 @@
         @include max(md) {
           margin-left: 0;
           max-width: 64.193vw;
+        }
+
+        @include max(sm) {
+          max-width: 81.333vw;
         }
       }
 
@@ -240,6 +304,11 @@
             max-height: 51.172vw;
             object-fit: cover;
           }
+
+          @include max(sm) {
+            max-width: 100%;
+            max-height: 59.733vw;
+          }
         }
 
         img:last-child {
@@ -247,6 +316,10 @@
 
           @include max(md) {
             margin-left: 4.297vw
+          }
+
+          @include max(sm) {
+            margin-left: 4vw;
           }
         }
       }
@@ -265,6 +338,10 @@
       margin: 26.042vw 0;
     }
 
+    @include max(sm) {
+      padding: 0 9.333vw;
+    }
+
     .serie-credits {
       span {
         @include sofiaProBold(0.875vw);
@@ -279,6 +356,12 @@
           font-size: 2.083vw;
           line-height: 3.125vw;
         }
+
+        @include max(sm) {
+          margin-bottom: 4vw;
+          font-size: 4.267vw;
+          line-height: 6.4vw;
+        }
       }
 
       ul {
@@ -289,6 +372,11 @@
           @include max(md) {
             font-size: 2.604vw;
             line-height: 3.906vw;
+          }
+
+          @include max(sm) {
+            font-size: 4.8vw;
+            line-height: 8vw;
           }
         }
       }
@@ -305,6 +393,10 @@
       padding-bottom: 19.531vw;
     }
 
+    @include max(sm) {
+      padding-bottom: 40vw;
+    }
+
     span {
       @include sofiaProLight(0.750vw);
       text-transform: uppercase;
@@ -314,6 +406,10 @@
 
       @include max(md) {
         font-size: 1.823vw;
+      }
+
+      @include max(sm) {
+        font-size: 3.733vw;
       }
     }
 
@@ -339,6 +435,10 @@
 
   @include max(md) {
     padding-top: 26.042vw;
+  }
+
+  @include max(sm) {
+    padding-top: 25vw;
   }
 
   .line {
@@ -371,6 +471,11 @@
       font-size: 10.417vw;
       line-height: 11.719vw;
     }
+
+    @include max(sm) {
+      font-size: 13.333vw;
+      line-height: 16vw;
+    }
   }
 
   .serie-slider {
@@ -385,6 +490,11 @@
       transform: translate3d(28vw, 0, 0);
     }
 
+    @include max(sm) {
+      margin-top: 16vw;
+      transform: translate3d(9.333vw, 0, 0);
+    }
+
     .slider-item {
       width: 20vw;
       height: 25vw;
@@ -394,11 +504,20 @@
         height: 51.563vw;
       }
 
+      @include max(sm) {
+        width: 60vw;
+        height: 74.667vw;
+      }
+
       &:not(:first-child){
         margin-left: 2.5vw;
 
         @include max(md) {
           margin-left: 3.906vw;
+        }
+
+        @include max(sm) {
+          font-size: 4vw;
         }
       }
 
@@ -418,8 +537,16 @@
       justify-content: space-between;
       color: white;
 
+      @include max(sm) {
+        justify-content: center;
+      }
+
       .play {
         transform: rotate(-90deg);
+
+        @include max(sm) {
+          display: none;
+        }
       }
 
       .title {
@@ -432,6 +559,11 @@
           font-size: 2.083vw;
           line-height: 3.125vw;
         }
+
+        @include max(sm) {
+          font-size: 4.267vw;
+          line-height: 6.4vw;
+        }
       }
 
       .index {
@@ -441,6 +573,10 @@
         @include max(md) {
           font-size: 2.083vw;
           line-height: 3.125vw;
+        }
+
+        @include max(sm) {
+          display: none;
         }
       }
     }
@@ -452,6 +588,10 @@
       @include max(md) {
         height: 0.130vw;
         margin-top: 2.604vw;
+      }
+
+      @include max(sm) {
+        margin-top: 8vw;
       }
     }
   }
