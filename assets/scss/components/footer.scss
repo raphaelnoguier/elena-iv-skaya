@@ -24,5 +24,10 @@ footer {
     @include sofiaProMedium(0.625vw);
     letter-spacing: 0.125vw;
     line-height: 1.875vw;
+
+    @include max(md) {
+      font-size: 2.083vw;
+      line-height: 3.906vw;
+    }
   }
 }

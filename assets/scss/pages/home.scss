@@ -10,6 +10,7 @@
 
       @include max(md) {
         margin-top: 39.0625vw;
+        padding-bottom: 32.552vw;
       }
 
       &.black {
@@ -57,7 +58,7 @@
             height: 43.75vw;
 
             @include max(md) {
-              max-width: 71.615vw;
+              max-width: 64.063vw;
               height: 79.818vw;
             }
           }
@@ -65,7 +66,7 @@
             max-width: 35vw;
 
             @include max(md) {
-              max-width: 71.615vw;
+              max-width: 64.063vw;
               max-height: 48.047vw;
             }
 
@@ -79,8 +80,17 @@
             margin-top: 12.1875vw;
             margin-bottom: 6.25vw;
 
+            @include max(md) {
+              margin-top: 26.042vw;
+              margin-bottom: 13.021vw;
+            }
+
             img {
               max-height: 50vw;
+
+              @include max(md) {
+                max-height: 82.031vw;
+              }
             }
 
             .item-title {
