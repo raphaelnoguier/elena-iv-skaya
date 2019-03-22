@@ -13,10 +13,7 @@
   .home-slider-wrapper {
     overflow: hidden;
     position: relative;
-
-    @include max(sm) {
-      height: 100%;
-    }
+    height: 100%;
   }
 
   .slide {
@@ -42,6 +39,10 @@
       width: 100%;
       background-size: cover;
       background-repeat: no-repeat;
+
+      @include max(sm) {
+        background-position: center;
+      }
     }
   }
 }
@@ -74,14 +75,25 @@
       cursor: pointer;
     }
 
+    .left span,
+    .right span {
+      @include max(md) {
+        display: none;
+      }
+    }
+
     .left img {
       top: 0.125vw;
       position: relative;
       margin-right: 1.25vw;
       width: 1.2vw;
 
+      @include max(md) {
+        width: 2.083vw;
+      }
+
       @include max(sm) {
-        width: 3.2vw;
+        width: 5.2vw;
       }
     }
 
@@ -106,8 +118,12 @@
       transform: rotate(180deg);
       width: 1.2vw;
 
+      @include max(md) {
+        width: 2.083vw;
+      }
+
       @include max(sm) {
-        width: 3.2vw;
+        width: 5.2vw;
       }
     }
   }

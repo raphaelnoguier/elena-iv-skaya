@@ -389,14 +389,6 @@
     align-items: center;
     @include verticalText(360);
 
-    @include max(md) {
-      padding-bottom: 19.531vw;
-    }
-
-    @include max(sm) {
-      padding-bottom: 40vw;
-    }
-
     span {
       @include sofiaProLight(0.750vw);
       text-transform: uppercase;
@@ -421,7 +413,13 @@
       opacity: 0.1;
 
       @include max(md) {
-        display: none;
+        border-width: 0.130vw;
+        height: 17.25vw;
+      }
+
+      @include max(sm) {
+        border-width: 0.267vw;
+        height: 45vw;
       }
     }
   }

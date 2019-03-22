@@ -16,14 +16,29 @@ export default {
     Loader
   },
   mounted() {
+    window.addEventListener('resize', this.resize);
     const container = this.$el;
-    scrollbar.add(container, this.onScroll);
+
+    if(container.clientWidth > 768) {
+      scrollbar.add(container, this.onScroll);
+    }
   },
   beforeDestroy() {
     const container = this.$el;
-    scrollbar.remove(container);
+    if(container.clientWidth > 768) {
+      scrollbar.destroyAll();
+    }
+    window.removeEventListener('resize', this.resize);
   },
   methods: {
+    resize () {
+      const container = this.$el;
+      if(container.clientWidth > 768) {
+        scrollbar.add(container, this.onScroll);
+      } else {
+        scrollbar.destroyAll();
+      }
+    },
     onScroll(e) {
     }
   }

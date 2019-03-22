@@ -17,10 +17,8 @@ const listen = function (el, listener) {
   return scrollbar
 }
 
-const remove = function (el, listener) {
-  const scrollbar = Scrollbar.get(el)
-  listener && scrollbar.removeListener(listener)
-  scrollbar.destroy(el)
+const destroyAll = function () {
+  Scrollbar.destroyAll()
 }
 
 const scrollTo = function (el,y) {
@@ -32,7 +30,7 @@ const scrollTo = function (el,y) {
 
 export default {
   add,
-  remove,
+  destroyAll,
   listen,
   scrollTo
 }

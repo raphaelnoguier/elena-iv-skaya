@@ -62,8 +62,12 @@
         opacity: 0;
         transition: opacity 500ms ease;
 
+        @include max(md) {
+          bottom: 15vw;
+        }
+
         @include max(sm) {
-          bottom: 13.333vw;
+          bottom: 25vw;
         }
 
         &.fade-in {

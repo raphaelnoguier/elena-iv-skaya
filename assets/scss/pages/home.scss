@@ -71,7 +71,7 @@
 
             @include max(md) {
               max-width: 64.063vw;
-              height: 79.818vw;
+              height: auto;
             }
 
             @include max(sm) {
@@ -81,6 +81,9 @@
             }
 
             img {
+              @include max(md) {
+                max-height: 79.818vw;
+              }
               @include max(sm) {
                 max-height: 101.333vw;
               }
@@ -133,9 +136,13 @@
               align-items: flex-end;
               margin-top: 2.125vw;
 
+              @include max(md) {
+                margin-top: 4vw;
+              }
+
               @include max(sm) {
                 align-items: flex-start;
-                margin-top: 8vw;
+                margin-top: 7vw;
                 margin-left: 9.333vw;
               }
 
@@ -145,7 +152,8 @@
 
                 @include max(sm) {
                   align-items: flex-start;
-                  margin-top: 5.333vw;
+                  margin-top: 4.25vw;
+                  margin-left: 0;
                 }
               }
             }
@@ -173,19 +181,19 @@
             }
 
             @include max(md) {
-              right: -6.75vw;
               line-height: 3.906vw;
-            }
-
-            @include max(sm) {
               position: relative;
               right: 0;
               writing-mode: initial;
               text-orientation: initial;
               transform: rotate(0deg);
-              flex-direction: column;
+              flex-direction: row;
               align-items: flex-start;
-              margin-top: 8vw;
+              margin-top: 7vw;
+            }
+
+            @include max(sm) {
+              flex-direction: column;
             }
 
             h3 {
@@ -202,18 +210,21 @@
             }
 
             span {
-              @include sofiaProLight(0.750vw);
+              @include sofiaProLight(0.875vw);
               display: block;
               margin-top: 1.25vw;
               letter-spacing: 0.125vw;
 
               @include max(md) {
-                font-size: 1.823vw;
+                font-size: 2.083vw;
+                margin-top: 0;
+                margin-left: 2.604vw;
               }
 
               @include max(sm) {
-                margin-top: 5.333vw;
+                margin-top: 4.25vw;
                 font-size: 3.733vw;
+                margin-left: 0;
               }
             }
           }
