@@ -7,6 +7,10 @@ footer {
   text-transform: uppercase;
   position: relative;
 
+  @include max(sm) {
+    padding: 4vh 9.133vw;
+  }
+
   .dark & {
     background: #121212;
     color:white;
@@ -28,6 +32,11 @@ footer {
     @include max(md) {
       font-size: 2.083vw;
       line-height: 3.906vw;
+    }
+
+    @include max(sm) {
+      font-size: 3vw;
+      line-height: 6vw;
     }
   }
 }

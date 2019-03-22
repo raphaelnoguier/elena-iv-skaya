@@ -33,6 +33,10 @@
             transform: translate3d(-7.8vw,0,0);
           }
 
+          @include max(sm) {
+            transform: translate3d(0,0,0);
+          }
+
           a {
             text-decoration: none;
           }
@@ -43,6 +47,10 @@
             @include max(md) {
               margin-top: 13.021vw;
             }
+
+            @include max(sm) {
+              margin-top: 20vw;
+            }
           }
 
           &:nth-child(even) {
@@ -50,6 +58,10 @@
 
             @include max(md) {
               transform: translate3d(3.25vw,0,0);
+            }
+
+            @include max(sm) {
+              transform: translate3d(0,0,0);
             }
           }
 
@@ -61,6 +73,18 @@
               max-width: 64.063vw;
               height: 79.818vw;
             }
+
+            @include max(sm) {
+              max-width: 100%;
+              width: calc(100% - 18.667vw);
+              height: auto;
+            }
+
+            img {
+              @include max(sm) {
+                max-height: 101.333vw;
+              }
+            }
           }
           &.landscape {
             max-width: 35vw;
@@ -68,6 +92,12 @@
             @include max(md) {
               max-width: 64.063vw;
               max-height: 48.047vw;
+            }
+
+            @include max(sm) {
+              max-width: 100%;
+              width: calc(100% - 18.667vw);
+              max-height: 61.333vw;
             }
 
             .item-title {
@@ -103,9 +133,20 @@
               align-items: flex-end;
               margin-top: 2.125vw;
 
+              @include max(sm) {
+                align-items: flex-start;
+                margin-top: 8vw;
+                margin-left: 9.333vw;
+              }
+
               span {
                 margin-top: 0;
                 margin-left: 1.25vw;
+
+                @include max(sm) {
+                  align-items: flex-start;
+                  margin-top: 5.333vw;
+                }
               }
             }
           }
@@ -136,12 +177,27 @@
               line-height: 3.906vw;
             }
 
+            @include max(sm) {
+              position: relative;
+              right: 0;
+              writing-mode: initial;
+              text-orientation: initial;
+              transform: rotate(0deg);
+              flex-direction: column;
+              align-items: flex-start;
+              margin-top: 8vw;
+            }
+
             h3 {
               @include sofiaProMedium(0.875vw);
               letter-spacing: 0.125vw;
 
               @include max(md) {
                 font-size: 2.083vw;
+              }
+
+              @include max(sm) {
+                font-size: 3.733vw;
               }
             }
 
@@ -153,6 +209,11 @@
 
               @include max(md) {
                 font-size: 1.823vw;
+              }
+
+              @include max(sm) {
+                margin-top: 5.333vw;
+                font-size: 3.733vw;
               }
             }
           }

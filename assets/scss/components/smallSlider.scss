@@ -6,9 +6,17 @@
     height: 15.625vw;
   }
 
+  @include max(sm) {
+    height: 26.667vw;
+  }
+
   .home-slider-wrapper {
     overflow: hidden;
     position: relative;
+
+    @include max(sm) {
+      height: 100%;
+    }
   }
 
   .slide {
@@ -55,6 +63,11 @@
       font-size: 2.083vw;
     }
 
+    @include max(sm) {
+      padding: 0  9.333vw;
+      font-size: 3.200vw;
+    }
+
     .left,
     .dots,
     .right {
@@ -66,6 +79,10 @@
       position: relative;
       margin-right: 1.25vw;
       width: 1.2vw;
+
+      @include max(sm) {
+        width: 3.2vw;
+      }
     }
 
     .index {
@@ -74,6 +91,10 @@
 
         @include max(md) {
           font-size: 2.083vw;
+        }
+
+        @include max(sm) {
+          font-size: 3.200vw;
         }
       }
     }
@@ -84,6 +105,10 @@
       margin-left: 1.25vw;
       transform: rotate(180deg);
       width: 1.2vw;
+
+      @include max(sm) {
+        width: 3.2vw;
+      }
     }
   }
 }

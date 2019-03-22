@@ -6,11 +6,17 @@
   transform: translate3d(-8vw, 0, 0);
 
   @include max(md) {
-    height: 108.984vw !important;
+    height: 108.984vw;
     width: 100%;
     transform: translate3d(0, 0, 0);
     padding: 0 6.510vw;
     margin-top: 12.370vw;
+
+    @include max(sm) {
+      padding: 0;
+      margin-top: 9vw;
+      height: 125.333vw;
+    }
   }
 
   .slide {
@@ -24,6 +30,10 @@
     @include max(md) {
       margin: auto;
       width: calc(100% - 13.02vw);
+    }
+
+    @include max(sm) {
+      width: 100%;
     }
 
     &.active {

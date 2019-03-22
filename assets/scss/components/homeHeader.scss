@@ -9,7 +9,9 @@
   }
 
   .home-slider-wrapper {
-    height: 100%;
+    @include min(lg) {
+      height: 100%;
+    }
   }
 
   .right-col {
@@ -33,6 +35,11 @@
         padding: 0 6.510vw;
       }
 
+      @include max(md) {
+        margin-top: 19.5vw;
+        padding: 0 9.333vw;
+      }
+
       .title {
         @include actaDisplayLight(5.625vw);
 
@@ -40,11 +47,19 @@
           font-size: 10.417vw;
         }
 
+        @include max(sm) {
+          font-size: 13.333vw;
+        }
+
         h3{
           line-height: 6.250vw;
 
           @include max(md) {
             line-height: 11.719vw;
+          }
+
+          @include max(sm) {
+            line-height: 16vw;
           }
         }
       }
@@ -57,6 +72,12 @@
 
         @include max(md) {
           font-size: 2.083vw;
+          line-height: 3.906vw;
+        }
+
+        @include max(sm) {
+          font-size: 3.733vw;
+          line-height: 8vw;
         }
 
         .copyright {
@@ -67,6 +88,10 @@
 
           @include max(md) {
             font-size: 2.604vw;
+          }
+
+          @include max(sm) {
+            font-size: 5.333vw;
           }
         }
       }
