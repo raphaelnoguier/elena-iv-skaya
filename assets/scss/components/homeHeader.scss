@@ -118,6 +118,10 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
 
+      @include max(md) {
+        display: none;
+      }
+
       .line {
         height: 4.0625vw;
         background: black;
