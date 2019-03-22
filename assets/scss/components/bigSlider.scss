@@ -6,7 +6,7 @@
   transform: translate3d(-8vw, 0, 0);
 
   @include max(md) {
-    height: 108.984vw;
+    height: 108.984vw !important;
     width: 100%;
     transform: translate3d(0, 0, 0);
     padding: 0 6.510vw;
@@ -17,14 +17,13 @@
     height: 100%;
     width: 100%;
     position: absolute;
-    transform: skew(0, 0);
     margin-left: auto;
     z-index: 1;
     transition: width 1s $ease-in-out-quart 1s;
 
     @include max(md) {
-      width: calc(100% - 6.510vw);
       margin: auto;
+      width: calc(100% - 13.02vw);
     }
 
     &.active {

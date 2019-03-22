@@ -8,6 +8,10 @@
       padding-bottom: 6.25vw;
       transition: all 0.5s ease;
 
+      @include max(md) {
+        margin-top: 39.0625vw;
+      }
+
       &.black {
         background:black;
       }
@@ -24,23 +28,46 @@
           position: relative;
           transform: translate3d(-12.5vw,0,0);
 
+          @include max(md) {
+            transform: translate3d(-7.8vw,0,0);
+          }
+
           a {
             text-decoration: none;
           }
 
           &:not(:first-child) {
             margin-top: 6.875vw;
+
+            @include max(md) {
+              margin-top: 13.021vw;
+            }
           }
+
           &:nth-child(even) {
             transform: translate3d(12.5vw,0,0);
+
+            @include max(md) {
+              transform: translate3d(3.25vw,0,0);
+            }
           }
 
           &.portrait {
             max-width: 35vw;
             height: 43.75vw;
+
+            @include max(md) {
+              max-width: 71.615vw;
+              height: 79.818vw;
+            }
           }
           &.landscape {
             max-width: 35vw;
+
+            @include max(md) {
+              max-width: 71.615vw;
+              max-height: 48.047vw;
+            }
 
             .item-title {
               bottom: 0.1875vw
@@ -94,9 +121,18 @@
               right: -2.5vw;
             }
 
+            @include max(md) {
+              right: -6.75vw;
+              line-height: 3.906vw;
+            }
+
             h3 {
               @include sofiaProMedium(0.875vw);
               letter-spacing: 0.125vw;
+
+              @include max(md) {
+                font-size: 2.083vw;
+              }
             }
 
             span {
@@ -104,6 +140,10 @@
               display: block;
               margin-top: 1.25vw;
               letter-spacing: 0.125vw;
+
+              @include max(md) {
+                font-size: 1.823vw;
+              }
             }
           }
         }
