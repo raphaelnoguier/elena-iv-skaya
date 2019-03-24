@@ -3,22 +3,28 @@
     <HomeSlider :type="'Big'" :featured="featured"/>
     <div class="right-col">
       <div class="small-slider-wrapper">
-        <HomeSlider :type="'Small'" :featured="featured" />
-        <div class="controls">
-          <div class="left"><img src="~assets/img/ui/arrow.svg" class="preload"><span>previous</span></div>
-          <div class="index">
-            <span class="current">1 / </span>
-            <span class="total">4</span>
+        <HomeSlider :type="'Small'" :featured="featured" :index="slideIndex"/>
+        <div class="controls" :class="transitioning ? 'disabled' : ''">
+          <div v-on:click="slide('prev')" class="left">
+            <img src="~assets/img/ui/arrow.svg" class="preload">
+            <span>previous</span>
           </div>
-          <div v-on:click="nextSlide" class="right"><span>next</span><img src="~assets/img/ui/arrow.svg" class="preload"></div>
+          <div class="index">
+            <span class="current">{{slideIndex}} /</span>
+            <span class="total">{{featured.length}}</span>
+          </div>
+          <div v-on:click="slide('next')" class="right">
+            <span>next</span>
+            <img src="~assets/img/ui/arrow.svg" class="preload">
+          </div>
         </div>
       </div>
-      <div v-for="(serie, index) in featured.slice(0,1)"  :key="index" class="serie-infos">
+      <div class="serie-infos" :class="transitioning ? 'transitioning' : ''">
         <div class="title">
-          <h3>{{serie.serie.data.title[0].text}}</h3>
+          <h3>{{featured[textIndex - 1].serie.data.title[0].text}}</h3>
         </div>
         <div class="date">
-          <p><span class="copyright">©</span> {{serie.serie.data.date}}</p>
+          <p><span class="copyright">©</span> {{featured[textIndex - 1].serie.data.date}}</p>
         </div>
       </div>
       <div v-on:click="scrollDown" class="chevron">
@@ -45,61 +51,69 @@ export default {
   },
   data() {
     return {
-      slideIndex: 0
+      slideIndex: 1,
+      textIndex: 1,
+      transitioning: false
     }
   },
   methods: {
-    nextSlide() {
-      let sliderWrapper = this.$el.querySelector('.big-slider');
-      let slides = sliderWrapper.querySelectorAll(".slide");
-      let activeSlide = sliderWrapper.querySelector(".active");
-      let activeSlideIndex = activeSlide.dataset.slide;
-      activeSlideIndex++;
+    slide(direction) {
+      let sliderWrapper = this.$el.querySelectorAll('.home-slider-wrapper');
+      this.transitioning = true;
+      sliderWrapper.forEach(slider => {
+        let slides = slider.querySelectorAll(".slide");
+        let activeSlide = slider.querySelector(".active");
+        let activeSlideIndex = activeSlide.dataset.slide;
 
-      if (activeSlideIndex <= slides.length) {
-        let nextSlide = sliderWrapper.querySelector(
-            ".slide[data-slide='" + activeSlideIndex + "']"
-          );
-          activeSlide.classList.add("sliding");
-          nextSlide.classList.add("active");
-          activeSlide.addEventListener('animationend', function() {
-            activeSlide.classList.remove('active');
-            nextSlide.classList.add("active");
-          })
-      } else {
-        let nextSlide = sliderWrapper.querySelector(".slide[data-slide='1']");
-        activeSlide.classList.remove("active");
-        activeSlide.classList.remove("sliding");
-        nextSlide.classList.add("active");
-        activeSlideIndex = 0;
-      }
+        direction === 'next' ? activeSlideIndex++ : activeSlideIndex--;
 
-      this.mirror();
+        if (activeSlideIndex > slides.length) activeSlideIndex = 1
+
+        if(activeSlideIndex < 1) activeSlideIndex = slides.length;
+
+        this.slideIndex = activeSlideIndex;
+
+        let nextSlide = slider.querySelector(".slide[data-slide='" + activeSlideIndex + "']");
+
+        nextSlide.classList.add('behind');
+
+        activeSlide.classList.add(`sliding-${direction}`);
+
+        setTimeout(() => {
+          this.transitioning = false;
+          activeSlide.classList.remove('active', 'sliding-next', 'sliding-prev');
+          nextSlide.classList.remove('behind');
+          nextSlide.classList.add('active');
+        }, 1100);
+        this.slideText(direction);
+      });
     },
-    mirror() {
-      let sliderWrapper = this.$el.querySelector('.small-slider');
-      let slides = sliderWrapper.querySelectorAll(".slide");
-      let activeSlide = sliderWrapper.querySelector(".active");
-      let activeSlideIndex = activeSlide.dataset.slide;
-      activeSlideIndex++;
+    slideText(direction){
+      let serieInfos = this.$el.querySelectorAll(".serie-infos .date, .serie-infos .title")
+      let tl = anime.timeline({
+        easing: 'easeInOutQuart',
+        duration: 750,
+        direction: direction === 'next' ? 'normal' : 'reverse'
+      });
 
-      if (activeSlideIndex <= slides.length) {
-        let nextSlide = sliderWrapper.querySelector(
-            ".slide[data-slide='" + activeSlideIndex + "']"
-          );
-          activeSlide.classList.add("sliding");
-          nextSlide.classList.add("active");
-          activeSlide.addEventListener('animationend', function() {
-            activeSlide.classList.remove('active');
-            nextSlide.classList.add("active");
-          })
-      } else {
-        let nextSlide = sliderWrapper.querySelector(".slide[data-slide='1']");
-        activeSlide.classList.remove("active");
-        activeSlide.classList.remove("sliding");
-        nextSlide.classList.add("active");
-        activeSlideIndex = 0;
-      }
+      tl.add({
+        targets: serieInfos,
+        opacity: [1, 0],
+        translateX: [0 , '6.250vw'],
+        letterSpacing: [0, '3px'],
+        complete: () => {
+          direction === 'next' ? this.textIndex = this.slideIndex : null;
+        }
+      })
+      .add({
+        targets: serieInfos,
+        opacity: [0, 1],
+        translateX: ['-6.250vw', 0],
+        letterSpacing: ['-3px', 0],
+        complete: () => {
+          direction === 'next' ? null : this.textIndex = this.slideIndex;
+        }
+      })
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('app');

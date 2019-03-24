@@ -24,8 +24,7 @@
     width: 100%;
     position: absolute;
     margin-left: auto;
-    z-index: 1;
-    transition: width 1s $ease-in-out-quart 1s;
+    z-index: -1;
 
     @include max(md) {
       margin: auto;
@@ -36,24 +35,11 @@
       width: 100%;
     }
 
-    &.active {
-      z-index: 2;
-    }
-
-    &.sliding {
-      width: 0;
-      .image {
-        animation: slide 1s ease forwards;
-      }
-    }
-
     .image {
       height: 100%;
       width: 100%;
       background-size: cover;
       background-repeat: no-repeat;
-      -webkit-clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
-      clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 100%);
     }
   }
 }

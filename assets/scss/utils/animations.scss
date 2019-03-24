@@ -1,11 +1,23 @@
-@keyframes slide{
+@keyframes slide-next{
   0% {
     clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0% 100%);
   }
-  50% {
-    clip-path: polygon(20% 0, 100% 0%, 100% 100%, 10% 100%);
-  }
+  // 30% {
+  //   clip-path: polygon(34% 0, 100% 0, 100% 100%, 42% 100%)
+  // }
   100%{
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+}
+
+@keyframes slide-prev{
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  // 30% {
+  //   clip-path: polygon(0 0, 95% 0, 100% 100%, 0 100%);
+  // }
+  100%{
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
   }
 }

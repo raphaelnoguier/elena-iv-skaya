@@ -12,6 +12,25 @@
     @include min(lg) {
       height: 100%;
     }
+
+    .slide {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+      &.behind {
+        z-index: 1;
+      }
+
+      &.active {
+        z-index: 2;
+      }
+
+      &.sliding-next {
+        animation: slide-next 1100ms $ease-in-out-quart;
+      }
+      &.sliding-prev {
+        animation: slide-prev 1100ms $ease-in-out-quart;
+      }
+    }
   }
 
   .right-col {
@@ -28,6 +47,10 @@
     .serie-infos {
       flex-direction: column;
       max-width: 45vw;
+
+      &.transitioning {
+        max-width: none;
+      }
 
       @include max(md) {
         margin-top: 15.625vw;
@@ -67,7 +90,7 @@
       .date {
         @include sofiaProMedium(0.875vw);
         margin-top: 0.9375vw;
-        letter-spacing: 0.125vw;
+        letter-spacing: 0.125vw !important;
         line-height: 1.875vw;
 
         @include max(md) {
