@@ -85,6 +85,11 @@
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 export default {
+  head() {
+    return{
+      title: this.title
+    }
+  },
   async asyncData ({ app, params, error, store}) {
     try {
       let entry = await store.dispatch('GET_DOC', app.context.route);

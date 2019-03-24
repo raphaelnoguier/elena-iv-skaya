@@ -37,11 +37,11 @@ export default {
 
       return {
         featured: featured,
-        series: series
-        // seo: {
-        //   title: data.seo_title,
-        //   description: data.seo_description
-        // },
+        series: series,
+        seo: {
+          title: data.seo_title,
+          description: data.seo_description
+        },
       };
 
     } catch (err) {
@@ -54,14 +54,14 @@ export default {
   },
   head() {
     return {
-      // title: this.doc.seo.title,
-      // meta: [
-      //   {
-      //     hid: "description",
-      //     name: "description",
-      //     content: this.doc.seo.description
-      //   }
-      // ]
+      title: this.seo.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.seo.description
+        }
+      ]
     };
   },
 
