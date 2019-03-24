@@ -61,7 +61,14 @@ export default {
           name: "description",
           content: this.seo.description
         }
-      ]
+      ],
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: this.$store.getters.currentDoc.data.loader_image.url
+        }
+      ],
     };
   },
 

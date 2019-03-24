@@ -87,7 +87,14 @@ import calcOffset from '~/utils/offset.js';
 export default {
   head() {
     return{
-      title: this.title
+      title: this.title,
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: this.featuredImage.url
+        }
+      ],
     }
   },
   async asyncData ({ app, params, error, store}) {

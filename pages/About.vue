@@ -82,6 +82,25 @@ export default {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
+  head() {
+    return {
+      title: "About - Elena Iv-Skaya",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.first_paragraph
+        }
+      ],
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: this.$store.getters.currentDoc.data.loader_image.url
+        }
+      ],
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       const container = this.$el.ownerDocument.getElementById('app');
