@@ -104,7 +104,7 @@
             }
 
             .item-title {
-              bottom: 0.1875vw
+              bottom: 0.2875vw;
             }
           }
 
@@ -189,10 +189,11 @@
               transform: rotate(0deg);
               flex-direction: row;
               align-items: flex-start;
-              margin-top: 7vw;
+              margin-top: 3.5vw;
             }
 
             @include max(sm) {
+              margin-top: 7vw;
               flex-direction: column;
             }
 

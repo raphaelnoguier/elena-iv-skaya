@@ -85,7 +85,7 @@
 
       .serie-title {
         flex-direction: column;
-        max-width: 45vw;
+        max-width: 36vw;
         margin-top: 3.25vw;
 
         @include max(md) {
@@ -258,11 +258,19 @@
       }
 
       &:nth-child(even):not(.duo){
-        margin-left: auto;
-        margin-right: 7.5vw;
-
-        @include max(md) {
-          margin-right: 0;
+        &.portrait {
+          margin-left: 22.500vw;
+          margin-right: auto;
+          @include max(md) {
+            margin-left: 22.786vw;
+          }
+          @include max(sm) {
+            margin-left: 18.667vw;
+          }
+        }
+        &.landscape {
+          margin-left: 7.500vw;
+          margin-right: auto;
         }
       }
 
@@ -280,10 +288,8 @@
 
       &.landscape {
         max-width: 57.5vw;
-        margin-left: 7.5vw;
 
         @include max(md) {
-          margin-left: 0;
           max-width: 64.193vw;
         }
 
@@ -298,15 +304,15 @@
         img {
           max-height: 43.75vw;
           max-width: 35vw;
+          object-fit: cover;
 
           @include max(md) {
             max-width: 41.146vw;
             max-height: 51.172vw;
-            object-fit: cover;
           }
 
           @include max(sm) {
-            max-width: 100%;
+            max-width: calc(50% - 2vw);
             max-height: 59.733vw;
           }
         }
@@ -413,12 +419,14 @@
       opacity: 0.1;
 
       @include max(md) {
-        border-width: 0.130vw;
+        border-left: 0.130vw solid black;
         height: 17.25vw;
+        margin-top: 2.604vw;
       }
 
       @include max(sm) {
-        border-width: 0.267vw;
+        border: 0.130vw solid black;
+        margin-top: 5.333vw;
         height: 45vw;
       }
     }
@@ -443,16 +451,15 @@
     position: absolute;
     display: inline-block;
     left:0;
+    top: 0;
     right: 0;
     margin: auto;
-    transform: rotate(270deg);
-    width: calc(100% - 30vw);
+    height: calc(100% - 30vw);
+    width: 0.130vw;
     border-left: 0.063vw solid white;
     opacity: 0.1;
 
     @include max(md) {
-      top: 0;
-      transform: rotate(0);
       width: 0.130vw;
       height: calc(100% - 24.740vw);
       border-left: 0.130vw solid white;

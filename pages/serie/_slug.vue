@@ -18,7 +18,7 @@
                 <h3>{{title}}</h3>
               </div>
               <div class="date">
-                <p><span class="copyright">©</span> 2019</p>
+                <p><span class="copyright">©</span> {{date}}</p>
               </div>
             </div>
           </div>

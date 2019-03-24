@@ -38,12 +38,12 @@ footer {
     }
 
     span {
-      margin-left: 0.5vw;
-      margin-right: 0.5vw;
+      margin-left: 0.15vw;
+      margin-right: 0.15vw;
 
       @include max(md) {
-        margin-left: 2vw;
-        margin-right: 2vw;
+        margin-left: 0.5vw;
+        margin-right: 0.5vw;
       }
     }
 
