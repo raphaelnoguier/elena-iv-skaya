@@ -302,18 +302,15 @@
         display: flex;
 
         img {
-          max-height: 43.75vw;
           max-width: 35vw;
           object-fit: cover;
 
           @include max(md) {
             max-width: 41.146vw;
-            max-height: 51.172vw;
           }
 
           @include max(sm) {
             max-width: calc(50% - 2vw);
-            max-height: 59.733vw;
           }
         }
 
