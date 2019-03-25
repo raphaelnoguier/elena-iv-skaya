@@ -14,7 +14,7 @@
     }
 
     .slide {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
 
       &.behind {
         z-index: 1;

@@ -90,7 +90,7 @@ export default {
           easing: 'easeInOutQuart',
           update: (anime) => {
             console.log(clipPathValue)
-            activeSlide.style.clipPath = `polygon(${clipPathValue.value}% 0, 100% 0%, 100% 100%, ${clipPathValue.value * 1.15}% 100%)`
+            activeSlide.style.clipPath = `polygon(${clipPathValue.value}% 0, 101% 0%, 101% 101%, ${clipPathValue.value * 1.15}% 101%)`
           },
           complete: () => {
             this.transitioning = false;
