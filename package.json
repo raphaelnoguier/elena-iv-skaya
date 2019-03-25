@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "animejs": "^3.0.1",
+    "bezier-easing": "^2.1.0",
     "cross-env": "^5.2.0",
     "nuxt": "^2.4.5",
     "patch-package": "^6.0.5",

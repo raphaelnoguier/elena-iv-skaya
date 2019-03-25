@@ -1467,6 +1467,11 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bezier-easing@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/bezier-easing/-/bezier-easing-2.1.0.tgz#c04dfe8b926d6ecaca1813d69ff179b7c2025d86"
+  integrity sha1-wE3+i5JtbsrKGBPWn/F5t8ICXYY=
+
 bfj@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/bfj/-/bfj-6.1.1.tgz#05a3b7784fbd72cfa3c22e56002ef99336516c48"
@@ -5962,10 +5967,10 @@ pretty-time@^1.1.0:
   resolved "https://registry.yarnpkg.com/pretty-time/-/pretty-time-1.1.0.tgz#ffb7429afabb8535c346a34e41873adf3d74dd0e"
   integrity sha512-28iF6xPQrP8Oa6uxE6a1biz+lWeTOAPKggvjB8HAs6nVMKZwf5bG++632Dx614hIWgUPkgivRfG+a8uAXGTIbA==
 
-prismic-javascript@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-2.0.1.tgz#8df01a7ae0fe8ccfe5fe7f6d2fa7de818d95ea39"
-  integrity sha512-a5nQ004OCSsw/+VxDbA14LjoI+zh8SrGX1gLdXof3UiJfbt5Gjbyap2k+/tX9a17hYGypG7LHDIvqYOjjHhopw==
+prismic-javascript@^2.0.1:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-2.0.3.tgz#085da0c332e1903bd79a59b3afbb2b5d5c6fabbd"
+  integrity sha512-FODv9IYhwVBy5mSPsV5UcHw1nDDHFVe41vSCiJoM3Q3q2TbwAE5/Pz+jNoKUbIDQvVzNcGJKm1KAB8CkxT0qiA==
   dependencies:
     cross-fetch "^2.2.0"
     promise-polyfill "8.0.0"

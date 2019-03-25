@@ -46,6 +46,7 @@ import anime from 'animejs'
 import HomeSlider from '~/components/HomeSlider'
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
+import BezierEasing from 'bezier-easing'
 
 export default {
   components: {
@@ -55,7 +56,7 @@ export default {
     return {
       slideIndex: 1,
       textIndex: 1,
-      transitioning: false
+      transitioning: false,
     }
   },
   methods: {
@@ -66,6 +67,7 @@ export default {
         let slides = slider.querySelectorAll(".slide");
         let activeSlide = slider.querySelector(".active");
         let activeSlideIndex = activeSlide.dataset.slide;
+        let isSmallSlider = slider.classList.contains('small-slider');
 
         direction === 'next' ? activeSlideIndex++ : activeSlideIndex--;
 
@@ -79,18 +81,27 @@ export default {
 
         nextSlide.classList.add('behind');
 
-        let clipPathValue = {
-          value: 0,
+        let values = {
+          x: direction === 'next' ? 0 : 100,
         }
 
+        let easingTop = BezierEasing(0.85, 0.015, 0.175, 0.9);
+        let easingBottom = BezierEasing(isSmallSlider ? 0.85 : 0.7, 0.200, 0.175, 1)
+
         anime({
-          targets: clipPathValue,
-          value: 100,
+          targets: values,
           duration: 1000,
-          easing: 'easeInOutQuart',
+          x: direction === 'next' ? 100 : 0,
+          easing: 'linear',
+          delay: isSmallSlider ? 300 : 0,
           update: (anime) => {
-            console.log(clipPathValue)
-            activeSlide.style.clipPath = `polygon(${clipPathValue.value}% 0, 101% 0%, 101% 101%, ${clipPathValue.value * 1.15}% 101%)`
+            const easeTop = easingTop(values.x / 100)
+            const easeBottom = easingBottom(values.x / 100)
+            if(direction === 'next') {
+              activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
+            } else {
+              activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
+            }
           },
           complete: () => {
             this.transitioning = false;
@@ -107,14 +118,14 @@ export default {
       let serieInfos = this.$el.querySelectorAll(".serie-infos .date, .serie-infos .title")
       let tl = anime.timeline({
         easing: 'easeInOutQuart',
-        duration: 750,
+        duration: 800,
         direction: direction === 'next' ? 'normal' : 'reverse'
       });
 
       tl.add({
         targets: serieInfos,
         opacity: [1, 0],
-        translateX: [0 , '6.250vw'],
+        translateX: [0 , '8.250vw'],
         letterSpacing: [0, '3px'],
         complete: () => {
           direction === 'next' ? this.textIndex = this.slideIndex : null;
@@ -123,7 +134,7 @@ export default {
       .add({
         targets: serieInfos,
         opacity: [0, 1],
-        translateX: ['-6.250vw', 0],
+        translateX: ['-8.250vw', 0],
         letterSpacing: ['-3px', 0],
         complete: () => {
           direction === 'next' ? null : this.textIndex = this.slideIndex;
