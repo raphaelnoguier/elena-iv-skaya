@@ -21,7 +21,9 @@
       </div>
       <div class="serie-infos" :class="transitioning ? 'transitioning' : ''">
         <div class="title">
-          <h3>{{featured[textIndex - 1].serie.data.title[0].text}}</h3>
+          <h3>
+            <nuxt-link :to="`serie/${featured[textIndex - 1].serie.uid}`">{{featured[textIndex - 1].serie.data.title[0].text}}</nuxt-link>
+          </h3>
         </div>
         <div class="date">
           <p><span class="copyright">©</span> {{featured[textIndex - 1].serie.data.date}}</p>

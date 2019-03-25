@@ -66,6 +66,10 @@
       .title {
         @include actaDisplayLight(5.625vw);
 
+        a {
+          text-decoration: none;
+        }
+
         @include max(md) {
           font-size: 10.417vw;
         }
