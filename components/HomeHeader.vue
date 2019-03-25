@@ -77,14 +77,27 @@ export default {
 
         nextSlide.classList.add('behind');
 
-        activeSlide.classList.add(`sliding-${direction}`);
+        let clipPathValue = {
+          value: 0,
+        }
 
-        setTimeout(() => {
-          this.transitioning = false;
-          activeSlide.classList.remove('active', 'sliding-next', 'sliding-prev');
-          nextSlide.classList.remove('behind');
-          nextSlide.classList.add('active');
-        }, 1100);
+        anime({
+          targets: clipPathValue,
+          value: 100,
+          duration: 1000,
+          easing: 'easeInOutQuart',
+          update: (anime) => {
+            console.log(clipPathValue)
+            activeSlide.style.clipPath = `polygon(${clipPathValue.value}% 0, 100% 0%, 100% 100%, ${clipPathValue.value * 1.15}% 100%)`
+          },
+          complete: () => {
+            this.transitioning = false;
+            activeSlide.style.clipPath = '';
+            activeSlide.classList.remove('active');
+            nextSlide.classList.remove('behind');
+            nextSlide.classList.add('active');
+          }
+        })
         this.slideText(direction);
       });
     },

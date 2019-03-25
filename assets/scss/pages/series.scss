@@ -153,10 +153,13 @@
         display: flex;
         justify-content: space-between;
         padding-right: 3.75vw;
-        margin-top: 6.5vw;
+        position: absolute;
+        bottom: 7.75vw;
         z-index: 2;
 
         @include max(md) {
+          bottom: 0;
+          position: relative;
           margin-top: 11vw;
         }
 

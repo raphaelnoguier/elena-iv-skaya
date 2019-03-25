@@ -25,7 +25,7 @@
       }
 
       &.sliding-next {
-        animation: slide-next 1100ms $ease-in-out-quart;
+        //animation: slide-next 1100ms step-start;
       }
       &.sliding-prev {
         animation: slide-prev 1100ms $ease-in-out-quart;
