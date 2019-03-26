@@ -1,5 +1,5 @@
 // global store
-import queryApi from '../utils/queryApi.js'
+export const strict = false
 import Prismic from 'prismic-javascript'
 import prismicConfig from '../prismic.config.js'
 

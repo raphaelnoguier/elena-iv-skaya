@@ -59,8 +59,10 @@
       </div>
       <div class="serie-slider">
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
-          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
-          <img v-else class="preload" :src="item.serie.data.cover_serie_image.url">
+          <nuxt-link :to="`/serie/${item.serie.uid}`">
+            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
+            <img v-else class="preload" :src="item.serie.data.cover_serie_image.url">
+          </nuxt-link>
         </div>
       </div>
       <div class="slider-controls">
@@ -105,9 +107,9 @@ export default {
       let data = entry.data;
       let nextSeries = await store.dispatch('GET_ALL_SERIES');
 
+      //Delete current serie from object / move the prev series to the end
       let indexCurrentSerie = nextSeries.findIndex(el => el.serie.uid === route.params.slug)
       typeof indexCurrentSerie !== undefined && nextSeries.splice(indexCurrentSerie, 1)
-
       if(indexCurrentSerie > 0) {
         nextSeries.splice(0, indexCurrentSerie).forEach(serie => {
           nextSeries.splice(nextSeries.length, 0, serie);
