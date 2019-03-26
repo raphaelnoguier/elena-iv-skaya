@@ -104,11 +104,11 @@ export default {
             }
           },
           complete: () => {
-            this.transitioning = false;
             activeSlide.style.clipPath = '';
             activeSlide.classList.remove('active');
             nextSlide.classList.remove('behind');
             nextSlide.classList.add('active');
+            isSmallSlider ? this.transitioning = false : this.transitioning = true;
           }
         })
         this.slideText(direction);
