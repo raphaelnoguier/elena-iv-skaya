@@ -11,11 +11,17 @@ export const getters = {
   currentDoc(state) {
     return state.doc
   },
+  allSeries(state) {
+    return state.allSeries
+  }
 }
 
 export const mutations = {
   SET_DOC(state, doc) {
     state.doc = doc
+  },
+  SET_ALL_SERIES(state, series) {
+    state.allSeries = series
   },
 }
 
@@ -60,5 +66,23 @@ export const actions = {
       error({ statusCode: 404, message: "Page not found" });
     }
   },
+  async GET_ALL_SERIES({ commit, error }) {
+    let series = null;
+    await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+      return api.query(
+        Prismic.Predicates.at('document.type', 'page'),
+        { fetch : 'page.series', fetchLinks: ['serie.cover_ratio', 'serie.cover_serie_image', 'serie.fallback_landscape_cover']}
+      ).then((response) => {
+        series = response.results[0].data.series
+      });
+    });
+
+    if (series) {
+      commit('SET_ALL_SERIES', series)
+      return series;
+    } else {
+      error({ statusCode: 404, message: "Page not found" });
+    }
+  }
 }
 

@@ -436,7 +436,7 @@
 .serie-slider-wrapper {
   background: #121212;
   padding-top: 11.875vw;
-  overflow: hidden;
+  overflow-x: scroll;
   position: relative;
 
   @include max(md) {

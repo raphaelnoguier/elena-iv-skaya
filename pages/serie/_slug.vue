@@ -58,8 +58,9 @@
         <span>Gallery</span>
       </div>
       <div class="serie-slider">
-        <div class="slider-item" v-for="(image, i) in gallery" :key="i">
-          <img class="preload" :src="image.image.url">
+        <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
+          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
+          <img v-else class="preload" :src="item.serie.data.cover_serie_image.url">
         </div>
       </div>
       <div class="slider-controls">
@@ -99,15 +100,28 @@ export default {
   },
   async asyncData ({ app, params, error, store}) {
     try {
+      const route = app.context.route
       let entry = await store.dispatch('GET_DOC', app.context.route);
       let data = entry.data;
+      let nextSeries = await store.dispatch('GET_ALL_SERIES');
+
+      let indexCurrentSerie = nextSeries.findIndex(el => el.serie.uid === route.params.slug)
+      typeof indexCurrentSerie !== undefined && nextSeries.splice(indexCurrentSerie, 1)
+
+      if(indexCurrentSerie > 0) {
+        nextSeries.splice(0, indexCurrentSerie).forEach(serie => {
+          nextSeries.splice(nextSeries.length, 0, serie);
+        });
+      }
+
       return {
         title: data.title[0].text,
         description: data.about_serie[0].text,
         date: data.date,
         credits: data.credits,
         featuredImage: data.cover_serie_image,
-        gallery: data.gallery
+        gallery: data.gallery,
+        nextSeries: nextSeries
       }
     } catch (err) {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
