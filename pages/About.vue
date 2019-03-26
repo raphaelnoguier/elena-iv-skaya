@@ -101,16 +101,56 @@ export default {
       ],
     }
   },
+  data() {
+    return {
+      contentBloc: null,
+      contentOffsetBottom: null,
+      paragraphBloc: null,
+      paragraphOffsetBottom: null
+    };
+  },
   mounted() {
+    window.addEventListener('resize', this.calcOffset);
     this.$nextTick(() => {
       const container = this.$el.ownerDocument.getElementById('app');
-      scrollbar.listen(container, this.onScroll);
+      scrollbar.listen(container, this.onScrollAbout);
+      this.calcOffset();
     });
   },
+  beforeDestroy() {
+    const container = this.$el.ownerDocument.getElementById('app');
+    window.removeEventListener('resize', this.calcOffset);
+    scrollbar.unlisten(container, this.onScrollAbout)
+  },
   methods: {
-    onScroll(e) {
+    calcOffset() {
+      let content = this.$el.querySelector('.about-wrapper');
+      let featuredImage = this.$el.querySelector('img')
+      let paragraphBloc = this.$el.querySelector('.about-right .social-links');
       let circle = this.$el.querySelector('.circle');
-      !circle.classList.contains('spinning') && circle.classList.add('spinning');
+
+      this.contentBloc = content.getBoundingClientRect();
+      this.contentOffsetBottom = this.contentBloc.height - featuredImage.offsetHeight
+
+      this.paragraphBloc = paragraphBloc.getBoundingClientRect();
+      this.paragraphOffsetBottom = this.paragraphBloc.top
+    },
+    onScrollAbout(status) {
+      console.log('scroll about');
+      let circle = this.$el.querySelector('.circle');
+      let featuredImage = this.$el.querySelector('img')
+      let offset = status.offset;
+
+      if(this.contentOffsetBottom > offset.y) {
+        featuredImage.style.top = offset.y + 'px';
+      }
+
+      if(this.paragraphOffsetBottom > offset.y) {
+        circle.classList.add('spinning')
+        circle.style.top = offset.y + 'px';
+      } else {
+        circle.classList.remove('spinning');
+      }
     }
   }
 };

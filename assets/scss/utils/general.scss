@@ -10,14 +10,27 @@
 }
 
 .page {
-  padding: 0 8vw;
   margin: auto;
 
+  &.serie {
+    padding:0 8vw;
+    @include max(md) {
+      padding: 14.323vw 6.5vw 0;
+    }
+
+    @include max(sm) {
+      padding: 29.333vw 0 0;
+    }
+  }
+
   &:not(.serie) {
-    padding-top: 2.75vw;
+    padding:10.313vw 8vw 0;
 
     @include max(md) {
-      padding-top: 0;
+      padding: 14.323vw 0 0;
+    }
+    @include max(sm) {
+      padding: 29.333vw 0 0;
     }
   }
 }

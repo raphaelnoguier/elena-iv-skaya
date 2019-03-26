@@ -15,17 +15,23 @@ export default {
     Navigation,
     Loader
   },
+  data() {
+    return {
+      nav: null
+    }
+  },
   mounted() {
     window.addEventListener('resize', this.resize);
     const container = this.$el;
-
+    this.nav = container.querySelector('.nav');
     if(container.clientWidth > 768) {
-      scrollbar.add(container, this.onScroll);
+      scrollbar.add(container, this.onScrollDefault);
     }
   },
   beforeDestroy() {
     const container = this.$el;
     if(container.clientWidth > 768) {
+      scrollbar.unlisten(container, this.onScrollDefault)
       scrollbar.destroyAll();
     }
     window.removeEventListener('resize', this.resize);
@@ -37,9 +43,13 @@ export default {
         scrollbar.add(container, this.onScroll);
       } else {
         scrollbar.destroyAll();
+        this.nav.style.top = 0;
       }
     },
-    onScroll(e) {
+    onScrollDefault(status) {
+      console.log('on scroll default');
+      let offset = status.offset;
+      this.nav.style.top = offset.y + 'px';
     }
   }
 };

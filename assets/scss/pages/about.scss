@@ -1,15 +1,12 @@
 .page.about {
   background-color: #121212;
 
-  @include max(md) {
-    padding: 0;
-  }
-
   .about-wrapper {
     display:flex;
     justify-content: space-between;
     flex-wrap: wrap;
     position: relative;
+    z-index: 4;
 
     @include max(md) {
       flex-direction: column;
@@ -37,6 +34,7 @@
         opacity: 0.94;
         width:100%;
         height: 100%;
+        position: absolute;
         object-fit: cover;
       }
 

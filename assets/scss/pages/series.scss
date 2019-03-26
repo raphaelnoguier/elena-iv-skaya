@@ -1,12 +1,4 @@
 .serie {
-  @include max(md) {
-    padding: 0 6.5vw;
-  }
-
-  @include max(sm) {
-    padding: 0;
-  }
-
   .serie-page-header {
     display: flex;
     justify-content: space-between;

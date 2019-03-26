@@ -17,6 +17,11 @@ const listen = function (el, listener) {
   return scrollbar
 }
 
+const unlisten = function (el, listener) {
+  const scrollbar = Scrollbar.get(el)
+  listener && scrollbar.removeListener(listener)
+}
+
 const destroyAll = function () {
   Scrollbar.destroyAll()
 }
@@ -32,5 +37,6 @@ export default {
   add,
   destroyAll,
   listen,
+  unlisten,
   scrollTo
 }
