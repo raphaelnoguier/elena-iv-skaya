@@ -156,6 +156,7 @@
         position: absolute;
         bottom: 7.75vw;
         z-index: 2;
+        width: 100%;
 
         @include max(md) {
           bottom: 0;

@@ -59,7 +59,7 @@
       </div>
       <div class="serie-slider">
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
-          <nuxt-link :to="`/serie/${item.serie.uid}`">
+          <nuxt-link :to="`/serie/${item.serie. uid}`">
             <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
             <img v-else class="preload" :src="item.serie.data.cover_serie_image.url">
           </nuxt-link>
@@ -90,7 +90,7 @@ import calcOffset from '~/utils/offset.js';
 export default {
   head() {
     return{
-      title: this.title,
+      title: 'Elena Iv-Skaya - ' + this.title,
       link: [
         {
           rel: 'icon',
