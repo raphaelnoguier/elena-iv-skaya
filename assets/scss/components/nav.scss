@@ -18,11 +18,17 @@
   &.serie-page{
     ul {
       li:first-child {
-        color:white;
+        opacity: 0;
 
         @include max(md) {
+          opacity: 1;
           color: black;
         }
+      }
+    }
+    &.black-link {
+      li:first-child {
+        opacity: 1;
       }
     }
   }
@@ -43,6 +49,7 @@
       letter-spacing: 0.125vw;
       line-height: 1.875vw;
       text-transform: uppercase;
+      transition: opacity 200ms ease;
 
       @include max(md) {
         font-size: 2.083vw;

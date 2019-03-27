@@ -48,7 +48,6 @@ export default {
       }
     },
     onScrollDefault(status) {
-      console.log('on scroll default');
       let offset = status.offset;
       this.nav.style.top = offset.y + 'px';
     }

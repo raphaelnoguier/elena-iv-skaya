@@ -87,7 +87,15 @@
 <script>
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
+import browser from '~/utils/browser.js';
 export default {
+  data() {
+    return {
+      isDrag: false,
+      xPosition: 0,
+      featuredImageOffset: null
+    }
+  },
   head() {
     return{
       title: 'Elena Iv-Skaya - ' + this.title,
@@ -129,7 +137,37 @@ export default {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
+  mounted() {
+    const container = this.$el.ownerDocument.getElementById('app');
+    this.$el.addEventListener('mouseup', this.up)
+    this.$el.addEventListener('mousedown', this.down)
+    //globals.cursorMove.listen(this.move)
+    window.addEventListener('resize', this.resize);
+    this.$nextTick(() => {
+      const container = this.$el.ownerDocument.getElementById('app');
+      scrollbar.listen(container, this.onScrollSerie);
+      this.calcOffset();
+    });
+  },
+  beforeDestroy () {
+    const container = this.$el.ownerDocument.getElementById('app');
+    if (browser.desktop && window.innerWidth > 768) {
+      scrollbar.unlisten(container, this.onScrollSerie);
+      window.removeEventListener('resize', this.resize);
+    }
+  },
   methods: {
+    calcOffset() {
+      let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
+      this.featuredImageOffset = image.height
+    },
+    resize() {
+      if(browser.desktop && window.innerWidth > 768) {
+        const container = this.$el.ownerDocument.getElementById('app');
+        scrollbar.listen(container, this.onScrollSerie);
+        this.calcOffset();
+      }
+    },
     getClass(ratio) {
       if (ratio.includes('Portrait')) {
         return 'portrait'
@@ -141,12 +179,28 @@ export default {
         return 'duo'
       }
     },
+    onScrollSerie(status) {
+      let nav = this.$el.ownerDocument.querySelector('.nav');
+      nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
+    },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('app');
       const destination = this.$el.querySelector('.serie-gallery');
       let offset = calcOffset.computeOffset(destination).top;
       scrollbar.scrollTo(container, offset)
-    }
+    },
+    dragGallery() {
+
+    },
+    up() {
+
+    },
+    down() {
+
+    },
+    move() {
+
+    },
   }
 };
 </script>

@@ -148,7 +148,6 @@ export default {
       this.paragraphOffsetBottom = this.paragraphBloc.top
     },
     onScrollAbout(status) {
-      console.log('scroll about');
       let circle = this.$el.querySelector('.circle');
       let featuredImage = this.$el.querySelector('img')
       let offset = status.offset;
