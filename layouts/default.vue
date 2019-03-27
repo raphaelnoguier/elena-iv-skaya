@@ -18,30 +18,29 @@ export default {
   },
   data() {
     return {
-      nav: null
+      nav: null,
+      container: null
     }
   },
   mounted() {
-    const container = this.$el;
-    this.nav = container.querySelector('.nav');
+    this.container = this.$el;
+    this.nav = this.container.querySelector('.nav');
     window.addEventListener('resize', this.resize);
     if (browser.desktop && window.innerWidth > 768) {
-      scrollbar.add(container, this.onScrollDefault);
+      scrollbar.add(this.container, this.onScrollDefault);
     }
   },
   beforeDestroy() {
-    const container = this.$el;
     if(browser.desktop && window.innerWidth > 768) {
-      scrollbar.unlisten(container, this.onScrollDefault)
+      scrollbar.unlisten(this.container, this.onScrollDefault)
       scrollbar.destroyAll();
       window.removeEventListener('resize', this.resize);
     }
   },
   methods: {
     resize () {
-      const container = this.$el;
       if (browser.desktop && window.innerWidth > 768) {
-        scrollbar.add(container, this.onScrollDefault);
+        scrollbar.add(this.container, this.onScrollDefault);
       } else {
         scrollbar.destroyAll();
         this.nav.style.top = 0;
@@ -51,7 +50,13 @@ export default {
       let offset = status.offset;
       this.nav.style.top = offset.y + 'px';
     }
+  },
+  watch: {
+    '$route'() {
+      //reset scroll pos on route change
+      scrollbar.resetPosition(this.container);
+    }
   }
-};
+ };
 </script>
 

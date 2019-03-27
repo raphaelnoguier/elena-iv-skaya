@@ -33,10 +33,16 @@ const scrollTo = function (el,y) {
   });
 }
 
+const resetPosition = function(el) {
+  const scrollbar = Scrollbar.get(el);
+  scrollbar.setPosition(0, 0);
+}
+
 export default {
   add,
   destroyAll,
   listen,
   unlisten,
-  scrollTo
+  scrollTo,
+  resetPosition
 }
