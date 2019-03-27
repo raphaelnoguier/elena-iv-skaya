@@ -77,7 +77,7 @@
 
       .serie-title {
         flex-direction: column;
-        max-width: 36vw;
+        max-width: 43vw;
         margin-top: 3.25vw;
 
         @include max(md) {
@@ -149,6 +149,10 @@
         bottom: 7.75vw;
         z-index: 2;
         width: 100%;
+
+        @include min(xxl) {
+          bottom: 5vw;
+        }
 
         @include max(md) {
           bottom: 0;

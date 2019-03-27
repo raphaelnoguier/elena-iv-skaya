@@ -61,6 +61,7 @@
 import splittedText from "~/utils/splittedText.js";
 import scrollbar from "~/utils/scrollbar.js";
 import { nextTick } from 'q';
+import browser from '~/utils/browser.js';
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -110,19 +111,30 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener('resize', this.calcOffset);
-    this.$nextTick(() => {
-      const container = this.$el.ownerDocument.getElementById('app');
-      scrollbar.listen(container, this.onScrollAbout);
-      this.calcOffset();
-    });
+    window.addEventListener('resize', this.resize);
+    if(browser.desktop && window.innerWidth > 768) {
+      this.$nextTick(() => {
+        const container = this.$el.ownerDocument.getElementById('app');
+        scrollbar.listen(container, this.onScrollAbout);
+        this.calcOffset();
+      });
+    }
   },
   beforeDestroy() {
-    const container = this.$el.ownerDocument.getElementById('app');
-    window.removeEventListener('resize', this.calcOffset);
-    scrollbar.unlisten(container, this.onScrollAbout)
+    if(browser.desktop && window.innerWidth > 768) {
+      const container = this.$el.ownerDocument.getElementById('app');
+      window.removeEventListener('resize', this.calcOffset);
+      scrollbar.unlisten(container, this.onScrollAbout)
+    }
   },
   methods: {
+    resize() {
+      if(browser.desktop && window.innerWidth > 768) {
+        const container = this.$el.ownerDocument.getElementById('app');
+        scrollbar.listen(container, this.onScrollAbout);
+        this.calcOffset();
+      }
+    },
     calcOffset() {
       let content = this.$el.querySelector('.about-wrapper');
       let featuredImage = this.$el.querySelector('img')
