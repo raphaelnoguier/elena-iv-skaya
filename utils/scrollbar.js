@@ -38,11 +38,23 @@ const resetPosition = function(el) {
   scrollbar.setPosition(0, 0);
 }
 
+const setPosition = function(el, y) {
+  const scrollbar = Scrollbar.get(el);
+  scrollbar && scrollbar.setPosition(0, y);
+}
+
+const getOffset = function(el) {
+  const scrollbar = Scrollbar.get(el);
+  return scrollbar.offset.y
+}
+
 export default {
   add,
   destroyAll,
   listen,
   unlisten,
   scrollTo,
-  resetPosition
+  resetPosition,
+  setPosition,
+  getOffset
 }

@@ -5,6 +5,8 @@ import prismicConfig from '../prismic.config.js'
 
 export const state = () => ({
   doc: {},
+  allSeries: {},
+  position: {x : 0, y : 0}
 })
 
 export const getters = {
@@ -13,6 +15,9 @@ export const getters = {
   },
   allSeries(state) {
     return state.allSeries
+  },
+  position(state) {
+    return state.position
   }
 }
 
@@ -22,6 +27,9 @@ export const mutations = {
   },
   SET_ALL_SERIES(state, series) {
     state.allSeries = series
+  },
+  SET_SCROLL_POSITION(state, position) {
+    state.position = position
   },
 }
 

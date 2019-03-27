@@ -26,6 +26,7 @@ export default {
     this.container = this.$el;
     this.nav = this.container.querySelector('.nav');
     window.addEventListener('resize', this.resize);
+
     if (browser.desktop && window.innerWidth > 768) {
       scrollbar.add(this.container, this.onScrollDefault);
     }
@@ -52,9 +53,14 @@ export default {
     }
   },
   watch: {
-    '$route'() {
-      //reset scroll pos on route change
-      scrollbar.resetPosition(this.container);
+    '$route'(to, from) {
+      this.$nextTick(() => {
+        //keep scroll pos on going back to index
+        if(from.name === 'index' && browser.desktop && window.innerWidth > 768) {
+          let position = scrollbar.getOffset(this.$el);
+          this.$store.commit('SET_SCROLL_POSITION', position)
+        };
+      });
     }
   }
  };

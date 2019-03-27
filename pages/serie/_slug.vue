@@ -141,12 +141,15 @@ export default {
     const container = this.$el.ownerDocument.getElementById('app');
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
-    //globals.cursorMove.listen(this.move)
+    this.$el.addEventListener('mousemove', this.move)
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
-      const container = this.$el.ownerDocument.getElementById('app');
-      scrollbar.listen(container, this.onScrollSerie);
-      this.calcOffset();
+      if (window.innerWidth > 768 && browser.desktop){
+        const container = this.$el.ownerDocument.getElementById('app');
+        scrollbar.listen(container, this.onScrollSerie);
+        scrollbar.resetPosition(container);
+        this.calcOffset();
+      }
     });
   },
   beforeDestroy () {

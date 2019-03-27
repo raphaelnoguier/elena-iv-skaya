@@ -116,6 +116,7 @@ export default {
       this.$nextTick(() => {
         const container = this.$el.ownerDocument.getElementById('app');
         scrollbar.listen(container, this.onScrollAbout);
+        scrollbar.resetPosition(container);
         this.calcOffset();
       });
     }

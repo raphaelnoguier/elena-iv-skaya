@@ -81,14 +81,19 @@ export default {
   },
 
   mounted () {
+    let container = this.$el.ownerDocument.getElementById('app');
+    let scrollY = this.$store.state.position;
+    this.$nextTick(() => {
+      setTimeout(() => {
+        if(scrollY > 0) scrollbar.setPosition(container, scrollY)
+      }, 1);
+    })
     // let gallery = document.querySelector(".gallery");
     // if(!gallery) return;
     // gallery.addEventListener("mousedown", this.down);
     // gallery.addEventListener("mousemove", this.move);
     // gallery.addEventListener("mouseleave", this.up);
     // gallery.addEventListener("mouseup", this.up);
-    // gallery.addEventListener("touchstart", this.down);
-    // gallery.addEventListener("touchend", this.up);
   },
 
   beforeDestroy() {
@@ -98,8 +103,6 @@ export default {
     // gallery.removeEventListener("mousemove", this.move);
     // gallery.removeEventListener("mouseup", this.up);
     // gallery.removeEventListener("mouseleave", this.up);
-    // gallery.removeEventListener("touchstart", this.down);
-    // gallery.removeEventListener("touchend", this.up);
   },
 
   methods: {
@@ -118,7 +121,6 @@ export default {
       requestAnimationFrame(this.timer);
       e.preventDefault();
     },
-
     up(e) {
       cancelAnimationFrame(this.timerID);
       this.counter = 0;
