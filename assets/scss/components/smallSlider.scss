@@ -3,11 +3,11 @@
   position: relative;
 
   @include max(md) {
-    height: 15.625vw;
+    height: 20.625vw;
   }
 
   @include max(sm) {
-    height: 26.667vw;
+    height: 30.667vw;
   }
 
   .home-slider-wrapper {
@@ -24,11 +24,6 @@
     right: 0;
     top: 0;
     z-index: -1;
-    
-    &.sliding-next,
-    &.sliding-prev {
-      animation-delay: 100ms !important;
-    }
 
     .image {
       height: 100%;

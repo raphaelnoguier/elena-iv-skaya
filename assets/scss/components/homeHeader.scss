@@ -48,10 +48,12 @@
       @include max(md) {
         margin-top: 15.625vw;
         max-width: none;
+        min-height: 30vh;
         padding: 0 6.510vw;
       }
 
-      @include max(md) {
+      @include max(sm) {
+        min-height: 45vh;
         margin-top: 22.5vw;
         padding: 0 9.333vw;
       }
