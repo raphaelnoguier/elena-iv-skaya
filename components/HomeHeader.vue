@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="serie-infos" :class="transitioning ? 'transitioning' : ''">
+      <div class="serie-infos">
         <div class="title">
           <h3>
             <nuxt-link :to="`serie/${featured[textIndex - 1].serie.uid}`">{{featured[textIndex - 1].serie.data.title[0].text}}</nuxt-link>
@@ -62,7 +62,6 @@ export default {
   methods: {
     slide(direction) {
       let sliderWrapper = this.$el.querySelectorAll('.home-slider-wrapper');
-      this.transitioning = true;
       sliderWrapper.forEach(slider => {
         let slides = slider.querySelectorAll(".slide");
         let activeSlide = slider.querySelector(".active");
@@ -97,6 +96,7 @@ export default {
           update: (anime) => {
             const easeTop = easingTop(values.x / 100)
             const easeBottom = easingBottom(values.x / 100)
+
             if(direction === 'next') {
               activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
             } else {
@@ -108,25 +108,26 @@ export default {
             activeSlide.classList.remove('active');
             nextSlide.classList.remove('behind');
             nextSlide.classList.add('active');
-            isSmallSlider ? this.transitioning = false : this.transitioning = true;
           }
         })
         this.slideText(direction);
       });
     },
     slideText(direction){
+      this.transitioning = true;
+
       let serieInfos = this.$el.querySelectorAll(".serie-infos .date, .serie-infos .title")
       let tl = anime.timeline({
         easing: 'easeInOutQuart',
-        duration: 800,
+        duration: 1000,
         direction: direction === 'next' ? 'normal' : 'reverse'
       });
 
       tl.add({
         targets: serieInfos,
         opacity: [1, 0],
-        translateX: [0 , '8.250vw'],
-        letterSpacing: [0, '3px'],
+        skewX: '-5deg',
+        translateX: [0 , '9vw'],
         complete: () => {
           direction === 'next' ? this.textIndex = this.slideIndex : null;
         }
@@ -134,9 +135,14 @@ export default {
       .add({
         targets: serieInfos,
         opacity: [0, 1],
-        translateX: ['-8.250vw', 0],
-        letterSpacing: ['-3px', 0],
+        translateX: ['-9vw', 0],
+        skewX: ['20deg', 0],
+        delay: function(el, i, l) {
+          let delay =  el.classList.contains('date') ? delay = 50 : delay =  0
+          return delay
+        },
         complete: () => {
+          this.transitioning = false;
           direction === 'next' ? null : this.textIndex = this.slideIndex;
         }
       })

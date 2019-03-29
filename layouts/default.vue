@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="$route.name === 'About' || $route.name === 'about' ? 'dark' : ''">
+  <div id="app" :class="$route.name === 'About' || $route.name === 'about' ? 'dark' : ''" >
     <Loader/>
     <Navigation/>
     <Transition :image="transitionImg" />

@@ -41,10 +41,6 @@
       flex-direction: column;
       max-width: 45vw;
 
-      &.transitioning {
-        max-width: none;
-      }
-
       @include max(md) {
         margin-top: 15.625vw;
         max-width: none;
@@ -89,7 +85,7 @@
       .date {
         @include sofiaProMedium(0.875vw);
         margin-top: 0.9375vw;
-        letter-spacing: 0.125vw !important;
+        letter-spacing: 0.125vw;
         line-height: 1.875vw;
 
         @include max(md) {

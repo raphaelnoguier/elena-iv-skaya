@@ -114,7 +114,7 @@ export default {
     animate() {
       var tl = anime.timeline({
         easing: 'easeInOutQuad',
-        duration: 500
+        duration: 700
       });
 
       let loader = this.$el.querySelector('.image-loader');
@@ -124,17 +124,12 @@ export default {
 
       tl.add({
         targets: loader,
-        height: '100vh',
+        height: ['0vh', '100vh'],
         complete: () => {
           loader.style.top = 0;
-          image.classList.add('hide');
           this.hideLoader = true;
           this.enableScroll();
         }
-      })
-      .add({
-        targets: loader,
-        height: 0,
       })
     },
   }
