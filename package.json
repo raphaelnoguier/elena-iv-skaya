@@ -17,7 +17,8 @@
     "nuxt": "^2.4.5",
     "patch-package": "^6.0.5",
     "prismic-javascript": "^2.0.1",
-    "smooth-scrollbar": "^8.3.1"
+    "smooth-scrollbar": "^8.3.1",
+    "bowser": "2.1.0"
   },
   "devDependencies": {
     "node-sass": "^4.11.0",

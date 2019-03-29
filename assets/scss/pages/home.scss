@@ -94,13 +94,12 @@
 
             @include max(md) {
               max-width: 64.063vw;
-              max-height: 48.047vw;
+              max-height: none;
             }
 
             @include max(sm) {
               max-width: 100%;
               width: calc(100% - 18.667vw);
-              max-height: 61.333vw;
             }
 
             .item-title {
