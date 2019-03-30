@@ -62,7 +62,9 @@ export default {
   methods: {
     slide(direction) {
       let sliderWrapper = this.$el.querySelectorAll('.home-slider-wrapper');
+
       sliderWrapper.forEach(slider => {
+
         let slides = slider.querySelectorAll(".slide");
         let activeSlide = slider.querySelector(".active");
         let activeSlideIndex = activeSlide.dataset.slide;
@@ -138,10 +140,11 @@ export default {
         translateX: ['-9vw', 0],
         skewX: ['20deg', 0],
         delay: function(el, i, l) {
-          let delay =  el.classList.contains('date') ? delay = 50 : delay =  0
+          let delay = el.classList.contains('date') ? delay = 50 : delay =  0
           return delay
         },
         complete: () => {
+          console.log('complete')
           this.transitioning = false;
           direction === 'next' ? null : this.textIndex = this.slideIndex;
         }

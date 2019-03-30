@@ -1,14 +1,12 @@
 <template>
-  <div id="app" :class="$route.name === 'About' || $route.name === 'about' ? 'dark' : ''" >
+  <div id="app" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' }">
     <Loader/>
     <Navigation/>
-    <Transition :image="transitionImg" />
     <nuxt/>
   </div>
 </template>
 <script>
 import Navigation from "~/components/Navigation";
-import Transition from "~/components/Transition";
 import Loader from "~/components/Loader";
 import scrollbar from "~/utils/scrollbar.js";
 import browser from '~/utils/browser.js';
@@ -16,14 +14,13 @@ import browser from '~/utils/browser.js';
 export default {
   components: {
     Navigation,
-    Transition,
-    Loader
+    Loader,
   },
   data() {
     return {
+      domLoaded: false,
       nav: null,
       container: null,
-      transitionImg: null
     }
   },
   mounted() {
@@ -59,7 +56,6 @@ export default {
   watch: {
     '$route'(to, from) {
       this.$nextTick(() => {
-        this.transitionImg = this.$store.getters.currentDoc.data.loader_image.url;
         //keep scroll pos on going back to index
         if(from.name === 'index' && browser.desktop && window.innerWidth > 768) {
           let position = scrollbar.getOffset(this.$el);

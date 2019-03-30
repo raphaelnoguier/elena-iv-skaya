@@ -1,7 +1,7 @@
 .loader-wrapper {
   height: 100vh;
   position: relative;
-  transition: height 500ms $ease-in-out-quad;
+  transition: height 700ms $ease-in-out-quad;
   overflow: hidden;
 
   &.hide {
@@ -10,6 +10,10 @@
 
     .loader {
       display: none;
+    }
+
+    .image-loader {
+      transform: translateY(-20vh)
     }
   }
 
@@ -113,6 +117,7 @@
     bottom:0;
     width: 100%;
     z-index: 9;
+    transition: transform 500ms $ease-in-out-quad 100ms;
 
     img {
       width: 100%;
@@ -120,10 +125,6 @@
       object-fit: cover;
       transform: scale(1.1);
       transition: transform 500ms $ease-in-out-quad 100ms;
-
-      &.hide {
-        transform: translateY(-200px)
-      }
     }
 
     &.animating {

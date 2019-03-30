@@ -29,7 +29,6 @@ export default {
       imageLoader: ''
     };
   },
-
   mounted() {
     this.disableScroll();
     let doc = this.$store.getters.currentDoc.data;
@@ -39,7 +38,6 @@ export default {
       this.launchLoading();
     });
   },
-
   methods: {
     preventDefault(e) {
       const o = e || loadingContainer.event;
@@ -124,14 +122,16 @@ export default {
 
       tl.add({
         targets: loader,
-        height: ['0vh', '100vh'],
+        height: [0, 100 + '%'],
         complete: () => {
           loader.style.top = 0;
           this.hideLoader = true;
           this.enableScroll();
+          this.$parent.domLoaded = true;
         }
       })
     },
-  }
+  },
+  props : {domLoaded: Boolean}
 };
 </script>

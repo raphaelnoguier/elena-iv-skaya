@@ -1,4 +1,10 @@
 .serie {
+  opacity: 0;
+  transition: opacity 500ms ease 500ms;
+
+  .loaded & {
+    opacity: 1;
+  }
   .serie-page-header {
     display: flex;
     justify-content: space-between;
@@ -26,6 +32,12 @@
         width:100%;
         height: 100%;
         object-fit: cover;
+        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
+        transition: clip-path 1000ms $ease-in-out-quart;
+
+        .loaded & {
+          clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
+        }
       }
     }
     .serie-hero {
@@ -97,14 +109,19 @@
           }
 
           h3{
-            line-height: 6.250vw;
+            line-height: 8.250vw;
+            transition: line-height 1000ms $ease-in-out-quart 300ms;
 
-            @include max(md) {
-              line-height: 11.719vw;
-            }
+            .loaded & {
+              line-height: 6.250vw;
 
-            @include max(sm) {
-              line-height: 16vw;
+              @include max(md) {
+                line-height: 11.719vw;
+              }
+
+              @include max(sm) {
+                line-height: 16vw;
+              }
             }
           }
         }

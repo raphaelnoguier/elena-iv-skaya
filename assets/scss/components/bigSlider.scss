@@ -4,6 +4,7 @@
   position: relative;
   overflow: hidden;
   transform: translate3d(-8vw, 0, 0);
+  transition: clip-path cubic-bezier(0.075, 0.82, 0.165, 1);
 
   @include max(md) {
     display: none;

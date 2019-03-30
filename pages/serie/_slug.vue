@@ -82,19 +82,24 @@
         </div>
       </div>
     </div>
+    <ImageTransition />
   </div>
 </template>
 <script>
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
+import ImageTransition from "~/components/ImageTransition";
+
 export default {
   data() {
     return {
       isDrag: false,
-      xPosition: 0,
       featuredImageOffset: null
     }
+  },
+  components: {
+    ImageTransition,
   },
   head() {
     return{
