@@ -19,7 +19,7 @@
     }
 
     .about-image {
-      max-height: 52.1875vw;
+      height: calc(100vh - 10.313vw);
       width: 40%;
       position: relative;
       display: flex;
@@ -43,7 +43,7 @@
         position: absolute;
         object-fit: cover;
         clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-        transition: clip-path 1000ms $ease-in-out-quart;
+        transition: clip-path 1000ms $ease-in-out-quart 100ms;
 
         .loaded & {
           clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);

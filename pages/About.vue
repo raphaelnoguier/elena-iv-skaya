@@ -58,16 +58,16 @@
   </section>
 </template>
 <script>
-import splittedText from "~/utils/splittedText.js";
-import scrollbar from "~/utils/scrollbar.js";
-import { nextTick } from 'q';
-import browser from '~/utils/browser.js';
+import splittedText from "~/utils/splittedText.js"
+import scrollbar from "~/utils/scrollbar.js"
+import { nextTick } from 'q'
+import browser from '~/utils/browser.js'
 
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
-      let entry = await store.dispatch('GET_DOC', app.context.route);
-      let data = entry.data;
+      let entry = await store.dispatch('GET_DOC', app.context.route)
+      let data = entry.data
       return {
         main_image: data.main_image.url,
         title: data.title[0].text,
@@ -108,62 +108,64 @@ export default {
       contentOffsetBottom: null,
       paragraphBloc: null,
       paragraphOffsetBottom: null
-    };
+    }
   },
   mounted() {
-    window.addEventListener('resize', this.resize);
+    window.addEventListener('resize', this.resize)
     if(browser.desktop && window.innerWidth > 768) {
       this.$nextTick(() => {
-        const container = this.$el.ownerDocument.getElementById('app');
-        scrollbar.listen(container, this.onScrollAbout);
-        scrollbar.resetPosition(container);
-        this.calcOffset();
-      });
+        const container = this.$el.ownerDocument.getElementById('app')
+        scrollbar.listen(container, this.onScrollAbout)
+        scrollbar.resetPosition(container)
+        this.calcOffset()
+      })
     }
   },
   beforeDestroy() {
     if(browser.desktop && window.innerWidth > 768) {
-      const container = this.$el.ownerDocument.getElementById('app');
-      window.removeEventListener('resize', this.calcOffset);
+      const container = this.$el.ownerDocument.getElementById('app')
+      window.removeEventListener('resize', this.calcOffset)
       scrollbar.unlisten(container, this.onScrollAbout)
     }
   },
   methods: {
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
-        const container = this.$el.ownerDocument.getElementById('app');
-        scrollbar.listen(container, this.onScrollAbout);
-        this.calcOffset();
+        const container = this.$el.ownerDocument.getElementById('app')
+        scrollbar.listen(container, this.onScrollAbout)
+        this.calcOffset()
       }
     },
     calcOffset() {
-      let content = this.$el.querySelector('.about-wrapper');
-      let featuredImage = this.$el.querySelector('img')
-      let paragraphBloc = this.$el.querySelector('.about-right .social-links');
-      let circle = this.$el.querySelector('.circle');
+      let content = this.$el.querySelector('.about-wrapper')
+      let featuredImage = this.$el.querySelector('img').getBoundingClientRect()
+      let paragraphBloc = this.$el.querySelector('.about-right .social-links')
+      let circle = this.$el.querySelector('.circle')
 
-      this.contentBloc = content.getBoundingClientRect();
-      this.contentOffsetBottom = this.contentBloc.height - featuredImage.offsetHeight
+      this.contentBloc = content.getBoundingClientRect()
+      this.contentOffsetBottom = this.contentBloc.bottom - featuredImage.height - featuredImage.top
 
-      this.paragraphBloc = paragraphBloc.getBoundingClientRect();
-      this.paragraphOffsetBottom = this.paragraphBloc.top
+      this.paragraphBloc = paragraphBloc.getBoundingClientRect()
+      this.paragraphOffsetBottom = this.paragraphBloc.bottom - circle.height - circle.top
     },
     onScrollAbout(status) {
-      let circle = this.$el.querySelector('.circle');
+      let circle = this.$el.querySelector('.circle')
       let featuredImage = this.$el.querySelector('img')
-      let offset = status.offset;
+      let offset = status.offset
 
       if(this.contentOffsetBottom > offset.y) {
-        featuredImage.style.top = offset.y + 'px';
+        featuredImage.style.top = offset.y + 'px'
       }
+
+      console.log(this.contentOffsetBottom, offset.y)
 
       if(this.paragraphOffsetBottom > offset.y) {
         circle.classList.add('spinning')
-        circle.style.top = offset.y + 'px';
+        circle.style.top = offset.y + 'px'
       } else {
-        circle.classList.remove('spinning');
+        circle.classList.remove('spinning')
       }
     }
   }
-};
+}
 </script>
