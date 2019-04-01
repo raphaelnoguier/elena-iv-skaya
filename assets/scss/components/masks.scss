@@ -8,7 +8,7 @@
   display: block;
   z-index: 2;
   transform-origin: top;
-  transition: height 1000ms $ease-in-out-quart 100ms;
+  transition: height 1000ms $ease-in-out-quart;
 
   .loaded & {
     height: 0;

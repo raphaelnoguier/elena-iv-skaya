@@ -79,21 +79,20 @@ export default {
     return {
       timerID: '',
       counter: 0,
-      dragMode: false
+      dragMode: false,
+      container: null
     }
   },
 
   mounted () {
-    let container = this.$el.ownerDocument.getElementById('app');
+    this.container = this.$el.ownerDocument.getElementById('app');
     let scrollY = this.$store.state.position;
     this.$nextTick(() => {
       setTimeout(() => {
-        if(scrollY > 0) scrollbar.setPosition(container, scrollY)
+        if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
+        if (browser.desktop && window.innerWidth > 768) scrollbar.listen(this.container, this.onScrollHome);
       }, 1);
     })
-    if (browser.desktop && window.innerWidth > 768) {
-      scrollbar.add(container, this.onScrollHome);
-    }
     // let gallery = document.querySelector(".gallery");
     // if(!gallery) return;
     // gallery.addEventListener("mousedown", this.down);
@@ -103,6 +102,9 @@ export default {
   },
 
   beforeDestroy() {
+    if (browser.desktop && window.innerWidth > 768) {
+      scrollbar.unlisten(this.container, this.onScrollHome);
+    }
     // let gallery = document.querySelector(".gallery");
     // if(!gallery) return;
     // gallery.removeEventListener("mousedown", this.down);
@@ -124,13 +126,10 @@ export default {
       }
     },
     onScrollHome() {
-      let container = this.$el.ownerDocument.getElementById('app');
       let galleryImgs = document.querySelectorAll('.gallery-mask')
 
-      console.log(galleryImgs)
-
       galleryImgs.forEach(img => {
-        scrollbar.isVisible(container, img) ? img.classList.add('revealed') : false;
+        scrollbar.isVisible(this.container, img) ? img.classList.add('revealed') : false;
       });
     },
     down(e) {

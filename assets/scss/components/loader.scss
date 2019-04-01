@@ -1,20 +1,10 @@
 .loader-wrapper {
   height: 100vh;
   position: relative;
-  transition: height 700ms $ease-in-out-quad;
   overflow: hidden;
 
   &.hide {
-    pointer-events: none;
-    height: 0;
-
-    .loader {
-      display: none;
-    }
-
-    .image-loader {
-      transform: translateY(-20vh)
-    }
+    display: none;
   }
 
   .loader {

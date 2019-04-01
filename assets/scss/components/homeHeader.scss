@@ -80,18 +80,20 @@
 
         h3{
           line-height: 8.250vw;
-          transition: line-height 1000ms $ease-in-out-quart 300ms;
+          transform: skewY(10deg);
+          transition: transform 1000ms $ease-in-out-quart;
+          line-height: 6.250vw;
 
           .loaded & {
-            line-height: 6.250vw;
+            transform: skewY(0deg);
+          }
 
-            @include max(md) {
-              line-height: 11.719vw;
-            }
+          @include max(md) {
+            line-height: 11.719vw;
+          }
 
-            @include max(sm) {
-              line-height: 16vw;
-            }
+          @include max(sm) {
+            line-height: 16vw;
           }
         }
       }

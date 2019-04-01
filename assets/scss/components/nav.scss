@@ -4,6 +4,12 @@
   margin: auto;
   width: 100%;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 500ms ease;
+
+  .loaded & {
+    opacity: 1;
+  }
 
   @include max(md) {
     padding: 4vh 6.5vw;

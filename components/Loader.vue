@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="image-loader">
-      <img class="desktop" :src="imageLoader" data-load="preload">
+      <img :src="imageLoader" data-load="preload">
     </div>
   </div>
 </template>
@@ -26,42 +26,42 @@ export default {
   data() {
     return {
       hideLoader: false,
-      imageLoader: ''
+      imageLoader: '',
+      loadingContainer: null
     };
   },
+  beforeMount() {
+    this.loadingContainer = this.$el;
+  },
   mounted() {
-    this.disableScroll();
     let doc = this.$store.getters.currentDoc.data;
     this.imageLoader = doc.loader_image.url
 
     this.$nextTick(() => {
+      this.disableScroll();
       this.launchLoading();
     });
   },
   methods: {
     preventDefault(e) {
-      const o = e || loadingContainer.event;
+      const o = e || this.loadingContainer.event;
       if (o.preventDefault) {
         o.preventDefault();
         o.returnValue = false;
       }
     },
     disableScroll() {
-      const loadingContainer = this.$el;
-      if (loadingContainer.addEventListener) {
-        loadingContainer.addEventListener('DOMMouseScroll', this.preventDefault, false);
-        loadingContainer.onwheel = this.preventDefault;
-        loadingContainer.onmousewheel = loadingContainer.onmousewheel = this.preventDefault;
-        loadingContainer.ontouchmove = this.preventDefault;
+      if (this.loadingContainer.addEventListener) {
+        this.loadingContainer.addEventListener('DOMMouseScroll', this.preventDefault, false);
+        this.loadingContainer.onwheel = this.preventDefault;
+        this.loadingContainer.onmousewheel = this.loadingContainer.onmousewheel = this.preventDefault;
       }
     },
     enableScroll() {
-      const loadingContainer = this.$el;
-      if (loadingContainer.removeEventListener) {
-        loadingContainer.removeEventListener('DOMMouseScroll', this.preventDefault, false);
-        loadingContainer.onmousewheel = loadingContainer.onmousewheel = null;
-        loadingContainer.onwheel = null;
-        loadingContainer.ontouchmove = null;
+      if (this.loadingContainer.removeEventListener) {
+        this.loadingContainer.removeEventListener('DOMMouseScroll', this.preventDefault, false);
+        this.loadingContainer.onmousewheel = this.loadingContainer.onmousewheel = null;
+        this.loadingContainer.onwheel = null;
       }
     },
     launchLoading() {
@@ -70,10 +70,10 @@ export default {
       this.fadeInContent();
       for (let elm of assets) {
         let src = elm.src;
-        elm.classList.remove('preload');
+        delete elm.dataset.load;
         elm = document.createElement("img");
         elm.src = src;
-        this.loadAssets(elm, src).then(value => {
+        this.loadAssets(elm).then(value => {
           resolved += 1;
           this.updateLoadProgress(resolved, assets.length);
         });
@@ -85,7 +85,7 @@ export default {
         el.classList.add('fade-in');
       });
     },
-    loadAssets(elm, src) {
+    loadAssets(elm) {
       return new Promise(resolve => {
         elm.addEventListener("load", () => {
           resolve();
@@ -98,13 +98,13 @@ export default {
     updateLoadProgress(loaded, total) {
       return new Promise(resolve => {
         let progress = Math.round((95 / total) * loaded );
-        const percent = this.$el.querySelector(".percent");
+        const percent = this.loadingContainer.querySelector(".percent");
 
         percent.innerHTML = this.round5(progress);
         if (progress >= 95 && loaded === total) {
           resolve();
           setTimeout(() => {
-            this.animate('grow');
+            this.animate();
           }, 500);
         }
       });
@@ -112,11 +112,12 @@ export default {
     animate() {
       var tl = anime.timeline({
         easing: 'easeInOutQuad',
-        duration: 700
+        duration: 750
       });
 
-      let loader = this.$el.querySelector('.image-loader');
-      let image = this.$el.querySelector('.image-loader img');
+      let loader = this.loadingContainer.querySelector('.image-loader');
+      let loaderContent = this.loadingContainer.querySelector('.loader')
+      let image = this.loadingContainer.querySelector('.image-loader img');
 
       loader.classList.add('animating');
 
@@ -124,14 +125,20 @@ export default {
         targets: loader,
         height: [0, 100 + '%'],
         complete: () => {
-          loader.style.top = 0;
-          this.hideLoader = true;
+          loaderContent.style.display = 'none'
+          loader.style.top = 0
+          image.style.transform = 'translate3d(0, -20vh, 0)'
+        }
+      }).add({
+        targets: loader,
+        height: 0,
+        complete: () => {
           this.enableScroll();
+          this.hideLoader = true;
           this.$parent.domLoaded = true;
         }
       })
     },
   },
-  props : {domLoaded: Boolean}
 };
 </script>

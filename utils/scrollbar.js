@@ -2,7 +2,7 @@ import Scrollbar from 'smooth-scrollbar';
 import easing from '~/utils/easing.js'
 
 const defaultProps = {
-  alwaysShowTracks: true
+  alwaysShowTracks: false
 }
 
 const add = function (el, listener, props = defaultProps) {
