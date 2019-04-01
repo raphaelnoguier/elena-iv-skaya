@@ -160,10 +160,8 @@ export default {
       }
 
       if(this.paragraphOffsetBottom > offset.y) {
-        circle.style.transform = `rotate(${offset.y}deg)`
-        circle.style.top = offset.y + 'px'
-      } else {
-        circle.classList.remove('spinning')
+        circle.style.transform = `rotate(${offset.y / 1.5}deg)`
+        circle.style.top = offset.y - 6 + 'px'
       }
     }
   }
