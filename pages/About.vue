@@ -154,14 +154,15 @@ export default {
       let circle = this.$el.querySelector('.circle')
       let featuredImage = this.$el.querySelector('img')
       let offset = status.offset
+      let rotateOffset = offset.y / 1.5
 
       if(this.contentOffsetBottom > offset.y) {
         featuredImage.style.top = offset.y + 'px'
       }
 
       if(this.paragraphOffsetBottom > offset.y) {
-        circle.style.transform = `rotate(${offset.y / 1.5}deg)`
-        circle.style.top = offset.y - 6 + 'px'
+        circle.style.transform = `rotate(${rotateOffset}deg)`
+        circle.style.top = (offset.y - 6) + 'px'
       }
     }
   }
