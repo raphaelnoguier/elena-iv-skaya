@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="image-loader">
-      <img :src="imageLoader" class="preload">
+      <img class="desktop" :src="imageLoader" data-load="preload">
     </div>
   </div>
 </template>
@@ -65,7 +65,7 @@ export default {
       }
     },
     launchLoading() {
-      const assets = this.$el.ownerDocument.querySelectorAll('.preload');
+      const assets = this.$el.ownerDocument.querySelectorAll('[data-load="preload"]');
       let resolved = 0;
       this.fadeInContent();
       for (let elm of assets) {

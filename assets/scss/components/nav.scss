@@ -3,7 +3,7 @@
   position: absolute;
   margin: auto;
   width: 100%;
-  z-index: 4;
+  z-index: 2;
 
   @include max(md) {
     padding: 4vh 6.5vw;

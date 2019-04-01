@@ -9,15 +9,9 @@
   }
 
   .home-slider-wrapper {
-    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0% 100%);
-    transition: clip-path 1000ms $ease-in-out-quart 50ms;
 
     @include min(lg) {
       height: 100%;
-    }
-
-    .loaded & {
-      clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
     }
 
     .slide {

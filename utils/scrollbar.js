@@ -48,6 +48,11 @@ const getOffset = function(el) {
   return scrollbar.offset.y
 }
 
+const isVisible = function(container, el) {
+  const scrollbar = Scrollbar.get(container);
+  return scrollbar.isVisible(el)
+}
+
 export default {
   add,
   destroyAll,
@@ -56,5 +61,6 @@ export default {
   scrollTo,
   resetPosition,
   setPosition,
-  getOffset
+  getOffset,
+  isVisible
 }

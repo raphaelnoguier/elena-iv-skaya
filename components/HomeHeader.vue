@@ -6,7 +6,7 @@
         <HomeSlider :type="'Small'" :featured="featured" :index="slideIndex"/>
         <div class="controls" :class="transitioning ? 'disabled' : ''">
           <div v-on:click="slide('prev')" class="left">
-            <img src="~assets/img/ui/arrow.svg" class="preload">
+            <img src="~assets/img/ui/arrow.svg" data-load="preload">
             <span>previous</span>
           </div>
           <div class="index">
@@ -15,7 +15,7 @@
           </div>
           <div v-on:click="slide('next')" class="right">
             <span>next</span>
-            <img src="~assets/img/ui/arrow.svg" class="preload">
+            <img src="~assets/img/ui/arrow.svg" data-load="preload">
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div v-on:click="scrollDown" class="chevron">
-        <img src="~assets/img/ui/chevron.svg" class="preload">
+        <img src="~assets/img/ui/chevron.svg" data-load="preload">
       </div>
       <div class="update-status">
         <div class="line" />
@@ -131,7 +131,10 @@ export default {
         skewX: '-5deg',
         translateX: [0 , '9vw'],
         complete: () => {
-          direction === 'next' ? this.textIndex = this.slideIndex : null;
+          this.textIndex = this.slideIndex;
+          if(direction === 'prev') {
+            this.transitioning = false;
+          }
         }
       })
       .add({
@@ -144,9 +147,10 @@ export default {
           return delay
         },
         complete: () => {
-          console.log('complete')
-          this.transitioning = false;
-          direction === 'next' ? null : this.textIndex = this.slideIndex;
+          this.textIndex = this.slideIndex;
+          if(direction === 'next') {
+            this.transitioning = false;
+          }
         }
       })
     },

@@ -3,13 +3,14 @@
     <div class="page serie">
       <div class="serie-page-header">
         <div class="featured-image">
-          <img class="preload" :src="featuredImage.url">
+          <div class="image-mask"></div>
+          <img data-load="preload" :src="featuredImage.url">
         </div>
         <div class="serie-hero">
           <div class="row">
             <div class="back-link">
               <nuxt-link to="/">
-                <img class="preload" src="~assets/img/ui/arrow.svg">
+                <img data-load="preload" src="~assets/img/ui/arrow.svg">
                 <span>Back to gallery </span>
               </nuxt-link>
             </div>
@@ -29,14 +30,14 @@
             </div>
           </div>
           <div v-on:click="scrollDown" class="chevron">
-            <img class="preload" src="~assets/img/ui/chevron.svg">
+            <img data-load="preload" src="~assets/img/ui/chevron.svg">
           </div>
         </div>
       </div>
       <div class="serie-gallery">
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img :src="image.image.url" class="preload">
-          <img v-if="image.ratio === 'Duo'" :src="image.duo_image.url" class="preload">
+          <img :src="image.image.url" data-load="preload">
+          <img v-if="image.ratio === 'Duo'" :src="image.duo_image.url" data-load="preload">
         </div>
       </div>
       <div class="serie-credits-wrapper">
@@ -61,14 +62,14 @@
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
           <nuxt-link :to="`/serie/${item.serie. uid}`">
             <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
-            <img v-else class="preload" :src="item.serie.data.cover_serie_image.url">
+            <img v-else data-load="preload" :src="item.serie.data.cover_serie_image.url">
           </nuxt-link>
         </div>
       </div>
       <div class="slider-controls">
         <div class="upper">
           <div class="play">
-            <img class="preload" src="~/assets/img/ui/play.svg">
+            <img data-load="preload" src="~/assets/img/ui/play.svg">
           </div>
           <div class="title">
             <span>A somewhat classic beauty</span>

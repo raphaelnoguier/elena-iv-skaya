@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' }">
+  <div id="app" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' || $route.name === 'About' }">
     <Loader/>
     <Navigation/>
     <nuxt/>

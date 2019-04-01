@@ -2,7 +2,8 @@
   <section class="page about">
     <div class="about-wrapper">
       <div class="about-image">
-        <img :src="main_image" class="preload"/>
+        <div class="image-mask"></div>
+        <img :src="main_image" data-load="preload"/>
         <div class="about-quote">
           <h3>{{title}}</h3>
         </div>
@@ -118,6 +119,7 @@ export default {
         scrollbar.listen(container, this.onScrollAbout)
         scrollbar.resetPosition(container)
         this.calcOffset()
+        this.resize()
       })
     }
   },
@@ -140,7 +142,7 @@ export default {
       let content = this.$el.querySelector('.about-wrapper')
       let featuredImage = this.$el.querySelector('img').getBoundingClientRect()
       let paragraphBloc = this.$el.querySelector('.about-right .social-links')
-      let circle = this.$el.querySelector('.circle')
+      let circle = this.$el.querySelector('.circle').getBoundingClientRect()
 
       this.contentBloc = content.getBoundingClientRect()
       this.contentOffsetBottom = this.contentBloc.bottom - featuredImage.height - featuredImage.top
@@ -157,10 +159,8 @@ export default {
         featuredImage.style.top = offset.y + 'px'
       }
 
-      console.log(this.contentOffsetBottom, offset.y)
-
       if(this.paragraphOffsetBottom > offset.y) {
-        circle.classList.add('spinning')
+        circle.style.transform = `rotate(${offset.y}deg)`
         circle.style.top = offset.y + 'px'
       } else {
         circle.classList.remove('spinning')

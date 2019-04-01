@@ -7,7 +7,9 @@
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
             <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
               <nuxt-link :to="`/serie/${serie.serie.uid}`">
-                <img :src="serie.serie.data.cover_serie_image.url" class="preload" />
+                <div class="gallery-mask left"></div>
+                <img :src="serie.serie.data.cover_serie_image.url" data-load="preload" />
+                <div class="gallery-mask right"></div>
                 <div class="item-title">
                   <h3>{{serie.serie.data.title[0].text}}</h3>
                   <span>{{serie.serie.data.category}}</span>
@@ -22,6 +24,7 @@
   </div>
 </template>
 <script>
+import browser from '~/utils/browser.js'
 import scrollbar from "~/utils/scrollbar.js";
 import HomeHeader from "~/components/HomeHeader";
 import Footer from "~/components/Footer";
@@ -88,6 +91,9 @@ export default {
         if(scrollY > 0) scrollbar.setPosition(container, scrollY)
       }, 1);
     })
+    if (browser.desktop && window.innerWidth > 768) {
+      scrollbar.add(container, this.onScrollHome);
+    }
     // let gallery = document.querySelector(".gallery");
     // if(!gallery) return;
     // gallery.addEventListener("mousedown", this.down);
@@ -116,6 +122,16 @@ export default {
       if (ratio.includes('Portrait')) {
         return 'portrait'
       }
+    },
+    onScrollHome() {
+      let container = this.$el.ownerDocument.getElementById('app');
+      let galleryImgs = document.querySelectorAll('.gallery-mask')
+
+      console.log(galleryImgs)
+
+      galleryImgs.forEach(img => {
+        scrollbar.isVisible(container, img) ? img.classList.add('revealed') : false;
+      });
     },
     down(e) {
       requestAnimationFrame(this.timer);
