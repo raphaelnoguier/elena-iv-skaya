@@ -41,14 +41,6 @@
     .serie-infos {
       flex-direction: column;
       max-width: 45vw;
-      opacity: 0;
-      transform: translate3d(0, 10vh, 0);
-      transition: transform 1000ms $ease-in-out-quart, opacity 1000ms $ease-in-out-quart;
-
-      .loaded & {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
 
       @include max(md) {
         margin-top: 15.625vw;
@@ -79,21 +71,19 @@
         }
 
         h3{
+          transition: line-height 1000ms $ease-in-out-quart 200ms;
           line-height: 8.250vw;
-          transform: skewY(10deg);
-          transition: transform 1000ms $ease-in-out-quart;
-          line-height: 6.250vw;
 
           .loaded & {
-            transform: skewY(0deg);
-          }
+            line-height: 6.250vw;
 
-          @include max(md) {
-            line-height: 11.719vw;
-          }
+            @include max(md) {
+              line-height: 11.719vw;
+            }
 
-          @include max(sm) {
-            line-height: 16vw;
+            @include max(sm) {
+              line-height: 16vw;
+            }
           }
         }
       }

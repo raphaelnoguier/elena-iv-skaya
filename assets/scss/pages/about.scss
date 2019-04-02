@@ -76,7 +76,6 @@
         h3 {
           @include actaDisplayLight(5.625vw);
           color: white;
-          line-height: 8.250vw;
           transition: line-height 1000ms $ease-in-out-quart 300ms;
 
           .loaded & {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="page home">
+    <section class="page home" >
       <HomeHeader v-if="featured" :featured="featured" />
       <div class="page-content" :class="dragMode ? 'black' : ''">
         <div class="gallery">

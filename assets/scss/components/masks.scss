@@ -2,16 +2,14 @@
   background-color: #FCF9F5;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   display: block;
   z-index: 2;
-  transform-origin: top;
   transition: height 1000ms $ease-in-out-quart;
 
   .loaded & {
-    height: 0;
+    height: 0
   }
 }
 
@@ -26,7 +24,11 @@
   display: block;
   z-index: 2;
   transform: translate3d(0,0,0);
-  transition: transform 1000ms ease;
+  transition: transform 1000ms ease 200ms;
+
+  @include max(md) {
+    display: none;
+  }
 
   &.left {
     left: 0;
