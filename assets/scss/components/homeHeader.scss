@@ -47,6 +47,12 @@
     .serie-infos {
       flex-direction: column;
       max-width: 45vw;
+      transform: translate3d(0, 100px, 0) skewY(10deg);
+      transition: transform 1000ms ease-in-out 200ms;
+
+      .loaded & {
+        transform: translate3d(0, 0, 0) skewY(0);
+      }
 
       @include max(md) {
         margin-top: 15.625vw;
@@ -77,19 +83,14 @@
         }
 
         h3{
-          transition: line-height 1000ms $ease-in-out-quart 200ms;
-          line-height: 8.250vw;
+          line-height: 6.250vw;
 
-          .loaded & {
-            line-height: 6.250vw;
+          @include max(md) {
+            line-height: 11.719vw;
+          }
 
-            @include max(md) {
-              line-height: 11.719vw;
-            }
-
-            @include max(sm) {
-              line-height: 16vw;
-            }
+          @include max(sm) {
+            line-height: 16vw;
           }
         }
       }
