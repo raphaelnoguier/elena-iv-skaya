@@ -21,12 +21,6 @@ body {
 
 .page {
   margin: auto;
-  opacity: 0;
-  transition: opacity 500ms ease 500ms;
-
-  .loaded & {
-    opacity: 1;
-  }
 
   &.serie {
     padding:0 8vw;

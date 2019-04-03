@@ -2,6 +2,14 @@
   display: flex;
   justify-content: space-between;
   height: calc(100vh - 10.313vw);
+  opacity: 0;
+  transform: translate3d(0, 50%, 0);
+  transition: opacity 500ms ease 500ms, transform 500ms ease 200ms;
+
+  .loaded & {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 
   @include max(md) {
     height: auto;
