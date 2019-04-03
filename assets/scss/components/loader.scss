@@ -19,10 +19,6 @@
     opacity: 1;
     z-index: 3;
 
-    &.hide {
-      display: none;
-    }
-
     .content {
       display: flex;
       align-items: center;
@@ -110,22 +106,19 @@
     height: 0;
     left: 0;
     right: 0;
-    bottom:0;
+    bottom: 0;
     width: 100%;
     z-index: 3;
+    overflow: hidden;
 
-    img {
+    .transition-mask {
+      background-size: cover;
+      background-position: center;
       width: 100%;
-      height: 100%;
-      transform: scale(1.1);
+      height: 100vh;
+      position: absolute;
+      bottom: 0;
       transition: transform 500ms $ease-in-out-quad 100ms;
-      object-fit: cover;
-    }
-
-    &.animating {
-      img {
-        transform: scale(1);
-      }
     }
   }
 }

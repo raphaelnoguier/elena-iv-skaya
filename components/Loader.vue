@@ -14,7 +14,8 @@
       </div>
     </div>
     <div class="image-loader">
-      <img :src="imageLoader" data-load="preload">
+      <div class="transition-mask" :style="`background-image:url('${imageLoader}')`"></div>
+      <img :src="imageLoader" data-load="preload" style="display:none">
     </div>
   </div>
 </template>
@@ -32,14 +33,14 @@ export default {
       loadingContainer: null,
       loaderContent: null,
       imageContainer: null,
-      image: null
+      mask: null
     }
   },
   beforeMount() {
     this.loadingContainer = this.$el
     this.loaderContent = this.loadingContainer.querySelector('.loader')
     this.imageContainer = this.loadingContainer.querySelector('.image-loader')
-    this.image = this.loadingContainer.querySelector('.image-loader img')
+    this.mask = this.loadingContainer.querySelector('.image-loader .transition-mask')
   },
   mounted() {
     let doc = this.$store.getters.currentDoc.data
@@ -124,15 +125,15 @@ export default {
         duration: 750
       })
 
-      this.imageContainer.classList.add('animating')
-
       tl.add({
         targets: this.imageContainer,
+        scale: [1.1, 1],
+        top: 0,
         height: '100%',
         complete: () => {
-          //this.$parent.domLoaded = true
-          this.loaderContent.classList.add('hide')
-          this.image.style.transform = 'translate3d(0, -100px, 0)'
+          this.mask.style.top = 0;
+          this.mask.style.transform = 'translate3d(0, -200px, 0)'
+          this.$parent.domLoaded = true
         }
       }).add({
         targets: this.loadingContainer,
