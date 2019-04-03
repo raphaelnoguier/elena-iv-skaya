@@ -44,7 +44,7 @@ export default {
   mounted() {
     let doc = this.$store.getters.currentDoc.data
 
-    this.imageLoader = browser.desktop && window.innerWidth > 768 ? doc.loader_image.url : doc.loader_image.touch_devices.url
+    this.imageLoader = doc.loader_image.url
 
     this.$nextTick(() => {
       this.disableScroll()
@@ -130,7 +130,7 @@ export default {
         targets: this.imageContainer,
         height: '100%',
         complete: () => {
-          this.$parent.domLoaded = true
+          //this.$parent.domLoaded = true
           this.loaderContent.classList.add('hide')
           this.image.style.transform = 'translate3d(0, -100px, 0)'
         }
