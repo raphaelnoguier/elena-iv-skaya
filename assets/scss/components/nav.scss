@@ -5,9 +5,11 @@
   width: 100%;
   z-index: 5;
   opacity: 0;
-  transition: opacity 500ms ease;
+  transform: translate3d(0, 100px, 0);
+  transition: opacity 500ms ease 500ms, transform 1000ms ease-in-out;
 
   .loaded & {
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 

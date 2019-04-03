@@ -3,8 +3,8 @@
   justify-content: space-between;
   height: calc(100vh - 10.313vw);
   opacity: 0;
-  transform: translate3d(0, 50%, 0);
-  transition: opacity 500ms ease 500ms, transform 500ms ease 200ms;
+  transform: translate3d(0, 100px, 0);
+  transition: opacity 500ms ease 500ms, transform 1000ms ease-in-out;
 
   .loaded & {
     opacity: 1;
@@ -23,8 +23,6 @@
     }
 
     .slide {
-      clip-path: polygon(0 0, 101% 0, 101% 101%, 0 101%);
-
       &.behind {
         z-index: 1;
       }
