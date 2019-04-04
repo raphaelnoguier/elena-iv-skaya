@@ -63,6 +63,7 @@ import splittedText from "~/utils/splittedText.js"
 import scrollbar from "~/utils/scrollbar.js"
 import { nextTick } from 'q'
 import browser from '~/utils/browser.js'
+import math from '~/utils/math.js'
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -118,8 +119,10 @@ export default {
         const container = this.$el.ownerDocument.getElementById('app')
         scrollbar.listen(container, this.onScrollAbout)
         scrollbar.resetPosition(container)
-        this.calcOffset()
-        this.resize()
+        setTimeout(() => {
+          this.calcOffset()
+          this.resize()
+        }, 100);
       })
     }
   },
@@ -154,10 +157,10 @@ export default {
       let circle = this.$el.querySelector('.circle')
       let featuredImage = this.$el.querySelector('img')
       let offset = status.offset
-      let rotateOffset = offset.y / 1.5
+      let rotateOffset = math.map(offset.y, 0, this.paragraphOffsetBottom, 0, 360)
 
       if(this.contentOffsetBottom > offset.y) {
-        featuredImage.style.top = offset.y + 'px'
+        featuredImage.style.transform = `translate3d(0,${offset.y}px, 0)`
       }
 
       if(this.paragraphOffsetBottom > offset.y) {

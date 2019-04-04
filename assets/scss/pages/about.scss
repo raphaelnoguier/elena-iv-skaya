@@ -46,6 +46,7 @@
         height: 100%;
         position: absolute;
         object-fit: cover;
+        object-position: top;
 
         @include max(md) {
           position: relative;
