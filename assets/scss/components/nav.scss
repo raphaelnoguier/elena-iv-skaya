@@ -1,6 +1,16 @@
+.loaded ~ .nav {
+  transform: translate3d(0, 0, 0);
+  opacity: 1;
+}
+
+.dark ~ .nav {
+  color:white;
+}
+
 .nav {
   padding: 5vh 8vw;
-  position: absolute;
+  position: fixed;
+  top: 0;
   margin: auto;
   width: 100%;
   z-index: 5;
@@ -8,15 +18,8 @@
   transform: translate3d(0, 100px, 0);
   transition: opacity 500ms ease 500ms, transform 1000ms ease-in-out;
 
-  .loaded & {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
   @include max(md) {
     padding: 4vh 6.5vw;
-    position: fixed;
-    top: 0;
   }
 
   @include max(sm) {
@@ -39,10 +42,6 @@
         opacity: 1;
       }
     }
-  }
-
-  .dark & {
-    color:white;
   }
 
   ul {

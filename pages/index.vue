@@ -59,11 +59,8 @@ export default {
   transition: {
     name: 'layer-image-transition',
     css: false,
-    beforeLeave() {
-      let tmpImg = new Image;
-      tmpImg.src = this.$store.getters.currentDoc.data.loader_image.url;
-    },
     leave(el, done) {
+      console.log('leave')
       this.$parent.domLoaded = false
       let tmpImg = new Image;
       tmpImg.src = this.$store.getters.currentDoc.data.loader_image.url;
@@ -138,7 +135,7 @@ export default {
   },
 
   mounted () {
-    this.container = this.$el.ownerDocument.getElementById('app');
+    this.container = this.$el.ownerDocument.getElementById('smooth-component');
     let scrollY = this.$store.state.position;
     this.$nextTick(() => {
       setTimeout(() => {

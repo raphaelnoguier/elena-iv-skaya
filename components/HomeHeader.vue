@@ -155,7 +155,7 @@ export default {
       })
     },
     scrollDown() {
-      const container = this.$el.ownerDocument.getElementById('app');
+      const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.ownerDocument.querySelector('.page-content');
       let offset = calcOffset.computeOffset(destination).top;
       scrollbar.scrollTo(container, offset)

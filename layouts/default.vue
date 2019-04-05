@@ -1,9 +1,11 @@
 <template>
-  <div id="app" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' || $route.name === 'About' }">
+  <div id="app">
     <Loader/>
+    <div id="smooth-component" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' || $route.name === 'About' }">
+      <nuxt/>
+    </div>
     <Navigation/>
     <ImageTransition/>
-    <nuxt/>
   </div>
 </template>
 <script>
@@ -28,8 +30,7 @@ export default {
     }
   },
   mounted() {
-    this.container = this.$el
-    this.nav = this.container.querySelector('.nav')
+    this.container = this.$el.querySelector('#smooth-component')
     this.transitionComponent = this.container.querySelector('.transition-wrapper')
     window.addEventListener('resize', this.resize)
 
@@ -50,13 +51,9 @@ export default {
         scrollbar.add(this.container, this.onScrollDefault)
       } else {
         scrollbar.destroyAll()
-        this.nav.style.top = 0
       }
     },
     onScrollDefault(status) {
-      let offset = status.offset
-      this.nav.style.top = offset.y + 'px'
-      this.transitionComponent.style.top = offset.y + 'px'
     }
   },
   watch: {
@@ -64,7 +61,7 @@ export default {
       this.$nextTick(() => {
         //keep scroll pos on going back to index
         if(from.name === 'index' && browser.desktop && window.innerWidth > 768) {
-          let position = scrollbar.getOffset(this.$el)
+          let position = scrollbar.getOffset(this.container)
           this.$store.commit('SET_SCROLL_POSITION', position)
         }
       })

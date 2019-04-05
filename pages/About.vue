@@ -116,7 +116,7 @@ export default {
     window.addEventListener('resize', this.resize)
     if(browser.desktop && window.innerWidth > 768) {
       this.$nextTick(() => {
-        const container = this.$el.ownerDocument.getElementById('app')
+        const container = this.$el.ownerDocument.getElementById('smooth-component')
         scrollbar.listen(container, this.onScrollAbout)
         scrollbar.resetPosition(container)
         setTimeout(() => {
@@ -128,7 +128,7 @@ export default {
   },
   beforeDestroy() {
     if(browser.desktop && window.innerWidth > 768) {
-      const container = this.$el.ownerDocument.getElementById('app')
+      const container = this.$el.ownerDocument.getElementById('smooth-component')
       window.removeEventListener('resize', this.calcOffset)
       scrollbar.unlisten(container, this.onScrollAbout)
     }
@@ -136,7 +136,7 @@ export default {
   methods: {
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
-        const container = this.$el.ownerDocument.getElementById('app')
+        const container = this.$el.ownerDocument.getElementById('smooth-component')
         scrollbar.listen(container, this.onScrollAbout)
         this.calcOffset()
       }

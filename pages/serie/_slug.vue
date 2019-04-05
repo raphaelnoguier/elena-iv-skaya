@@ -139,14 +139,14 @@ export default {
     }
   },
   mounted() {
-    const container = this.$el.ownerDocument.getElementById('app');
+    const container = this.$el.ownerDocument.getElementById('smooth-component');
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop){
-        const container = this.$el.ownerDocument.getElementById('app');
+        const container = this.$el.ownerDocument.getElementById('smooth-component');
         scrollbar.listen(container, this.onScrollSerie);
         scrollbar.resetPosition(container);
         this.calcOffset();
@@ -154,7 +154,7 @@ export default {
     });
   },
   beforeDestroy () {
-    const container = this.$el.ownerDocument.getElementById('app');
+    const container = this.$el.ownerDocument.getElementById('smooth-component');
     if (browser.desktop && window.innerWidth > 768) {
       scrollbar.unlisten(container, this.onScrollSerie);
       window.removeEventListener('resize', this.resize);
@@ -167,7 +167,7 @@ export default {
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
-        const container = this.$el.ownerDocument.getElementById('app');
+        const container = this.$el.ownerDocument.getElementById('smooth-component');
         scrollbar.listen(container, this.onScrollSerie);
         this.calcOffset();
       }
@@ -188,7 +188,7 @@ export default {
       nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
     },
     scrollDown() {
-      const container = this.$el.ownerDocument.getElementById('app');
+      const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.querySelector('.serie-gallery');
       let offset = calcOffset.computeOffset(destination).top;
       scrollbar.scrollTo(container, offset)
