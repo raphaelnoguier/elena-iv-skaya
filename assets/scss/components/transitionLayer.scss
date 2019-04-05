@@ -1,37 +1,34 @@
-.transition-layer {
-  position: absolute;
-  top: 0;
-  width:100%;
+.transition-wrapper {
+  width: 100%;
   height: 100vh;
-  opacity: 1;
-  z-index: 3;
-  display: none;
+  position: absolute;
+  overflow: hidden;
+  z-index: 9;
+  pointer-events: none;
 
-  .image {
+  &.hide {
+    display: none;
+  }
+
+  .image-transition {
     position: absolute;
     height: 0;
     left: 0;
     right: 0;
-    bottom:0;
+    bottom: 0;
     width: 100%;
-    z-index: 9;
+    z-index: 3;
+    overflow: hidden;
 
-    img {
+    .transition-mask {
+      background-size: cover;
+      background-position: center;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transform: scale(1.1);
+      height: 100vh;
+      position: absolute;
+      bottom: 0;
       transition: transform 500ms $ease-in-out-quad 100ms;
-
-      &.hide {
-        transform: translateY(-200px)
-      }
-    }
-
-    &.animating {
-      img {
-        transform: scale(1);
-      }
     }
   }
 }
+

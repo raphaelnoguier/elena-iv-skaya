@@ -6,7 +6,7 @@
         <div class="gallery">
           <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
             <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
-              <nuxt-link :to="`/serie/${serie.serie.uid}`">
+              <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url)" :to="`/serie/${serie.serie.uid}`">
                 <div class="gallery-mask left"></div>
                 <img :src="serie.serie.data.cover_serie_image.url" data-load="preload" />
                 <div class="gallery-mask right"></div>
@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import anime from 'animejs';
 import browser from '~/utils/browser.js'
 import scrollbar from "~/utils/scrollbar.js";
 import HomeHeader from "~/components/HomeHeader";
@@ -54,6 +55,58 @@ export default {
   components: {
     HomeHeader,
     Footer
+  },
+  transition: {
+    name: 'layer-image-transition',
+    css: false,
+    beforeLeave() {
+      let tmpImg = new Image;
+      tmpImg.src = this.$store.getters.currentDoc.data.loader_image.url;
+    },
+    leave(el, done) {
+      this.$parent.domLoaded = false
+      let tmpImg = new Image;
+      tmpImg.src = this.$store.getters.currentDoc.data.loader_image.url;
+      tmpImg.onload = function() {
+        let tl = anime.timeline({
+          easing: 'easeInOutQuad',
+          duration: 750
+        })
+
+        let transitionContainer = document.querySelector('.transition-wrapper')
+        let imageContainer = transitionContainer.querySelector('.image-transition')
+        let mask = transitionContainer.querySelector('.image-transition .transition-mask')
+
+        tl.add({
+          targets: imageContainer,
+          scale: [1.1, 1],
+          top: 0,
+          height: '100%',
+          complete: () => {
+            mask.style.top = 0;
+            mask.style.transform = 'translate3d(0, -200px, 0)'
+          }
+        }).add({
+          targets: transitionContainer,
+          height: 0,
+          complete: () => {
+            imageContainer.style.height = 0;
+            imageContainer.style.top = '';
+            imageContainer.style.bottom = 0;
+            transitionContainer.style.height = '100vh';
+            mask.style.top = ''
+            mask.style.bottom = '0'
+            mask.style.transform = "translate3d(0, 0, 0)";
+            done()
+          }
+        })
+      };
+    },
+    afterLeave() {
+      setTimeout(() => {
+        this.$parent.domLoaded = true
+      }, 100);
+    },
   },
   head() {
     return {
@@ -114,6 +167,9 @@ export default {
   },
 
   methods: {
+    updateTransitionImg(serieCover) {
+      this.$store.getters.currentDoc.data.loader_image.url = serieCover
+    },
     getClass(ratio) {
       if(ratio.includes('Big')){
         return 'full'

@@ -6,16 +6,16 @@
     &-content {
       margin-top: 12.5vw;
       padding-bottom: 6.25vw;
+      opacity: 0;
+      transition: opacity 500ms ease 500ms;
+
+      .loaded & {
+        opacity: 1;
+      }
 
       @include max(md) {
         margin-top: 0;
         padding-bottom: 32.552vw;
-        opacity: 0;
-        transition: opacity 500ms ease 500ms;
-
-        .loaded & {
-          opacity: 1;
-        }
       }
 
       &.black {

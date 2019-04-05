@@ -1,20 +1,11 @@
 <template>
-  <div class="transition-layer">
-    <div class="image">
-      <img :src="$store.getters.currentDoc.data.loader_image.url" />
+  <div class="transition-wrapper">
+    <div class="image-transition">
+      <div class="transition-mask" :style="`background-image:url('${$store.getters.currentDoc.data.loader_image.url}')`"></div>
+      <img :src="$store.getters.currentDoc.data.loader_image.url" data-load="preload" style="display:none">
     </div>
   </div>
 </template>
-
-<script>
-import anime from 'animejs';
-
-export default {
-  methods : {
-  },
-  props: {transitionImage: String}
-}
-</script>
 
 
 

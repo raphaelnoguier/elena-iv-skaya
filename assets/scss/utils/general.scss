@@ -24,6 +24,7 @@ body {
 
   &.serie {
     padding:0 8vw;
+
     @include max(md) {
       padding: 14.323vw 6.5vw 0;
     }

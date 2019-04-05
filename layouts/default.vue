@@ -2,18 +2,21 @@
   <div id="app" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' || $route.name === 'About' }">
     <Loader/>
     <Navigation/>
-    <nuxt :style="domLoaded ? '' : ''" />
+    <ImageTransition/>
+    <nuxt/>
   </div>
 </template>
 <script>
 import Navigation from "~/components/Navigation"
 import Loader from "~/components/Loader"
 import scrollbar from "~/utils/scrollbar.js"
+import ImageTransition from "~/components/ImageTransition"
 import browser from '~/utils/browser.js'
 
 export default {
   components: {
     Navigation,
+    ImageTransition,
     Loader,
   },
   data() {
@@ -21,11 +24,13 @@ export default {
       domLoaded: false,
       nav: null,
       container: null,
+      transitionComponent: null,
     }
   },
   mounted() {
     this.container = this.$el
     this.nav = this.container.querySelector('.nav')
+    this.transitionComponent = this.container.querySelector('.transition-wrapper')
     window.addEventListener('resize', this.resize)
 
     if (browser.desktop && window.innerWidth > 768) {
@@ -51,6 +56,7 @@ export default {
     onScrollDefault(status) {
       let offset = status.offset
       this.nav.style.top = offset.y + 'px'
+      this.transitionComponent.style.top = offset.y + 'px'
     }
   },
   watch: {

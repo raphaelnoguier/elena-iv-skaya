@@ -1,14 +1,15 @@
 .serie {
-  opacity: 0;
-  transition: opacity 500ms ease 500ms;
-
-  .loaded & {
-    opacity: 1;
-  }
-
   .serie-page-header {
     display: flex;
     justify-content: space-between;
+    transform: translate3d(0, 100px, 0);
+    opacity: 0;
+    transition:  opacity 700ms ease 300ms, transform 1000ms $ease-in-out-quad;
+
+    .loaded & {
+      opacity: 1;
+      transform: translate3d(0, 0, 0)
+    }
 
     @include max(md) {
       flex-direction: column;
@@ -53,7 +54,7 @@
       }
 
       .row {
-        z-index: 4;
+        z-index: 5;
       }
 
       .back-link {
