@@ -137,6 +137,12 @@ export default {
   },
   methods: {
     resize() {
+      let circle = this.$el.querySelector('.circle')
+      let featuredImage = this.$el.querySelector('img')
+
+      circle.style.top = 'translate3d(0,0,0)'
+      featuredImage.style.transform = 'translate3d(0,0,0)'
+
       if(browser.desktop && window.innerWidth > 768) {
         const container = this.$el.ownerDocument.getElementById('smooth-component')
         scrollbar.listen(container, this.onScrollAbout)
