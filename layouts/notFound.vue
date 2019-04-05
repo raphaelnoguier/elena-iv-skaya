@@ -4,9 +4,9 @@
       <div class="content">
         <span class="number">404</span>
         <div class="text">
-          <nuxt-link to="/">
+          <a href="/">
             go back home
-          </nuxt-link>
+          </a>
         </div>
       </div>
     </div>

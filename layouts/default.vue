@@ -4,7 +4,7 @@
     <div id="smooth-component" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' || $route.name === 'About' }">
       <nuxt/>
     </div>
-    <Navigation/>
+    <Navigation :class="transitioning ? 'transitioning': ''"/>
     <ImageTransition/>
   </div>
 </template>
@@ -27,6 +27,7 @@ export default {
       nav: null,
       container: null,
       transitionComponent: null,
+      transitioning: false,
     }
   },
   mounted() {

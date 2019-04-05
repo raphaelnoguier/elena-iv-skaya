@@ -7,6 +7,7 @@
   color:white;
 }
 
+
 .nav {
   padding: 5vh 8vw;
   position: fixed;
@@ -15,8 +16,12 @@
   width: 100%;
   z-index: 5;
   opacity: 0;
-  transform: translate3d(0, 100px, 0);
-  transition: opacity 500ms ease 500ms, transform 1000ms ease-in-out;
+  transform: translate3d(0, -100px, 0);
+  transition: opacity 500ms ease 200ms, transform 1000ms ease-in-out;
+
+  .transitioning & {
+    opacity: 0;
+  }
 
   @include max(md) {
     padding: 4vh 6.5vw;

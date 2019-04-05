@@ -64,6 +64,7 @@ import scrollbar from "~/utils/scrollbar.js"
 import { nextTick } from 'q'
 import browser from '~/utils/browser.js'
 import math from '~/utils/math.js'
+import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -85,6 +86,7 @@ export default {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
+  mixins: [ pageTransition ],
   head() {
     return {
       title: "About - Elena Iv-Skaya",

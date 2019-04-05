@@ -8,9 +8,11 @@
     position: relative;
     z-index: 4;
     opacity: 0;
-    transition: opacity 500ms ease 500ms;
+    transform: translate3d(0, 100px, 0);
+    transition: transform 1000ms $ease-in-out-quad, opacity 500ms ease 500ms;
 
     .loaded & {
+      transform: translate3d(0, 0, 0);
       opacity: 1;
     }
 
@@ -77,20 +79,22 @@
         h3 {
           @include actaDisplayLight(5.625vw);
           color: white;
-          transition: line-height 1000ms $ease-in-out-quart 300ms;
+          line-height: 6.250vw;
+          transform: translate3d(0, 100px, 0) skewY(10deg);
+          transition: transform 1000ms ease-in-out 200ms;
 
           .loaded & {
-            line-height: 6.250vw;
+            transform: translate3d(0, 0, 0) skewY(0);
+          }
 
-            @include max(md) {
-              font-size: 10.41vw;
-              line-height: 11.719vw;
-            }
+          @include max(md) {
+            font-size: 10.41vw;
+            line-height: 11.719vw;
+          }
 
-            @include max(sm) {
-              font-size: 13.333vw;
-              line-height: 16vw;
-            }
+          @include max(sm) {
+            font-size: 13.333vw;
+            line-height: 16vw;
           }
         }
       }

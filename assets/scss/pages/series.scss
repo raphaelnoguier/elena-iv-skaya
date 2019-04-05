@@ -4,7 +4,7 @@
     justify-content: space-between;
     transform: translate3d(0, 100px, 0);
     opacity: 0;
-    transition:  opacity 700ms ease 300ms, transform 1000ms $ease-in-out-quad;
+    transition:  opacity 500ms ease 500ms, transform 1000ms $ease-in-out-quad;
 
     .loaded & {
       opacity: 1;
@@ -105,19 +105,20 @@
           }
 
           h3{
-            line-height: 8.250vw;
-            transition: line-height 1000ms $ease-in-out-quart 300ms;
+            line-height: 6.250vw;
+            transition: transform 1000ms ease-in-out 200ms;
+            transform: translate3d(0, 100px, 0) skewY(10deg);
 
             .loaded & {
-              line-height: 6.250vw;
+              transform: translate3d(0, 0, 0) skewY(0);
+            }
 
-              @include max(md) {
-                line-height: 11.719vw;
-              }
+            @include max(md) {
+              line-height: 11.719vw;
+            }
 
-              @include max(sm) {
-                line-height: 16vw;
-              }
+            @include max(sm) {
+              line-height: 16vw;
             }
           }
         }
@@ -158,8 +159,7 @@
         display: flex;
         justify-content: space-between;
         padding-right: 3.75vw;
-        position: absolute;
-        bottom: 7.75vw;
+        margin-top: 6.25vw;
         z-index: 2;
         width: 100%;
 

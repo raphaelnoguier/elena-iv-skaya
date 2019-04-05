@@ -25,7 +25,6 @@ import anime from 'animejs'
 import browser from '~/utils/browser.js'
 
 export default {
-  layout: 'default',
   data() {
     return {
       hideLoader: false,

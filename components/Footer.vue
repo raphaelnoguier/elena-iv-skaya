@@ -7,7 +7,7 @@
         robin noguier
       </a>
       <div>
-        <span>&</span> 
+        <span>&</span>
         <a href="http://raphael-aitelalim.fr" target="_blank">
           raphael ait-el-alim
         </a>
@@ -16,3 +16,5 @@
   </div>
  </footer>
 </template>
+
+

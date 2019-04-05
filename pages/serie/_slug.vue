@@ -89,26 +89,9 @@
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
+import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
-  data() {
-    return {
-      isDrag: false,
-      featuredImageOffset: null
-    }
-  },
-  head() {
-    return{
-      title: 'Elena Iv-Skaya - ' + this.title,
-      link: [
-        {
-          rel: 'icon',
-          type: 'image/png',
-          href: this.featuredImage.url
-        }
-      ],
-    }
-  },
   async asyncData ({ app, params, error, store}) {
     try {
       const route = app.context.route
@@ -136,6 +119,25 @@ export default {
       }
     } catch (err) {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
+    }
+  },
+  mixins: [ pageTransition ],
+  head() {
+    return{
+      title: 'Elena Iv-Skaya - ' + this.title,
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: this.featuredImage.url
+        }
+      ],
+    }
+  },
+  data() {
+    return {
+      isDrag: false,
+      featuredImageOffset: null
     }
   },
   mounted() {
