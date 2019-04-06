@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Loader/>
-    <div id="smooth-component" :class="{ 'loaded': domLoaded, 'dark': $route.name === 'about' || $route.name === 'About' }">
+    <div id="smooth-component" :data-background="isDark ? 'dark': ''" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
     <Navigation :class="transitioning ? 'transitioning': ''"/>
@@ -29,6 +29,7 @@ export default {
       container: null,
       transitionComponent: null,
       transitioning: false,
+      isDark: false
     }
   },
   mounted() {

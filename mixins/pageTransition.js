@@ -4,6 +4,7 @@ let createTransition = () => {
   return {
     transition(to, from) {
       let toHome = to.name === 'index'
+      let toAbout = to.name === 'about' || to.name === 'About'
       return {
         name: 'page',
         leave(el, done) {
@@ -32,6 +33,7 @@ let createTransition = () => {
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
+                toAbout ? this.$parent.isDark = true : this.$parent.isDark = false
                 if(toHome) {
                   imageContainer.style.top = 'unset'
                   imageContainer.style.bottom = 0

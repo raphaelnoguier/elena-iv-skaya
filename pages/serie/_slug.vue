@@ -142,6 +142,7 @@ export default {
   },
   mounted() {
     const container = this.$el.ownerDocument.getElementById('smooth-component');
+    container.dataset.background = 'white'
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)

@@ -119,6 +119,7 @@ export default {
     if(browser.desktop && window.innerWidth > 768) {
       this.$nextTick(() => {
         const container = this.$el.ownerDocument.getElementById('smooth-component')
+        container.dataset.background = 'dark'
         scrollbar.listen(container, this.onScrollAbout)
         scrollbar.resetPosition(container)
         setTimeout(() => {
@@ -160,9 +161,6 @@ export default {
 
       this.paragraphBloc = paragraphBloc.getBoundingClientRect()
       this.paragraphOffsetBottom = this.paragraphBloc.bottom - circle.height - circle.top
-
-            console.log(this.paragraphOffsetBottom)
-
     },
     onScrollAbout(status) {
       let circle = this.$el.querySelector('.circle')

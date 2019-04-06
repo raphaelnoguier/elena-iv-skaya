@@ -3,7 +3,7 @@
   opacity: 1;
 }
 
-.dark ~ .nav {
+[data-background="dark"]  ~ .nav {
   color:white;
 }
 

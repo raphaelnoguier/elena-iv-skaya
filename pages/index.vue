@@ -88,6 +88,7 @@ export default {
 
   mounted () {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
+    this.container.dataset.background = ''
     let scrollY = this.$store.state.position;
     this.$nextTick(() => {
       setTimeout(() => {
