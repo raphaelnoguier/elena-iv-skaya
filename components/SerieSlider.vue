@@ -63,6 +63,9 @@ export default {
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
+    this.$el.addEventListener('touchstart', this.up)
+    this.$el.addEventListener('touchend', this.down)
+    this.$el.addEventListener('touchmove', this.move)
   },
   beforeDestroy() {
     this.$el.removeEventListener('mouseup', this.up)
