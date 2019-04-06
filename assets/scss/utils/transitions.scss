@@ -1,11 +1,12 @@
 .page-leave, .page-leave-active {
-  transition: opacity 500ms ease, transform 1000ms $ease-in-out-quad;
-  transform: translate3d(0, -100px, 0);
+  transition: opacity 1000ms ease-in-out, transform 1000ms ease-in-out;
+  transform: translate3d(0, -200px, 0);
   opacity: 0;
 }
 
 .page-enter, .page-enter-active {
-  transition: opacity 500ms ease 200ms, transform 1000ms $ease-in-out-quad;
+  transition: opacity 1000ms ease-in-out, transform 1000ms ease-in-out;
   transform: translate3d(0, 0, 0);
   opacity: 1;
 }
+

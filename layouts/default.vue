@@ -14,6 +14,7 @@ import Loader from "~/components/Loader"
 import scrollbar from "~/utils/scrollbar.js"
 import ImageTransition from "~/components/ImageTransition"
 import browser from '~/utils/browser.js'
+import anime from 'animejs'
 
 export default {
   components: {

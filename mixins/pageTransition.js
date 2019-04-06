@@ -7,9 +7,12 @@ let createTransition = () => {
       return {
         name: 'page',
         leave(el, done) {
+          let nav = document.querySelector('.nav')
           let transitionContainer = document.querySelector('.transition-wrapper')
           let imageContainer = transitionContainer.querySelector('.image-transition')
           let mask = transitionContainer.querySelector('.image-transition .transition-mask')
+
+          if(!toHome) this.$parent.transitioning = true
 
           let tmpImg = new Image
           tmpImg.src = this.$store.getters.currentDoc.data.loader_image.url
@@ -35,6 +38,7 @@ let createTransition = () => {
                   transitionContainer.style.top = 'unset'
                   transitionContainer.style.bottom = 0
                 } else {
+                  nav.classList.add('before-enter')
                   imageContainer.style.top = 0
                   imageContainer.style.bottom = 'unset'
                   transitionContainer.style.top = 0
@@ -47,6 +51,7 @@ let createTransition = () => {
               targets: transitionContainer,
               height: 0,
               complete: () => {
+                this.$parent.transitioning = false
                 imageContainer.style.height = 0
                 imageContainer.style.top = ''
                 imageContainer.style.bottom = 0
@@ -66,6 +71,10 @@ let createTransition = () => {
           })
         },
         enter(el, done) {
+          let nav = document.querySelector('.nav')
+          setTimeout(() => {
+            nav.classList.remove('before-enter')
+          }, 1000);
           done()
         }
       }

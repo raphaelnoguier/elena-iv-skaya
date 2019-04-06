@@ -7,7 +7,7 @@
       margin-top: 12.5vw;
       padding-bottom: 6.25vw;
       opacity: 0;
-      transition: opacity 500ms ease 500ms;
+      transition: opacity 500ms ease;
 
       .loaded & {
         opacity: 1;

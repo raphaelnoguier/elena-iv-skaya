@@ -7,6 +7,7 @@ const anime = require('./node_modules/animejs/lib/anime')
 
 module.exports = {
   mode: 'universal',
+  loading: false,
   /*
   ** Headers
   */

@@ -140,7 +140,7 @@ export default {
       let circle = this.$el.querySelector('.circle')
       let featuredImage = this.$el.querySelector('img')
 
-      circle.style.top = 'translate3d(0,0,0)'
+      circle.style.top = 0
       featuredImage.style.transform = 'translate3d(0,0,0)'
 
       if(browser.desktop && window.innerWidth > 768) {
@@ -160,6 +160,9 @@ export default {
 
       this.paragraphBloc = paragraphBloc.getBoundingClientRect()
       this.paragraphOffsetBottom = this.paragraphBloc.bottom - circle.height - circle.top
+
+            console.log(this.paragraphOffsetBottom)
+
     },
     onScrollAbout(status) {
       let circle = this.$el.querySelector('.circle')
