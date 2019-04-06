@@ -53,39 +53,12 @@
         <div class="line"></div>
       </div>
     </div>
-    <div class="serie-slider-wrapper">
-      <div class="line"></div>
-      <div class="serie-slider-title">
-        <span>Gallery</span>
-      </div>
-      <div class="serie-slider">
-        <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
-          <nuxt-link :to="`/serie/${item.serie. uid}`">
-            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
-            <img v-else data-load="preload" :src="item.serie.data.cover_serie_image.url">
-          </nuxt-link>
-        </div>
-      </div>
-      <div class="slider-controls">
-        <div class="upper">
-          <div class="play">
-            <img data-load="preload" src="~/assets/img/ui/play.svg">
-          </div>
-          <div class="title">
-            <span>A somewhat classic beauty</span>
-          </div>
-          <div class="index">
-            <span class="current">1 /</span>
-            <span class="total">41</span>
-          </div>
-        </div>
-        <div class="bottom">
-        </div>
-      </div>
-    </div>
+    <SerieSlider :nextSeries="nextSeries"/>
   </div>
 </template>
 <script>
+import SerieSlider from '~/components/SerieSlider'
+import reveal from "~/utils/reveal.js"
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
@@ -121,6 +94,9 @@ export default {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
     }
   },
+  components: {
+    SerieSlider
+  },
   mixins: [ pageTransition ],
   head() {
     return{
@@ -142,6 +118,7 @@ export default {
   },
   mounted() {
     const container = this.$el.ownerDocument.getElementById('smooth-component');
+    this.revealSlider()
     container.dataset.background = 'white'
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
@@ -164,6 +141,12 @@ export default {
     }
   },
   methods: {
+    revealSlider() {
+      let slider = this.$el.querySelector('.serie-slider-wrapper');
+      this.reveal = reveal(
+        { dom: slider, ratioIn: 0.2 }
+      )
+    },
     calcOffset() {
       let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
       this.featuredImageOffset = image.height

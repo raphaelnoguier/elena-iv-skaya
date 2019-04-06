@@ -13,12 +13,14 @@
   "dependencies": {
     "animejs": "^3.0.1",
     "bezier-easing": "^2.1.0",
+    "bowser": "2.1.0",
     "cross-env": "^5.2.0",
+    "intersection-observer": "^0.5.1",
     "nuxt": "^2.4.5",
     "patch-package": "^6.0.5",
     "prismic-javascript": "^2.0.1",
-    "smooth-scrollbar": "^8.3.1",
-    "bowser": "2.1.0"
+    "raf": "^3.4.1",
+    "smooth-scrollbar": "^8.3.1"
   },
   "devDependencies": {
     "node-sass": "^4.11.0",

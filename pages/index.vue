@@ -25,19 +25,20 @@
 </template>
 <script>
 import browser from '~/utils/browser.js'
-import scrollbar from "~/utils/scrollbar.js";
-import HomeHeader from "~/components/HomeHeader";
-import Footer from "~/components/Footer";
+import scrollbar from "~/utils/scrollbar.js"
+import HomeHeader from "~/components/HomeHeader"
+import Footer from "~/components/Footer"
+import reveal from "~/utils/reveal.js"
 import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
   async asyncData ({ app, params, error, store}) {
     try {
-      let entry = await store.dispatch('GET_DOC', app.context.route);
+      let entry = await store.dispatch('GET_DOC', app.context.route)
       let data = entry.data
 
-      let series = data.series;
-      let featured = data.slides;
+      let series = data.series
+      let featured = data.slides
 
       return {
         featured: featured,
@@ -46,7 +47,7 @@ export default {
           title: data.seo_title,
           description: data.seo_description
         },
-      };
+      }
 
     } catch (err) {
       error({statusCode: 404, message: `The page you are looking for does not exist. `, err: err})
@@ -74,7 +75,7 @@ export default {
           href: this.$store.getters.currentDoc.data.loader_image.url
         }
       ],
-    };
+    }
   },
 
   data () {
@@ -87,36 +88,47 @@ export default {
   },
 
   mounted () {
-    this.container = this.$el.ownerDocument.getElementById('smooth-component');
+    this.container = this.$el.ownerDocument.getElementById('smooth-component')
     this.container.dataset.background = ''
-    let scrollY = this.$store.state.position;
+    let scrollY = this.$store.state.position
     this.$nextTick(() => {
+      this.revealGallery()
       setTimeout(() => {
         if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
-        if (browser.desktop && window.innerWidth > 768) scrollbar.listen(this.container, this.onScrollHome);
-      }, 1);
+        if (browser.desktop && window.innerWidth > 768) scrollbar.listen(this.container, this.onScrollHome)
+      }, 1)
     })
-    // let gallery = document.querySelector(".gallery");
-    // if(!gallery) return;
-    // gallery.addEventListener("mousedown", this.down);
-    // gallery.addEventListener("mousemove", this.move);
-    // gallery.addEventListener("mouseleave", this.up);
-    // gallery.addEventListener("mouseup", this.up);
+    // let gallery = document.querySelector(".gallery")
+    // if(!gallery) return
+    // gallery.addEventListener("mousedown", this.down)
+    // gallery.addEventListener("mousemove", this.move)
+    // gallery.addEventListener("mouseleave", this.up)
+    // gallery.addEventListener("mouseup", this.up)
   },
 
   beforeDestroy() {
     if (browser.desktop && window.innerWidth > 768) {
-      scrollbar.unlisten(this.container, this.onScrollHome);
+      scrollbar.unlisten(this.container, this.onScrollHome)
     }
-    // let gallery = document.querySelector(".gallery");
-    // if(!gallery) return;
-    // gallery.removeEventListener("mousedown", this.down);
-    // gallery.removeEventListener("mousemove", this.move);
-    // gallery.removeEventListener("mouseup", this.up);
-    // gallery.removeEventListener("mouseleave", this.up);
+    // let gallery = document.querySelector(".gallery")
+    // if(!gallery) return
+    // gallery.removeEventListener("mousedown", this.down)
+    // gallery.removeEventListener("mousemove", this.move)
+    // gallery.removeEventListener("mouseup", this.up)
+    // gallery.removeEventListener("mouseleave", this.up)
   },
 
   methods: {
+    revealGallery() {
+      let tmp = this.$el.querySelectorAll('.gallery-mask');
+      const imgs = Array.from(tmp).map(img => {
+        return {
+          dom: img,
+          ratioIn: 0.5,
+        }
+      })
+      this.reveal = reveal(imgs)
+    },
     updateTransitionImg(serieCover) {
       this.$store.getters.currentDoc.data.loader_image.url = serieCover
     },
@@ -131,36 +143,29 @@ export default {
         return 'portrait'
       }
     },
-    onScrollHome() {
-      let galleryImgs = document.querySelectorAll('.gallery-mask')
-
-      galleryImgs.forEach(img => {
-        scrollbar.isVisible(this.container, img) ? img.classList.add('revealed') : false;
-      });
-    },
     down(e) {
-      requestAnimationFrame(this.timer);
-      e.preventDefault();
+      requestAnimationFrame(this.timer)
+      e.preventDefault()
     },
     up(e) {
-      cancelAnimationFrame(this.timerID);
-      this.counter = 0;
-      this.dragMode = false;
+      cancelAnimationFrame(this.timerID)
+      this.counter = 0
+      this.dragMode = false
     },
     timer() {
-      let gallery = document.querySelector(".gallery");
+      let gallery = document.querySelector(".gallery")
       if (this.counter < 0) {
-        this.timerID = requestAnimationFrame(this.timer);
-        this.counter++;
+        this.timerID = requestAnimationFrame(this.timer)
+        this.counter++
       } else {
-        this.dragMode = true;
+        this.dragMode = true
       }
     },
     move(e) {
-      if(!this.dragMode) return;
+      if(!this.dragMode) return
 
       console.log(e.pageY)
     }
   },
-};
+}
 </script>

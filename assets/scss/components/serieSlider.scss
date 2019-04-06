@@ -1,0 +1,223 @@
+.serie-slider-wrapper {
+  background: #FCF9F5;
+  padding-top: 11.875vw;
+  position: relative;
+  opacity: 0;
+  overflow-x: hidden;
+  transition: opacity 500ms ease, background-color 500ms ease;
+
+  * > {
+    user-select: none;
+  }
+
+  @include max(md) {
+    padding-top: 26.042vw;
+  }
+
+  @include max(sm) {
+    padding-top: 25vw;
+  }
+
+  .line {
+    position: absolute;
+    display: inline-block;
+    left:0;
+    top: 0;
+    right: 0;
+    margin: auto;
+    height: calc(100% - 12.188vw);
+    width: 0.130vw;
+    border-left: 0.063vw solid white;
+    opacity: 0.1;
+
+    @include max(md) {
+      width: 0.130vw;
+      height: calc(100% - 24.740vw);
+      border-left: 0.130vw solid white;
+    }
+  }
+
+  .serie-slider-title {
+    @include actaDisplayLight(5.625vw);
+    line-height: 6.250vw;
+    text-align: center;
+    color:white;
+
+    @include max(md) {
+      font-size: 10.417vw;
+      line-height: 11.719vw;
+    }
+
+    @include max(sm) {
+      font-size: 13.333vw;
+      line-height: 16vw;
+    }
+  }
+
+  .serie-slider {
+    position: relative;
+    display: inline-flex;
+    margin-bottom: 8.125vw;
+    top: -2.25vw;
+    user-select: none;
+    transition: left 1000ms $ease-in-out-quad;
+    left: 100vw;
+
+    * {
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @include max(md) {
+      margin-top: 3.25vw;
+      margin-bottom: 27.995vw;
+      margin-left: 28vw;
+    }
+
+    @include max(sm) {
+      margin-top: 16vw;
+      margin-left: 9.333vw;
+    }
+
+    .slider-item {
+      width: 20vw;
+      height: 25vw;
+      opacity: 0;
+      transition: opacity 500ms ease, transform 1000ms $ease-in-out-quad;
+
+      @include max(md) {
+        width: 41.406vw;
+        height: 51.563vw;
+      }
+
+      @include max(sm) {
+        width: 60vw;
+        height: 74.667vw;
+      }
+
+      &:not(:first-child){
+        transform: translate3d(32vw, 0, 0);
+      }
+
+      @for $i from 0 through 50 {
+        &:nth-child($i) {
+          transition-delay: $i * 0.3s;
+          transform: translate3d(($i * 30)+vw, 0, 0);
+        }
+      }
+
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .slider-controls {
+    padding: 0 8vw 5vw;
+
+    .upper {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+
+      @include max(sm) {
+        justify-content: center;
+      }
+
+      .play {
+        transform: rotate(-90deg);
+
+        @include max(sm) {
+          display: none;
+        }
+      }
+
+      .title {
+        @include sofiaProBold(0.875vw);
+        letter-spacing: 0.125vw;
+        line-height: 1.313vw;
+        text-transform: uppercase;
+
+        @include max(md) {
+          font-size: 2.083vw;
+          line-height: 3.125vw;
+        }
+
+        @include max(sm) {
+          font-size: 4.267vw;
+          line-height: 6.4vw;
+        }
+      }
+
+      .index {
+        @include sofiaProMedium(0.875vw);
+        line-height: 1.875vw;
+
+        @include max(md) {
+          font-size: 2.083vw;
+          line-height: 3.125vw;
+        }
+
+        @include max(sm) {
+          display: none;
+        }
+      }
+    }
+    .bottom {
+      height: 0.063vw;
+      background: #2A2A2A;
+      margin-top: 1vw;
+
+      @include max(md) {
+        height: 0.130vw;
+        margin-top: 2.604vw;
+      }
+
+      @include max(sm) {
+        margin-top: 8vw;
+      }
+    }
+  }
+
+
+  &.down-enter {
+    background-color: #121212;
+    opacity: 1;
+
+    .serie-slider {
+      left: 40vw;
+
+      &.drag {
+        .slider-item {
+          //transform: translate3d(0vw, 0, 0) !important;
+        }
+      }
+
+      .slider-item {
+        opacity: 1;
+
+        @for $i from 0 through 50 {
+          @if($i == 1) {
+            &:nth-child(#{$i}) {
+              transform: translate3d((0*2.5)+vw, 0,0);
+            }
+          } @else {
+            &:nth-child(#{$i}) {
+              transform: translate3d((($i - 1)*2.5)+vw, 0,0);
+            }
+          }
+        }
+      }
+
+      @include max(md) {
+        margin-left: 3.906vw;
+      }
+
+      @include max(sm) {
+        font-size: 4vw;
+      }
+    }
+  }
+}
