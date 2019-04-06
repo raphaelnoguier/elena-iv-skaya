@@ -63,14 +63,19 @@ export default {
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
-    this.$el.addEventListener('touchstart', this.up)
-    this.$el.addEventListener('touchend', this.down)
+
+    this.$el.addEventListener('touchstart', this.down)
+    this.$el.addEventListener('touchend', this.up)
     this.$el.addEventListener('touchmove', this.move)
   },
   beforeDestroy() {
     this.$el.removeEventListener('mouseup', this.up)
     this.$el.removeEventListener('mousedown', this.down)
     this.$el.removeEventListener('mousemove', this.move)
+
+    this.$el.removeEventListener('touchstart', this.down)
+    this.$el.removeEventListener('touchend', this.up)
+    this.$el.removeEventListener('touchmove', this.move)
   },
   methods: {
     up() {
@@ -78,12 +83,12 @@ export default {
     },
     down(cursor) {
       this.isDrag = true
-      this.downX = cursor.x
+      cursor.x ? this.downX = cursor.x : this.downX = cursor.touches[0].clientX
       this.downPosition = this.xPosition
     },
     move(cursor) {
       if(!this.isDrag) return;
-      this.moveX = cursor.x
+      cursor.x ? this.moveX = cursor.x : this.moveX = cursor.touches[0].clientX
       const translateX = this.moveX - this.downX
       const mappedX = translateX > 0 ? math.map(translateX, 0, this.dragStep, 0, 1) : math.map(translateX, 0, -this.dragStep, 0, -1)
       const pos = math.clamp(this.downPosition - mappedX, 0, this.nextSeries.length - 1)
@@ -99,7 +104,6 @@ export default {
       const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1 - (1 / this.nextSeries.length))
       const size = this.sliderContentBounds.width + this.rightMargin;
       const x = math.clamp(percentTranslate * size, 0, size - this.containerBounds.width)
-
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
     }
   },

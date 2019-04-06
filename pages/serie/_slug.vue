@@ -110,26 +110,16 @@ export default {
       ],
     }
   },
-  data() {
-    return {
-      isDrag: false,
-      featuredImageOffset: null
-    }
-  },
   mounted() {
     const container = this.$el.ownerDocument.getElementById('smooth-component');
     this.revealSlider()
     container.dataset.background = 'white'
-    this.$el.addEventListener('mouseup', this.up)
-    this.$el.addEventListener('mousedown', this.down)
-    this.$el.addEventListener('mousemove', this.move)
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop){
         const container = this.$el.ownerDocument.getElementById('smooth-component');
         scrollbar.listen(container, this.onScrollSerie);
         scrollbar.resetPosition(container);
-        this.calcOffset();
       }
     });
   },
@@ -147,15 +137,10 @@ export default {
         { dom: slider, ratioIn: 0.2 }
       )
     },
-    calcOffset() {
-      let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
-      this.featuredImageOffset = image.height
-    },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
         const container = this.$el.ownerDocument.getElementById('smooth-component');
         scrollbar.listen(container, this.onScrollSerie);
-        this.calcOffset();
       }
     },
     getClass(ratio) {
@@ -178,18 +163,6 @@ export default {
       const destination = this.$el.querySelector('.serie-gallery');
       let offset = calcOffset.computeOffset(destination).top;
       scrollbar.scrollTo(container, offset)
-    },
-    dragGallery() {
-
-    },
-    up() {
-
-    },
-    down() {
-
-    },
-    move() {
-
     },
   }
 };
