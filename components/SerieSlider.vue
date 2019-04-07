@@ -59,7 +59,7 @@ export default {
       downPosition: 0,
       downX: 0,
       isDrag: false,
-      dragStep: browser.desktop ? 150 : 50,
+      dragStep: browser.desktop ? 250 : 50,
       lerp: lerp(),
       containerBounds: null,
       sliderContent: null,
