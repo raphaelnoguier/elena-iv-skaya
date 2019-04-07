@@ -53,7 +53,7 @@
         <div class="line"></div>
       </div>
     </div>
-    <SerieSlider :nextSeries="nextSeries"/>
+    <SerieSlider :nextSeries="nextSeries.slice(0, 5)"/>
   </div>
 </template>
 <script>

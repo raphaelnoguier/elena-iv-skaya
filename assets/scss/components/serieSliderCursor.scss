@@ -1,0 +1,58 @@
+.serie-slider-cursor {
+  position: absolute;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0);
+
+  @include max(md) {
+    display: none;
+  }
+  //transition: transform 500ms;
+
+  &.visible {
+    transform: scale(1);
+  }
+
+  img {
+    width: 0.75vw
+  }
+
+
+  .arrows {
+    position: absolute;
+    width: 65%;
+    display: flex;
+    justify-content: space-between;
+    transition: width 500ms $ease-in-out-quad;
+  }
+
+  .left {
+    transform: rotate(90deg);
+  }
+
+  .circle {
+    width: 4vw;
+    height: 4vw;
+    border-radius: 20vw;
+    border: 1px solid #FCF9F5;
+    background: transparent;
+    margin: 0 0.2vw;
+    transform: scale(1.3);
+    transition: transform 500ms $ease-in-out-quart;
+  }
+
+  .right {
+    transform: rotate(-90deg);
+  }
+
+  &.focus {
+    .arrows {
+      width: 110%;
+    }
+    .circle{
+      transform: scale(0.5)
+    }
+  }
+}

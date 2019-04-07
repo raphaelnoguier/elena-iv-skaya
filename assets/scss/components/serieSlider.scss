@@ -2,9 +2,8 @@
   background: #FCF9F5;
   padding-top: 11.875vw;
   position: relative;
-  opacity: 0;
-  overflow-x: hidden;
-  transition: opacity 500ms ease, background-color 500ms ease;
+  overflow: hidden;
+  transition: background-color 500ms ease;
 
   * > {
     user-select: none;
@@ -61,7 +60,7 @@
     top: -2.25vw;
     user-select: none;
     transition: left 1000ms $ease-in-out-quad;
-    left: 100vw;
+    //left: 100vw;
 
     * {
       user-select: none;
@@ -83,7 +82,7 @@
       width: 20vw;
       height: 25vw;
       opacity: 0;
-      transition: opacity 500ms ease, transform 1000ms $ease-in-out-quad;
+      transition: opacity 500ms ease, transform 500ms $ease-in-out-quad;
 
       @include max(md) {
         width: 41.406vw;
@@ -99,10 +98,15 @@
         transform: translate3d(32vw, 0, 0);
       }
 
-      @for $i from 0 through 50 {
-        &:nth-child($i) {
-          transition-delay: $i * 0.3s;
-          transform: translate3d(($i * 30)+vw, 0, 0);
+      &:first-child {
+        .serie-gallery-mask.left {
+          display: none;
+        }
+      }
+
+      &:last-child {
+        .serie-gallery-mask.right {
+          display: none;
         }
       }
 
@@ -122,19 +126,34 @@
       justify-content: space-between;
       color: white;
 
+      @include max(md) {
+        width: 41.406vw;
+      }
+
       @include max(sm) {
+        width: 60vw;
         justify-content: center;
       }
 
-      .play {
-        transform: rotate(-90deg);
+      .titles {
+        width: 20vw;
+        margin: auto;
+        overflow: hidden;
+        color: white;
+        position: relative;
+
+        @include max(md) {
+          width: 41.406vw;
+        }
 
         @include max(sm) {
-          display: none;
+          width: 60vw;
         }
       }
 
-      .title {
+      .titles-wrapper {
+        display: inline-flex;
+
         @include sofiaProBold(0.875vw);
         letter-spacing: 0.125vw;
         line-height: 1.313vw;
@@ -148,6 +167,31 @@
         @include max(sm) {
           font-size: 4.267vw;
           line-height: 6.4vw;
+        }
+
+        div {
+          width: 20vw;
+          text-align: center;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          padding: 0 1.25vw;
+
+          @include max(md) {
+            width: 41.406vw;
+          }
+
+          @include max(sm) {
+            width: 60vw;
+          }
+        }
+      }
+
+      .play {
+        transform: rotate(-90deg);
+
+        @include max(sm) {
+          display: none;
         }
       }
 
@@ -165,18 +209,25 @@
         }
       }
     }
+
     .bottom {
       height: 0.063vw;
       background: #2A2A2A;
       margin-top: 1vw;
 
       @include max(md) {
-        height: 0.130vw;
+        height: 0.230vw;
         margin-top: 2.604vw;
       }
 
       @include max(sm) {
-        margin-top: 8vw;
+        margin-top: 6vw;
+      }
+
+      .progress {
+        width: 0;
+        height: 100%;
+        background-color: #FCF9F5;
       }
     }
   }
@@ -191,24 +242,15 @@
 
       &.drag {
         .slider-item {
-          //transform: translate3d(0vw, 0, 0) !important;
+          .serie-gallery-mask {
+            transform: scaleX(0);
+          }
         }
       }
 
       .slider-item {
         opacity: 1;
-
-        @for $i from 0 through 50 {
-          @if($i == 1) {
-            &:nth-child(#{$i}) {
-              transform: translate3d((0*2.5)+vw, 0,0);
-            }
-          } @else {
-            &:nth-child(#{$i}) {
-              transform: translate3d((($i - 1)*2.5)+vw, 0,0);
-            }
-          }
-        }
+        transform: translate3d(0, 0, 0);
       }
 
       @include max(md) {

@@ -79,7 +79,7 @@ export const actions = {
     await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
       return api.query(
         Prismic.Predicates.at('document.type', 'page'),
-        { fetch : 'page.series', fetchLinks: ['serie.cover_ratio', 'serie.cover_serie_image', 'serie.fallback_landscape_cover']}
+        { fetch : 'page.series', fetchLinks: ['serie.title', 'serie.cover_ratio', 'serie.cover_serie_image', 'serie.fallback_landscape_cover']},
       ).then((response) => {
         series = response.results[0].data.series
       });
