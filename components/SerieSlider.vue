@@ -1,5 +1,5 @@
 <template>
-  <div class="serie-slider-wrapper down-enter">
+  <div class="serie-slider-wrapper">
     <SerieSliderCursor/>
     <div class="line"></div>
     <div class="serie-slider-title">
@@ -21,7 +21,7 @@
           <img data-load="preload" src="~/assets/img/ui/play.svg">
         </div>
         <div class="titles">
-          <div class="titles-wrapper" :class="isDrag ? 'drag' : ''">
+          <div class="titles-wrapper">
             <div v-for="(item, i) in nextSeries" :key="i">
               {{item.serie.data.title[0].text}}
             </div>
@@ -59,11 +59,12 @@ export default {
       downPosition: 0,
       downX: 0,
       isDrag: false,
-      dragStep: browser.desktop ? 250 : 50,
+      dragStep: browser.desktop ? 200 : 50,
       lerp: lerp(),
       containerBounds: null,
       sliderContent: null,
       titleContainer: null,
+      running: false
     }
   },
   mounted() {
@@ -74,17 +75,15 @@ export default {
     this.titleContainer = this.$el.querySelector('.slider-controls .titles-wrapper')
     this.progress = this.$el.querySelector('.slider-controls .bottom .progress')
 
-    raf.add(this.tick)
-
     this.$el.addEventListener('mouseenter', this.enableCursor)
     this.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseleave', this.exitSection)
 
     window.addEventListener('resize', this.resize)
-    this.sliderContent.addEventListener('mouseleave', this.exit)
-    this.sliderContent.addEventListener('mouseup', this.up)
-    this.sliderContent.addEventListener('mousedown', this.down)
-    this.sliderContent.addEventListener('mousemove', this.move)
+    this.$el.addEventListener('mouseleave', this.exit)
+    this.$el.addEventListener('mouseup', this.up)
+    this.$el.addEventListener('mousedown', this.down)
+    this.$el.addEventListener('mousemove', this.move)
 
     this.sliderContent.addEventListener('touchstart', this.down)
     this.sliderContent.addEventListener('touchend', this.up)
@@ -96,21 +95,27 @@ export default {
     this.$el.removeEventListener('mouseleave', this.exitSection)
 
     window.removeEventListener('resize', this.resize)
-    this.sliderContent.removeEventListener('mouseleave', this.exit)
-    this.sliderContent.removeEventListener('mouseup', this.up)
-    this.sliderContent.removeEventListener('mousedown', this.down)
-    this.sliderContent.removeEventListener('mousemove', this.move)
+    this.$el.removeEventListener('mouseleave', this.exit)
+    this.$el.removeEventListener('mouseup', this.up)
+    this.$el.removeEventListener('mousedown', this.down)
+    this.$el.removeEventListener('mousemove', this.move)
 
     this.sliderContent.removeEventListener('touchstart', this.down)
     this.sliderContent.removeEventListener('touchend', this.up)
     this.sliderContent.removeEventListener('touchmove', this.move)
   },
   methods: {
+    toggleRaf() {
+      this.running = !this.running
+      if(this.running) raf.add(this.tick)
+      else raf.remove(this.tick)
+    },
     enableCursor() {
       this.cursor.classList.add('visible')
     },
     moveCursor(cursor) {
-      this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y}px, 0)`
+      if(window.innerWidth < 768) return;
+      this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y - 300}px, 0)`
     },
     exitSection() {
       this.cursor.classList.remove('visible')
@@ -146,24 +151,27 @@ export default {
       return (v * w) / 100;
     },
     tick() {
+      console.log('run')
       this.sliderContent.classList.toggle('drag', this.isDrag)
       this.lerp.update(0.10)
 
-      const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1 - (1 / this.nextSeries.length))
-      const size = this.sliderContentBounds.width + this.sliderContentBounds.left + (this.vw(40));
-      const x = math.clamp(percentTranslate * size, 0, size - this.containerBounds.width)
+      const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1)
+      const size = this.sliderContentBounds.width - this.vw(20) //: this.vw(30));
+      const x = percentTranslate * size
 
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
       this.titleContainer.style.transform = `translate3d(-${x}px, 0, 0)`
       this.progress.style.width = `${percentTranslate * 100}%`
 
-      console.log(x)
+      // let test=  math.map(x, 0, size, -12, 12)
+
     },
     resize () {
       this.containerBounds = this.$el.getBoundingClientRect()
       this.sliderContentBounds =  this.sliderContent.getBoundingClientRect()
     },
     exit() {
+      this.cursor.classList.remove('visible')
       this.isDrag = false
     }
   },

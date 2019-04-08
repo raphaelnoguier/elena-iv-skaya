@@ -53,7 +53,7 @@
         <div class="line"></div>
       </div>
     </div>
-    <SerieSlider :nextSeries="nextSeries"/>
+    <SerieSlider ref="serieSlider" :nextSeries="nextSeries"/>
   </div>
 </template>
 <script>
@@ -151,7 +151,10 @@ export default {
     revealSlider() {
       let slider = this.$el.querySelector('.serie-slider-wrapper');
       this.reveal = reveal(
-        { dom: slider, ratioIn: 0.2 }
+        { dom: slider, ratioIn: 0.2, update: () => {
+          console.log('hey')
+          this.$refs.serieSlider.toggleRaf()
+        } }
       )
     },
     resize() {

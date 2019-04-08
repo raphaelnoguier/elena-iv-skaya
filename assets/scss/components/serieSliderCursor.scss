@@ -4,15 +4,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: scale(0);
+  display: none;
+  user-select: none;
 
   @include max(md) {
     display: none;
+    visibility: hidden;
   }
-  //transition: transform 500ms;
 
   &.visible {
-    transform: scale(1);
+    display: flex;
   }
 
   img {

@@ -425,17 +425,15 @@
       margin-top: 2vw;
       transform: rotate(180deg);
       height:8.125vw;
-      border-left: 0.063vw solid black;
+      border-left: 1px solid black;
       opacity: 0.1;
 
       @include max(md) {
-        border-left: 0.130vw solid black;
         height: 17.25vw;
         margin-top: 2.604vw;
       }
 
       @include max(sm) {
-        border: 0.130vw solid black;
         margin-top: 5.333vw;
         height: 45vw;
       }

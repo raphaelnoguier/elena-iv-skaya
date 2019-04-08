@@ -3,9 +3,9 @@
   padding-top: 11.875vw;
   position: relative;
   overflow: hidden;
-  transition: background-color 500ms ease;
+  transition: background-color 1000ms ease;
 
-  * > {
+  * {
     user-select: none;
   }
 
@@ -25,14 +25,13 @@
     right: 0;
     margin: auto;
     height: calc(100% - 12.188vw);
-    width: 0.130vw;
-    border-left: 0.063vw solid white;
+    width: 1px;
+    border-left: 1px solid white;
     opacity: 0.1;
 
     @include max(md) {
-      width: 0.130vw;
       height: calc(100% - 24.740vw);
-      border-left: 0.130vw solid white;
+      border-left: 1px solid white;
     }
   }
 
@@ -58,14 +57,8 @@
     display: inline-flex;
     margin-bottom: 8.125vw;
     top: -2.25vw;
-    user-select: none;
     transition: left 1000ms $ease-in-out-quad;
-    //left: 100vw;
-
-    * {
-      user-select: none;
-      pointer-events: none;
-    }
+    left: 100vw;
 
     @include max(md) {
       margin-top: 3.25vw;
@@ -110,10 +103,15 @@
         }
       }
 
+      a {
+        overflow: hidden;
+      }
+
       img{
-        width: 100%;
+        width: 105%;
         height: 100%;
         object-fit: cover;
+        pointer-events: none;
       }
     }
   }
@@ -127,12 +125,7 @@
       color: white;
 
       @include max(md) {
-        width: 41.406vw;
-      }
-
-      @include max(sm) {
-        width: 60vw;
-        justify-content: center;
+        width: 100%;
       }
 
       .titles {
@@ -231,12 +224,11 @@
     }
 
     .bottom {
-      height: 0.063vw;
+      height: 1px;
       background: #2A2A2A;
       margin-top: 1vw;
 
       @include max(md) {
-        height: 0.230vw;
         margin-top: 2.604vw;
       }
 
@@ -255,10 +247,17 @@
 
   &.down-enter {
     background-color: #121212;
-    opacity: 1;
 
     .serie-slider {
       left: 40vw;
+
+      @include max(md) {
+        left: 23vw;
+      }
+
+      @include max(sm) {
+        left: 0;
+      }
 
       &.drag {
         .slider-item {

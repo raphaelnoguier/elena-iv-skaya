@@ -6,7 +6,9 @@ const ERROR_API = 'Reveal api must be = {dom, update?}'
 
 const STATES = {
   down_enter: 'down-enter',
+  down_leave: 'down-leave',
   up_enter: 'up-enter',
+  up_leave: 'up-leave',
 }
 
 const thresholdArray = steps => Array(steps + 1)
@@ -16,7 +18,7 @@ const thresholdArray = steps => Array(steps + 1)
 const getDefaultOpts = (opts) => {
   return assign({
     threshold: thresholdArray(20),
-    allowLeave: false
+    allowLeave: true
   }, opts)
 }
 
@@ -47,7 +49,6 @@ export default function Reveal (elements, opts = {}) {
   function toggleState (state, el) {
     if (el.classList.contains('state')) return
 
-    for (let className in STATES) { el.classList.remove(STATES[className]) }
     el.classList.add(state)
   }
 
