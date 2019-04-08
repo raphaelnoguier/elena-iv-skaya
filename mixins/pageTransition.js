@@ -3,7 +3,7 @@ import anime from 'animejs'
 let createTransition = () => {
   return {
     transition(to, from) {
-      let toHome = to.name === 'index'
+      let toHome = to.name === 'index' && from.name != 'About' && from.name != 'about'
       let toAbout = to.name === 'about' || to.name === 'About'
       return {
         name: 'page',

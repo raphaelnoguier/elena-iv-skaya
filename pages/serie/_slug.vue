@@ -98,6 +98,11 @@ export default {
     SerieSlider
   },
   mixins: [ pageTransition ],
+  data() {
+    return {
+      featuredImageOffset: null
+    }
+  },
   head() {
     return{
       title: 'Elena Iv-Skaya - ' + this.title,
@@ -120,6 +125,7 @@ export default {
         const container = this.$el.ownerDocument.getElementById('smooth-component');
         scrollbar.listen(container, this.onScrollSerie);
         scrollbar.resetPosition(container);
+        this.calcOffset();
       }
     });
   },
@@ -131,6 +137,17 @@ export default {
     }
   },
   methods: {
+    calcOffset() {
+      let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
+      this.featuredImageOffset = image.height
+    },
+    resize() {
+      if(browser.desktop && window.innerWidth > 768) {
+        const container = this.$el.ownerDocument.getElementById('app');
+        scrollbar.listen(container, this.onScrollSerie);
+        this.calcOffset();
+      }
+    },
     revealSlider() {
       let slider = this.$el.querySelector('.serie-slider-wrapper');
       this.reveal = reveal(
@@ -156,6 +173,7 @@ export default {
     },
     onScrollSerie(status) {
       let nav = this.$el.ownerDocument.querySelector('.nav');
+      console.log(status.offset.y, this.featuredImageOffset)
       nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
     },
     scrollDown() {

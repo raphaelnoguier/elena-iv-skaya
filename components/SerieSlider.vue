@@ -21,7 +21,7 @@
           <img data-load="preload" src="~/assets/img/ui/play.svg">
         </div>
         <div class="titles">
-          <div class="titles-wrapper">
+          <div class="titles-wrapper" :class="isDrag ? 'drag' : ''">
             <div v-for="(item, i) in nextSeries" :key="i">
               {{item.serie.data.title[0].text}}
             </div>

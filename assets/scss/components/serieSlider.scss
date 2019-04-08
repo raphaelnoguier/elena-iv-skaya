@@ -142,6 +142,18 @@
         color: white;
         position: relative;
 
+        &:before {
+          content: "";
+          top: 0;
+          left: 0;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          z-index: 9;
+          background: linear-gradient(to left, #121212, transparent 30%),
+          linear-gradient(to right, #121212, transparent 30%);
+        }
+
         @include max(md) {
           width: 41.406vw;
         }
@@ -176,6 +188,8 @@
           white-space: nowrap;
           overflow: hidden;
           padding: 0 1.25vw;
+          opacity: 1;
+          transition: opacity 500ms ease;
 
           @include max(md) {
             width: 41.406vw;
@@ -183,6 +197,12 @@
 
           @include max(sm) {
             width: 60vw;
+          }
+        }
+
+        &.drag {
+          div {
+            opacity: 0.3;
           }
         }
       }
