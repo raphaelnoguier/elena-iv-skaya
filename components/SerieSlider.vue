@@ -59,7 +59,7 @@ export default {
       downPosition: 0,
       downX: 0,
       isDrag: false,
-      dragStep: browser.desktop ? 250 : 50,
+      dragStep: browser.desktop ? 50 : 50,
       lerp: lerp(),
       containerBounds: null,
       sliderContent: null,
@@ -151,13 +151,13 @@ export default {
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1 - (1 / this.nextSeries.length))
       const size = this.sliderContentBounds.width + this.sliderContentBounds.left + (this.vw(40));
-      const x = math.clamp(percentTranslate * size, 0, size - (this.containerBounds.width))
-
-      console.log(percentTranslate * 100)
+      const x = math.clamp(percentTranslate * size, 0, size - this.containerBounds.width)
 
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
       this.titleContainer.style.transform = `translate3d(-${x}px, 0, 0)`
       this.progress.style.width = `${percentTranslate * 100}%`
+
+      console.log(x)
     },
     resize () {
       this.containerBounds = this.$el.getBoundingClientRect()

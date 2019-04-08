@@ -53,7 +53,7 @@
         <div class="line"></div>
       </div>
     </div>
-    <SerieSlider :nextSeries="nextSeries"/>
+    <SerieSlider :nextSeries="nextSeries.slice(0, 5)"/>
   </div>
 </template>
 <script>
@@ -173,7 +173,6 @@ export default {
     },
     onScrollSerie(status) {
       let nav = this.$el.ownerDocument.querySelector('.nav');
-      console.log(status.offset.y, this.featuredImageOffset)
       nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
     },
     scrollDown() {
