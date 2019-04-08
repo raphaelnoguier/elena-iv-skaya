@@ -4,7 +4,7 @@
     <div id="smooth-component" :data-background="isDark ? 'dark': ''" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
-    <Navigation :class="transitioning ? 'transitioning': ''"/>
+    <Navigation ref="nav" :class="transitioning ? 'transitioning': ''"/>
     <ImageTransition/>
   </div>
 </template>

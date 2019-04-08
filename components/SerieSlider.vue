@@ -1,11 +1,11 @@
 <template>
   <div class="serie-slider-wrapper">
-    <SerieSliderCursor/>
+    <SerieSliderCursor ref="cursor" />
     <div class="line"></div>
     <div class="serie-slider-title">
       <span>Gallery</span>
     </div>
-    <div class="serie-slider">
+    <div ref="slider" class="serie-slider">
       <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
         <div class="serie-gallery-mask left"></div>
         <nuxt-link :to="`/serie/${item.serie. uid}`">
@@ -21,19 +21,19 @@
           <img data-load="preload" src="~/assets/img/ui/play.svg">
         </div>
         <div class="titles">
-          <div class="titles-wrapper">
+          <div ref="titlesWrapper" class="titles-wrapper">
             <div v-for="(item, i) in nextSeries" :key="i">
               {{item.serie.data.title[0].text}}
             </div>
           </div>
         </div>
         <div class="index">
-          <span class="current">{{this.index + 1}} /</span>
+          <span class="current"><span ref="index">1</span> /</span>
           <span class="total">{{nextSeries.length}}</span>
         </div>
       </div>
       <div class="bottom">
-        <div class="progress"></div>
+        <div ref="progress" class="progress"></div>
       </div>
     </div>
   </div>
@@ -59,21 +59,23 @@ export default {
       downPosition: 0,
       downX: 0,
       isDrag: false,
-      dragStep: browser.desktop ? 200 : 50,
+      dragStep: browser.desktop ? 250 : 150,
       lerp: lerp(),
       containerBounds: null,
       sliderContent: null,
       titleContainer: null,
-      running: false
+      running: false,
+      covers: null
     }
   },
   mounted() {
     this.containerBounds = this.$el.getBoundingClientRect()
-    this.sliderContent = this.$el.querySelector('.serie-slider')
+    this.sliderContent = this.$refs.slider
     this.sliderContentBounds = this.sliderContent.getBoundingClientRect()
-    this.cursor = this.$el.querySelector('.serie-slider-cursor')
-    this.titleContainer = this.$el.querySelector('.slider-controls .titles-wrapper')
-    this.progress = this.$el.querySelector('.slider-controls .bottom .progress')
+    this.cursor = this.$refs.cursor.$el
+    this.titleContainer = this.$refs.titlesWrapper
+    this.progress = this.$refs.progress
+    this.covers = this.sliderContent.querySelectorAll('.serie-slider .slider-item img')
 
     this.$el.addEventListener('mouseenter', this.enableCursor)
     this.$el.addEventListener('mousemove', this.moveCursor)
@@ -90,6 +92,7 @@ export default {
     this.sliderContent.addEventListener('touchmove', this.move)
   },
   beforeDestroy() {
+    this.toggleRaf()
     this.$el.removeEventListener('mouseenter', this.enableCursor)
     this.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseleave', this.exitSection)
@@ -117,9 +120,6 @@ export default {
       if(window.innerWidth < 768) return;
       this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y - 300}px, 0)`
     },
-    exitSection() {
-      this.cursor.classList.remove('visible')
-    },
     up() {
       this.isDrag = false;
       this.cursor.classList.remove('focus')
@@ -133,47 +133,56 @@ export default {
     move(cursor) {
       if(!this.isDrag) return;
       browser.desktop ? this.moveX = cursor.x : this.moveX = cursor.touches[0].clientX
-
       const translateX = this.moveX - this.downX
       const mappedX = translateX > 0 ? math.map(translateX, 0, this.dragStep, 0, 1) : math.map(translateX, 0, -this.dragStep, 0, -1)
       const pos = math.clamp(this.downPosition - mappedX, 0, this.nextSeries.length - 1)
 
+      // TO DO this.parralax(mappedX)
+
       this.setPosition(pos)
+    },
+    parralax(x) {
+      let nodeList = Array.prototype.slice.call(this.covers);
+      let toTransform = nodeList.slice(this.index - 3, this.index + 3)
+
+      toTransform.forEach((cover, i) => {
+        this.covers[i].style.transform = `translate3d(${x * 5}px, 0, 0)`
+      });
     },
     setPosition (x) {
       const intPos = parseInt(x)
       this.xPosition = x
       this.lerp.set(x)
       if (intPos !== this.index) this.index = intPos
-    },
-    vw(v) {
-      var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      return (v * w) / 100;
+      this.$refs.index.innerHTML = this.index + 1
     },
     tick() {
-      console.log('run')
       this.sliderContent.classList.toggle('drag', this.isDrag)
       this.lerp.update(0.10)
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1)
-      const size = this.sliderContentBounds.width - this.vw(20) //: this.vw(30));
+      const size = this.sliderContentBounds.width - this.vw(20);
       const x = percentTranslate * size
 
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
       this.titleContainer.style.transform = `translate3d(-${x}px, 0, 0)`
       this.progress.style.width = `${percentTranslate * 100}%`
-
-      // let test=  math.map(x, 0, size, -12, 12)
-
     },
     resize () {
       this.containerBounds = this.$el.getBoundingClientRect()
       this.sliderContentBounds =  this.sliderContent.getBoundingClientRect()
     },
+    vw(v) {
+      var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      return (v * w) / 100;
+    },
     exit() {
       this.cursor.classList.remove('visible')
       this.isDrag = false
-    }
+    },
+    exitSection() {
+      this.cursor.classList.remove('visible')
+    },
   },
   props: {nextSeries: Array}
 }

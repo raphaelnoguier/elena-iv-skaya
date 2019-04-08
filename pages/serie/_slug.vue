@@ -100,7 +100,9 @@ export default {
   mixins: [ pageTransition ],
   data() {
     return {
-      featuredImageOffset: null
+      container: null,
+      featuredImageOffset: null,
+      serieSliderOfsset: null
     }
   },
   head() {
@@ -116,23 +118,22 @@ export default {
     }
   },
   mounted() {
-    const container = this.$el.ownerDocument.getElementById('smooth-component');
-    this.revealSlider()
-    container.dataset.background = 'white'
+    this.container = this.$el.ownerDocument.getElementById('smooth-component');
+    this.container.dataset.background = 'white'
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop){
-        const container = this.$el.ownerDocument.getElementById('smooth-component');
-        scrollbar.listen(container, this.onScrollSerie);
-        scrollbar.resetPosition(container);
+        scrollbar.listen(this.container, this.onScrollSerie);
+        scrollbar.resetPosition(this.container);
         this.calcOffset();
+        this.revealSlider()
       }
     });
   },
   beforeDestroy () {
-    const container = this.$el.ownerDocument.getElementById('smooth-component');
+    this.reveal.destroy()
     if (browser.desktop && window.innerWidth > 768) {
-      scrollbar.unlisten(container, this.onScrollSerie);
+      scrollbar.unlisten(this.container, this.onScrollSerie);
       window.removeEventListener('resize', this.resize);
     }
   },
@@ -140,28 +141,26 @@ export default {
     calcOffset() {
       let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
       this.featuredImageOffset = image.height
+
+      let slider = this.$refs.serieSlider.$el.getBoundingClientRect()
+      let navHeight = this.$parent.$parent.$refs.nav.$el.clientHeight / 2
+
+      console.log(slider.bottom)
+
+      this.serieSliderOfsset = slider.bottom - slider.height - navHeight
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
-        const container = this.$el.ownerDocument.getElementById('app');
-        scrollbar.listen(container, this.onScrollSerie);
+        scrollbar.listen(this.container, this.onScrollSerie);
         this.calcOffset();
       }
     },
     revealSlider() {
-      let slider = this.$el.querySelector('.serie-slider-wrapper');
       this.reveal = reveal(
-        { dom: slider, ratioIn: 0.2, update: () => {
-          console.log('hey')
+        { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: () => {
           this.$refs.serieSlider.toggleRaf()
         } }
       )
-    },
-    resize() {
-      if(browser.desktop && window.innerWidth > 768) {
-        const container = this.$el.ownerDocument.getElementById('smooth-component');
-        scrollbar.listen(container, this.onScrollSerie);
-      }
     },
     getClass(ratio) {
       if (ratio.includes('Portrait')) {
@@ -177,6 +176,7 @@ export default {
     onScrollSerie(status) {
       let nav = this.$el.ownerDocument.querySelector('.nav');
       nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
+      nav.classList.toggle('white' , status.offset.y > this.serieSliderOfsset)
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');

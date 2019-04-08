@@ -104,7 +104,10 @@
       }
 
       a {
+        height: 100%;
+        position: absolute;
         overflow: hidden;
+        pointer-events: none;
       }
 
       img{
@@ -112,12 +115,16 @@
         height: 100%;
         object-fit: cover;
         pointer-events: none;
+        transform: translate3d(0, 0, 0);
+        transition: transform 10ms ease;
       }
     }
   }
 
   .slider-controls {
     padding: 0 8vw 5vw;
+    opacity: 0;
+    transition: opacity 500ms ease 800ms;
 
     .upper {
       display: flex;
@@ -264,6 +271,9 @@
           .serie-gallery-mask {
             transform: scaleX(0);
           }
+          a {
+            pointer-events: none;
+          }
         }
       }
 
@@ -279,6 +289,10 @@
       @include max(sm) {
         font-size: 4vw;
       }
+    }
+
+    .slider-controls {
+      opacity: 1;
     }
   }
 }

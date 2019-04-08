@@ -4,7 +4,7 @@
     justify-content: space-between;
     transform: translate3d(0, 100px, 0);
     opacity: 0;
-    transition:  opacity 500ms ease 500ms, transform 1000ms $ease-in-out-quad;
+    transition:  opacity 800ms ease 600ms, transform 1200ms $ease-in-out-quad;
 
     .loaded & {
       opacity: 1;
