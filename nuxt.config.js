@@ -36,7 +36,7 @@ module.exports = {
   ],
   generate: {
     routes: function (callback) {
-      Prismic.getApi(prismicConfig.apiEndpoint)
+      Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken })
       .then((api) => {
         return api.query("");
       }).then((response) => {
