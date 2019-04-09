@@ -101,8 +101,10 @@ export default {
 
             if(direction === 'next') {
               activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
+              activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
             } else {
               activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
+              activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
             }
           },
           complete: () => {

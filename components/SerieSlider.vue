@@ -9,8 +9,8 @@
       <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
         <div class="serie-gallery-mask left"></div>
         <nuxt-link :to="`/serie/${item.serie. uid}`">
-          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
-          <img v-else data-load="preload" :src="item.serie.data.cover_serie_image.url">
+          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" data-load="preload">
+          <img v-else :src="item.serie.data.cover_serie_image.url" data-load="preload">
         </nuxt-link>
         <div class="serie-gallery-mask right"></div>
       </div>

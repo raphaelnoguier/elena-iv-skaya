@@ -4,6 +4,7 @@
   position: absolute;
   overflow: hidden;
   z-index: 6;
+  cursor: wait;
 
   &.hide {
     display: none;
