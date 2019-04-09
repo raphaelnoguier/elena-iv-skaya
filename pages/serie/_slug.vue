@@ -102,7 +102,8 @@ export default {
     return {
       container: null,
       featuredImageOffset: null,
-      serieSliderOfsset: null
+      serieSliderOfsset: null,
+      nav: null
     }
   },
   head() {
@@ -120,6 +121,7 @@ export default {
   mounted() {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.container.dataset.background = 'white'
+    this.nav = this.$parent.$parent.$el.querySelector('.nav');
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop){
@@ -143,11 +145,9 @@ export default {
       this.featuredImageOffset = image.height
 
       let slider = this.$refs.serieSlider.$el.getBoundingClientRect()
-      let navHeight = this.$parent.$parent.$refs.nav.$el.clientHeight / 2
+      let navHeight = this.nav.getBoundingClientRect().height / 2
 
-      console.log(slider.bottom)
-
-      this.serieSliderOfsset = slider.bottom - slider.height - navHeight
+      this.serieSliderOfsset = parseInt(slider.top - navHeight)
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
@@ -174,9 +174,8 @@ export default {
       }
     },
     onScrollSerie(status) {
-      let nav = this.$el.ownerDocument.querySelector('.nav');
-      nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
-      nav.classList.toggle('white' , status.offset.y > this.serieSliderOfsset)
+      this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
+      this.nav.classList.toggle('white' , status.offset.y >= this.serieSliderOfsset)
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');

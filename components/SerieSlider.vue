@@ -123,6 +123,8 @@ export default {
     up() {
       this.isDrag = false;
       this.cursor.classList.remove('focus')
+      this.xPosition = this.index
+      this.lerp.set(this.index)
     },
     down(cursor) {
       this.isDrag = true
@@ -150,11 +152,11 @@ export default {
       });
     },
     setPosition (x) {
-      const intPos = parseInt(x)
+      const intPos = Math.round(x)
       this.xPosition = x
-      this.lerp.set(x)
       if (intPos !== this.index) this.index = intPos
       this.$refs.index.innerHTML = this.index + 1
+      this.lerp.set(x)
     },
     tick() {
       this.sliderContent.classList.toggle('drag', this.isDrag)
@@ -181,6 +183,7 @@ export default {
       this.isDrag = false
     },
     exitSection() {
+      this.up()
       this.cursor.classList.remove('visible')
     },
   },
