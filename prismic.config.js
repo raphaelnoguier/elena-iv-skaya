@@ -1,6 +1,6 @@
 const prismicConfig = {
   apiEndpoint: 'https://elena-iv-skaya.cdn.prismic.io/api/v2',
-  //accessToken: 'MC5XLVJXWEJJQUFCOEF0VW8z.77-977-9I--_vTc677-9Te-_vWYnDe-_vSrvv70EE--_ve-_vR5vHO-_vV7vv73vv70ydO-_vR9SKA',
+  accessToken: 'MC5YS3o4Z2hRQUFHcTY0NUxE.RTfvv70a77-977-977-9fu-_ve-_vVIX77-977-977-9Oe-_ve-_vXp_77-9de-_ve-_vUVAFhtj77-977-977-9',
   linkResolver: function(doc) {
     if (doc.type === 'page' || doc.type === 'about') {
       switch(doc.uid) {

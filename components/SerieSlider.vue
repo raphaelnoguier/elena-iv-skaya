@@ -1,5 +1,5 @@
 <template>
-  <div class="serie-slider-wrapper">
+  <div class="serie-slider-wrapper down-enter">
     <SerieSliderCursor ref="cursor" />
     <div class="line"></div>
     <div class="serie-slider-title">
@@ -9,8 +9,8 @@
       <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
         <div class="serie-gallery-mask left"></div>
         <nuxt-link :to="`/serie/${item.serie. uid}`">
-          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" data-load="preload">
-          <img v-else :src="item.serie.data.cover_serie_image.url" data-load="preload">
+          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
+          <img v-else :src="item.serie.data.cover_serie_image.url" >
         </nuxt-link>
         <div class="serie-gallery-mask right"></div>
       </div>
@@ -65,7 +65,8 @@ export default {
       sliderContent: null,
       titleContainer: null,
       running: false,
-      covers: null
+      covers: null,
+      offsetY: 0
     }
   },
   mounted() {
@@ -75,11 +76,10 @@ export default {
     this.cursor = this.$refs.cursor.$el
     this.titleContainer = this.$refs.titlesWrapper
     this.progress = this.$refs.progress
-    this.covers = this.sliderContent.querySelectorAll('.serie-slider .slider-item img')
+    this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
 
     this.$el.addEventListener('mouseenter', this.enableCursor)
     this.$el.addEventListener('mousemove', this.moveCursor)
-    this.$el.addEventListener('mouseleave', this.exitSection)
 
     window.addEventListener('resize', this.resize)
     this.$el.addEventListener('mouseleave', this.exit)
@@ -95,7 +95,6 @@ export default {
     this.toggleRaf()
     this.$el.removeEventListener('mouseenter', this.enableCursor)
     this.$el.removeEventListener('mousemove', this.moveCursor)
-    this.$el.removeEventListener('mouseleave', this.exitSection)
 
     window.removeEventListener('resize', this.resize)
     this.$el.removeEventListener('mouseleave', this.exit)
@@ -118,7 +117,8 @@ export default {
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return;
-      this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y - 300}px, 0)`
+      // let y = cursor.y - this.sliderContentBounds.top
+      // this.cursor.style.transform = `translate3d(${cursor.x}px, ${y}px, 0)`
     },
     up() {
       this.isDrag = false;
@@ -139,17 +139,12 @@ export default {
       const mappedX = translateX > 0 ? math.map(translateX, 0, this.dragStep, 0, 1) : math.map(translateX, 0, -this.dragStep, 0, -1)
       const pos = math.clamp(this.downPosition - mappedX, 0, this.nextSeries.length - 1)
 
-      // TO DO this.parralax(mappedX)
+      this.parralax(mappedX)
 
       this.setPosition(pos)
     },
     parralax(x) {
-      let nodeList = Array.prototype.slice.call(this.covers);
-      let toTransform = nodeList.slice(this.index - 3, this.index + 3)
-
-      toTransform.forEach((cover, i) => {
-        this.covers[i].style.transform = `translate3d(${x * 5}px, 0, 0)`
-      });
+      //this.covers[this.index].style.transform = `translate3d(${x * 10}px,0, 0)`
     },
     setPosition (x) {
       const intPos = Math.round(x)
@@ -179,10 +174,7 @@ export default {
       return (v * w) / 100;
     },
     exit() {
-      this.cursor.classList.remove('visible')
       this.isDrag = false
-    },
-    exitSection() {
       this.up()
       this.cursor.classList.remove('visible')
     },

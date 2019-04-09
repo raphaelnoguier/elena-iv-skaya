@@ -35,9 +35,9 @@
         </div>
       </div>
       <div class="serie-gallery">
-        <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img :data-src="image.image.url">
-          <img v-if="image.ratio === 'Duo'" :data-src="image.duo_image.url">
+        <div class="gallery-item" v-for="(image, i) in gallery.slice(0,2)" :key="i" :class="getClass(image.ratio)">
+          <img class="lazy" src="~/assets/img/placeholder.png" :data-src="image.image.url">
+          <img v-if="image.ratio === 'Duo'" class="lazy" src="~/assets/img/placeholder.png" :data-src="image.duo_image.url">
         </div>
       </div>
       <div class="serie-credits-wrapper">
@@ -176,6 +176,7 @@ export default {
     onScrollSerie(status) {
       this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
       this.nav.classList.toggle('white' , status.offset.y >= this.serieSliderOfsset)
+      this.$children[1].offsetY = status.offset.y
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');

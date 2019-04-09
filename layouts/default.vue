@@ -56,8 +56,7 @@ export default {
   methods: {
     lazyLoadAssets() {
       let lazyLoadInstance = new LazyLoad({
-        elements_selector: "img",
-        threshold: 500
+        elements_selector: ".lazy"
       });
     },
     resize () {

@@ -45,13 +45,13 @@ export const actions = {
     let isAbout = route === 'About' || route === 'about';
 
     if(isSerie) {
-      await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+      await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
         return api.getByUID('serie', serieRoute);
       }).then((response) => {
         document = response
       });
     } else if(isHome){
-      await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+      await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
         return api.query(
           Prismic.Predicates.at('document.type', 'page'),
           { fetchLinks : ['serie.title', 'serie.category', 'serie.cover_ratio', 'serie.date', 'serie.cover_serie_image'] }
@@ -60,7 +60,7 @@ export const actions = {
         });
       });
     } else if(isAbout){
-      await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+      await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
         return api.getByUID('about', 'about');
       }).then((response) => {
         document = response
@@ -76,7 +76,7 @@ export const actions = {
   },
   async GET_ALL_SERIES({ commit, error }) {
     let series = null;
-    await Prismic.getApi(prismicConfig.apiEndpoint).then((api) => {
+    await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
       return api.query(
         Prismic.Predicates.at('document.type', 'page'),
         { fetch : 'page.series', fetchLinks: ['serie.title', 'serie.cover_ratio', 'serie.cover_serie_image', 'serie.fallback_landscape_cover']},

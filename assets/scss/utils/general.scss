@@ -46,3 +46,14 @@ body {
     }
   }
 }
+
+
+
+img.lazy {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+img.loaded {
+  opacity: 1;
+}

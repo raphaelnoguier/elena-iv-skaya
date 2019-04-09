@@ -115,8 +115,7 @@
         height: 100%;
         object-fit: cover;
         pointer-events: none;
-        transform: translate3d(0, 0, 0);
-        transition: transform 10ms ease;
+        transition: transform 200ms ease;
       }
     }
   }
