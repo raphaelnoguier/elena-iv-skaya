@@ -125,6 +125,7 @@ export default {
       this.cursor.classList.remove('focus')
       this.xPosition = this.index
       this.lerp.set(this.index)
+      this.covers[this.index].style.transform = `translate3d(0,0, 0)`
     },
     down(cursor) {
       this.isDrag = true
@@ -144,7 +145,10 @@ export default {
       this.setPosition(pos)
     },
     parralax(x) {
-      //this.covers[this.index].style.transform = `translate3d(${x * 10}px,0, 0)`
+      let transform = math.clamp(x * 20, -13, -5)
+      for (let i = 0; i < this.covers.length; i++) {
+        this.covers[i].style.transform = `translate3d(${transform}px,0, 0)`
+      }
     },
     setPosition (x) {
       const intPos = Math.round(x)

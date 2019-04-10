@@ -111,11 +111,12 @@
       }
 
       img{
-        width: 105%;
+        width: 115%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
         pointer-events: none;
-        transition: transform 200ms ease;
+        transition: transform 800ms ease-in-out;
       }
     }
   }
