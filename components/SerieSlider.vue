@@ -1,5 +1,5 @@
 <template>
-  <div class="serie-slider-wrapper down-enter">
+  <div class="serie-slider-wrapper">
     <div class="line"></div>
     <div class="serie-slider-title">
       <span>Gallery</span>
