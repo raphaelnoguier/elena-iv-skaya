@@ -2,11 +2,6 @@
   padding-top: 11.875vw;
   position: relative;
   overflow: hidden;
-  cursor: none;
-
-  * {
-    user-select: none;
-  }
 
   @include max(md) {
     padding-top: 26.042vw;
@@ -74,6 +69,7 @@
       width: 20vw;
       height: 25vw;
       opacity: 0;
+      position: relative;
       transition: opacity 500ms ease, transform 500ms $ease-in-out-quad;
 
       @include max(md) {
@@ -108,7 +104,9 @@
         height: 100%;
         position: absolute;
         overflow: hidden;
-        pointer-events: none;
+        z-index: 2;
+        pointer-events: all;
+        user-select: none;
       }
 
       img{
@@ -117,6 +115,7 @@
         object-fit: cover;
         object-position: top;
         pointer-events: none;
+        user-select: none;
         transition: transform 600ms ease-in-out;
       }
     }
@@ -143,17 +142,17 @@
         color: white;
         position: relative;
 
-        &:before {
-          content: "";
+        .blur {
           top: 0;
           left: 0;
           position: absolute;
           height: 100%;
           width: 100%;
           z-index: 9;
+          opacity: 0;
           background: linear-gradient(to left, #121212, transparent 30%),
           linear-gradient(to right, #121212, transparent 30%);
-          opacity: 1;
+          transition: opacity 200ms;
         }
 
         @include max(md) {
@@ -187,7 +186,7 @@
           width: 20vw;
           text-align: center;
           overflow: hidden;
-          padding: 0 0 0 1.25vw;
+          padding-left: 1.25vw;
           opacity: 1;
           transition: opacity 500ms ease;
 
@@ -197,12 +196,6 @@
 
           @include max(sm) {
             width: 60vw;
-          }
-        }
-
-        &.drag {
-          div {
-            opacity: 0.3;
           }
         }
       }
@@ -270,7 +263,13 @@
             transform: scaleX(0);
           }
           a {
-            pointer-events: none;
+            //pointer-events: none;
+          }
+        }
+
+        & + .slider-controls .titles {
+          .blur {
+            opacity: 1;
           }
         }
       }

@@ -6,7 +6,7 @@
   align-items: center;
   user-select: none;
   pointer-events: none;
-  transition: transform 5ms ease;
+  transition: transform 100ms ease-out;
 
   @include max(md) {
     display: none;
@@ -23,7 +23,7 @@
     width: 65%;
     display: flex;
     justify-content: space-between;
-    transition: width 500ms $ease-in-out-quad;
+    transition: width 500ms $ease-in-out-quad, transform 1000ms $ease-in-out-quart;
     transform: scale(0);
   }
 
@@ -35,11 +35,11 @@
     width: 3vw;
     height: 3vw;
     border-radius: 20vw;
-    border: 1px solid #FCF9F5;
+    border: 2px solid #FCF9F5;
     background: transparent;
     margin: 0 0.2vw;
     transform: scale(0);
-    transition: transform 500ms $ease-in-out-quart;
+    transition: transform 1000ms $ease-in-out-quart;
   }
 
   .right {

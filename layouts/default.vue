@@ -5,12 +5,11 @@
     <div id="smooth-component" :data-background="isDark ? 'dark': 'white'" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
-    <Navigation ref="nav" :class="transitioning ? 'transitioning': ''"/>
+    <Navigation ref="nav" :class="[transitioning ? 'transitioning': '', $route.name === 'about' ? 'white' : '']"/>
     <ImageTransition/>
   </div>
 </template>
 <script>
-import LazyLoad from "vanilla-lazyload";
 import Navigation from "~/components/Navigation"
 import SerieSliderCursor from '~/components/SerieSliderCursor'
 import Loader from "~/components/Loader"
@@ -45,10 +44,6 @@ export default {
       scrollbar.add(this.container, this.onScrollDefault)
     }
   },
-  updated() {
-    console.log('change')
-    this.lazyLoadAssets()
-  },
   beforeDestroy() {
     if(browser.desktop && window.innerWidth > 768) {
       scrollbar.unlisten(this.container, this.onScrollDefault)
@@ -57,11 +52,6 @@ export default {
     }
   },
   methods: {
-    lazyLoadAssets() {
-      let lazyLoadInstance = new LazyLoad({
-        elements_selector: ".lazy"
-      });
-    },
     resize () {
       if (browser.desktop && window.innerWidth > 768) {
         scrollbar.add(this.container, this.onScrollDefault)

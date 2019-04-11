@@ -8,7 +8,7 @@
             <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
               <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url)" :to="`/serie/${serie.serie.uid}`">
                 <div class="gallery-mask left"></div>
-                <img class="lazy" src="~/assets/img/placeholder.png" :data-src="serie.serie.data.cover_serie_image.url" />
+                <img v-lazy="serie.serie.data.cover_serie_image.url" />
                 <div class="gallery-mask right"></div>
                 <div class="item-title">
                   <h3>{{serie.serie.data.title[0].text}}</h3>
@@ -80,9 +80,6 @@ export default {
 
   data () {
     return {
-      timerID: '',
-      counter: 0,
-      dragMode: false,
       container: null
     }
   },
@@ -95,27 +92,8 @@ export default {
       this.revealGallery()
       setTimeout(() => {
         if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
-        if (browser.desktop && window.innerWidth > 768) scrollbar.listen(this.container, this.onScrollHome)
       }, 1)
     })
-    // let gallery = document.querySelector(".gallery")
-    // if(!gallery) return
-    // gallery.addEventListener("mousedown", this.down)
-    // gallery.addEventListener("mousemove", this.move)
-    // gallery.addEventListener("mouseleave", this.up)
-    // gallery.addEventListener("mouseup", this.up)
-  },
-
-  beforeDestroy() {
-    if (browser.desktop && window.innerWidth > 768) {
-      scrollbar.unlisten(this.container, this.onScrollHome)
-    }
-    // let gallery = document.querySelector(".gallery")
-    // if(!gallery) return
-    // gallery.removeEventListener("mousedown", this.down)
-    // gallery.removeEventListener("mousemove", this.move)
-    // gallery.removeEventListener("mouseup", this.up)
-    // gallery.removeEventListener("mouseleave", this.up)
   },
 
   methods: {
@@ -124,7 +102,7 @@ export default {
       const imgs = Array.from(tmp).map(img => {
         return {
           dom: img,
-          ratioIn: 0.5,
+          ratioIn: 0.3,
         }
       })
       this.reveal = reveal(imgs)
@@ -143,29 +121,6 @@ export default {
         return 'portrait'
       }
     },
-    down(e) {
-      requestAnimationFrame(this.timer)
-      e.preventDefault()
-    },
-    up(e) {
-      cancelAnimationFrame(this.timerID)
-      this.counter = 0
-      this.dragMode = false
-    },
-    timer() {
-      let gallery = document.querySelector(".gallery")
-      if (this.counter < 0) {
-        this.timerID = requestAnimationFrame(this.timer)
-        this.counter++
-      } else {
-        this.dragMode = true
-      }
-    },
-    move(e) {
-      if(!this.dragMode) return
-
-      console.log(e.pageY)
-    }
   },
 }
 </script>

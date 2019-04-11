@@ -36,8 +36,8 @@
       </div>
       <div class="serie-gallery">
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img class="lazy" src="~/assets/img/placeholder.png" :data-src="image.image.url">
-          <img v-if="image.ratio === 'Duo'" class="lazy" src="~/assets/img/placeholder.png" :data-src="image.duo_image.url">
+          <img v-lazy="image.image.url">
+          <img v-if="image.ratio === 'Duo'" v-lazy="image.duo_image.url">
         </div>
       </div>
       <div class="serie-credits-wrapper">
@@ -62,6 +62,7 @@ import reveal from "~/utils/reveal.js"
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
+import ResponsiveImage from '~/components/ResponsiveImage'
 import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
@@ -155,6 +156,7 @@ export default {
       this.reveal = reveal(
         { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: () => {
           this.$refs.serieSlider.toggleRaf()
+          this.$refs.serieSlider.toggleCursor()
           this.sliderEnter = !this.sliderEnter
           this.sliderEnter ? this.$parent.$el.dataset.background = 'dark' : this.$parent.$el.dataset.background = 'white'
           this.nav.classList.toggle('white')

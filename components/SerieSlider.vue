@@ -8,8 +8,8 @@
       <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
         <div class="serie-gallery-mask left"></div>
         <nuxt-link :to="`/serie/${item.serie. uid}`">
-          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url">
-          <img v-else :src="item.serie.data.cover_serie_image.url" >
+          <ResponsiveImage v-if="item.serie.data.cover_ratio.includes('Landscape')" :image-url="`${item.serie.data.fallback_landscape_cover.url}`" :width-on-screen="83" :width-on-screen-tablet="83" :width-on-screen-smartphone="83" :mode="'all'"/>
+          <ResponsiveImage v-else :image-url="`${item.serie.data.cover_serie_image.url}`" :width-on-screen="83" :width-on-screen-tablet="83" :width-on-screen-smartphone="83" :mode="'all'"/>
         </nuxt-link>
         <div class="serie-gallery-mask right"></div>
       </div>
@@ -20,6 +20,7 @@
           <img data-load="preload" src="~/assets/img/ui/play.svg">
         </div>
         <div class="titles">
+          <div class="blur"></div>
           <div ref="titlesWrapper" class="titles-wrapper">
             <div v-for="(item, i) in nextSeries" :key="i">
               {{item.serie.data.title[0].text}}
@@ -39,12 +40,16 @@
 </template>
 
 <script>
+import ResponsiveImage from '~/components/ResponsiveImage'
 import math from '~/utils/math.js'
 import lerp from '~/utils/lerp.js'
 import raf from '~/utils/raf.js'
 import browser from '~/utils/browser.js'
 
 export default {
+  components: {
+    ResponsiveImage
+  },
   data() {
     return {
       index: 0,
@@ -72,7 +77,6 @@ export default {
     this.progress = this.$refs.progress
     this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
 
-    this.$el.addEventListener('mouseenter', this.enableCursor)
     this.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseleave', this.exit)
 
@@ -87,7 +91,6 @@ export default {
   },
   beforeDestroy() {
     this.toggleRaf()
-    this.$el.removeEventListener('mouseenter', this.enableCursor)
     this.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseleave', this.exit)
 
@@ -106,9 +109,8 @@ export default {
       if(this.running) raf.add(this.tick)
       else raf.remove(this.tick)
     },
-    enableCursor() {
-      console.log('enable')
-      this.cursor.classList.add('visible')
+    toggleCursor() {
+      this.cursor.classList.toggle('visible')
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return;
@@ -142,7 +144,7 @@ export default {
       this.setPosition(pos)
     },
     parralax(x) {
-      let transform = math.clamp(x * 20, -30, 30)
+      let transform = math.clamp(x * 20, -20, 20)
       for (let i = 0; i < this.covers.length; i++) {
         this.covers[i].style.transform = `translate3d(${transform}px,0, 0)`
       }
@@ -177,8 +179,6 @@ export default {
     exit() {
       this.isDrag = false
       this.up()
-      this.cursor.classList.remove('visible')
-      console.log('exit')
     },
   },
   props: {nextSeries: Array}

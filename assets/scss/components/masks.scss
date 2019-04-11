@@ -24,7 +24,7 @@
   display: block;
   z-index: 2;
   transform: translate3d(0,0,0);
-  transition: transform 1000ms ease 200ms;
+  transition: transform 1000ms $ease-in-out-quad;
 
   @include max(md) {
     display: none;
