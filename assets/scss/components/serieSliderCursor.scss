@@ -6,6 +6,7 @@
   align-items: center;
   user-select: none;
   pointer-events: none;
+  transition: transform 5ms ease;
 
   @include max(md) {
     display: none;

@@ -2,7 +2,7 @@
   <div id="app">
     <Loader/>
     <SerieSliderCursor ref="cursor" v-if="$route.path.includes('serie')" />
-    <div id="smooth-component" :data-background="isDark ? 'dark': ''" :class="domLoaded ? 'loaded': ''">
+    <div id="smooth-component" :data-background="isDark ? 'dark': 'white'" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
     <Navigation ref="nav" :class="transitioning ? 'transitioning': ''"/>

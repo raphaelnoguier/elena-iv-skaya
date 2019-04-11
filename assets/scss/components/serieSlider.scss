@@ -1,10 +1,8 @@
 .serie-slider-wrapper {
-  background: #FCF9F5;
   padding-top: 11.875vw;
   position: relative;
   overflow: hidden;
   cursor: none;
-  transition: background-color 1000ms ease;
 
   * {
     user-select: none;
@@ -105,6 +103,8 @@
       }
 
       a {
+        display: flex;
+        justify-content: center;
         height: 100%;
         position: absolute;
         overflow: hidden;
@@ -112,12 +112,12 @@
       }
 
       img{
-        width: 115%;
+        width: 125%;
         height: 100%;
         object-fit: cover;
         object-position: top;
         pointer-events: none;
-        transition: transform 800ms ease-in-out;
+        transition: transform 600ms ease-in-out;
       }
     }
   }
@@ -153,6 +153,7 @@
           z-index: 9;
           background: linear-gradient(to left, #121212, transparent 30%),
           linear-gradient(to right, #121212, transparent 30%);
+          opacity: 1;
         }
 
         @include max(md) {
@@ -185,8 +186,6 @@
         div {
           width: 20vw;
           text-align: center;
-          text-overflow: ellipsis;
-          white-space: nowrap;
           overflow: hidden;
           padding: 0 0 0 1.25vw;
           opacity: 1;
@@ -254,8 +253,6 @@
 
 
   &.down-enter {
-    background-color: #121212;
-
     .serie-slider {
       left: 40vw;
 

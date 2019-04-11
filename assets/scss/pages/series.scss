@@ -403,7 +403,16 @@
     text-align: center;
     display: flex;
     align-items: center;
+    transition: color 1000ms ease;
     @include verticalText(360);
+
+    &.white {
+      color:white;
+
+      .line {
+        border-color:white;
+      }
+    }
 
     span {
       @include sofiaProLight(0.750vw);

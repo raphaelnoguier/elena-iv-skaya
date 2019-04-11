@@ -60,8 +60,7 @@ export default {
       sliderContent: null,
       titleContainer: null,
       running: false,
-      covers: null,
-      offsetY: 0
+      covers: null
     }
   },
   mounted() {
@@ -120,7 +119,10 @@ export default {
       this.cursor.classList.remove('focus')
       this.xPosition = this.index
       this.lerp.set(this.index)
-      this.covers[this.index].style.transform = `translate3d(0,0, 0)`
+
+      for (let i = 0; i < this.covers.length; i++) {
+        this.covers[this.index].style.transform = `translate3d(0,0, 0)`
+      }
     },
     down(cursor) {
       this.isDrag = true
@@ -140,7 +142,7 @@ export default {
       this.setPosition(pos)
     },
     parralax(x) {
-      let transform = math.clamp(x * 20, -13, -5)
+      let transform = math.clamp(x * 20, -30, 30)
       for (let i = 0; i < this.covers.length; i++) {
         this.covers[i].style.transform = `translate3d(${transform}px,0, 0)`
       }

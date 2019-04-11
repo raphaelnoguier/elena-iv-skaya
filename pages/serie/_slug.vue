@@ -48,7 +48,7 @@
           </ul>
         </div>
       </div>
-      <div class="serie-footer">
+      <div class="serie-footer" ref="serieFooter">
         <span>continue exploring</span>
         <div class="line"></div>
       </div>
@@ -103,7 +103,8 @@ export default {
       container: null,
       featuredImageOffset: null,
       serieSliderOfsset: null,
-      nav: null
+      nav: null,
+      sliderEnter: false
     }
   },
   head() {
@@ -120,7 +121,7 @@ export default {
   },
   mounted() {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
-    this.container.dataset.background = 'white'
+    this.$parent.isDark = false
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -143,11 +144,6 @@ export default {
     calcOffset() {
       let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
       this.featuredImageOffset = image.height
-
-      let slider = this.$refs.serieSlider.$el.getBoundingClientRect()
-      let navHeight = this.nav.getBoundingClientRect().height / 2
-
-      this.serieSliderOfsset = parseInt(slider.top - navHeight)
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
@@ -159,6 +155,10 @@ export default {
       this.reveal = reveal(
         { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: () => {
           this.$refs.serieSlider.toggleRaf()
+          this.sliderEnter = !this.sliderEnter
+          this.sliderEnter ? this.$parent.$el.dataset.background = 'dark' : this.$parent.$el.dataset.background = 'white'
+          this.nav.classList.toggle('white')
+          this.$refs.serieFooter.classList.toggle('white')
         } }
       )
     },
@@ -175,8 +175,6 @@ export default {
     },
     onScrollSerie(status) {
       this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
-      this.nav.classList.toggle('white' , status.offset.y >= this.serieSliderOfsset)
-      this.$children[1].offsetY = status.offset.y
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
