@@ -1,10 +1,11 @@
 .serie-slider-cursor {
-  position: absolute;
-  z-index: 10;
+  position: fixed;
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none;
+  pointer-events: none;
 
   @include max(md) {
     display: none;

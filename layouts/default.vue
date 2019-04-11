@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Loader/>
+    <SerieSliderCursor ref="cursor" v-if="$route.path.includes('serie')" />
     <div id="smooth-component" :data-background="isDark ? 'dark': ''" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
@@ -11,6 +12,7 @@
 <script>
 import LazyLoad from "vanilla-lazyload";
 import Navigation from "~/components/Navigation"
+import SerieSliderCursor from '~/components/SerieSliderCursor'
 import Loader from "~/components/Loader"
 import scrollbar from "~/utils/scrollbar.js"
 import ImageTransition from "~/components/ImageTransition"
@@ -22,6 +24,7 @@ export default {
     Navigation,
     ImageTransition,
     Loader,
+    SerieSliderCursor
   },
   data() {
     return {

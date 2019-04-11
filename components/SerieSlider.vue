@@ -1,6 +1,5 @@
 <template>
   <div class="serie-slider-wrapper down-enter">
-    <SerieSliderCursor ref="cursor" />
     <div class="line"></div>
     <div class="serie-slider-title">
       <span>Gallery</span>
@@ -40,16 +39,12 @@
 </template>
 
 <script>
-import SerieSliderCursor from '~/components/SerieSliderCursor'
 import math from '~/utils/math.js'
 import lerp from '~/utils/lerp.js'
 import raf from '~/utils/raf.js'
 import browser from '~/utils/browser.js'
 
 export default {
-  components: {
-    SerieSliderCursor
-  },
   data() {
     return {
       index: 0,
@@ -73,16 +68,16 @@ export default {
     this.containerBounds = this.$el.getBoundingClientRect()
     this.sliderContent = this.$refs.slider
     this.sliderContentBounds = this.sliderContent.getBoundingClientRect()
-    this.cursor = this.$refs.cursor.$el
+    this.cursor = this.$parent.$parent.$parent.$refs.cursor.$el
     this.titleContainer = this.$refs.titlesWrapper
     this.progress = this.$refs.progress
     this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
 
     this.$el.addEventListener('mouseenter', this.enableCursor)
     this.$el.addEventListener('mousemove', this.moveCursor)
+    this.$el.addEventListener('mouseleave', this.exit)
 
     window.addEventListener('resize', this.resize)
-    this.$el.addEventListener('mouseleave', this.exit)
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
@@ -95,9 +90,9 @@ export default {
     this.toggleRaf()
     this.$el.removeEventListener('mouseenter', this.enableCursor)
     this.$el.removeEventListener('mousemove', this.moveCursor)
+    this.$el.removeEventListener('mouseleave', this.exit)
 
     window.removeEventListener('resize', this.resize)
-    this.$el.removeEventListener('mouseleave', this.exit)
     this.$el.removeEventListener('mouseup', this.up)
     this.$el.removeEventListener('mousedown', this.down)
     this.$el.removeEventListener('mousemove', this.move)
@@ -113,12 +108,12 @@ export default {
       else raf.remove(this.tick)
     },
     enableCursor() {
+      console.log('enable')
       this.cursor.classList.add('visible')
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return;
-      // let y = cursor.y - this.sliderContentBounds.top
-      // this.cursor.style.transform = `translate3d(${cursor.x}px, ${y}px, 0)`
+      this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y}px, 0)`
     },
     up() {
       this.isDrag = false;
@@ -181,6 +176,7 @@ export default {
       this.isDrag = false
       this.up()
       this.cursor.classList.remove('visible')
+      console.log('exit')
     },
   },
   props: {nextSeries: Array}
