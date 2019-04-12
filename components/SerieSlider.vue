@@ -79,6 +79,7 @@ export default {
 
     this.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseleave', this.exit)
+    this.$el.addEventListener('mouseenter', this.enter)
 
     window.addEventListener('resize', this.resize)
     this.$el.addEventListener('mouseup', this.up)
@@ -93,6 +94,7 @@ export default {
     this.toggleRaf()
     this.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseleave', this.exit)
+    this.$el.removeEventListener('mouseenter', this.enter)
 
     window.removeEventListener('resize', this.resize)
     this.$el.removeEventListener('mouseup', this.up)
@@ -106,18 +108,20 @@ export default {
   methods: {
     toggleRaf() {
       this.running = !this.running
-      if(this.running) raf.add(this.tick)
-      else raf.remove(this.tick)
+      this.running ? raf.add(this.tick) : raf.remove(this.tick)
     },
     toggleCursor() {
       this.cursor.classList.toggle('visible')
     },
     moveCursor(cursor) {
-      if(window.innerWidth < 768) return;
+      if(window.innerWidth < 768) return
       this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y}px, 0)`
     },
+    enter() {
+      this.cursor.classList.add('visible')
+    },
     up() {
-      this.isDrag = false;
+      this.isDrag = false
       this.cursor.classList.remove('focus')
       this.xPosition = this.index
       this.lerp.set(this.index)
@@ -127,13 +131,13 @@ export default {
       }
     },
     down(cursor) {
-      this.isDrag = true
       this.cursor.classList.add('focus')
+      this.isDrag = true
       browser.desktop ? this.downX = cursor.x : this.downX = cursor.touches[0].clientX
       this.downPosition = this.xPosition
     },
     move(cursor) {
-      if(!this.isDrag) return;
+      if(!this.isDrag) return
       browser.desktop ? this.moveX = cursor.x : this.moveX = cursor.touches[0].clientX
       const translateX = this.moveX - this.downX
       const mappedX = translateX > 0 ? math.map(translateX, 0, this.dragStep, 0, 1) : math.map(translateX, 0, -this.dragStep, 0, -1)
@@ -161,7 +165,7 @@ export default {
       this.lerp.update(0.10)
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1)
-      const size = this.sliderContentBounds.width - this.vw(20);
+      const size = this.sliderContentBounds.width - this.vw(20)
       const x = percentTranslate * size
 
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
@@ -173,10 +177,11 @@ export default {
       this.sliderContentBounds =  this.sliderContent.getBoundingClientRect()
     },
     vw(v) {
-      var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-      return (v * w) / 100;
+      var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+      return (v * w) / 100
     },
     exit() {
+      this.cursor.classList.remove('visible')
       this.isDrag = false
       this.up()
     },

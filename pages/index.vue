@@ -2,9 +2,9 @@
   <div>
     <section class="page home" >
       <HomeHeader v-if="featured" :featured="featured" />
-      <div class="page-content" :class="dragMode ? 'black' : ''">
+      <div class="page-content">
         <div class="gallery">
-          <div class="gallery-wrapper" :class="dragMode ? 'drag-mode' : ''">
+          <div class="gallery-wrapper">
             <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
               <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url)" :to="`/serie/${serie.serie.uid}`">
                 <div class="gallery-mask left"></div>
