@@ -86,10 +86,10 @@ export default {
 
   mounted () {
     this.container = this.$el.ownerDocument.getElementById('smooth-component')
-    this.container.dataset.background = ''
     let scrollY = this.$store.state.position
     this.$nextTick(() => {
       this.revealGallery()
+      this.setTheme()
       setTimeout(() => {
         if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
       }, 1)
@@ -97,6 +97,9 @@ export default {
   },
 
   methods: {
+    setTheme() {
+      document.body.dataset.background = 'white'
+    },
     revealGallery() {
       let tmp = this.$el.querySelectorAll('.gallery-mask');
       const imgs = Array.from(tmp).map(img => {

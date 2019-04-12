@@ -7,10 +7,10 @@
     <div ref="slider" class="serie-slider">
       <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
         <div class="serie-gallery-mask left"></div>
-        <nuxt-link :to="`/serie/${item.serie. uid}`">
+        <div class="link" v-on:click="navigate(`/serie/${item.serie. uid}`)">
           <ResponsiveImage v-if="item.serie.data.cover_ratio.includes('Landscape')" :image-url="`${item.serie.data.fallback_landscape_cover.url}`" :width-on-screen="83" :width-on-screen-tablet="83" :width-on-screen-smartphone="83" :mode="'all'"/>
           <ResponsiveImage v-else :image-url="`${item.serie.data.cover_serie_image.url}`" :width-on-screen="83" :width-on-screen-tablet="83" :width-on-screen-smartphone="83" :mode="'all'"/>
-        </nuxt-link>
+        </div>
         <div class="serie-gallery-mask right"></div>
       </div>
     </div>
@@ -106,6 +106,9 @@ export default {
     this.sliderContent.removeEventListener('touchmove', this.move)
   },
   methods: {
+    navigate(to) {
+      this.$router.push({path: to})
+    },
     toggleRaf() {
       this.running = !this.running
       this.running ? raf.add(this.tick) : raf.remove(this.tick)
@@ -125,6 +128,7 @@ export default {
       this.cursor.classList.remove('focus')
       this.xPosition = this.index
       this.lerp.set(this.index)
+      this.sliderContent.classList.remove('no-events')
 
       for (let i = 0; i < this.covers.length; i++) {
         this.covers[this.index].style.transform = `translate3d(0,0, 0)`
@@ -138,6 +142,7 @@ export default {
     },
     move(cursor) {
       if(!this.isDrag) return
+      this.sliderContent.classList.add('no-events')
       browser.desktop ? this.moveX = cursor.x : this.moveX = cursor.touches[0].clientX
       const translateX = this.moveX - this.downX
       const mappedX = translateX > 0 ? math.map(translateX, 0, this.dragStep, 0, 1) : math.map(translateX, 0, -this.dragStep, 0, -1)

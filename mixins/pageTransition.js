@@ -33,7 +33,7 @@ let createTransition = () => {
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
-                toAbout ? this.$parent.isDark = true : this.$parent.isDark = false
+                toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
                 if(toHome) {
                   imageContainer.style.top = 'unset'
                   imageContainer.style.bottom = 0

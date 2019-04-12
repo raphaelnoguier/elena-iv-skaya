@@ -32,12 +32,12 @@ body {
   line-height: 1;
 	background-color: #FCF9F5;
 
-	[data-background="white"] {
+	&[data-background="white"] {
 		transition: background-color 1000ms ease;
     background-color: #FCF9F5;;
   }
 
-  [data-background="dark"] {
+  &[data-background="dark"] {
 		transition: background-color 1000ms ease;
     background-color: #121212;
   }

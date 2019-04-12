@@ -57,6 +57,11 @@
     top: -2.25vw;
     transition: left 1000ms $ease-in-out-quad;
     left: 100vw;
+    pointer-events: auto;
+
+    &.no-events {
+      pointer-events: none;
+    }
 
     @include max(md) {
       margin-top: 3.25vw;
@@ -103,14 +108,13 @@
         }
       }
 
-      a {
+      .link {
         display: flex;
         justify-content: center;
         height: 100%;
         position: absolute;
         overflow: hidden;
         z-index: 2;
-        pointer-events: all;
       }
 
       img{
@@ -265,9 +269,6 @@
         .slider-item {
           .serie-gallery-mask {
             transform: scaleX(0);
-          }
-          a {
-            pointer-events: none;
           }
         }
 

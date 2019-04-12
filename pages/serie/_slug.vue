@@ -122,7 +122,6 @@ export default {
   },
   mounted() {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
-    this.$parent.isDark = false
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -158,11 +157,14 @@ export default {
           this.$refs.serieSlider.toggleRaf()
           this.$refs.serieSlider.toggleCursor()
           this.sliderEnter = !this.sliderEnter
-          this.sliderEnter ? this.$parent.$el.dataset.background = 'dark' : this.$parent.$el.dataset.background = 'white'
+          this.sliderEnter ? this.setTheme('dark') : this.setTheme('white')
           this.nav.classList.toggle('white')
           this.$refs.serieFooter.classList.toggle('white')
         } }
       )
+    },
+    setTheme(theme) {
+      document.body.dataset.background = theme
     },
     getClass(ratio) {
       if (ratio.includes('Portrait')) {

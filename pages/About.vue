@@ -119,12 +119,12 @@ export default {
     if(browser.desktop && window.innerWidth > 768) {
       this.$nextTick(() => {
         const container = this.$el.ownerDocument.getElementById('smooth-component')
-        container.dataset.background = 'dark'
         scrollbar.listen(container, this.onScrollAbout)
         scrollbar.resetPosition(container)
         setTimeout(() => {
           this.calcOffset()
           this.resize()
+          this.setTheme()
         }, 100);
       })
     }
@@ -137,6 +137,9 @@ export default {
     }
   },
   methods: {
+    setTheme() {
+      document.body.dataset.background = 'dark'
+    },
     resize() {
       let circle = this.$el.querySelector('.circle')
       let featuredImage = this.$el.querySelector('img')
