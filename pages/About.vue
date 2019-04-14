@@ -116,6 +116,7 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.resize)
+    this.setTheme()
     if(browser.desktop && window.innerWidth > 768) {
       this.$nextTick(() => {
         const container = this.$el.ownerDocument.getElementById('smooth-component')
@@ -124,7 +125,6 @@ export default {
         setTimeout(() => {
           this.calcOffset()
           this.resize()
-          this.setTheme()
         }, 100);
       })
     }

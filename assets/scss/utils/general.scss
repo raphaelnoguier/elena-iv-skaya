@@ -19,18 +19,6 @@ body {
   }
 }
 
-#app {
-  transition: opacity 1000ms ease-in-out, transform 1000ms ease-in-out;
-  &.before-leave {
-    transform: translate3d(0, -200px, 0);
-    opacity: 0;
-  }
-  &.before-enter {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-}
-
 .page {
   margin: auto;
 

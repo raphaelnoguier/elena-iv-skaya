@@ -175,7 +175,7 @@
       .titles-wrapper {
         display: inline-flex;
 
-        @include sofiaProBold(0.875vw);
+        @include sofiaProBold(0.8vw);
         letter-spacing: 0.125vw;
         line-height: 1.313vw;
         text-transform: uppercase;
@@ -194,6 +194,8 @@
           width: 20vw;
           text-align: center;
           overflow: hidden;
+          white-space: nowrap;
+          text-overflow: clip;
           padding-left: 1.25vw;
           opacity: 1;
           transition: opacity 500ms ease;

@@ -1,0 +1,29 @@
+.zoom-serie {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  border-bottom: 1px solid rgb(223, 223, 223);
+  width: 100%;
+  z-index: -1;
+
+  @include max(md) {
+    display: none;
+  }
+
+  &-image {
+    width: 200px;
+    height: 200px;
+    margin-left: auto;
+    overflow: hidden;
+
+    img {
+      opacity: 1;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.5);
+      //transition: opacity 200ms ease;
+    }
+  }
+}

@@ -35,6 +35,7 @@
         </div>
       </div>
       <div class="serie-gallery">
+        <ZoomSerie ref="zoomSerie" :currentZoomImage="currentZoomImage" :currentZoomImageHeight="currentZoomImageHeight" />
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
           <img v-lazy="image.image.url">
           <img v-if="image.ratio === 'Duo'" v-lazy="image.duo_image.url">
@@ -63,7 +64,9 @@ import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
 import ResponsiveImage from '~/components/ResponsiveImage'
+import ZoomSerie from "~/components/ZoomSerie"
 import { pageTransition } from '~/mixins/pageTransition.js'
+import math from '~/utils/math.js'
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -96,7 +99,8 @@ export default {
     }
   },
   components: {
-    SerieSlider
+    SerieSlider,
+    ZoomSerie
   },
   mixins: [ pageTransition ],
   data() {
@@ -105,7 +109,12 @@ export default {
       featuredImageOffset: null,
       serieSliderOfsset: null,
       nav: null,
-      sliderEnter: false
+      sliderEnter: false,
+      zoomSerie: null,
+      zoomBlocHeight: null,
+      currentImage: null,
+      currentZoomImage: null,
+      currentZoomImageHeight: null,
     }
   },
   head() {
@@ -123,33 +132,52 @@ export default {
   mounted() {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
+    this.zoomSerie = this.$refs.zoomSerie
+
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop){
-        scrollbar.listen(this.container, this.onScrollSerie);
-        scrollbar.resetPosition(this.container);
-        this.calcOffset();
+        scrollbar.listen(this.container, this.onScrollSerie)
+        scrollbar.resetPosition(this.container)
+        this.calcOffset()
         this.revealSlider()
+        this.revealGalleryItems()
       }
     });
   },
   beforeDestroy () {
-    this.reveal.destroy()
     if (browser.desktop && window.innerWidth > 768) {
+      this.reveal.destroy()
+      this.revealGalleryItems.destroy()
       scrollbar.unlisten(this.container, this.onScrollSerie);
       window.removeEventListener('resize', this.resize);
     }
   },
   methods: {
     calcOffset() {
-      let image = this.$el.querySelector('.featured-image').getBoundingClientRect();
+      let image = this.$el.querySelector('.featured-image').getBoundingClientRect()
       this.featuredImageOffset = image.height
+      this.zoomBlocHeight = this.zoomSerie.$el.getBoundingClientRect().top
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
         scrollbar.listen(this.container, this.onScrollSerie);
         this.calcOffset();
       }
+    },
+    revealGalleryItems() {
+      let tmp = this.$el.querySelectorAll('.gallery-item img');
+      const items = Array.from(tmp).map(item => {
+        return {
+          dom: item,
+          ratioIn: 0.8,
+          ratioOut: 0.5,
+          update: () => {
+            this.setCurrentZoom(item)
+          }
+        }
+      })
+      this.revealGalleryItems = reveal(items)
     },
     revealSlider() {
       this.reveal = reveal(
@@ -162,6 +190,31 @@ export default {
           this.$refs.serieFooter.classList.toggle('white')
         } }
       )
+    },
+    onScrollSerie(status) {
+      this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
+      this.zoomSerie.$el.style.transform = `translate3d(0,${status.offset.y}px, 0)`
+      this.transformZoom(status.offset.y)
+    },
+    setCurrentZoom(item) {
+      this.currentImage = item
+      this.currentZoomImage = item.src
+      this.currentZoomImageHeight = item.height
+    },
+    transformZoom(y) {
+      if(!this.currentImage) return
+      let image = this.zoomSerie.$refs.imageZoomSerie
+      let imageOffsetY = calcOffset.computeOffset(this.currentImage).top
+      let transformY = math.map(y, imageOffsetY, imageOffsetY + this.currentZoomImageHeight, 0, this.currentZoomImageHeight - this.zoomBlocHeight)
+
+      if(transformY > this.currentZoomImageHeight - this.zoomBlocHeight) transformY = 0
+      image.style.transform = `translate3d(0, ${- (transformY * 1.2)}px, 0) scale(1.5)`
+    },
+    scrollDown() {
+      const container = this.$el.ownerDocument.getElementById('smooth-component');
+      const destination = this.$el.querySelector('.serie-gallery');
+      let offset = calcOffset.computeOffset(destination).top;
+      scrollbar.scrollTo(container, offset)
     },
     setTheme(theme) {
       document.body.dataset.background = theme
@@ -176,15 +229,6 @@ export default {
       if(ratio.includes('Duo')){
         return 'duo'
       }
-    },
-    onScrollSerie(status) {
-      this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
-    },
-    scrollDown() {
-      const container = this.$el.ownerDocument.getElementById('smooth-component');
-      const destination = this.$el.querySelector('.serie-gallery');
-      let offset = calcOffset.computeOffset(destination).top;
-      scrollbar.scrollTo(container, offset)
     },
   }
 };

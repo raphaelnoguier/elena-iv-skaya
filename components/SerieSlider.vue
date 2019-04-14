@@ -92,6 +92,8 @@ export default {
   },
   beforeDestroy() {
     this.toggleRaf()
+    this.toggleCursor()
+
     this.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseleave', this.exit)
     this.$el.removeEventListener('mouseenter', this.enter)
