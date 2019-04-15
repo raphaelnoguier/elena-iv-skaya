@@ -18,12 +18,10 @@
     overflow: hidden;
 
     img {
-      opacity: 1;
       width: 100%;
       object-fit: cover;
       object-position: center;
-      transform: scale(1.5);
-      //transition: opacity 200ms ease;
+      transform: scale(1.5)
     }
   }
 }

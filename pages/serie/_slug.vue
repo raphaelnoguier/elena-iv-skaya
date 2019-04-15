@@ -133,6 +133,7 @@ export default {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.zoomSerie = this.$refs.zoomSerie
+    this.imageZoomSerie = this.zoomSerie.$refs.imageZoomSerie
 
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -140,9 +141,10 @@ export default {
         scrollbar.listen(this.container, this.onScrollSerie)
         scrollbar.resetPosition(this.container)
         this.calcOffset()
-        this.revealSlider()
         this.revealGalleryItems()
       }
+
+      this.revealSlider()
     });
   },
   beforeDestroy () {
@@ -166,14 +168,16 @@ export default {
       }
     },
     revealGalleryItems() {
-      let tmp = this.$el.querySelectorAll('.gallery-item img');
-      const items = Array.from(tmp).map(item => {
+      let tmp = this.$el.querySelectorAll('.gallery-item img:last-child');
+      const items = Array.from(tmp).map((item, index) => {
         return {
           dom: item,
-          ratioIn: 0.8,
-          ratioOut: 0.5,
+          ratioIn: 1,
+          ratioOut: 1,
           update: () => {
             this.setCurrentZoom(item)
+            console.log(index)
+            if(index === items.length) console.log('end')
           }
         }
       })
@@ -203,12 +207,10 @@ export default {
     },
     transformZoom(y) {
       if(!this.currentImage) return
-      let image = this.zoomSerie.$refs.imageZoomSerie
       let imageOffsetY = calcOffset.computeOffset(this.currentImage).top
       let transformY = math.map(y, imageOffsetY, imageOffsetY + this.currentZoomImageHeight, 0, this.currentZoomImageHeight - this.zoomBlocHeight)
-
-      if(transformY > this.currentZoomImageHeight - this.zoomBlocHeight) transformY = 0
-      image.style.transform = `translate3d(0, ${- (transformY * 1.2)}px, 0) scale(1.5)`
+      
+      this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY * 1.35 )}px, 0) scale(1.5)`
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
