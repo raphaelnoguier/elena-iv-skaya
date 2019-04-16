@@ -305,11 +305,11 @@
 
       &.landscape {
         max-width: 57.5vw;
-        height: 26.250vw;
+        height: 43.125vw;
 
         @include max(md) {
           max-width: 64.193vw;
-          height: 48.177vw;
+          height: 48.307vw;
         }
 
         @include max(sm) {
