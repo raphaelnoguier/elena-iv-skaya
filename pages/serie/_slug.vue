@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="serie-gallery">
+      <div ref="serieGallery" class="serie-gallery">
         <ZoomSerie ref="zoomSerie" :currentZoomImage="currentZoomImage" :currentZoomImageHeight="currentZoomImageHeight" />
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
           <img v-lazy="image.image.url">
@@ -110,6 +110,8 @@ export default {
       serieSliderOfsset: null,
       nav: null,
       sliderEnter: false,
+      serieGallery: null,
+      serieGalleryOffsetBotttom: null,
       zoomSerie: null,
       zoomBlocHeight: null,
       currentImage: null,
@@ -134,6 +136,7 @@ export default {
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.zoomSerie = this.$refs.zoomSerie
     this.imageZoomSerie = this.zoomSerie.$refs.imageZoomSerie
+    this.serieGallery = this.$refs.serieGallery
 
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -160,6 +163,8 @@ export default {
       let image = this.$el.querySelector('.featured-image').getBoundingClientRect()
       this.featuredImageOffset = image.height
       this.zoomBlocHeight = this.zoomSerie.$el.getBoundingClientRect().top
+
+      this.serieGalleryOffsetBotttom = this.serieGallery.getBoundingClientRect().bottom
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
@@ -176,8 +181,7 @@ export default {
           ratioOut: 1,
           update: () => {
             this.setCurrentZoom(item)
-            console.log(index)
-            if(index === items.length) console.log('end')
+            if(index === items.length - 1) console.log('end')
           }
         }
       })
@@ -197,8 +201,11 @@ export default {
     },
     onScrollSerie(status) {
       this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
-      this.zoomSerie.$el.style.transform = `translate3d(0,${status.offset.y}px, 0)`
-      this.transformZoom(status.offset.y)
+
+      if(this.serieGalleryOffsetBotttom > status.offset.y) {
+        this.zoomSerie.$el.style.transform = `translate3d(0,${status.offset.y}px, 0)`
+        this.transformZoom(status.offset.y)
+      }
     },
     setCurrentZoom(item) {
       this.currentImage = item
@@ -209,7 +216,7 @@ export default {
       if(!this.currentImage) return
       let imageOffsetY = calcOffset.computeOffset(this.currentImage).top
       let transformY = math.map(y, imageOffsetY, imageOffsetY + this.currentZoomImageHeight, 0, this.currentZoomImageHeight - this.zoomBlocHeight)
-      
+
       this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY * 1.35 )}px, 0) scale(1.5)`
     },
     scrollDown() {

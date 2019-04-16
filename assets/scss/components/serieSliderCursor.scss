@@ -6,7 +6,7 @@
   align-items: center;
   user-select: none;
   pointer-events: none;
-  transition: transform 100ms ease-out, opacity 200ms ease;
+  transition: opacity 200ms ease;
   opacity: 0;
 
   @include max(md) {

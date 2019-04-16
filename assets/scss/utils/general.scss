@@ -46,15 +46,3 @@ body {
     }
   }
 }
-
-
-
-img[lazy="loading"] {
-  //opacity: 0;
-  transition: opacity 500ms ease;
-}
-
-img[lazy="loaded"] {
-  transition: opacity 500ms ease;
-  //opacity: 1;
-}

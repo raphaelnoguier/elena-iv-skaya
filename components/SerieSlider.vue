@@ -54,6 +54,8 @@ export default {
     return {
       index: 0,
       cursor: null,
+      cursorX: lerp(),
+      cursorY: lerp(),
       progress: 0,
       xPosition: 0,
       downPosition: 0,
@@ -113,14 +115,19 @@ export default {
     },
     toggleRaf() {
       this.running = !this.running
-      this.running ? raf.add(this.tick) : raf.remove(this.tick)
+      if(this.running){
+        raf.add(this.tick)
+      } else {
+        raf.remove(this.tick)
+      }
     },
     toggleCursor() {
       this.cursor.classList.toggle('visible')
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
-      this.cursor.style.transform = `translate3d(${cursor.x}px, ${cursor.y}px, 0)`
+      this.cursorX.set(cursor.x)
+      this.cursorY.set(cursor.y)
     },
     enter() {
       this.cursor.classList.add('visible')
@@ -178,6 +185,10 @@ export default {
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
       this.titleContainer.style.transform = `translate3d(-${x}px, 0, 0)`
       this.progress.style.width = `${percentTranslate * 100}%`
+
+      this.cursorX.update()
+      this.cursorY.update()
+      this.cursor.style.transform = `translate3d(${this.cursorX.get()}px, ${this.cursorY.get()}px, 0)`
     },
     resize () {
       this.containerBounds = this.$el.getBoundingClientRect()

@@ -290,30 +290,45 @@
 
       &.portrait {
         max-width: 42.5vw;
+        height: 53.125vw;
 
         @include max(md) {
           max-width: 64.193vw;
+          height: 79.688vw;
         }
 
         @include max(sm) {
           max-width: 81.333vw;
+          height: 101.333vw;
         }
       }
 
       &.landscape {
         max-width: 57.5vw;
+        height: 26.250vw;
 
         @include max(md) {
           max-width: 64.193vw;
+          height: 48.177vw;
         }
 
         @include max(sm) {
           max-width: 81.333vw;
+          height: 61.333vw;
         }
       }
 
       &.duo {
         display: flex;
+        height: 43.750vw;
+
+        @include max(md) {
+          height: 51.172vw;
+        }
+
+        @include max(sm) {
+          height: 60vw;
+        }
 
         img {
           max-width: 35vw;
