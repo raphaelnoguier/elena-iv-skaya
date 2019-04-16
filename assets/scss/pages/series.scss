@@ -258,6 +258,7 @@
 
     .gallery-item {
       display: flex;
+      border: 1px solid red;
 
       &:not(:first-child) {
         margin-top: 9.375vw;

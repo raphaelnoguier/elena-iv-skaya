@@ -46,3 +46,9 @@ body {
     }
   }
 }
+
+
+
+img[lazy="loading"] {
+  object-fit: cover !important;
+}
