@@ -195,7 +195,7 @@
           text-align: center;
           overflow: hidden;
           white-space: nowrap;
-          text-overflow: clip;
+          text-overflow: ellipsis;
           padding-left: 1.25vw;
           opacity: 1;
           transition: opacity 500ms ease;
@@ -269,7 +269,7 @@
 
       &.drag {
         .slider-item {
-          .serie-gallery-mask {
+          .serie-slider-mask {
             transform: scaleX(0);
           }
         }

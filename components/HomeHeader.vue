@@ -32,9 +32,12 @@
       <div v-on:click="scrollDown" class="chevron">
         <img src="~assets/img/ui/chevron.svg" data-load="preload">
       </div>
-      <div class="update-status">
+      <div class="update-status" ref="updateStatus">
         <div class="line" />
-        <span>LAST UPDATED - FEB 2019</span>
+        <div class="status-text">
+          <span class="last-updated">LAST UPDATED - {{lastPublication}}</span>
+          <span class="hold-instructions">hold & drag</span>
+        </div>
       </div>
     </div>
   </div>
@@ -163,7 +166,7 @@ export default {
       scrollbar.scrollTo(container, offset)
     }
   },
-  props: { featured: Array }
+  props: { featured: Array, lastPublication: String }
 }
 </script>
 

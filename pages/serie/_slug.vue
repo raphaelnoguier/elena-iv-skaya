@@ -63,7 +63,6 @@ import reveal from "~/utils/reveal.js"
 import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
-import ResponsiveImage from '~/components/ResponsiveImage'
 import ZoomSerie from "~/components/ZoomSerie"
 import { pageTransition } from '~/mixins/pageTransition.js'
 import math from '~/utils/math.js'

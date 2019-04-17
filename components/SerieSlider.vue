@@ -6,12 +6,12 @@
     </div>
     <div ref="slider" class="serie-slider">
       <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
-        <div class="serie-gallery-mask left"></div>
+        <div class="serie-slider-mask left"></div>
         <div class="link" v-on:click="navigate(`/serie/${item.serie. uid}`)">
-          <ResponsiveImage v-if="item.serie.data.cover_ratio.includes('Landscape')" :image-url="`${item.serie.data.fallback_landscape_cover.url}`" :width-on-screen="83" :width-on-screen-tablet="83" :width-on-screen-smartphone="83" :mode="'all'"/>
-          <ResponsiveImage v-else :image-url="`${item.serie.data.cover_serie_image.url}`" :width-on-screen="83" :width-on-screen-tablet="83" :width-on-screen-smartphone="83" :mode="'all'"/>
+          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" />
+          <img v-else :src="item.serie.data.cover_serie_image.url" />
         </div>
-        <div class="serie-gallery-mask right"></div>
+        <div class="serie-slider-mask right"></div>
       </div>
     </div>
     <div class="slider-controls">
@@ -40,16 +40,12 @@
 </template>
 
 <script>
-import ResponsiveImage from '~/components/ResponsiveImage'
 import math from '~/utils/math.js'
 import lerp from '~/utils/lerp.js'
 import raf from '~/utils/raf.js'
 import browser from '~/utils/browser.js'
 
 export default {
-  components: {
-    ResponsiveImage
-  },
   data() {
     return {
       index: 0,
@@ -80,8 +76,8 @@ export default {
     this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
 
     this.$el.addEventListener('mousemove', this.moveCursor)
-    this.$el.addEventListener('mouseleave', this.exit)
     this.$el.addEventListener('mouseenter', this.enter)
+    this.$el.addEventListener('mouseleave', this.exit)
 
     window.addEventListener('resize', this.resize)
     this.$el.addEventListener('mouseup', this.up)
@@ -97,8 +93,8 @@ export default {
     this.toggleCursor()
 
     this.$el.removeEventListener('mousemove', this.moveCursor)
-    this.$el.removeEventListener('mouseleave', this.exit)
     this.$el.removeEventListener('mouseenter', this.enter)
+    this.$el.removeEventListener('mouseleave', this.exit)
 
     window.removeEventListener('resize', this.resize)
     this.$el.removeEventListener('mouseup', this.up)
@@ -126,10 +122,10 @@ export default {
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
-      this.cursorX.set(cursor.x)
-      this.cursorY.set(cursor.y)
+      this.cursorX.set(cursor.x - (this.cursor.clientWidth / 2))
+      this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
     },
-    enter() {
+    enter(cursor) {
       this.cursor.classList.add('visible')
     },
     up() {
@@ -140,7 +136,7 @@ export default {
       this.sliderContent.classList.remove('no-events')
 
       for (let i = 0; i < this.covers.length; i++) {
-        this.covers[this.index].style.transform = `translate3d(0,0, 0)`
+        this.covers[i].style.transform = `translate3d(0, 0, 0)`
       }
     },
     down(cursor) {
@@ -163,6 +159,7 @@ export default {
     },
     parralax(x) {
       let transform = math.clamp(x * 20, -20, 20)
+
       for (let i = 0; i < this.covers.length; i++) {
         this.covers[i].style.transform = `translate3d(${transform}px,0, 0)`
       }
@@ -199,7 +196,6 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      this.cursor.classList.remove('visible')
       this.isDrag = false
       this.up()
     },

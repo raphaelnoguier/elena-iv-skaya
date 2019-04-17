@@ -23,30 +23,18 @@ let createTransition = () => {
               duration: 750,
             })
 
-            if(toHome) {
-              imageContainer.style.top = 0
-              mask.style.top = 0
-            }
-
             tl.add({
               targets: imageContainer,
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
                 toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
-                if(toHome) {
-                  imageContainer.style.top = 'unset'
-                  imageContainer.style.bottom = 0
-                  transitionContainer.style.top = 'unset'
-                  transitionContainer.style.bottom = 0
-                } else {
-                  nav.classList.add('before-enter')
-                  imageContainer.style.top = 0
-                  imageContainer.style.bottom = 'unset'
-                  transitionContainer.style.top = 0
-                  transitionContainer.style.bottom = 'unset'
-                  mask.style.top = 0
-                }
+                nav.classList.add('before-enter')
+                imageContainer.style.top = 0
+                imageContainer.style.bottom = 'unset'
+                transitionContainer.style.top = 0
+                transitionContainer.style.bottom = 'unset'
+                mask.style.top = 0
                 mask.style.transform = 'translate3d(0, -200px, 0)'
               }
             }).add({
@@ -76,7 +64,7 @@ let createTransition = () => {
           let nav = document.querySelector('.nav')
           setTimeout(() => {
             nav.classList.remove('before-enter')
-          }, 1000);
+          }, 200);
           done()
         }
       }

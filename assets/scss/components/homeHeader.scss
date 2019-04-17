@@ -148,6 +148,7 @@
       bottom: 2.125vw;
       writing-mode: vertical-rl;
       text-orientation: mixed;
+      overflow: hidden;
 
       @include max(md) {
         display: none;
@@ -156,15 +157,39 @@
       .line {
         height: 4.0625vw;
         background: black;
-        width: 0.0625vw;
+        width: 0.063vw;
         margin-bottom: 1.4375vw;
       }
 
-      span {
-        @include sofiaProLight(0.75vw);
-        letter-spacing: 0.125vw;
-        line-height: 0.875vw;
-        text-transform: uppercase;
+      .status-text {
+        position: relative;
+
+        span {
+          @include sofiaProLight(0.75vw);
+          letter-spacing: 0.125vw;
+          line-height: 0.875vw;
+          text-transform: uppercase;
+          display: block;
+          transition: transform 400ms $ease-in-out-quad;
+
+          &.hold-instructions {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate3d(-1.75vw, 0, 0) skewX(10deg)
+          }
+        }
+      }
+
+      &.animate {
+        .status-text {
+          .last-updated {
+            transform: translate3d(1.75vw, 0, 0) skewX(10deg)
+          }
+          .hold-instructions {
+            transform: translate3d(0, 0, 0) skewX(0deg)
+          }
+        }
       }
     }
   }

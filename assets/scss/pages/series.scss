@@ -258,7 +258,6 @@
 
     .gallery-item {
       display: flex;
-      border: 1px solid red;
 
       &:not(:first-child) {
         margin-top: 9.375vw;
@@ -333,7 +332,6 @@
 
         img {
           max-width: 35vw;
-          object-fit: cover;
 
           @include max(md) {
             max-width: 41.146vw;
@@ -358,7 +356,8 @@
       }
 
       img {
-        object-fit: contain;
+        object-fit: cover;
+        pointer-events: none;
         width: 100%;
         height: 100%;
       }

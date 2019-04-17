@@ -49,6 +49,16 @@ body {
 
 
 
-img[lazy="loading"] {
-  object-fit: cover !important;
+img[lazy="loaded"] {
+  opacity: 0;
+  animation: fadein 500ms ease forwards;
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }

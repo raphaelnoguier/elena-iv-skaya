@@ -1,23 +1,9 @@
 <template>
   <div>
     <section class="page home" >
-      <HomeHeader v-if="featured" :featured="featured" />
+      <HomeHeader ref="homeHeader" v-if="featured" :featured="featured" :lastPublication="lastPublication"/>
       <div class="page-content">
-        <div class="gallery">
-          <div class="gallery-wrapper">
-            <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
-              <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url)" :to="`/serie/${serie.serie.uid}`">
-                <div class="gallery-mask left"></div>
-                <img v-lazy="serie.serie.data.cover_serie_image.url" />
-                <div class="gallery-mask right"></div>
-                <div class="item-title">
-                  <h3>{{serie.serie.data.title[0].text}}</h3>
-                  <span>{{serie.serie.data.category}}</span>
-                </div>
-              </nuxt-link>
-            </div>
-          </div>
-        </div>
+        <HomeGallery :series="series" />
       </div>
     </section>
     <Footer/>
@@ -27,8 +13,9 @@
 import browser from '~/utils/browser.js'
 import scrollbar from "~/utils/scrollbar.js"
 import HomeHeader from "~/components/HomeHeader"
+import HomeGallery from "~/components/HomeGallery"
 import Footer from "~/components/Footer"
-import reveal from "~/utils/reveal.js"
+import math from "~/utils/math.js"
 import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
@@ -41,6 +28,7 @@ export default {
       let featured = data.slides
 
       return {
+        lastPublication: entry.last_publication_date,
         featured: featured,
         series: series,
         seo: {
@@ -56,6 +44,7 @@ export default {
   mixins: [ pageTransition ],
   components: {
     HomeHeader,
+    HomeGallery,
     Footer
   },
   head() {
@@ -80,50 +69,62 @@ export default {
 
   data () {
     return {
-      container: null
+      container: null,
+      updateStatus: null,
+      updateStatusOffset: null,
     }
   },
 
   mounted () {
+    window.addEventListener('resize', this.resize);
+
+    this.lastPublication = this.formatDate(this.lastPublication)
+    this.updateStatus = this.$refs.homeHeader.$refs.updateStatus
     this.container = this.$el.ownerDocument.getElementById('smooth-component')
     let scrollY = this.$store.state.position
+
     this.$nextTick(() => {
-      this.revealGallery()
       this.setTheme()
+      this.calcOffset()
       setTimeout(() => {
         if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
+        if(browser.desktop && window.innerWidth > 768) scrollbar.listen(this.container, this.onScrollHome)
       }, 1)
     })
   },
 
+  beforeDestroy () {
+    if (browser.desktop && window.innerWidth > 768) scrollbar.unlisten(this.container, this.onScrollHome);
+  },
+
   methods: {
+    calcOffset() {
+      this.updateStatusOffset = this.updateStatus.getBoundingClientRect().height
+    },
+    formatDate(date) {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      let d = new Date(date);
+      let month = monthNames[d.getMonth()]
+      let year = d.getFullYear();
+
+      if (month < 10) month = '0' + month
+
+      return month + ' ' + year
+    },
     setTheme() {
       document.body.dataset.background = 'white'
     },
-    revealGallery() {
-      let tmp = this.$el.querySelectorAll('.gallery-mask');
-      const imgs = Array.from(tmp).map(img => {
-        return {
-          dom: img,
-          ratioIn: 0.3,
-        }
-      })
-      this.reveal = reveal(imgs)
+    onScrollHome(status) {
+      this.updateStatus.style.transform = `translate3d(0, ${status.offset.y}px, 0)`
+      if(status.offset.y > this.updateStatusOffset) this.updateStatus.classList.add('animate')
+      else this.updateStatus.classList.remove('animate')
     },
-    updateTransitionImg(serieCover) {
-      this.$store.getters.currentDoc.data.loader_image.url = serieCover
-    },
-    getClass(ratio) {
-      if(ratio.includes('Big')){
-        return 'full'
+    resize () {
+      if(browser.desktop && window.innerWidth > 768) {
+        scrollbar.listen(this.container, this.onScrollHome);
+        this.calcOffset()
       }
-      if (ratio.includes('Landscape')) {
-        return 'landscape'
-      }
-      if (ratio.includes('Portrait')) {
-        return 'portrait'
-      }
-    },
+    }
   },
 }
 </script>

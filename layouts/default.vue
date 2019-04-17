@@ -58,13 +58,10 @@ export default {
         scrollbar.destroyAll()
       }
     },
-    onScrollDefault(status) {
-    }
   },
   watch: {
     '$route'(to, from) {
       this.$nextTick(() => {
-        //keep scroll pos on going back to index
         if(from.name === 'index' && browser.desktop && window.innerWidth > 768) {
           let position = scrollbar.getOffset(this.container)
           this.$store.commit('SET_SCROLL_POSITION', position)
