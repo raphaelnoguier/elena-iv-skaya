@@ -149,6 +149,7 @@
       writing-mode: vertical-rl;
       text-orientation: mixed;
       overflow: hidden;
+      z-index: 9;
 
       @include max(md) {
         display: none;
@@ -170,7 +171,7 @@
           line-height: 0.875vw;
           text-transform: uppercase;
           display: block;
-          transition: transform 400ms $ease-in-out-quad;
+          transition: transform 800ms $ease-in-out-quad;
 
           &.hold-instructions {
             position: absolute;
