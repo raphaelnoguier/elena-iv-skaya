@@ -3,7 +3,7 @@
     <div v-for="(serie, index) in series" :key="index" class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
       <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url)" :to="`/serie/${serie.serie.uid}`">
         <div class="home-gallery-mask">
-          <img :src="serie.serie.data.cover_serie_image.url" />
+          <img :src="serie.serie.data.cover_serie_image.url" alt="home-gallery-cover" />
         </div>
         <div class="item-title">
           <h3>{{serie.serie.data.title[0].text}}</h3>

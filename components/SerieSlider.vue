@@ -75,7 +75,7 @@ export default {
     this.progress = this.$refs.progress
     this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
 
-    this.$el.addEventListener('mousemove', this.moveCursor)
+    this.$parent.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseenter', this.enter)
     this.$el.addEventListener('mouseleave', this.exit)
 
@@ -92,7 +92,7 @@ export default {
     this.toggleRaf()
     this.toggleCursor()
 
-    this.$el.removeEventListener('mousemove', this.moveCursor)
+    this.$parent.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseenter', this.enter)
     this.$el.removeEventListener('mouseleave', this.exit)
 

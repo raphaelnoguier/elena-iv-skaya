@@ -4,7 +4,7 @@
         <nuxt-link :to="`serie/${serie.serie.uid}`">
           <div class="image-mask"></div>
           <div class="image" :style="`background-image: url('${type === 'Big' ? serie.serie.data.cover_serie_image.url : serie.stripe.url}')`">
-            <img :src="serie.serie.data.cover_serie_image.url" style="display:none" data-load="preload">
+            <img :src="serie.serie.data.cover_serie_image.url" style="display:none" data-load="preload" alt="home-slider-cover" >
           </div>
         </nuxt-link>
       </div>

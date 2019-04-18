@@ -3,37 +3,41 @@ import anime from 'animejs'
 let createTransition = () => {
   return {
     transition(to, from) {
-      let toHome = to.name === 'index' && from && from.name != 'About' && from.name != 'about'
       let toAbout = to.name === 'about' || to.name === 'About'
+      let fromSerie = from && from.name === 'serie-slug'
+      let serieToSerie = to.name === 'serie-slug' && fromSerie
+
       return {
         name: 'page',
+        css: false,
         leave(el, done) {
           let nav = document.querySelector('.nav')
+          let navItems = nav.querySelectorAll('li')
           let transitionContainer = document.querySelector('.transition-wrapper')
           let imageContainer = transitionContainer.querySelector('.image-transition')
           let mask = transitionContainer.querySelector('.image-transition .transition-mask')
 
-          if(!toHome) this.$parent.transitioning = true
+          const tmp = new Image
+          tmp.src = this.$store.getters.currentDoc.data.loader_image.url
 
-          let tmpImg = new Image
-          tmpImg.src = this.$store.getters.currentDoc.data.loader_image.url
-          tmpImg.onload = () => {
-            let tl = anime.timeline({
-              easing: 'easeInOutQuad',
-              duration: 750,
-            })
+          tmp.onload = () => {
+            const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
+
+            fromSerie ? navItems[0].style.opacity  = 0 : null
+
+            el.classList.remove('page-enter', 'page-leave')
+            el.classList.add('page-leave')
+            this.$parent.transitioning = true
 
             tl.add({
               targets: imageContainer,
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
-                toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
                 nav.classList.add('before-enter')
-                imageContainer.style.top = 0
-                imageContainer.style.bottom = 'unset'
-                transitionContainer.style.top = 0
-                transitionContainer.style.bottom = 'unset'
+                toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
+                fromSerie && !serieToSerie ? navItems[0].style.opacity = 1 : navItems[0].style.opacity = ''
+
                 mask.style.top = 0
                 mask.style.transform = 'translate3d(0, -200px, 0)'
               }
@@ -42,14 +46,12 @@ let createTransition = () => {
               height: 0,
               complete: () => {
                 this.$parent.transitioning = false
+                this.$parent.domLoaded = false
+
                 imageContainer.style.height = 0
-                imageContainer.style.top = ''
-                imageContainer.style.bottom = 0
                 transitionContainer.style.height = '100vh'
                 mask.style.top = ''
-                mask.style.bottom = '0'
                 mask.style.transform = "translate3d(0, 0, 0)"
-                this.$parent.domLoaded = false
                 done()
               }
             })
@@ -61,11 +63,14 @@ let createTransition = () => {
           })
         },
         enter(el, done) {
-          let nav = document.querySelector('.nav')
+          let nav = this.$parent.$refs.nav.$el
+          el.classList.remove('page-leave')
+          el.classList.add('page-enter')
+          done()
+
           setTimeout(() => {
             nav.classList.remove('before-enter')
           }, 200);
-          done()
         }
       }
     },

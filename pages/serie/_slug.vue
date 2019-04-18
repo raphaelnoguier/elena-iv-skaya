@@ -37,8 +37,8 @@
       <div ref="serieGallery" class="serie-gallery">
         <ZoomSerie ref="zoomSerie" :currentZoomImage="currentZoomImage" :currentZoomImageHeight="currentZoomImageHeight" />
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img v-lazy="image.image.url">
-          <img v-if="image.ratio === 'Duo'" v-lazy="image.duo_image.url">
+          <img v-lazy="image.image.url" :alt="`image-serie-${i}`">
+          <img v-if="image.ratio === 'Duo'" v-lazy="image.duo_image.url" :alt="`image-serie-${i}`">
         </div>
       </div>
       <div class="serie-credits-wrapper">
@@ -106,13 +106,17 @@ export default {
     return {
       container: null,
       featuredImageOffset: null,
-      serieSliderOfsset: null,
       nav: null,
+      offsetY: 0,
+      currentIndex: 0,
       sliderEnter: false,
       serieGallery: null,
-      serieGalleryOffsetBotttom: null,
+      galleryItemsOffset: [],
+      serieGalleryOffsetBottom: null,
+      serieGalleryOffsetTop: null,
       zoomSerie: null,
       zoomBlocHeight: null,
+      currentItem: null,
       currentImage: null,
       currentZoomImage: null,
       currentZoomImageHeight: null,
@@ -143,9 +147,8 @@ export default {
         scrollbar.listen(this.container, this.onScrollSerie)
         scrollbar.resetPosition(this.container)
         this.calcOffset()
-        this.revealGalleryItems()
+        this.prepareZoom()
       }
-
       this.revealSlider()
     });
   },
@@ -163,28 +166,14 @@ export default {
       this.featuredImageOffset = image.height
       this.zoomBlocHeight = this.zoomSerie.$el.getBoundingClientRect().top
 
-      this.serieGalleryOffsetBotttom = this.serieGallery.getBoundingClientRect().bottom
+      this.serieGalleryOffsetTop = this.serieGallery.getBoundingClientRect().top
+      this.serieGalleryOffsetBottom = this.serieGallery.getBoundingClientRect().bottom - this.zoomSerie.$el.getBoundingClientRect().height
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
         scrollbar.listen(this.container, this.onScrollSerie);
         this.calcOffset();
       }
-    },
-    revealGalleryItems() {
-      let tmp = this.$el.querySelectorAll('.gallery-item img:last-child');
-      const items = Array.from(tmp).map((item, index) => {
-        return {
-          dom: item,
-          ratioIn: 1,
-          ratioOut: 1,
-          update: () => {
-            this.setCurrentZoom(item)
-            if(index === items.length - 1) console.log('end')
-          }
-        }
-      })
-      this.revealGalleryItems = reveal(items)
     },
     revealSlider() {
       this.reveal = reveal(
@@ -199,24 +188,47 @@ export default {
       )
     },
     onScrollSerie(status) {
-      this.nav.classList.toggle('black-link' , status.offset.y > this.featuredImageOffset)
+      this.offsetY = status.offset.y
+      this.nav.classList.toggle('black-link' , this.offsetY > this.featuredImageOffset)
 
-      if(this.serieGalleryOffsetBotttom > status.offset.y) {
-        this.zoomSerie.$el.style.transform = `translate3d(0,${status.offset.y}px, 0)`
-        this.transformZoom(status.offset.y)
+      if(this.serieGalleryOffsetTop < this.offsetY && this.serieGalleryOffsetBottom > this.offsetY) {
+        this.zoomSerie.$el.style.transform = `translate3d(0,${this.offsetY + 30}px, 0)`
+        console.log(this.galleryItemsOffset[0], this.offsetY - this.zoomBlocHeight)
+        if(this.galleryItemsOffset[this.currentIndex]  < (this.offsetY - this.zoomBlocHeight)) {
+          this.setCurrentZoom(this.currentItem)
+          this.transformZoom()
+        }
       }
+    },
+    prepareZoom() {
+      let tmp = this.$el.querySelectorAll('.gallery-item img:last-child');
+      const items = Array.from(tmp).map((item, index) => {
+        this.galleryItemsOffset.push(item.getBoundingClientRect().top)
+        return {
+          dom: item,
+          ratioIn: 0.9,
+          update: () => {
+            this.currentIndex = index
+            this.currentItem = item
+          }
+        }
+      })
+      this.revealGalleryItems = reveal(items)
     },
     setCurrentZoom(item) {
       this.currentImage = item
-      this.currentZoomImage = item.src
+      this.currentZoomImage = item.src && item.src
       this.currentZoomImageHeight = item.height
     },
     transformZoom(y) {
       if(!this.currentImage) return
+
       let imageOffsetY = calcOffset.computeOffset(this.currentImage).top
       let transformY = math.map(y, imageOffsetY, imageOffsetY + this.currentZoomImageHeight, 0, this.currentZoomImageHeight - this.zoomBlocHeight)
 
-      this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY * 1.35 )}px, 0) scale(1.5)`
+      if(transformY > this.currentZoomImageHeight) {
+        this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY * 1.35 )}px, 0) scale(1.5)`
+      }
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');

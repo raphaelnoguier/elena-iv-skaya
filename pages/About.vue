@@ -3,7 +3,7 @@
     <div class="about-wrapper">
       <div class="about-image">
         <div class="image-mask"></div>
-        <img :src="main_image" data-load="preload"/>
+        <img :src="main_image" data-load="preload" alt="elena portrait" />
         <div class="about-quote">
           <h3>{{title}}</h3>
         </div>

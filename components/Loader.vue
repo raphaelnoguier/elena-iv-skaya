@@ -15,7 +15,7 @@
     </div>
     <div class="image-loader">
       <div class="transition-mask" :style="`background-image:url('${imageLoader}')`"></div>
-      <img :src="imageLoader" data-load="preload" style="display:none">
+      <img :src="imageLoader" data-load="preload" style="display:none" alt="image-loader">
     </div>
   </div>
 </template>

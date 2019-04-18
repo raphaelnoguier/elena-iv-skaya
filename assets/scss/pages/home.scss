@@ -7,10 +7,12 @@
       margin-top: 12.5vw;
       padding-bottom: 6.25vw;
       opacity: 0;
-      transition: opacity 500ms ease;
+      transform: translate3d(0, 100px, 0);
+      transition: opacity 500ms ease, transform 800ms $ease-in-out-quad;
 
       .loaded & {
         opacity: 1;
+        transform: translate3d(0, 0, 0);
       }
 
       @include max(md) {

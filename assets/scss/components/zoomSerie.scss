@@ -3,7 +3,7 @@
   top: 0;
   right: 0;
   z-index: 9;
-  border-bottom: 1px solid rgb(223, 223, 223);
+  // border-bottom: 1px solid rgb(223, 223, 223);
   width: 100%;
   z-index: -1;
 
@@ -12,8 +12,8 @@
   }
 
   &-image {
-    width: 200px;
-    height: 200px;
+    width: 15vw;
+    height: 15vw;
     margin-left: auto;
     overflow: hidden;
 

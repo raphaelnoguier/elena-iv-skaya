@@ -15,16 +15,15 @@
   }
 
   img {
-    width: 0.75vw
+    width: 0.75vw;
+    transition: transform 500ms $ease-in-out-quad;
   }
-
 
   .arrows {
     position: absolute;
-    width: 65%;
+    width: 60%;
     display: flex;
     justify-content: space-between;
-    transition: width 500ms $ease-in-out-quad;
   }
 
   .left {
@@ -32,13 +31,13 @@
   }
 
   .circle {
-    width: 3vw;
-    height: 3vw;
+    width: 4vw;
+    height: 4vw;
     border-radius: 20vw;
     border: 2px solid #FCF9F5;
     background: transparent;
     margin: 0 0.2vw;
-    transition: transform 800ms $ease-in-out-quart;
+    transition: transform 500ms $ease-in-out-quad;
   }
 
   .right {
@@ -51,7 +50,12 @@
 
   &.focus {
     .arrows {
-      width: 110%;
+      .left {
+        transform: translate3d(-10px, 0, 0) rotate(90deg);
+      }
+      .right {
+        transform: translate3d(10px, 0, 0) rotate(-90deg);
+      }
     }
     .circle{
       transform: scale(0.5)

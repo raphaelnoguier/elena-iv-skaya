@@ -3,8 +3,6 @@
   opacity: 1;
 }
 
-
-
 .nav {
   padding: 5vh 8vw 0;
   position: fixed;
@@ -38,7 +36,8 @@
     padding: 5.5vh 9.333vw;
   }
 
-  &.serie-page{
+  &.serie-page {
+
     ul {
       li:first-child {
         opacity: 0;
