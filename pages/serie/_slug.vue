@@ -37,8 +37,14 @@
       <div ref="serieGallery" class="serie-gallery">
         <ZoomSerie ref="zoomSerie" :currentZoomImage="currentZoomImage" :currentZoomImageHeight="currentZoomImageHeight" />
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
-          <img v-lazy="image.image.url" :alt="`image-serie-${i}`">
-          <img v-if="image.ratio === 'Duo'" v-lazy="image.duo_image.url" :alt="`image-serie-${i}`">
+          <div class="relative-container">
+            <img v-lazy="image.image.url" :alt="`image-serie-${i}`">
+            <div class="placeholder"></div>
+          </div>
+          <div class="relative-container duo" v-if="image.ratio === 'Duo'">
+            <img v-lazy="image.duo_image.url" :alt="`image-serie-${i}`">
+            <div class="placeholder"></div>
+          </div>
         </div>
       </div>
       <div class="serie-credits-wrapper">
@@ -164,10 +170,25 @@ export default {
     calcOffset() {
       let image = this.$el.querySelector('.featured-image').getBoundingClientRect()
       this.featuredImageOffset = image.height
-      this.zoomBlocHeight = this.zoomSerie.$el.getBoundingClientRect().top
+      this.zoomBlocHeight = this.zoomSerie.$el.getBoundingClientRect().height
 
       this.serieGalleryOffsetTop = this.serieGallery.getBoundingClientRect().top
       this.serieGalleryOffsetBottom = this.serieGallery.getBoundingClientRect().bottom - this.zoomSerie.$el.getBoundingClientRect().height
+    },
+    prepareZoom() {
+      let tmp = this.$el.querySelectorAll('.gallery-item .relative-container:last-child img');
+      const items = Array.from(tmp).map((item, index) => {
+        this.galleryItemsOffset.push(item.getBoundingClientRect().top)
+        return {
+          dom: item,
+          ratioIn: 0.9,
+          update: () => {
+            this.currentIndex = index
+            this.currentItem = item
+          }
+        }
+      })
+      this.revealGalleryItems = reveal(items)
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
@@ -192,28 +213,12 @@ export default {
       this.nav.classList.toggle('black-link' , this.offsetY > this.featuredImageOffset)
 
       if(this.serieGalleryOffsetTop < this.offsetY && this.serieGalleryOffsetBottom > this.offsetY) {
-        this.zoomSerie.$el.style.transform = `translate3d(0,${this.offsetY + 30}px, 0)`
-        console.log(this.galleryItemsOffset[0], this.offsetY - this.zoomBlocHeight)
-        if(this.galleryItemsOffset[this.currentIndex]  < (this.offsetY - this.zoomBlocHeight)) {
+        this.zoomSerie.$el.style.transform = `translate3d(0,${this.offsetY}px, 0)`
+        if(this.galleryItemsOffset[this.currentIndex]  < (this.offsetY + this.zoomBlocHeight)) {
           this.setCurrentZoom(this.currentItem)
-          this.transformZoom()
+          this.transformZoom(this.offsetY)
         }
       }
-    },
-    prepareZoom() {
-      let tmp = this.$el.querySelectorAll('.gallery-item img:last-child');
-      const items = Array.from(tmp).map((item, index) => {
-        this.galleryItemsOffset.push(item.getBoundingClientRect().top)
-        return {
-          dom: item,
-          ratioIn: 0.9,
-          update: () => {
-            this.currentIndex = index
-            this.currentItem = item
-          }
-        }
-      })
-      this.revealGalleryItems = reveal(items)
     },
     setCurrentZoom(item) {
       this.currentImage = item
@@ -225,9 +230,8 @@ export default {
 
       let imageOffsetY = calcOffset.computeOffset(this.currentImage).top
       let transformY = math.map(y, imageOffsetY, imageOffsetY + this.currentZoomImageHeight, 0, this.currentZoomImageHeight - this.zoomBlocHeight)
-
-      if(transformY > this.currentZoomImageHeight) {
-        this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY * 1.35 )}px, 0) scale(1.5)`
+      if(transformY < this.currentZoomImageHeight) {
+        this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY)}px, 0) scale(1.5)`
       }
     },
     scrollDown() {

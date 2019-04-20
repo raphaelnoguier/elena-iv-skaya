@@ -45,7 +45,7 @@ export default {
       const imgs = Array.from(tmp).map(img => {
         return {
           dom: img,
-          ratioIn: 0.1,
+          ratioIn: 0,
         }
       })
       this.reveal = reveal(imgs)

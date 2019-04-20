@@ -259,6 +259,15 @@
     .gallery-item {
       display: flex;
 
+      .relative-container {
+        position: relative;
+        width: 100%;
+
+        &.duo {
+          text-align: right;
+        }
+      }
+
       &:not(:first-child) {
         margin-top: 9.375vw;
 
@@ -320,6 +329,7 @@
 
       &.duo {
         display: flex;
+        justify-content: space-between;
         height: 43.750vw;
 
         @include max(md) {
@@ -353,6 +363,21 @@
             margin-left: 4vw;
           }
         }
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #f3efec;
+        opacity: 1;
+        transition: opacity 800ms ease;
+      }
+
+
+      img[lazy="loaded"] ~ .placeholder {
+        opacity: 0;
       }
 
       img {

@@ -16,7 +16,7 @@
 .home-gallery-mask {
   background: transparent;
   transform: scale3d(0.85, 1, 1);
-  transition: transform 800ms $ease-in-out-quad;
+  transition: transform 900ms $ease-in-out-quart;
   overflow: hidden;
   height: 100%;
   width: 100%;
@@ -32,7 +32,7 @@
 
   img {
     transform: scale3d(1.15, 1, 1);
-    transition: transform 800ms $ease-in-out-quad;
+    transition: transform 900ms $ease-in-out-quart;
   }
 
   &.down-enter {
