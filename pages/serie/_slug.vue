@@ -35,7 +35,6 @@
         </div>
       </div>
       <div ref="serieGallery" class="serie-gallery">
-        <ZoomSerie ref="zoomSerie" :currentZoomImage="currentZoomImage" :currentZoomImageHeight="currentZoomImageHeight" />
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
           <div class="relative-container">
             <img v-lazy="image.image.url" :alt="`image-serie-${i}`">
@@ -72,6 +71,7 @@ import browser from '~/utils/browser.js';
 import ZoomSerie from "~/components/ZoomSerie"
 import { pageTransition } from '~/mixins/pageTransition.js'
 import math from '~/utils/math.js'
+import raf from '~/utils/raf.js'
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -113,19 +113,10 @@ export default {
       container: null,
       featuredImageOffset: null,
       nav: null,
-      offsetY: 0,
-      currentIndex: 0,
+      offsetY: null,
       sliderEnter: false,
-      serieGallery: null,
-      galleryItemsOffset: [],
-      serieGalleryOffsetBottom: null,
-      serieGalleryOffsetTop: null,
-      zoomSerie: null,
-      zoomBlocHeight: null,
-      currentItem: null,
-      currentImage: null,
-      currentZoomImage: null,
-      currentZoomImageHeight: null,
+      galleryItems: null,
+      parallax: []
     }
   },
   head() {
@@ -143,9 +134,7 @@ export default {
   mounted() {
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
-    this.zoomSerie = this.$refs.zoomSerie
-    this.imageZoomSerie = this.zoomSerie.$refs.imageZoomSerie
-    this.serieGallery = this.$refs.serieGallery
+    this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item:not(:first-child)')
 
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -153,7 +142,8 @@ export default {
         scrollbar.listen(this.container, this.onScrollSerie)
         scrollbar.resetPosition(this.container)
         this.calcOffset()
-        this.prepareZoom()
+        this.initParallax()
+        raf.add(this.tick)
       }
       this.revealSlider()
     });
@@ -161,34 +151,43 @@ export default {
   beforeDestroy () {
     if (browser.desktop && window.innerWidth > 768) {
       this.reveal.destroy()
-      this.revealGalleryItems.destroy()
+      raf.remove(this.tick)
       scrollbar.unlisten(this.container, this.onScrollSerie);
       window.removeEventListener('resize', this.resize);
     }
   },
   methods: {
+    initParallax() {
+      this.galleryItems.forEach((item, i) => {
+        if(i = 0) return
+        this.parallax.push({ offsetTop: item.offsetTop, parallax: item, imgs: item.querySelectorAll('img')})
+      });
+    },
+    transform(item,imgs, y, yImg) {
+      item.style.transform = `translate3d(0, ${y}px, 0)`
+      imgs.forEach(img => {img.style.transform = `translate3d(0, ${yImg}px, 0) scale(1.15)`});
+    },
+    tick() {
+      const wHeight =  window.innerHeight
+
+      for (let i = 0; i < this.parallax.length; i++) {
+        const item = this.parallax[i].parallax
+        const imgs = this.parallax[i].imgs
+        const offsetTop = -this.offsetY + this.parallax[i].offsetTop
+
+        const min = (-wHeight * 0.5) - wHeight * 0.75
+        const max = wHeight + (wHeight * 0.75)
+
+        if (offsetTop > min && offsetTop < max) {
+          const y = math.map(offsetTop, min, max, 0, 150)
+          const yImg = math.map(offsetTop, min, max, -50, 50)
+          this.transform(item, imgs, y, yImg)
+        }
+      }
+    },
     calcOffset() {
       let image = this.$el.querySelector('.featured-image').getBoundingClientRect()
       this.featuredImageOffset = image.height
-      this.zoomBlocHeight = this.zoomSerie.$el.getBoundingClientRect().height
-
-      this.serieGalleryOffsetTop = this.serieGallery.getBoundingClientRect().top
-      this.serieGalleryOffsetBottom = this.serieGallery.getBoundingClientRect().bottom - this.zoomSerie.$el.getBoundingClientRect().height
-    },
-    prepareZoom() {
-      let tmp = this.$el.querySelectorAll('.gallery-item .relative-container:last-child img');
-      const items = Array.from(tmp).map((item, index) => {
-        this.galleryItemsOffset.push(item.getBoundingClientRect().top)
-        return {
-          dom: item,
-          ratioIn: 0.9,
-          update: () => {
-            this.currentIndex = index
-            this.currentItem = item
-          }
-        }
-      })
-      this.revealGalleryItems = reveal(items)
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
@@ -211,28 +210,6 @@ export default {
     onScrollSerie(status) {
       this.offsetY = status.offset.y
       this.nav.classList.toggle('black-link' , this.offsetY > this.featuredImageOffset)
-
-      if(this.serieGalleryOffsetTop < this.offsetY && this.serieGalleryOffsetBottom > this.offsetY) {
-        this.zoomSerie.$el.style.transform = `translate3d(0,${this.offsetY}px, 0)`
-        if(this.galleryItemsOffset[this.currentIndex]  < (this.offsetY + this.zoomBlocHeight)) {
-          this.setCurrentZoom(this.currentItem)
-          this.transformZoom(this.offsetY)
-        }
-      }
-    },
-    setCurrentZoom(item) {
-      this.currentImage = item
-      this.currentZoomImage = item.src && item.src
-      this.currentZoomImageHeight = item.height
-    },
-    transformZoom(y) {
-      if(!this.currentImage) return
-
-      let imageOffsetY = calcOffset.computeOffset(this.currentImage).top
-      let transformY = math.map(y, imageOffsetY, imageOffsetY + this.currentZoomImageHeight, 0, this.currentZoomImageHeight - this.zoomBlocHeight)
-      if(transformY < this.currentZoomImageHeight) {
-        this.imageZoomSerie.style.transform = `translate3d(0, ${- (transformY)}px, 0) scale(1.5)`
-      }
     },
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');

@@ -21,7 +21,6 @@
     "prismic-javascript": "^2.0.1",
     "raf": "^3.4.1",
     "smooth-scrollbar": "^8.3.1",
-    "vanilla-lazyload": "^11.0.6",
     "vue-lazyload": "^1.2.6"
   },
   "devDependencies": {

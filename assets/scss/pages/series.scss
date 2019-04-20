@@ -261,7 +261,8 @@
 
       .relative-container {
         position: relative;
-        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
 
         &.duo {
           text-align: right;
@@ -385,6 +386,7 @@
         pointer-events: none;
         width: 100%;
         height: 100%;
+        transform: scale(1.15)
       }
     }
   }
