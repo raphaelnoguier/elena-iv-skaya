@@ -116,7 +116,8 @@ export default {
       offsetY: null,
       sliderEnter: false,
       galleryItems: null,
-      parallax: []
+      parallax: [],
+      running: false
     }
   },
   head() {
@@ -143,7 +144,7 @@ export default {
         scrollbar.resetPosition(this.container)
         this.calcOffset()
         this.initParallax()
-        raf.add(this.tick)
+        this.toggleRaf()
       }
       this.revealSlider()
     });
@@ -157,31 +158,39 @@ export default {
     }
   },
   methods: {
+    toggleRaf() {
+      this.running = !this.running
+      if(this.running) raf.add(this.tick)
+      else raf.remove(this.tick)
+    },
     initParallax() {
       this.galleryItems.forEach((item, i) => {
         if(i = 0) return
-        this.parallax.push({ offsetTop: item.offsetTop, parallax: item, imgs: item.querySelectorAll('img')})
+        this.parallax.push({ offsetTop: item.offsetTop, parallax: item })
       });
     },
-    transform(item,imgs, y, yImg) {
+    transform(item, y) {
       item.style.transform = `translate3d(0, ${y}px, 0)`
-      imgs.forEach(img => {img.style.transform = `translate3d(0, ${yImg}px, 0) scale(1.15)`});
+    },
+    resetParallax() {
+      for (let i = 0; i < this.parallax.length; i++) {
+        const item = this.parallax[i].parallax
+        item.style.transform = 'translate3d(0, 0px, 0)'
+      }
     },
     tick() {
       const wHeight =  window.innerHeight
 
       for (let i = 0; i < this.parallax.length; i++) {
         const item = this.parallax[i].parallax
-        const imgs = this.parallax[i].imgs
         const offsetTop = -this.offsetY + this.parallax[i].offsetTop
 
         const min = (-wHeight * 0.5) - wHeight * 0.75
         const max = wHeight + (wHeight * 0.75)
 
         if (offsetTop > min && offsetTop < max) {
-          const y = math.map(offsetTop, min, max, 0, 150)
-          const yImg = math.map(offsetTop, min, max, -50, 50)
-          this.transform(item, imgs, y, yImg)
+          const y = math.map(offsetTop, min, max, 0, 450)
+          this.transform(item, y)
         }
       }
     },
@@ -193,11 +202,14 @@ export default {
       if(browser.desktop && window.innerWidth > 768) {
         scrollbar.listen(this.container, this.onScrollSerie);
         this.calcOffset();
+      } else {
+        this.resetParallax()
       }
     },
     revealSlider() {
       this.reveal = reveal(
         { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: () => {
+          this.toggleRaf()
           this.$refs.serieSlider.toggleRaf()
           this.$refs.serieSlider.toggleCursor()
           this.sliderEnter = !this.sliderEnter

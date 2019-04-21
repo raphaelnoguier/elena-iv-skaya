@@ -111,11 +111,8 @@ export default {
     },
     toggleRaf() {
       this.running = !this.running
-      if(this.running){
-        raf.add(this.tick)
-      } else {
-        raf.remove(this.tick)
-      }
+      if(this.running) raf.add(this.tick)
+      else raf.remove(this.tick)
     },
     toggleCursor() {
       this.cursor.classList.toggle('visible')

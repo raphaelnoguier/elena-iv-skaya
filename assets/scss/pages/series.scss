@@ -107,7 +107,7 @@
           h3{
             line-height: 6.250vw;
             transition: transform 1000ms ease-in-out 200ms;
-            transform: translate3d(0, 100px, 0) skewY(10deg);
+            transform: translate3d(0, 160px, 0) skewY(10deg);
 
             .loaded & {
               transform: translate3d(0, 0, 0) skewY(0);
@@ -159,16 +159,15 @@
         display: flex;
         justify-content: space-between;
         padding-right: 3.75vw;
-        margin-top: 6.25vw;
+        margin-top: 3.25vw;
         z-index: 2;
         width: 100%;
 
         @include min(xxl) {
-          bottom: 5vw;
+          margin-top: 1.25vw;
         }
 
         @include max(md) {
-          bottom: 0;
           position: relative;
           margin-top: 11vw;
         }
@@ -262,6 +261,7 @@
       .relative-container {
         position: relative;
         max-width: 100%;
+        width: 100%;
         overflow: hidden;
 
         &.duo {
@@ -353,7 +353,7 @@
           }
         }
 
-        img:last-child {
+        .relative-container:last-child {
           margin-left: 2.5vw;
 
           @include max(md) {
@@ -381,12 +381,17 @@
         opacity: 0;
       }
 
+      img[lazy="loading"] {
+        transform: scale(1.1)
+      }
+
       img {
         object-fit: cover;
         pointer-events: none;
         width: 100%;
         height: 100%;
-        transform: scale(1.15)
+        transform: scale(1);
+        transition: transform 800ms ease;
       }
     }
   }

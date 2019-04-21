@@ -3,7 +3,7 @@
     <section class="page home" >
       <HomeHeader ref="homeHeader" v-if="featured" :featured="featured" :lastPublication="lastPublication"/>
       <div class="page-content">
-        <HomeGallery :series="series" />
+        <HomeGallery :series="series" ref="homeGallery"/>
       </div>
     </section>
     <Footer/>
@@ -116,6 +116,7 @@ export default {
     },
     onScrollHome(status) {
       this.updateStatus.style.transform = `translate3d(0, ${status.offset.y}px, 0)`
+      this.$refs.homeGallery.offsetY = status.offset.y
       if(status.offset.y > this.updateStatusOffset) this.updateStatus.classList.add('animate')
       else this.updateStatus.classList.remove('animate')
     },

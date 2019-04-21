@@ -14,32 +14,32 @@
 }
 
 .home-gallery-mask {
-  background: transparent;
-  transform: scale3d(0.85, 1, 1);
-  transition: transform 900ms $ease-in-out-quart;
-  overflow: hidden;
+  position: absolute;
+  background-color: #FCF9F5;
+  top: 0;
+  width: 10%;
   height: 100%;
-  width: 100%;
+  margin: auto;
+  display: block;
+  z-index: 2;
+  transform: translate3d(0,0,0);
+  transition: transform 800ms $ease-in-out-quad;
+  pointer-events: none;
 
+  &.left {
+    left: -1px;
+  }
 
-  @include max(md) {
-    transform: scale3d(1, 1, 1);
+  &.right {
+    right: -1px;
+  }
 
-    img {
-      transform: scale3d(1, 1, 1);
+  &.up-enter, &.down-enter {
+    &.left {
+      transform: translate3d(-100%, 0, 0)
     }
-  }
-
-  img {
-    transform: scale3d(1.15, 1, 1);
-    transition: transform 900ms $ease-in-out-quart;
-  }
-
-  &.down-enter {
-    transform: scale3d(1, 1, 1);
-
-    img {
-      transform: scale3d(1, 1, 1)
+    &.right {
+      transform: translate3d(100%, 0, 0)
     }
   }
 }

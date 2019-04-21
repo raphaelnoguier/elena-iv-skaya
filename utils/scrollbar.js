@@ -26,10 +26,10 @@ const destroyAll = function () {
   Scrollbar.destroyAll()
 }
 
-const scrollTo = function (el,y) {
+const scrollTo = function (el,y, duration) {
   const scrollbar = Scrollbar.get(el)
-  scrollbar.scrollTo(0, y, 500, {
-    easing: easing.easeInOutQuad,
+  scrollbar.scrollTo(0, y, duration, {
+    easing: easing.easeInOutQuart,
   });
 }
 

@@ -18,7 +18,7 @@ export default {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = container.querySelector('.page');
       let offset = calcOffset.computeOffset(destination).top;
-      scrollbar.scrollTo(container, offset)
+      scrollbar.scrollTo(container, offset, 1500)
     }
   }
 }

@@ -163,7 +163,7 @@ export default {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.ownerDocument.querySelector('.page-content');
       let offset = calcOffset.computeOffset(destination).top;
-      scrollbar.scrollTo(container, offset)
+      scrollbar.scrollTo(container, offset, 1000)
     }
   },
   props: { featured: Array, lastPublication: String }

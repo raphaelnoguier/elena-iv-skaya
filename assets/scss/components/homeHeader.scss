@@ -151,6 +151,17 @@
       overflow: hidden;
       z-index: 9;
 
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background: linear-gradient(to left, #FCF9F5, transparent 5%), linear-gradient(to right, #FCF9F5, transparent 30%)
+      }
+
       @include max(md) {
         display: none;
       }
@@ -171,9 +182,14 @@
           line-height: 0.875vw;
           text-transform: uppercase;
           display: block;
-          transition: transform 800ms $ease-in-out-quad;
+          transition: transform 800ms $ease-in-out-quad, opacity 600ms $ease-in-out-quad;
+
+          &.last-updated {
+            opacity: 1;
+          }
 
           &.hold-instructions {
+            opacity: 0;
             position: absolute;
             top: 0;
             right: 0;
@@ -185,9 +201,11 @@
       &.animate {
         .status-text {
           .last-updated {
+            opacity: 0;
             transform: translate3d(1.75vw, 0, 0) skewX(10deg)
           }
           .hold-instructions {
+            opacity: 1;
             transform: translate3d(0, 0, 0) skewX(0deg)
           }
         }
