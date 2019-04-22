@@ -136,7 +136,7 @@ export default {
     this.$store.commit('SET_SERIE_LOADER_IMG', this.$store.getters.currentDoc.data.loader_image.url)
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
-    this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item:not(:first-child) .relative-container')
+    this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item .relative-container')
 
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -190,7 +190,13 @@ export default {
         const max = wHeight + (wHeight * 0.75)
 
         if (offsetTop > min && offsetTop < max) {
-          const y = math.map(offsetTop, min, max, 0, item.classList.contains('duo') ? 450 : 200)
+          let y = null
+
+          item.classList.contains('duo') ?
+          y = math.map(offsetTop, min, max, -100, 650)
+          :
+          y = math.map(offsetTop, min, max, -50, 350)
+
           this.transform(item, y)
         }
       }
