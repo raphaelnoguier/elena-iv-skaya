@@ -5,7 +5,7 @@ let createTransition = () => {
     transition(to, from) {
       let toAbout = to.name === 'about' || to.name === 'About'
       let fromSerie = from && from.name === 'serie-slug' && to.name !== 'serie-slug'
-      let serieToSerie = to.name === 'serie-slug' && from.name === 'serie-slug'
+      let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
 
       return {

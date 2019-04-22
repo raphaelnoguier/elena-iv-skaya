@@ -136,7 +136,7 @@ export default {
     this.$store.commit('SET_SERIE_LOADER_IMG', this.$store.getters.currentDoc.data.loader_image.url)
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
-    this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item:not(:first-child)')
+    this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item:not(:first-child) .relative-container')
 
     window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
@@ -190,7 +190,7 @@ export default {
         const max = wHeight + (wHeight * 0.75)
 
         if (offsetTop > min && offsetTop < max) {
-          const y = math.map(offsetTop, min, max, 0, 450)
+          const y = math.map(offsetTop, min, max, 0, item.classList.contains('duo') ? 450 : 200)
           this.transform(item, y)
         }
       }
@@ -228,7 +228,7 @@ export default {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.querySelector('.serie-gallery');
       let offset = calcOffset.computeOffset(destination).top;
-      scrollbar.scrollTo(container, offset)
+      scrollbar.scrollTo(container, offset, 1000)
     },
     setTheme(theme) {
       document.body.dataset.background = theme
