@@ -4,12 +4,9 @@
   margin: auto;
   align-items: center;
 
-  .gallery-item {
-    overflow: hidden;
-    transition: transform 800ms $ease-in-out-quart;
-    width: 100%;
-    position: relative;
+  .gallery-item-wrapper {
     transform: translate3d(-12.5vw,0,0);
+    transition: transform 800ms $ease-in-out-quart;
 
     @include max(md) {
       transform: translate3d(-7.8vw,0,0);
@@ -17,10 +14,6 @@
 
     @include max(sm) {
       transform: translate3d(0,0,0);
-    }
-
-    a {
-      text-decoration: none;
     }
 
     &:not(:first-child) {
@@ -47,6 +40,23 @@
       }
     }
 
+    &.full {
+      width: 100%;
+      transform: translate3d(0, 0, 0)
+    }
+  }
+
+  .gallery-item {
+    width: 100%;
+    position: relative;
+
+    a {
+      display: block;
+      overflow: hidden;
+      height: 100%;
+      text-decoration: none;
+    }
+
     &.portrait {
       max-width: 35vw;
       height: 43.75vw;
@@ -71,6 +81,7 @@
         }
       }
     }
+
     &.landscape {
       max-width: 35vw;
       height: 26.250vw;
@@ -146,7 +157,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale3d(1.1, 1.1, 1)
+      transform: scale3d(1.1, 1.15, 1)
     }
 
     .item-title {
