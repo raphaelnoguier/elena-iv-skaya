@@ -42,7 +42,14 @@
 
     &.full {
       width: 100%;
-      transform: translate3d(0, 0, 0)
+      transform: translate3d(0, 0, 0);
+      margin-top: 12.1875vw;
+      margin-bottom: 6.25vw;
+
+      @include max(md) {
+        margin-top: 26.042vw;
+        margin-bottom: 13.021vw;
+      }
     }
   }
 
@@ -103,14 +110,7 @@
 
     &.full {
       transform: translate3d(0,0,0);
-      margin-top: 12.1875vw;
-      margin-bottom: 6.25vw;
       overflow: hidden;
-
-      @include max(md) {
-        margin-top: 26.042vw;
-        margin-bottom: 13.021vw;
-      }
 
       img {
         max-height: 50vw;

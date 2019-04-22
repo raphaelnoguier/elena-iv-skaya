@@ -42,7 +42,7 @@ export default {
   },
   beforeDestroy() {
     if (window.innerWidth > 768 && browser.desktop) this.toggleRaf()
-    this.reveal.destroy()
+    // this.reveal.destroy()
   },
   methods: {
     toggleRaf() {
@@ -55,8 +55,6 @@ export default {
         if(i = 0) return
         this.parallax.push({ offsetTop: item.parentNode.offsetTop, bloc: item, img: item.querySelector('img') })
       });
-
-      console.log(this.parallax)
     },
     tick() {
       const wHeight =  window.innerHeight
@@ -71,7 +69,7 @@ export default {
 
         if (offsetTop > min && offsetTop < max) {
           const yImg = math.map(offsetTop, min, max, -50, 50)
-          const yBloc = math.map(offsetTop, min, max, 0, 150)
+          const yBloc = math.map(offsetTop, min, max, 0, 350)
           this.transform(item, bloc, yBloc, yImg)
         }
       }

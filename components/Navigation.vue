@@ -13,7 +13,6 @@ import calcOffset from '~/utils/offset.js';
 export default {
   methods: {
     scrollTop() {
-      console.log('hello')
       if(this.$route.name !== 'index') return
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = container.querySelector('.page');

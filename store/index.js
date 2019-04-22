@@ -6,7 +6,8 @@ import prismicConfig from '../prismic.config.js'
 export const state = () => ({
   doc: {},
   allSeries: {},
-  position: {x : 0, y : 0}
+  position: {x : 0, y : 0},
+  serieLoaderImg: {}
 })
 
 export const getters = {
@@ -19,6 +20,9 @@ export const getters = {
   position(state) {
     return state.position
   },
+  serieLoaderImg(state) {
+    return state.serieLoaderImg
+  },
 }
 
 export const mutations = {
@@ -30,6 +34,9 @@ export const mutations = {
   },
   SET_SCROLL_POSITION(state, position) {
     state.position = position
+  },
+  SET_SERIE_LOADER_IMG(state, img) {
+    state.serieLoaderImg = img
   },
 }
 

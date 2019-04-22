@@ -133,6 +133,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('SET_SERIE_LOADER_IMG', this.$store.getters.currentDoc.data.loader_image.url)
     this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item:not(:first-child)')

@@ -4,12 +4,20 @@ let createTransition = () => {
   return {
     transition(to, from) {
       let toAbout = to.name === 'about' || to.name === 'About'
-      let fromSerie = from && from.name === 'serie-slug'
-      let serieToSerie = to.name === 'serie-slug' && fromSerie
+      let fromSerie = from && from.name === 'serie-slug' && to.name !== 'serie-slug'
+      let serieToSerie = to.name === 'serie-slug' && from.name === 'serie-slug'
+      let imgTransition = null
 
       return {
         name: 'page',
         css: false,
+        beforeLeave() {
+          if(fromSerie) {
+            imgTransition = this.$store.getters.serieLoaderImg
+          } else {
+            imgTransition = this.$store.getters.currentDoc.data.loader_image.url
+          }
+        },
         leave(el, done) {
           let nav = document.querySelector('.nav')
           let navItems = nav.querySelectorAll('li')
@@ -18,7 +26,8 @@ let createTransition = () => {
           let mask = transitionContainer.querySelector('.image-transition .transition-mask')
 
           const tmp = new Image
-          tmp.src = this.$store.getters.currentDoc.data.loader_image.url
+
+          tmp.src = imgTransition
 
           tmp.onload = () => {
             const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
