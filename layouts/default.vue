@@ -1,7 +1,8 @@
 <template>
   <div id="app">
+    <div class="drag-line"></div>
     <Loader/>
-    <SerieSliderCursor ref="cursor" v-if="$route.path.includes('serie')" />
+    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" />
     <div id="smooth-component" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
@@ -11,7 +12,7 @@
 </template>
 <script>
 import Navigation from "~/components/Navigation"
-import SerieSliderCursor from '~/components/SerieSliderCursor'
+import DragCursor from '~/components/DragCursor'
 import Loader from "~/components/Loader"
 import scrollbar from "~/utils/scrollbar.js"
 import ImageTransition from "~/components/ImageTransition"
@@ -23,7 +24,7 @@ export default {
     Navigation,
     ImageTransition,
     Loader,
-    SerieSliderCursor
+    DragCursor
   },
   data() {
     return {

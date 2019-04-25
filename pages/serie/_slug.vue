@@ -233,7 +233,7 @@ export default {
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.querySelector('.serie-gallery');
-      let offset = calcOffset.computeOffset(destination).top;
+      let offset = calcOffset.get(destination).top;
       scrollbar.scrollTo(container, offset, 1000)
     },
     setTheme(theme) {

@@ -33,7 +33,7 @@
         <img src="~assets/img/ui/chevron.svg" data-load="preload">
       </div>
       <div class="update-status" ref="updateStatus">
-        <div class="line" />
+        <div class="line"><div class="progress" ref="progressDrag"></div></div>
         <div class="status-text">
           <span class="last-updated">LAST UPDATED - {{lastPublication}}</span>
           <span class="hold-instructions">hold & drag</span>
@@ -96,7 +96,7 @@ export default {
           targets: values,
           duration: 1000,
           x: direction === 'next' ? 100 : 0,
-          easing: 'linear',
+          easing: 'easeInOutQuad',
           delay: isSmallSlider ? 300 : 0,
           update: (anime) => {
             const easeTop = easingTop(values.x / 100)
@@ -162,7 +162,7 @@ export default {
     scrollDown() {
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.ownerDocument.querySelector('.page-content');
-      let offset = calcOffset.computeOffset(destination).top;
+      let offset = calcOffset.get(destination).top;
       scrollbar.scrollTo(container, offset, 1000)
     }
   },

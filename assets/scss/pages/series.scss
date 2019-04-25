@@ -178,9 +178,8 @@
         }
 
         &-column {
-
           &.description {
-            flex-basis: 50%;
+            flex-basis: 45%;
 
             @include max(sm) {
               flex-basis: 100%;

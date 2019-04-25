@@ -1,4 +1,4 @@
-const computeOffset = (element) => {
+const get = (element) => {
   var top = 0, left = 0
   do {
     top += element.offsetTop  || 0
@@ -13,5 +13,5 @@ const computeOffset = (element) => {
 }
 
 export default {
-  computeOffset
+  get
 }

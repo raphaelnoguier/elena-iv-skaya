@@ -16,6 +16,7 @@ import HomeHeader from "~/components/HomeHeader"
 import HomeGallery from "~/components/HomeGallery"
 import Footer from "~/components/Footer"
 import math from "~/utils/math.js"
+import reveal from "~/utils/reveal.js"
 import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
@@ -70,6 +71,7 @@ export default {
   data () {
     return {
       container: null,
+      cursor: null,
       updateStatus: null,
       updateStatusOffset: null,
     }
@@ -80,21 +82,29 @@ export default {
 
     this.lastPublication = this.formatDate(this.lastPublication)
     this.updateStatus = this.$refs.homeHeader.$refs.updateStatus
+    this.cursor = this.$parent.$parent.$refs.cursor.$el
     this.container = this.$el.ownerDocument.getElementById('smooth-component')
+    this.galleryItems = this.$refs.homeGallery.$el.querySelectorAll('.gallery-item-wrapper')
     let scrollY = this.$store.state.position
 
     this.$nextTick(() => {
-      this.setTheme()
+      this.setTheme('white')
       this.calcOffset()
       setTimeout(() => {
         if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
-        if(browser.desktop && window.innerWidth > 768) scrollbar.listen(this.container, this.onScrollHome)
+        if(browser.desktop && window.innerWidth > 768) {
+          this.revealGalleryItems()
+          scrollbar.listen(this.container, this.onScrollHome)
+        }
       }, 1)
     })
   },
 
   beforeDestroy () {
-    if (browser.desktop && window.innerWidth > 768) scrollbar.unlisten(this.container, this.onScrollHome);
+    if (browser.desktop && window.innerWidth > 768) { 
+      scrollbar.unlisten(this.container, this.onScrollHome)
+      this.reveal.destroy()
+    }
   },
 
   methods: {
@@ -111,14 +121,33 @@ export default {
 
       return month + ' ' + year
     },
-    setTheme() {
-      document.body.dataset.background = 'white'
+    setTheme(theme) {
+      document.body.dataset.background = theme
     },
     onScrollHome(status) {
       this.updateStatus.style.transform = `translate3d(0, ${status.offset.y}px, 0)`
       this.$refs.homeGallery.offsetY = status.offset.y
-      if(status.offset.y > this.updateStatusOffset) this.updateStatus.classList.add('animate')
-      else this.updateStatus.classList.remove('animate')
+      if(status.offset.y > this.updateStatusOffset)  {
+        this.updateStatus.classList.add('animate')
+        // this.cursor.classList.add('visible')
+       } else {
+        this.updateStatus.classList.remove('animate')
+        // this.cursor.classList.remove('visible')
+       }
+    },
+    revealGalleryItems() {
+      let tmp = this.galleryItems
+      const items = Array.from(tmp).map((item, i) => {
+      return {
+        dom: item,
+        ratioIn: 0.9,
+        ratioOut: 1,
+        update: () => {
+          this.$refs.homeGallery.index = i
+        }
+      }
+    })
+    this.reveal = reveal(items)
     },
     resize () {
       if(browser.desktop && window.innerWidth > 768) {

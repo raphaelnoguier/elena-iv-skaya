@@ -16,7 +16,7 @@ export default {
       if(this.$route.name !== 'index') return
       const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = container.querySelector('.page');
-      let offset = calcOffset.computeOffset(destination).top;
+      let offset = calcOffset.get(destination).top;
       scrollbar.scrollTo(container, offset, 1500)
     }
   }

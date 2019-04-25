@@ -19,9 +19,15 @@ const lerpUtil = function (val) {
     return current
   }
 
+  function immediateSet (t) {
+    current = t
+    target = t
+  }
+
   return {
     set,
     update,
+    immediateSet,
     get
   }
 }
