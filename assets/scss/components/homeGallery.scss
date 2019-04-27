@@ -10,7 +10,7 @@
   }
 
   .gallery-item-wrapper {
-    transform: translate3d(-12.5vw,0,0);
+    transform: translate3d(-12.5vw, 0, 0);
     transition: transform 800ms $ease-in-out-quart;
 
     @include max(md) {
@@ -250,7 +250,7 @@
       }
 
       &:not(:first-child) {
-        margin-top:0;
+        margin-top: 0;
       }
 
       &.full, .landscape {
@@ -275,4 +275,10 @@
   height: 1px;
   background: white;
   width: 100%;
+  transition: opacity 800ms ease;
+  opacity: 0;
+
+  &.active {
+    opacity: 1;
+  }
 }

@@ -33,6 +33,13 @@ const scrollTo = function (el,y, duration) {
   });
 }
 
+const scrollIntoView = function (container, el) {
+  const scrollbar = Scrollbar.get(container)
+  scrollbar.scrollIntoView(el, {
+    alignToTop: true
+  });
+}
+
 const resetPosition = function(el) {
   const scrollbar = Scrollbar.get(el);
   scrollbar.setPosition(0, 0);
@@ -59,6 +66,7 @@ export default {
   listen,
   unlisten,
   scrollTo,
+  scrollIntoView,
   resetPosition,
   setPosition,
   getOffset,

@@ -41,6 +41,7 @@ export default {
       containerBounds: null,
       homeHeaderBounds: null,
       sliderContent: null,
+      dragLine: null
     }
   },
   mounted () {
@@ -49,32 +50,46 @@ export default {
     this.sliderContent = this.$el
     this.homeHeaderBounds = this.$parent.$refs.homeHeader.$el.getBoundingClientRect()
     this.progressDrag = this.$parent.$refs.homeHeader.$refs.progressDrag
+    this.dragLine = document.querySelector('.drag-line')
 
-    this.$parent.$el.addEventListener('mousemove', this.moveCursor)
-    this.$el.addEventListener('mouseenter', this.enter)
-    this.$el.addEventListener('mouseleave', this.exit)
-
-    window.addEventListener('resize', this.resize)
-    this.$el.addEventListener('mouseup', this.up)
-    this.$el.addEventListener('mousedown', this.down)
-    this.$el.addEventListener('mousemove', this.move)
-
-    this.sliderContent.addEventListener('touchstart', this.down)
-    this.sliderContent.addEventListener('touchend', this.up)
-    this.sliderContent.addEventListener('touchmove', this.move)
+    if (window.innerWidth > 768 && browser.desktop) {
+      window.addEventListener('resize', this.resize)
+      this.$el.addEventListener('mousedown', this.down)
+      this.$el.addEventListener('mouseup', this.up)
+      this.$el.addEventListener('mousemove', this.move)
+      this.$el.addEventListener('mouseleave', this.exit)
+    }
 
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop) {
         this.galleryItems = this.$refs.gallery.querySelectorAll('.gallery-item')
         this.toggleRaf()
         this.initParallax()
+        this.calcOffset()
       }
     })
   },
   beforeDestroy() {
-    if (window.innerWidth > 768 && browser.desktop) this.toggleRaf()
+    if (window.innerWidth > 768 && browser.desktop)  {
+      this.toggleRaf()
+      window.removeEventListener('resize', this.resize)
+      this.$el.removeEventListener('mouseleave', this.exit)
+      this.$el.removeEventListener('mouseup', this.up)
+      this.$el.removeEventListener('mousedown', this.down)
+      this.$el.removeEventListener('mousemove', this.move)
+    }
   },
   methods: {
+    calcOffset() {
+      let _t = this
+      _t.sliderContent.classList.add('drag')
+      _t.galleryItems[0].parentNode.addEventListener('transitionend', function calcSliderBounds() {
+        console.log('in')
+        _t.sliderContentBounds = _t.sliderContent.getBoundingClientRect()
+        _t.sliderContent.classList.remove('drag')
+        _t.galleryItems[0].parentNode.removeEventListener('transitionend', calcSliderBounds)
+      })
+    },
     // PARALLAX //
     toggleRaf() {
       // this.running = !this.running
@@ -128,24 +143,20 @@ export default {
       }
     },
     // DRAG //
-    initPos() {
-      this.galleryItems[0].parentNode.addEventListener('transitionend', this.prepareDrag)
-    },
-    prepareDrag() {
+    prepareDrag(cursor) {
       this.isDrag = true
-      this.sliderContentBounds = this.sliderContent.getBoundingClientRect()
-      this.galleryItems[0].parentNode.removeEventListener('transitionend', this.prepareDrag)
-      raf.add(this.tick)
-    },
-    down(cursor) {
-      this.initPos()
-      this.lerp.immediateSet(this.index)
-
       this.downY = cursor.y
-      this.downPosition = this.yPosition
+      this.downPosition = this.index
+      this.lerp.immediateSet(this.index + 0.5)
+      raf.add(this.tick)
 
       this.sliderContent.classList.add('drag', 'no-events')
+      this.dragLine.classList.add('active')
       this.$parent.setTheme('dark')
+    },
+    down(cursor) {
+      this.prepareDrag(cursor)
+      scrollbar.setPosition(this.appContainer, (calcOffset.get(this.galleryItems[this.index]).top + this.vw(21.875 + (this.index * 0.1))) - (window.innerHeight * 0.5))
     },
     move(cursor) {
       if(!this.isDrag) return
@@ -169,26 +180,30 @@ export default {
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.series.length, 0, 1)
       const size = this.sliderContentBounds.height
-      const y = percentTranslate * size
+      let y = percentTranslate * size
+      console.log(this.index)
 
       this.progressDrag.style.transform = `scale3d(1, ${percentTranslate}, 1)`
-      scrollbar.setPosition(this.appContainer, y + (calcOffset.get(this.sliderContent).top + this.vw(21.875)) - (window.innerHeight * 0.5))
+      scrollbar.setPosition(this.appContainer, y + (calcOffset.get(this.sliderContent).top - (window.innerHeight * 0.5)))
     },
     up() {
-      this.isDrag = false
-
-      this.$parent.setTheme('white')
-      this.sliderContent.classList.remove('no-events', 'drag')
-
+      this.disableDrag()
       scrollbar.setPosition(this.appContainer, (calcOffset.get(this.galleryItems[this.index]).top + this.vw(21.875)) - (window.innerHeight * 0.5))
-      raf.remove(this.tick)
     },
     resize () {
       this.homeHeaderBounds = this.$parent.$refs.homeHeader.$el.getBoundingClientRect()
       this.containerBounds = this.$el.getBoundingClientRect()
       this.sliderContentBounds =  this.sliderContent.getBoundingClientRect()
-
       this.initParallax()
+
+      if (window.innerWidth < 768) this.disableDrag()
+    },
+    disableDrag() {
+      this.isDrag = false
+      this.dragLine.classList.remove('active')
+      this.sliderContent.classList.remove('no-events', 'drag')
+      this.$parent.setTheme('white')
+      raf.remove(this.tick)
     },
     vw(v) {
       var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
