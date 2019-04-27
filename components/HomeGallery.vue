@@ -27,6 +27,9 @@ export default {
     return {
       appContainer: null,
       galleryItems: null,
+      cursor: null,
+      cursorX: lerp(),
+      cursorY: lerp(),
       parallax: [],
       offsetY: 0,
       running: false,
@@ -48,6 +51,7 @@ export default {
     this.appContainer = document.getElementById('smooth-component')
     this.containerBounds = this.$el.getBoundingClientRect()
     this.sliderContent = this.$el
+    this.cursor = this.$parent.$parent.$parent.$refs.cursor.$el
     this.homeHeaderBounds = this.$parent.$refs.homeHeader.$el.getBoundingClientRect()
     this.progressDrag = this.$parent.$refs.homeHeader.$refs.progressDrag
     this.dragLine = document.querySelector('.drag-line')
@@ -55,8 +59,9 @@ export default {
     if (window.innerWidth > 768 && browser.desktop) {
       window.addEventListener('resize', this.resize)
       this.$el.addEventListener('mousedown', this.down)
-      this.$el.addEventListener('mouseup', this.up)
       this.$el.addEventListener('mousemove', this.move)
+      this.$el.addEventListener('mousemove', this.moveCursor)
+      this.$el.addEventListener('mouseup', this.up)
       this.$el.addEventListener('mouseleave', this.exit)
     }
 
@@ -77,6 +82,7 @@ export default {
       this.$el.removeEventListener('mouseup', this.up)
       this.$el.removeEventListener('mousedown', this.down)
       this.$el.removeEventListener('mousemove', this.move)
+      this.$el.removeEventListener('mousemove', this.moveCursor)
     }
   },
   methods: {
@@ -143,6 +149,9 @@ export default {
       }
     },
     // DRAG //
+    enter() {
+      raf.add(this.tickCursor)
+    },
     prepareDrag(cursor) {
       this.isDrag = true
       this.downY = cursor.y
@@ -151,6 +160,7 @@ export default {
       raf.add(this.tick)
 
       this.sliderContent.classList.add('drag', 'no-events')
+      this.cursor.classList.add('focus')
       this.dragLine.classList.add('active')
       this.$parent.setTheme('dark')
     },
@@ -168,6 +178,11 @@ export default {
 
       this.setPosition(pos)
     },
+    moveCursor(cursor) {
+      if(window.innerWidth < 768) return
+      this.cursorX.set(cursor.x - (this.cursor.clientWidth / 2))
+      this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
+    },
     setPosition (y) {
       const intPos = Math.floor(y)
       if (intPos !== this.index) this.index = intPos
@@ -175,15 +190,20 @@ export default {
       this.yPosition = y
       this.lerp.set(y)
     },
+    tickCursor() {
+      this.cursorX.update()
+      this.cursorY.update()
+      this.cursor.style.transform = `translate3d(${this.cursorX.get()}px, ${this.cursorY.get()}px, 0)`
+    },
     tick() {
       this.lerp.update(0.10)
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.series.length, 0, 1)
       const size = this.sliderContentBounds.height
       let y = percentTranslate * size
-      console.log(this.index)
 
       this.progressDrag.style.transform = `scale3d(1, ${percentTranslate}, 1)`
+
       scrollbar.setPosition(this.appContainer, y + (calcOffset.get(this.sliderContent).top - (window.innerHeight * 0.5)))
     },
     up() {
@@ -201,6 +221,7 @@ export default {
     disableDrag() {
       this.isDrag = false
       this.dragLine.classList.remove('active')
+      this.cursor.classList.remove('visible', 'focus')
       this.sliderContent.classList.remove('no-events', 'drag')
       this.$parent.setTheme('white')
       raf.remove(this.tick)

@@ -14,16 +14,21 @@
     visibility: hidden;
   }
 
-  img {
-    width: 0.75vw;
-    transition: transform 500ms $ease-in-out-quad;
-  }
-
   .arrows {
     position: absolute;
     width: 60%;
     display: flex;
     justify-content: space-between;
+
+    svg {
+      width: 0.75vw;
+      position: relative;
+      transition: transform 500ms $ease-in-out-quad;
+
+      g {
+        fill: #FCF9F5;
+      }
+    }
   }
 
   .left {
@@ -37,7 +42,7 @@
     border: 2px solid #FCF9F5;
     background: transparent;
     margin: 0 0.2vw;
-    transition: transform 500ms $ease-in-out-quad;
+    transition: transform 500ms $ease-in-out-quad, border 500ms ease;
   }
 
   .right {
@@ -59,6 +64,30 @@
     }
     .circle{
       transform: scale(0.5)
+    }
+  }
+
+  &.homepage {
+    .circle {
+      border: 2px solid#121212;
+    }
+
+    .arrows {
+      transform: rotate(90deg) translate3d(0, 1px, 0);
+      svg g{
+        fill: #121212;
+      }
+    }
+
+    &.focus {
+      .arrows {
+        svg g {
+          fill: #FCF9F5;
+        }
+      }
+      .circle {
+        border: 2px solid#FCF9F5;
+      }
     }
   }
 }

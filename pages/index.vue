@@ -129,10 +129,11 @@ export default {
       this.$refs.homeGallery.offsetY = status.offset.y
       if(status.offset.y > this.updateStatusOffset)  {
         this.updateStatus.classList.add('animate')
-        // this.cursor.classList.add('visible')
+        this.cursor.classList.add('visible')
+        this.$refs.homeGallery.enter()
        } else {
         this.updateStatus.classList.remove('animate')
-        // this.cursor.classList.remove('visible')
+        this.cursor.classList.remove('visible')
        }
     },
     revealGalleryItems() {

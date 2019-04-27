@@ -2,7 +2,7 @@
   <div id="app">
     <div class="drag-line"></div>
     <Loader/>
-    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" />
+    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" :class="$route.name === 'index' && 'homepage'" />
     <div id="smooth-component" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
