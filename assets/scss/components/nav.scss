@@ -18,6 +18,11 @@
     color: white;
   }
 
+  [data-background='dark'] &.home {
+    user-select: none;
+    pointer-events: none;
+  }
+
   &.white {
     color: white;
   }

@@ -6,7 +6,7 @@
     <div id="smooth-component" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
-    <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name.toLowerCase() === 'serie-slug' && 'serie-page']"/>
+    <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name === 'index' && 'home',$route.name.toLowerCase() === 'serie-slug' && 'serie-page']"/>
     <ImageTransition/>
   </div>
 </template>
