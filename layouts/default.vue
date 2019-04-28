@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <div class="drag-line"></div>
     <Loader/>
+    <DragComponent v-if="$route.name === 'index'" :series="$store.getters.currentDoc.data.series" ref="dragComponent"/>
     <DragCursor ref="cursor" v-if="!$route.path.includes('about')" :class="$route.name === 'index' && 'homepage'" />
     <div id="smooth-component" :class="domLoaded ? 'loaded': ''">
       <nuxt/>
     </div>
-    <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name.toLowerCase() === 'about' && 'white', $route.name.toLowerCase() === 'serie-slug' && 'serie-page']"/>
+    <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name.toLowerCase() === 'serie-slug' && 'serie-page']"/>
     <ImageTransition/>
   </div>
 </template>
@@ -15,6 +15,7 @@ import Navigation from "~/components/Navigation"
 import DragCursor from '~/components/DragCursor'
 import Loader from "~/components/Loader"
 import scrollbar from "~/utils/scrollbar.js"
+import DragComponent from "~/components/DragComponent"
 import ImageTransition from "~/components/ImageTransition"
 import browser from '~/utils/browser.js'
 import anime from 'animejs'
@@ -22,6 +23,7 @@ import anime from 'animejs'
 export default {
   components: {
     Navigation,
+    DragComponent,
     ImageTransition,
     Loader,
     DragCursor
@@ -29,13 +31,11 @@ export default {
   data() {
     return {
       domLoaded: false,
-      nav: null,
-      container: null,
-      transitionComponent: null,
       transitioning: false,
     }
   },
   mounted() {
+    console.log(this)
     this.container = this.$el.querySelector('#smooth-component')
     this.transitionComponent = this.container.querySelector('.transition-wrapper')
     window.addEventListener('resize', this.resize)

@@ -453,7 +453,7 @@
     transition: color 1000ms ease;
     @include verticalText(360);
 
-    &.white {
+    [data-background='dark'] & {
       color:white;
 
       .line {

@@ -150,6 +150,7 @@
       text-orientation: mixed;
       overflow: hidden;
       z-index: 9;
+      user-select: none;
       transition: color 500ms ease;
 
       [data-background="dark"] & {

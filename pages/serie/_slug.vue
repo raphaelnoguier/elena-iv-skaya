@@ -54,7 +54,7 @@
           </ul>
         </div>
       </div>
-      <div class="serie-footer" ref="serieFooter">
+      <div class="serie-footer">
         <span>continue exploring</span>
         <div class="line"></div>
       </div>
@@ -221,8 +221,6 @@ export default {
           this.$refs.serieSlider.toggleCursor()
           this.sliderEnter = !this.sliderEnter
           this.sliderEnter ? this.setTheme('dark') : this.setTheme('white')
-          this.nav.classList.toggle('white')
-          this.$refs.serieFooter.classList.toggle('white')
         } }
       )
     },

@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import calcOffset from '~/utils/offset.js';
+import anime from 'animejs'
+import calcOffset from '~/utils/offset.js'
 import scrollbar from "~/utils/scrollbar.js"
 import reveal from "~/utils/reveal.js"
 import browser from '~/utils/browser.js'
@@ -25,9 +26,6 @@ import raf from '~/utils/raf.js'
 export default {
   data() {
     return {
-      appContainer: null,
-      galleryItems: null,
-      cursor: null,
       cursorX: lerp(),
       cursorY: lerp(),
       parallax: [],
@@ -39,22 +37,24 @@ export default {
       downPosition: 0,
       downY: 0,
       isDrag: false,
-      dragStep: 50,
+      dragStep: 75,
       lerp: lerp(),
-      containerBounds: null,
-      homeHeaderBounds: null,
-      sliderContent: null,
-      dragLine: null
     }
   },
   mounted () {
     this.appContainer = document.getElementById('smooth-component')
     this.containerBounds = this.$el.getBoundingClientRect()
     this.sliderContent = this.$el
+    this.sliderContentBounds = this.vw(43.75) * this.series.length
     this.cursor = this.$parent.$parent.$parent.$refs.cursor.$el
     this.homeHeaderBounds = this.$parent.$refs.homeHeader.$el.getBoundingClientRect()
     this.progressDrag = this.$parent.$refs.homeHeader.$refs.progressDrag
-    this.dragLine = document.querySelector('.drag-line')
+    this.dragComponent = this.$parent.$parent.$parent.$refs.dragComponent
+    this.currentIndexDrag = this.dragComponent.$refs.currentIndexDrag
+    this.titleMask = this.dragComponent.$refs.titleMask
+    this.coverLeft = this.dragComponent.$refs.coverWrapperLeft
+    this.coverRight = this.dragComponent.$refs.coverWrapperRight
+    this.blurs = this.dragComponent.$el.querySelectorAll('.blur')
 
     if (window.innerWidth > 768 && browser.desktop) {
       window.addEventListener('resize', this.resize)
@@ -67,10 +67,10 @@ export default {
 
     this.$nextTick(() => {
       if (window.innerWidth > 768 && browser.desktop) {
+        this.galleryWrapper = this.$refs.gallery.querySelectorAll('.gallery-item-wrapper')
         this.galleryItems = this.$refs.gallery.querySelectorAll('.gallery-item')
         this.toggleRaf()
         this.initParallax()
-        this.calcOffset()
       }
     })
   },
@@ -86,16 +86,6 @@ export default {
     }
   },
   methods: {
-    calcOffset() {
-      let _t = this
-      _t.sliderContent.classList.add('drag')
-      _t.galleryItems[0].parentNode.addEventListener('transitionend', function calcSliderBounds() {
-        console.log('in')
-        _t.sliderContentBounds = _t.sliderContent.getBoundingClientRect()
-        _t.sliderContent.classList.remove('drag')
-        _t.galleryItems[0].parentNode.removeEventListener('transitionend', calcSliderBounds)
-      })
-    },
     // PARALLAX //
     toggleRaf() {
       // this.running = !this.running
@@ -104,8 +94,7 @@ export default {
     },
     initParallax() {
       this.galleryItems.forEach((item, i) => {
-        if(i = 0) return
-        this.parallax.push({ offsetTop: item.parentNode.offsetTop, height: item.getBoundingClientRect().height, bloc: item})
+        this.parallax.push({ offsetTop: calcOffset.get(item).top, height: item.getBoundingClientRect().height, bloc: item})
       });
     },
     tickPrlx() {
@@ -152,21 +141,24 @@ export default {
     enter() {
       raf.add(this.tickCursor)
     },
-    prepareDrag(cursor) {
+    down(cursor) {
       this.isDrag = true
       this.downY = cursor.y
       this.downPosition = this.index
       this.lerp.immediateSet(this.index + 0.5)
-      raf.add(this.tick)
 
       this.sliderContent.classList.add('drag', 'no-events')
       this.cursor.classList.add('focus')
-      this.dragLine.classList.add('active')
+      this.dragComponent.$el.classList.add('active')
       this.$parent.setTheme('dark')
-    },
-    down(cursor) {
-      this.prepareDrag(cursor)
-      scrollbar.setPosition(this.appContainer, (calcOffset.get(this.galleryItems[this.index]).top + this.vw(21.875 + (this.index * 0.1))) - (window.innerHeight * 0.5))
+
+      let _this = this
+      document.body.addEventListener('transitionend', function addBlur() {
+        _this.blurs.forEach(blur =>  blur.style.display = 'block' );
+        document.body.removeEventListener('transitionend', addBlur)
+      })
+
+      raf.add(this.tick)
     },
     move(cursor) {
       if(!this.isDrag) return
@@ -199,32 +191,45 @@ export default {
       this.lerp.update(0.10)
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.series.length, 0, 1)
-      const size = this.sliderContentBounds.height
+      const percentTranslateTexts = math.map(this.lerp.get(), 0, 1, 0, 1.7)
+      const percentTranslateCover = math.map(this.lerp.get(), 0, 1, 0, 43.75)
+      const size = this.sliderContentBounds
       let y = percentTranslate * size
 
       this.progressDrag.style.transform = `scale3d(1, ${percentTranslate}, 1)`
+      this.titleMask.style.transform = `translate3d(0, -${percentTranslateTexts}vw, 0)`
+      this.currentIndexDrag.style.transform = `translate3d(0, -${percentTranslateTexts}vw, 0)`
+      this.coverLeft.style.transform = `translate3d(0, -${percentTranslateCover}vw, 0)`
+      this.coverRight.style.transform = `translate3d(0, -${percentTranslateCover}vw, 0)`
 
       scrollbar.setPosition(this.appContainer, y + (calcOffset.get(this.sliderContent).top - (window.innerHeight * 0.5)))
     },
     up() {
+      let offset = 21.875
+      let itemTop = this.parallax[this.index].offsetTop
+
+      if(this.galleryItems[this.index].classList.contains('full')) offset = 25
+      if(this.galleryItems[this.index].classList.contains('landscape')) offset = 13.125
+
+      scrollbar.setPosition(this.appContainer, (itemTop + this.vw(offset)) - (window.innerHeight * 0.5))
       this.disableDrag()
-      scrollbar.setPosition(this.appContainer, (calcOffset.get(this.galleryItems[this.index]).top + this.vw(21.875)) - (window.innerHeight * 0.5))
+    },
+    disableDrag() {
+      this.isDrag = false
+      this.dragComponent.$el.classList.remove('active')
+      this.cursor.classList.remove('visible', 'focus')
+      this.sliderContent.classList.remove('no-events', 'drag')
+      this.$parent.setTheme('white')
+      this.blurs.forEach(blur =>  blur.style.display = '' );
+      raf.remove(this.tick)
     },
     resize () {
       this.homeHeaderBounds = this.$parent.$refs.homeHeader.$el.getBoundingClientRect()
       this.containerBounds = this.$el.getBoundingClientRect()
-      this.sliderContentBounds =  this.sliderContent.getBoundingClientRect()
+      this.sliderContentBounds =  this.vw(43.75) * this.series.length
       this.initParallax()
 
       if (window.innerWidth < 768) this.disableDrag()
-    },
-    disableDrag() {
-      this.isDrag = false
-      this.dragLine.classList.remove('active')
-      this.cursor.classList.remove('visible', 'focus')
-      this.sliderContent.classList.remove('no-events', 'drag')
-      this.$parent.setTheme('white')
-      raf.remove(this.tick)
     },
     vw(v) {
       var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)

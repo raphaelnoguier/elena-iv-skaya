@@ -26,6 +26,7 @@
       transition: transform 500ms $ease-in-out-quad;
 
       g {
+        transition: fill 500ms ease;
         fill: #FCF9F5;
       }
     }

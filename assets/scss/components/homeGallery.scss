@@ -11,7 +11,7 @@
 
   .gallery-item-wrapper {
     transform: translate3d(-12.5vw, 0, 0);
-    transition: transform 800ms $ease-in-out-quart;
+    transition: transform 500ms $ease-in-out-quad;
 
     @include max(md) {
       transform: translate3d(-7.8vw,0,0);
@@ -46,10 +46,10 @@
     }
 
     &.full {
-      width: 100%;
       transform: translate3d(0, 0, 0);
       margin-top: 12.1875vw;
       margin-bottom: 6.25vw;
+      transition: width 800ms ease;
 
       @include max(md) {
         margin-top: 26.042vw;
@@ -97,6 +97,7 @@
     &.landscape {
       max-width: 35vw;
       height: 26.250vw;
+      transition: width 800ms ease, height 800ms ease;
 
       @include max(md) {
         width: 64.063vw;
@@ -181,6 +182,12 @@
       right: -2.25vw;
       line-height: 1.875vw;
       z-index: 3;
+      opacity: 1;
+      transition: opacity 500ms ease;
+
+      [data-background='dark'] & {
+        opacity: 0;
+      }
 
       @include min(xxl) {
         right: -2.5vw;
@@ -239,46 +246,21 @@
 
   &.drag {
     .gallery-item-wrapper {
-      transform: translate3d(0,0,0);
-
-      .item-title{
-        display: none;
-      }
-
-      &:nth-child(even) {
-        transform: translate3d(0,0,0);
-      }
+      transform: translate3d(0, 0, 0);
 
       &:not(:first-child) {
         margin-top: 0;
       }
 
       &.full, .landscape {
-        transition: width 500ms ease, height 500ms ease;
-        width: 35vw;
-        height: 43.75vw;
         margin-bottom: 0;
       }
 
       .gallery-item {
+        width: 35vw;
         height: 43.75vw;
-        transform: translate3d(0, 0, 0) !important;
+        transform: translate3d(0, 0, 0);
       }
     }
-  }
-}
-
-.drag-line {
-  position: fixed;
-  top:50%;
-  transform: translateY(-50%);
-  height: 1px;
-  background: white;
-  width: 100%;
-  transition: opacity 800ms ease;
-  opacity: 0;
-
-  &.active {
-    opacity: 1;
   }
 }

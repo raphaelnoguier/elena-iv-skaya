@@ -1,0 +1,178 @@
+
+.drag-component {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  margin: auto;
+  height: 100vh;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+
+  .drag-line {
+    position: fixed;
+    top:50%;
+    transform: translateY(-50%);
+    height: 1px;
+    background: #F9F9F9;
+    width: 100%;
+    opacity: 0.1;
+  }
+
+  .drag-component-wrapper {
+    padding: 0 8vw;
+    height: 100%;
+  }
+
+  .row {
+    height: 50%;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+
+    &:first-child {
+      padding-right: 6.25vw;
+      .index {
+        align-items: flex-end;
+      }
+    }
+
+    &:last-child {
+      padding:0 6.25vw;
+      .index {
+        text-align: center;
+        position: absolute;
+        left: 0;
+        margin-top: 1.25vw;
+      }
+    }
+
+    .index {
+      @include sofiaProMedium(0.875vw);
+
+      display: flex;
+      flex-direction: column;
+      color: white;
+      justify-content: center;
+      width: 2vw;
+
+      span {
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    .index-wrapper {
+      width: 25%;
+      text-align: right;
+      height: 1.75vw;
+      overflow: hidden;
+      margin-top: auto;
+      position: relative;
+      margin-bottom: 0.75vw;
+
+      .index {
+        height: 100%;
+      }
+
+      .blur {
+        top: 0;
+        left: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 9;
+        background: linear-gradient(to bottom, #121212, transparent 30%),
+        linear-gradient(to top, #121212, transparent 30%);
+        display: none;
+      }
+
+      .index-mask {
+        height: 100%;
+      }
+    }
+
+    .zoom {
+      width: 12.5vw;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+
+      &.right {
+        transform: rotate(180deg)
+      }
+
+      .cover {
+        height: 100%;
+        overflow: hidden;
+        transition: clip-path 500ms $ease-in-out-quad;
+        clip-path: polygon(0 0, 100% 0%, 100% 0, 0 0);
+
+        .cover-wrapper {
+          display: inline-flex;
+          flex-direction: column;
+          height: 100%;
+          img {
+            width: 100%;
+            height: 43.75vw;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(2);
+            transform-origin: top;
+          }
+        }
+      }
+    }
+
+    .titles-wrapper {
+      width: 25%;
+      text-align: right;
+      height: 1.75vw;
+      overflow: hidden;
+      margin-top: 1vw;
+      position: relative;
+
+      .blur {
+        top: 0;
+        left: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 9;
+        display: none;
+        background: linear-gradient(to bottom, #121212, transparent 30%),
+        linear-gradient(to top, #121212, transparent 30%);
+      }
+
+      .title-mask {
+        height: 100%;
+      }
+
+      .title {
+        text-transform: uppercase;
+        color:white;
+        display: block;
+        white-space: pre;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+
+        span {
+          @include sofiaProMedium(0.875vw);
+          letter-spacing: 0.125vw;
+        }
+      }
+    }
+  }
+
+  &.active {
+    opacity: 1;
+
+    .row {
+      .zoom .cover {
+        clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+      }
+    }
+  }
+}

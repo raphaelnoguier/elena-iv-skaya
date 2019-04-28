@@ -7,6 +7,10 @@ footer {
   text-transform: uppercase;
   position: relative;
 
+  [data-background='dark'] & {
+    color: white;
+  }
+
   @include max(sm) {
     padding: 4vh 9.133vw;
   }
