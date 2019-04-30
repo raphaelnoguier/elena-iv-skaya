@@ -2,6 +2,10 @@
   height: 17.5%;
   position: relative;
 
+  [data-background='dark'] & {
+    opacity: 0;
+  }
+
   @include max(md) {
     height: 20.625vw;
   }
@@ -16,6 +20,7 @@
     height: 100%;
     transition-duration: 900ms;
     transition-delay: 200ms;
+    
   }
 
   .slide {

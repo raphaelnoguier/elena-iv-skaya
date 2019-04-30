@@ -6,10 +6,12 @@
   height: 150%;
   display: block;
   z-index: 2;
-  transition: height 1000ms $ease-in-out-quad;
+  transform-origin: top;
+  transition: transform 1000ms $ease-in-out-quad;
+  transform: scale3d(1.1, 1, 1);
 
   .loaded & {
-    height: 0
+    transform: scale3d(1.1, 0, 1)
   }
 }
 

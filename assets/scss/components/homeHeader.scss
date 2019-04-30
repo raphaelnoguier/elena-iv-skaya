@@ -11,16 +11,16 @@
     transform: translate3d(0, 0, 0);
   }
 
-  [data-background='dark'] & {
-    opacity: 0;
-  }
-
   @include max(md) {
     height: auto;
     flex-direction: column-reverse;
   }
 
   .home-slider-wrapper {
+
+    [data-background='dark'] & {
+      opacity: 0;
+    }
 
     @include min(lg) {
       height: 100%;
@@ -53,6 +53,10 @@
       max-width: 45vw;
       transform: translate3d(0, 100px, 0) skewY(10deg);
       transition: transform 1000ms ease-in-out 200ms;
+
+      [data-background='dark'] & {
+        opacity: 0;
+      }
 
       .loaded & {
         transform: translate3d(0, 0, 0) skewY(0);

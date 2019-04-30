@@ -10,6 +10,7 @@
           </div>
         </nuxt-link>
       </div>
+      <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask"><div class="inner" /></div>
     </div>
   </div>
 </template>
@@ -39,6 +40,9 @@ export default {
       isDrag: false,
       dragStep: 75,
       lerp: lerp(),
+      timerId: null,
+      spacings: [],
+      transformValues: []
     }
   },
   mounted () {
@@ -54,7 +58,6 @@ export default {
     this.titleMask = this.dragComponent.$refs.titleMask
     this.coverLeft = this.dragComponent.$refs.coverWrapperLeft
     this.coverRight = this.dragComponent.$refs.coverWrapperRight
-    this.blurs = this.dragComponent.$el.querySelectorAll('.blur')
 
     if (window.innerWidth > 768 && browser.desktop) {
       window.addEventListener('resize', this.resize)
@@ -71,6 +74,7 @@ export default {
         this.galleryItems = this.$refs.gallery.querySelectorAll('.gallery-item')
         this.toggleRaf()
         this.initParallax()
+        this.calcSpacings()
       }
     })
   },
@@ -141,7 +145,25 @@ export default {
     enter() {
       raf.add(this.tickCursor)
     },
-    down(cursor) {
+    calcSpacings() {
+      this.galleryItems.forEach((item, i) => {
+        let itemSpacing = 6.875
+        if(item.classList.contains('full')) {
+          itemSpacing = (6.875 * (2) +  3.3) // 3.3 is height of item-title of full block
+          this.spacings[i - 1] = this.spacings[i - 1] + (6.875) // add margin bottom to div after full
+        }
+        this.spacings.push(itemSpacing)
+        let sum = this.spacings.slice(0, i).reduce((pv, cv) => pv + cv, 0);
+        this.transformValues.push(sum)
+      });
+    },
+    transformCovers(release) {
+      for (let i = 0; i < this.series.length; i++) {
+        const element = this.galleryItems[i];
+        element.style.transform = `translate3d(0, -${release ? 0 : this.transformValues[i]}vw, 0)`
+      }
+    },
+    initDrag(cursor) {
       this.isDrag = true
       this.downY = cursor.y
       this.downPosition = this.index
@@ -151,14 +173,14 @@ export default {
       this.cursor.classList.add('focus')
       this.dragComponent.$el.classList.add('active')
       this.$parent.setTheme('dark')
-
-      let _this = this
-      document.body.addEventListener('transitionend', function addBlur() {
-        _this.blurs.forEach(blur =>  blur.style.display = 'block' );
-        document.body.removeEventListener('transitionend', addBlur)
-      })
+      this.transformCovers(false)
 
       raf.add(this.tick)
+    },
+    down(cursor) {
+      this.timerId = setTimeout(() => {
+        this.initDrag(cursor)
+      }, 500);
     },
     move(cursor) {
       if(!this.isDrag) return
@@ -217,11 +239,14 @@ export default {
     disableDrag() {
       this.isDrag = false
       this.dragComponent.$el.classList.remove('active')
-      this.cursor.classList.remove('visible', 'focus')
+      this.cursor.classList.remove('focus')
       this.sliderContent.classList.remove('no-events', 'drag')
       this.$parent.setTheme('white')
-      this.blurs.forEach(blur =>  blur.style.display = '' );
+      this.progressDrag.style.transform = 'scale3d(1, 0, 1)'
       raf.remove(this.tick)
+      this.transformCovers(true)
+
+      clearTimeout(this.timerId);
     },
     resize () {
       this.homeHeaderBounds = this.$parent.$refs.homeHeader.$el.getBoundingClientRect()
