@@ -260,7 +260,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      this.isDrag = false
+      this.disableDrag()
     },
   },
   props: { series: Array }
