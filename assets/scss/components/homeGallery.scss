@@ -3,6 +3,7 @@
   flex-direction: column;
   margin: auto;
   align-items: center;
+  cursor: -webkit-grab;
 
   & > * {
     user-select: none;
@@ -55,14 +56,6 @@
         margin-top: 26.042vw;
         margin-bottom: 13.021vw;
       }
-
-      .full-mask {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-      }
     }
   }
 
@@ -70,7 +63,7 @@
     width: 100%;
     position: relative;
     margin: auto;
-    transition: transform 500ms $ease-in-out-quad;
+    //transition: transform 500ms $ease-in-out-quad;
 
     a {
       display: block;
@@ -257,10 +250,11 @@
   }
 
   &.drag {
+    cursor: -webkit-grabbing;
     .gallery-item-wrapper {
       transform: translate3d(0, 0, 0);
 
-      .full {
+      .full, .landscape {
         height: 43.75vw;
         width: 35vw;
         // a {

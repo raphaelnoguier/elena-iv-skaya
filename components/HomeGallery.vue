@@ -4,13 +4,12 @@
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
         <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`">
           <img :src="serie.serie.data.cover_serie_image.url" alt="home-gallery-cover" />
-          <div class="item-title">
-            <h3>{{serie.serie.data.title[0].text}}</h3>
-            <span>{{serie.serie.data.category}}</span>
-          </div>
         </nuxt-link>
+        <div class="item-title">
+          <h3>{{serie.serie.data.title[0].text}}</h3>
+          <span>{{serie.serie.data.category}}</span>
+        </div>
       </div>
-      <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask"><div class="inner" /></div>
     </div>
   </div>
 </template>
@@ -149,7 +148,7 @@ export default {
       this.galleryItems.forEach((item, i) => {
         let itemSpacing = 6.875
         if(item.classList.contains('full')) {
-          itemSpacing = (6.875 * (2) +  3.3) // 3.3 is height of item-title of full block
+          itemSpacing = (6.875 * (2))
           this.spacings[i - 1] = this.spacings[i - 1] + (6.875) // add margin bottom to div after full
         }
         this.spacings.push(itemSpacing)
@@ -164,6 +163,7 @@ export default {
       }
     },
     initDrag(cursor) {
+      this.transformCovers(false)
       this.isDrag = true
       this.downY = cursor.y
       this.downPosition = this.index
@@ -173,14 +173,12 @@ export default {
       this.cursor.classList.add('focus')
       this.dragComponent.$el.classList.add('active')
       this.$parent.setTheme('dark')
-      this.transformCovers(false)
-
       raf.add(this.tick)
     },
     down(cursor) {
       this.timerId = setTimeout(() => {
         this.initDrag(cursor)
-      }, 500);
+      }, 350);
     },
     move(cursor) {
       if(!this.isDrag) return
@@ -198,9 +196,6 @@ export default {
       this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
     },
     setPosition (y) {
-      const intPos = Math.floor(y)
-      if (intPos !== this.index) this.index = intPos
-
       this.yPosition = y
       this.lerp.set(y)
     },
@@ -213,7 +208,7 @@ export default {
       this.lerp.update(0.10)
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.series.length, 0, 1)
-      const percentTranslateTexts = math.map(this.lerp.get(), 0, 1, 0, 1.7)
+      const percentTranslateTexts = math.map(this.lerp.get() - 0.55, 0, 1, 0, 1.7)
       const percentTranslateCover = math.map(this.lerp.get(), 0, 1, 0, 43.75)
       const size = this.sliderContentBounds
       let y = percentTranslate * size
@@ -225,6 +220,10 @@ export default {
       this.coverRight.style.transform = `translate3d(0, -${percentTranslateCover}vw, 0)`
 
       scrollbar.setPosition(this.appContainer, y + (calcOffset.get(this.sliderContent).top - (window.innerHeight * 0.5)))
+      this.setIndex(this.lerp.get())
+    },
+    setIndex(i) {
+      this.index = Math.floor(i)
     },
     up() {
       let offset = 21.875

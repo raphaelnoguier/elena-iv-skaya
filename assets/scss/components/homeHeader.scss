@@ -140,6 +140,10 @@
       cursor: pointer;
       transform: translate3d(0, -2.125vw, 0);
 
+      [data-background='dark'] & {
+        opacity: 0;
+      }
+
       @include max(md) {
         display: none;
       }
