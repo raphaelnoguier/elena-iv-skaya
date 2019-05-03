@@ -35,7 +35,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this)
     this.container = this.$el.querySelector('#smooth-component')
     this.transitionComponent = this.container.querySelector('.transition-wrapper')
     window.addEventListener('resize', this.resize)

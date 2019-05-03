@@ -4,6 +4,12 @@
   margin: auto;
   align-items: center;
   cursor: -webkit-grab;
+  position: relative;
+
+  @include min(lg) {
+    top: 21.875vw;
+    transform: translate3d(0, -21.875vw, 0);
+  }
 
   & > * {
     user-select: none;
@@ -63,7 +69,7 @@
     width: 100%;
     position: relative;
     margin: auto;
-    //transition: transform 500ms $ease-in-out-quad;
+    transition: transform 0ms $ease-in-out-quad;
 
     a {
       display: block;
@@ -168,6 +174,7 @@
       height: 100%;
       opacity: 1;
       object-fit: cover;
+      object-position: center;
       transition: opacity 500ms ease, transform 500ms $ease-in-out-quad;
       transform: scale3d(1, 1, 1);
 
@@ -257,14 +264,6 @@
       .full, .landscape {
         height: 43.75vw;
         width: 35vw;
-        // a {
-        //   transform-origin: top;
-        //   transform: scale3d(0.41664, 0.82095, 1);
-
-        //   img {
-        //     transform: scale3d(1.58336, 1.17905, 1)
-        //   }
-        // }
       }
 
       .gallery-item:not(.full){

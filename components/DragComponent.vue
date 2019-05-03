@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="index">{{this.series.length - 1}}</div>
+        <div class="index">{{this.series.length}}</div>
         <div class="zoom left">
           <div class="cover">
             <div class="cover-wrapper" ref="coverWrapperLeft">

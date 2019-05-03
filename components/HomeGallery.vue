@@ -167,7 +167,7 @@ export default {
       this.isDrag = true
       this.downY = cursor.y
       this.downPosition = this.index
-      this.lerp.immediateSet(this.index + 0.5)
+      this.lerp.immediateSet(this.index)
 
       this.sliderContent.classList.add('drag', 'no-events')
       this.cursor.classList.add('focus')
@@ -186,7 +186,7 @@ export default {
 
       const translateY = this.moveY - this.downY
       const mappedY = translateY > 0 ? math.map(translateY, 0, this.dragStep, 0, 1) : math.map(translateY, 0, -this.dragStep, 0, -1)
-      const pos = math.clamp(this.downPosition - mappedY, 0, this.series.length)
+      const pos = math.clamp(this.downPosition - mappedY, 0, this.series.length - 1)
 
       this.setPosition(pos)
     },
@@ -207,11 +207,12 @@ export default {
     tick() {
       this.lerp.update(0.10)
 
-      const percentTranslate = math.map(this.lerp.get(), 0, this.series.length, 0, 1)
-      const percentTranslateTexts = math.map(this.lerp.get() - 0.55, 0, 1, 0, 1.7)
-      const percentTranslateCover = math.map(this.lerp.get(), 0, 1, 0, 43.75)
-      const size = this.sliderContentBounds
+      const percentTranslate = math.map(this.lerp.get(), 0, this.series.length - 1, 0, 1)
+      const percentTranslateTexts = math.map(this.lerp.get(), 0, 1, 0, 1.75)
+      const percentTranslateCover = math.map(this.lerp.get() + 0.5, 0, 1, 0, 43.75)
+      const size = this.sliderContentBounds - this.vw(43.75)
       let y = percentTranslate * size
+
 
       this.progressDrag.style.transform = `scale3d(1, ${percentTranslate}, 1)`
       this.titleMask.style.transform = `translate3d(0, -${percentTranslateTexts}vw, 0)`
@@ -221,18 +222,18 @@ export default {
 
       scrollbar.setPosition(this.appContainer, y + (calcOffset.get(this.sliderContent).top - (window.innerHeight * 0.5)))
       this.setIndex(this.lerp.get())
+
     },
     setIndex(i) {
-      this.index = Math.floor(i)
+      this.index = Math.round(i)
     },
     up() {
-      let offset = 21.875
+      let offset = 0
       let itemTop = this.parallax[this.index].offsetTop
 
-      if(this.galleryItems[this.index].classList.contains('full')) offset = 25
-      if(this.galleryItems[this.index].classList.contains('landscape')) offset = 13.125
+      if(this.galleryItems[this.index].classList.contains('landscape')) offset = 8.5
 
-      scrollbar.setPosition(this.appContainer, (itemTop + this.vw(offset)) - (window.innerHeight * 0.5))
+      scrollbar.setPosition(this.appContainer, (itemTop - this.vw(offset)) - (window.innerHeight * 0.5))
       this.disableDrag()
     },
     disableDrag() {
@@ -260,7 +261,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      this.disableDrag()
+      //this.disableDrag()
     },
   },
   props: { series: Array }
