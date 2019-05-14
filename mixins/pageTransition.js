@@ -24,6 +24,7 @@ let createTransition = () => {
           let transitionContainer = document.querySelector('.transition-wrapper')
           let imageContainer = transitionContainer.querySelector('.image-transition')
           let mask = transitionContainer.querySelector('.image-transition img')
+          let fixedEls = document.querySelector('.fixed-elements')
 
           const tmp = new Image
 
@@ -43,6 +44,7 @@ let createTransition = () => {
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
+                fixedEls.innerHTML = ''
                 if(to.name !== 'index') window.scroll(0, 0)
                 if(from && from.name === 'serie-slug' && to.name === 'index') window.scroll(0, this.$store.state.position)
 

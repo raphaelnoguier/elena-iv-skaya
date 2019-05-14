@@ -1,7 +1,9 @@
 <template>
   <div class="nav">
     <ul>
-      <li><nuxt-link v-on:click.native="scrollTop" to="/">Elena Iv-Skaya</nuxt-link></li>
+      <li>
+        <nuxt-link v-on:click.native="scrollTop" to="/">Elena Iv-Skaya</nuxt-link>
+      </li>
       <li><nuxt-link to="/about">About</nuxt-link></li>
     </ul>
   </div>

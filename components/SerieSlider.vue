@@ -110,6 +110,7 @@ export default {
     navigate(to, i) {
       this.$router.push({path: to})
       this.covers[i].classList.add('active-link')
+      document.body.style.overflow = 'hidden'
     },
     toggleRaf() {
       this.running = !this.running
@@ -117,7 +118,7 @@ export default {
       else raf.remove(this.tick)
     },
     toggleCursor() {
-      this.cursor.classList.toggle('visible')
+      if(this.$route.name === 'serie-slug') this.cursor.classList.toggle('visible')
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return

@@ -126,6 +126,7 @@ export default {
   methods: {
     setTheme() {
       document.body.dataset.background = 'dark'
+      document.body.style.overflow = 'auto'
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) this.calcOffset()
@@ -145,7 +146,7 @@ export default {
     onScrollAbout() {
       if(window.innerWidth < 768) return
 
-      let rotateOffset = math.map(window.scrollY, 0, this.socialLinksOffset, 0, 360)
+      let rotateOffset = math.map(window.scrollY, 0, this.socialLinksOffset, 0, 180)
 
       console.log(Math.round(this.contentOffsetBottom), window.scrollY)
       if(this.contentOffsetBottom > window.scrollY) {

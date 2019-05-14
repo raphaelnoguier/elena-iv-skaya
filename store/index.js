@@ -6,6 +6,7 @@ import prismicConfig from '../prismic.config.js'
 export const state = () => ({
   doc: {},
   allSeries: {},
+  homeSeries: {},
   position: {x : 0, y : 0},
   serieLoaderImg: {}
 })
@@ -13,6 +14,9 @@ export const state = () => ({
 export const getters = {
   currentDoc(state) {
     return state.doc
+  },
+  homeSeries(state) {
+    return state.homeSeries
   },
   allSeries(state) {
     return state.allSeries
@@ -29,6 +33,9 @@ export const mutations = {
   SET_DOC(state, doc) {
     state.doc = doc
   },
+  SET_HOME_SERIES(state, series) {
+    state.homeSeries = series
+  },
   SET_ALL_SERIES(state, series) {
     state.allSeries = series
   },
@@ -41,6 +48,22 @@ export const mutations = {
 }
 
 export const actions = {
+  async nuxtServerInit ({ commit }, { req }) {
+    let series = null;
+    await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
+      return api.query(
+        Prismic.Predicates.at('document.type', 'page'),
+        { fetchLinks : ['serie.title', 'serie.category', 'serie.cover_ratio', 'serie.date', 'serie.cover_serie_image'] }
+      ).then((response) => {
+        series = response.results[0].data.series
+      });
+    });
+
+    if (series) {
+      commit('SET_HOME_SERIES', series)
+      return series;
+    }
+  },
   async GET_DOC({ commit, error }, params) {
     let path = params.path
     let route = params.name

@@ -2,12 +2,12 @@
   <div id="app">
     <Loader/>
     <DragComponent v-if="$route.name === 'index'" :series="series" ref="dragComponent"/>
-    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" :class="$route.name === 'index' && 'homepage'" />
+    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" :class="[$route.name === 'index' ? 'homepage' : '']" />
     <FakeNav ref="fakeNav"/>
     <div ref="smoothComponent" :class="domLoaded ? 'loaded': ''" class="scroll-content">
       <nuxt ref="nuxt"/>
     </div>
-    <FixedElements v-if="$route.name === 'index'" ref="fixedElements"/>
+    <FixedElements ref="fixedElements"/>
     <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name === 'index' && 'home',$route.name.toLowerCase() === 'serie-slug' && 'serie-page']"/>
     <ImageTransition/>
   </div>
@@ -23,6 +23,7 @@ import Loader from "~/components/Loader"
 import DragComponent from "~/components/DragComponent"
 import ImageTransition from "~/components/ImageTransition"
 import browser from '~/utils/browser.js'
+
 
 export default {
   components: {
@@ -41,7 +42,7 @@ export default {
       scrolled: 0,
       disableDragComponent: false,
       scroll: {y: 0},
-      series: this.$store.getters.currentDoc.data.series
+      series: this.$store.getters.homeSeries
     }
   },
   mounted() {

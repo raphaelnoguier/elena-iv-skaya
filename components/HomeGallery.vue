@@ -30,7 +30,6 @@ export default {
       parallax: [],
       offsetY: 0,
       running: false,
-      index: 0,
       currentIndex: 0,
       yPosition: 0,
       scrollPosition: 0,
@@ -57,7 +56,9 @@ export default {
     this.coverRight = this.dragComponent.$refs.coverWrapperRight
     this.galleryWrapper = this.$refs.gallery.querySelectorAll('.gallery-item-wrapper')
     this.galleryItems = this.$refs.gallery.querySelectorAll('.gallery-item')
+    this.covers = this.$refs.gallery.querySelectorAll('.gallery-item img')
     this.firstTransform = 0
+    this.cursor.classList.remove('visible')
 
     this.calcHeights()
 
@@ -74,6 +75,7 @@ export default {
       // this.toggleRaf()
       window.removeEventListener('resize', this.resize)
       window.removeEventListener('contextmenu', this.disableContextMenu)
+      window.removeEventListener('scroll', this.lockScroll)
       this.$el.parentNode.removeEventListener('mousedown', this.down)
       this.$el.parentNode.removeEventListener('mousemove', this.move)
       this.$el.parentNode.removeEventListener('mousemove', this.moveCursor)
@@ -99,29 +101,22 @@ export default {
       this.$el.parentNode.addEventListener('mousemove', this.moveCursor)
       this.$el.parentNode.addEventListener('mouseup', this.up)
       this.$el.parentNode.addEventListener('mouseleave', this.exit)
-
-      this.toggleRaf()
-      this.initParallax()
-    },
-    toggleRaf() {
-      // this.running = !this.running
-      // if(this.running) raf.add(this.tickPrlx)
-      // else raf.remove(this.tickPrlx)
+      // this.initParallax()
     },
     initParallax() {
+      raf.add(this.tickPrlx)
       this.galleryItems.forEach((item, i) => {
         this.parallax.push({ offsetTop: calcOffset.get(item).top, height: item.getBoundingClientRect().height, bloc: item})
       })
     },
     tickPrlx() {
       const wHeight =  window.innerHeight
+      const min = (-wHeight * 0.5) - wHeight * 0.75
+      const max = wHeight + (wHeight * 0.75)
 
       for (let i = 0; i < this.parallax.length; i++) {
         const bloc = this.parallax[i].bloc
-        const offsetTop = -this.offsetY + this.parallax[i].offsetTop
-
-        const min = (-wHeight * 0.5) - wHeight * 0.75
-        const max = wHeight + (wHeight * 0.75)
+        const offsetTop = this.offsetY + this.parallax[i].offsetTop
 
         if (offsetTop > min && offsetTop < max) {
           const y = math.map(offsetTop, min, max, 0, 450)
@@ -137,10 +132,12 @@ export default {
         const bloc = this.parallax[i].bloc
         bloc.style.transform = 'translate3d(0, 0, 0)'
       }
+      raf.remove(this.tick)
     },
     updateTransitionImg(serieCover, index) {
       this.galleryItems[index].querySelector('img').classList.add('active-link')
       this.$store.getters.currentDoc.data.loader_image.url = serieCover
+      document.body.style.overflow = 'hidden'
     },
     getClass(ratio) {
       if(ratio.includes('Big')){
@@ -164,6 +161,7 @@ export default {
     initDrag(cursor) {
       this.isDrag = true
       this.calcPositions()
+      this.resetParallax()
 
       this.sliderContent.classList.add('drag', 'no-events')
       this.cursor.classList.add('focus')
@@ -195,6 +193,7 @@ export default {
       const pos = math.clamp(this.downPosition - mappedY, 0, this.series.length - 1)
 
       this.setPosition(pos)
+      this.dragParallax(mappedY)
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
@@ -210,6 +209,17 @@ export default {
       this.cursorX.update()
       this.cursorY.update()
       this.cursor.style.transform = `translate3d(${this.cursorX.get()}px, ${this.cursorY.get()}px, 0)`
+    },
+    dragParallax(y) {
+      let transform = math.clamp(y * 30, -30, 30)
+      for (let i = 0; i < this.galleryItems.length; i++) {
+        this.covers[i].style.transform = `translate3d(0,${transform}px, 0) scale3d(1.2, 1.2, 1)`
+      }
+    },
+    resetDragParallax() {
+      for (let i = 0; i < this.galleryItems.length; i++) {
+        this.covers[i].style.transform = ``
+      }
     },
     tick() {
       this.lerp.update(0.10)
@@ -231,11 +241,12 @@ export default {
     },
     up() {
       if(window.innerWidth < 768) return
-      this.disableDrag()
       this.setPosScrollBar(this.currentIndex)
+      this.disableDrag()
+      this.resetDragParallax()
+      // this.initParallax()
     },
     getSize(i) {
-      console.log(i)
       if(this.galleryItems[i].classList.contains('full')) return this.vw(25)
       if(this.galleryItems[i].classList.contains('portrait')) return this.vw(21.875)
       if(this.galleryItems[i].classList.contains('landscape')) return this.vw(13.125)
@@ -253,7 +264,7 @@ export default {
       TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
 
       this.dragComponent.$el.classList.remove('active')
-      this.cursor.classList.remove('focus')
+      this.cursor.classList.remove('focus', 'visible')
       this.sliderContent.classList.remove('no-events', 'drag')
       this.$parent.setTheme('white')
       this.progressDrag.style.transform = 'scale3d(1, 0, 1)'
@@ -271,7 +282,7 @@ export default {
       else  {
         this.calcHeights()
         this.addListeners()
-        this.initParallax()
+        // this.initParallax()
       }
     },
     vw(v) {

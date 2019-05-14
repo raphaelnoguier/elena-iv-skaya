@@ -239,7 +239,9 @@
       }
 
       .play {
-        transform: rotate(-90deg);
+        img {
+          transform: rotate(-90deg);
+        }
 
         @include max(sm) {
           display: none;
