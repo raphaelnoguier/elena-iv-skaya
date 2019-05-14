@@ -90,7 +90,7 @@ export default {
       this.setTheme('white')
       this.calcOffset()
       setTimeout(() => {
-        // if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
+        if(scrollY > 0) window.scroll(0, scrollY)
         if(browser.desktop && window.innerWidth > 768) {
           this.revealGalleryItems()
         }
@@ -101,8 +101,8 @@ export default {
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScrollHome);
     window.removeEventListener('resize', this.resize);
-    if (browser.desktop && window.innerWidth > 768) { 
-      // this.reveal.destroy()
+    if (window.innerWidth > 768) { 
+      this.reveal.destroy()
     }
   },
 
