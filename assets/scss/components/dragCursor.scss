@@ -83,6 +83,7 @@
     }
 
     &.focus {
+      z-index: 1;
       .arrows {
         svg g {
           fill: #FCF9F5;

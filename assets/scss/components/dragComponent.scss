@@ -106,21 +106,18 @@
       height: 100%;
       overflow: hidden;
       position: relative;
+      opacity: 0;
+      transition: opacity 500ms $ease-in-out-quad;
 
       &.right {
         transform: rotate(180deg)
       }
 
       .cover {
-        height: 0%;
+        height: 100%;
         width: 100%;
         overflow: hidden;
         position: relative;
-        transition: height 500ms $ease-in-out-quad;
-
-        [data-background='dark'] & {
-          height: 100%;
-        }
 
         .cover-wrapper {
           display: inline-flex;
@@ -195,5 +192,9 @@
 
   &.active {
     opacity: 1;
+
+    .zoom {
+      opacity: 1;
+    }
   }
 }

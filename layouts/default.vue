@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import raf from '~/utils/raf.js'
 import TweenLite from 'gsap'
 import FixedElements from '~/components/FixedElements'
 import FakeNav from '~/components/FakeNav'
@@ -45,7 +46,6 @@ export default {
   },
   mounted() {
     this.calcScroll()
-    if(window.innerWidth > 768 && browser.desktop) this.loopScrollAnimation()
     window.addEventListener('resize', this.resize)
     window.addEventListener('scroll', this.onScrollDefault)
   },
@@ -55,9 +55,12 @@ export default {
   },
   methods: {
     calcScroll() {
-      this.totalHeight = this.$refs.nuxt.$el.getBoundingClientRect().height
-      TweenLite.set(this.$refs.smoothComponent, { height: this.totalHeight });
-      TweenLite.set(this.$refs.fakeNav.$el, { height: this.totalHeight });
+      this.$nextTick(() => {
+        if(window.innerWidth > 768) raf.add(this.loopScrollAnimation)
+        this.totalHeight = this.$refs.nuxt.$el.getBoundingClientRect().height
+        TweenLite.set(this.$refs.smoothComponent, { height: this.totalHeight });
+        TweenLite.set(this.$refs.fakeNav.$el, { height: this.totalHeight });
+      })
     },
     onScrollDefault() {
       this.scrolled = -window.scrollY;
@@ -68,10 +71,16 @@ export default {
     loopScrollAnimation() {
       this.scroll.y = this.roundTwo(0.1 * (this.scrolled - this.scroll.y) + this.scroll.y)
       TweenLite.set(this.$refs.smoothComponent, { y: this.scroll.y, force3D: true });
-      requestAnimationFrame(this.loopScrollAnimation);
+    },
+    resetScroll() {
+      TweenLite.set(this.$refs.smoothComponent, { height: '', y: 0 });
+      TweenLite.set(this.$refs.fakeNav.$el, { height: '' });
+
+      raf.remove(this.loopScrollAnimation)
     },
     resize () {
-      this.calcScroll()
+      if(window.innerWidth > 768) this.calcScroll()
+      else this.resetScroll()
     },
   },
   watch: {

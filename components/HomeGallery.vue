@@ -71,7 +71,7 @@ export default {
   },
   beforeDestroy() {
     if (window.innerWidth >= 768 && browser.desktop)  {
-      this.toggleRaf()
+      // this.toggleRaf()
       window.removeEventListener('resize', this.resize)
       this.$el.parentNode.removeEventListener('mousedown', this.down)
       this.$el.parentNode.removeEventListener('mousemove', this.move)
@@ -82,6 +82,7 @@ export default {
   },
   methods: {
     calcHeights() {
+      this.$parent.$parent.$parent.calcScroll()
       this.margin = this.vw(6.875)
       this.totalHeightOnDrag = this.vw(43.75) * this.galleryItems.length
     },
@@ -151,7 +152,8 @@ export default {
       raf.add(this.tickCursor)
     },
     down(cursor) {
-      this.timerId = setTimeout(() => this.initDrag(cursor), 0)
+      if(window.innerWidth < 768) return
+      this.timerId = setTimeout(() => this.initDrag(cursor), 350)
     },
     initDrag(cursor) {
       this.isDrag = true
@@ -176,7 +178,6 @@ export default {
       }
     },
     resetDrag() {
-      TweenLite.set(this.sliderContent.parentNode, { y: 0, force3D: true })
       TweenLite.set(this.galleryItems, { y: 0, force3D: true })
     },
     move(cursor) {
@@ -191,6 +192,7 @@ export default {
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
+      if(!this.cursor.classList.contains('visible')) this.cursor.classList.add('visible')
       this.cursorX.set(cursor.x - (this.cursor.clientWidth / 2))
       this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
     },
@@ -269,7 +271,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      //this.disableDrag()
+      // this.disableDrag()
     },
   },
   props: { series: Array }

@@ -128,7 +128,6 @@ export default {
 
       if(window.scrollY > this.updateStatusOffset)  {
         this.updateStatus.classList.add('animate')
-        this.cursor.classList.add('visible')
         this.$refs.homeGallery.enter()
        } else {
         this.updateStatus.classList.remove('animate')
