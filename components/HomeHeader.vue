@@ -47,7 +47,6 @@
 <script>
 import anime from 'animejs'
 import HomeSlider from '~/components/HomeSlider'
-import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import BezierEasing from 'bezier-easing'
 
@@ -61,6 +60,9 @@ export default {
       textIndex: 1,
       transitioning: false,
     }
+  },
+  mounted() {
+    this.$parent.$parent.$parent.$refs.fixedElements.$el.appendChild(this.$refs.updateStatus)
   },
   methods: {
     slide(direction) {
@@ -97,7 +99,7 @@ export default {
           duration: 1000,
           x: direction === 'next' ? 100 : 0,
           easing: 'easeInOutQuad',
-          delay: isSmallSlider ? 300 : 0,
+          delay: isSmallSlider ? 200 : 0,
           update: (anime) => {
             const easeTop = easingTop(values.x / 100)
             const easeBottom = easingBottom(values.x / 100)
@@ -160,10 +162,10 @@ export default {
       })
     },
     scrollDown() {
-      const container = this.$el.ownerDocument.getElementById('smooth-component');
       const destination = this.$el.ownerDocument.querySelector('.page-content');
       let offset = calcOffset.get(destination).top;
-      scrollbar.scrollTo(container, offset, 1000)
+
+      window.scroll(0, offset)
     }
   },
   props: { featured: Array, lastPublication: String }

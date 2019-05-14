@@ -14,8 +14,7 @@
       </div>
     </div>
     <div class="image-loader">
-      <div class="transition-mask" :style="`background-image:url('${imageLoader}')`"></div>
-      <img :src="imageLoader" data-load="preload" style="display:none" alt="image-loader">
+      <img :src="imageLoader" data-load="preload" alt="image-loader">
     </div>
   </div>
 </template>
@@ -39,7 +38,7 @@ export default {
     this.loadingContainer = this.$el
     this.loaderContent = this.loadingContainer.querySelector('.loader')
     this.imageContainer = this.loadingContainer.querySelector('.image-loader')
-    this.mask = this.loadingContainer.querySelector('.image-loader .transition-mask')
+    this.mask = this.loadingContainer.querySelector('.image-loader img')
   },
   mounted() {
     let doc = this.$store.getters.currentDoc.data
@@ -61,14 +60,16 @@ export default {
     },
     disableScroll() {
       if (this.loadingContainer.addEventListener) {
-        this.loadingContainer.addEventListener('DOMMouseScroll', this.preventDefault, false)
+        this.loadingContainer.addEventListener('touchmove', this.preventDefault, false)
+        this.loadingContainer.addEventListener('scroll', this.preventDefault, false)
         this.loadingContainer.onwheel = this.preventDefault
         this.loadingContainer.onmousewheel = this.loadingContainer.onmousewheel = this.preventDefault
       }
     },
     enableScroll() {
       if (this.loadingContainer.removeEventListener) {
-        this.loadingContainer.removeEventListener('DOMMouseScroll', this.preventDefault, false)
+        this.loadingContainer.removeEventListener('touchmove', this.preventDefault, false)
+        this.loadingContainer.removeEventListener('scroll', this.preventDefault, false)
         this.loadingContainer.onmousewheel = this.loadingContainer.onmousewheel = null
         this.loadingContainer.onwheel = null
       }
@@ -134,7 +135,8 @@ export default {
           this.mask.style.transform = 'translate3d(0, -200px, 0)'
           this.$parent.domLoaded = true
         }
-      }).add({
+      })
+      .add({
         targets: this.loadingContainer,
         height: 0,
         complete: () => {

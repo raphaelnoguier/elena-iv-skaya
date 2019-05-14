@@ -2,9 +2,9 @@
   .serie-page-header {
     display: flex;
     justify-content: space-between;
-    transform: translate3d(0, 100px, 0);
+    transform: translate3d(0, 150px, 0);
     opacity: 0;
-    transition:  opacity 800ms ease 600ms, transform 1200ms $ease-in-out-quad;
+    transition: opacity 800ms ease 600ms, transform 1200ms $ease-in-out-quad 200ms;
 
     .loaded & {
       opacity: 1;
@@ -19,6 +19,7 @@
       width: 40%;
       height: 100vh;
       transform: translate3d(-8vw, 0, 0);
+      overflow: hidden;
 
       @include max(md) {
         width: 100%;
@@ -180,6 +181,10 @@
         &-column {
           &.description {
             flex-basis: 45%;
+
+            @include max(md) {
+              flex-basis: 75%;
+            }
 
             @include max(sm) {
               flex-basis: 100%;
@@ -348,7 +353,7 @@
           }
 
           @include max(sm) {
-            max-width: calc(50% - 2vw);
+            max-width: calc(100% - 2vw);
           }
         }
 
@@ -413,6 +418,10 @@
         letter-spacing: 0.125vw;
         text-transform: uppercase;
         margin-bottom: 0.45vw;
+
+        &.hide {
+          opacity: 0;
+        }
 
         @include max(md) {
           margin-bottom: 1.55vw;

@@ -3,7 +3,7 @@
   justify-content: space-between;
   height: calc(100vh - 10.313vw);
   opacity: 0;
-  transform: translate3d(0, 100px, 0);
+  transform: translate3d(0, 200px, 0);
   transition: opacity 500ms ease 500ms, transform 1000ms ease-in-out;
 
   .loaded & {
@@ -17,7 +17,8 @@
   }
 
   .home-slider-wrapper {
-
+    transition: opacity 800ms ease;
+    opacity: 1;
     [data-background='dark'] & {
       opacity: 0;
     }
@@ -52,7 +53,7 @@
       flex-direction: column;
       max-width: 45vw;
       transform: translate3d(0, 100px, 0) skewY(10deg);
-      transition: transform 1000ms ease-in-out 200ms;
+      transition: transform 1000ms ease-in-out 200ms, opacity 800ms ease;
 
       [data-background='dark'] & {
         opacity: 0;
@@ -139,6 +140,7 @@
     .chevron {
       cursor: pointer;
       transform: translate3d(0, -2.125vw, 0);
+      transition: opacity 800ms ease;
 
       [data-background='dark'] & {
         opacity: 0;
@@ -152,84 +154,91 @@
         width: 0.875vw;
       }
     }
+  }
+}
 
-    .update-status {
-      display:flex;
-      align-items: center;
-      position: absolute;
-      bottom: 2.125vw;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      overflow: hidden;
-      z-index: 9;
-      user-select: none;
-      transition: color 500ms ease;
 
-      [data-background="dark"] & {
-        color: white;
+.loaded ~ .fixed-elements .update-status {
+  opacity: 1;
+}
 
-        .line {
-          background: #2A2A2A;
-        }
+.update-status {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  right: 8vw;
+  bottom: 2.125vw;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  overflow: hidden;
+  z-index: 9;
+  user-select: none;
+  transition: color 500ms ease, opacity 500ms ease 500ms;
+  opacity: 0;
+
+  [data-background="dark"] & {
+    color: white;
+
+    .line {
+      background: #2A2A2A;
+    }
+  }
+
+  @include max(md) {
+    display: none;
+  }
+
+  .line {
+    position: relative;
+    height: 4.0625vw;
+    background-color: black;
+    width: 0.084vw;
+    margin-bottom: 1.4375vw;
+    transition: background-color 500ms ease;
+
+    .progress {
+      transform-origin: top;
+      width: 100%;
+      height: 100%;
+      transform: scale3d(1, 0, 1);
+      background: white;
+    }
+  }
+
+  .status-text {
+    position: relative;
+
+    span {
+      @include sofiaProLight(0.75vw);
+      letter-spacing: 0.125vw;
+      line-height: 0.875vw;
+      text-transform: uppercase;
+      display: block;
+      transition: transform 800ms $ease-in-out-quad, opacity 600ms $ease-in-out-quad;
+
+      &.last-updated {
+        opacity: 1;
       }
 
-      @include max(md) {
-        display: none;
+      &.hold-instructions {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate3d(-1.75vw, 0, 0) skewX(10deg)
       }
+    }
+  }
 
-      .line {
-        position: relative;
-        height: 4.0625vw;
-        background-color: black;
-        width: 0.084vw;
-        margin-bottom: 1.4375vw;
-        transition: background-color 500ms ease;
-
-        .progress {
-          transform-origin: top;
-          width: 100%;
-          height: 100%;
-          transform: scale3d(1, 0, 1);
-          background: white;
-        }
+  &.animate {
+    .status-text {
+      .last-updated {
+        opacity: 0;
+        transform: translate3d(1.75vw, 0, 0) skewX(10deg)
       }
-
-      .status-text {
-        position: relative;
-
-        span {
-          @include sofiaProLight(0.75vw);
-          letter-spacing: 0.125vw;
-          line-height: 0.875vw;
-          text-transform: uppercase;
-          display: block;
-          transition: transform 800ms $ease-in-out-quad, opacity 600ms $ease-in-out-quad;
-
-          &.last-updated {
-            opacity: 1;
-          }
-
-          &.hold-instructions {
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translate3d(-1.75vw, 0, 0) skewX(10deg)
-          }
-        }
-      }
-
-      &.animate {
-        .status-text {
-          .last-updated {
-            opacity: 0;
-            transform: translate3d(1.75vw, 0, 0) skewX(10deg)
-          }
-          .hold-instructions {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) skewX(0deg)
-          }
-        }
+      .hold-instructions {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) skewX(0deg)
       }
     }
   }

@@ -4,12 +4,6 @@
   margin: auto;
   align-items: center;
   cursor: -webkit-grab;
-  position: relative;
-
-  @include min(lg) {
-    top: 21.875vw;
-    transform: translate3d(0, -21.875vw, 0);
-  }
 
   & > * {
     user-select: none;
@@ -54,9 +48,8 @@
 
     &.full {
       transform: translate3d(0, 0, 0);
-      margin-top: 13.75vw;
-      margin-bottom: 6.875vw;
       transition: width 800ms ease;
+      width: 100%;
 
       @include max(md) {
         margin-top: 26.042vw;
@@ -69,15 +62,17 @@
     width: 100%;
     position: relative;
     margin: auto;
-    transition: transform 0ms $ease-in-out-quad;
+    transition: width 0ms $ease-in-out-quad, height 0ms $ease-in-out-quad;
 
     a {
+      pointer-events: none;
       display: block;
       overflow: hidden;
       height: 100%;
       text-decoration: none;
       transform: scale3d(1, 1, 1);
       transition: transform 500ms $ease-in-out-quad;
+      cursor: pointer;
     }
 
     &.portrait {
@@ -258,6 +253,7 @@
 
   &.drag {
     cursor: -webkit-grabbing;
+
     .gallery-item-wrapper {
       transform: translate3d(0, 0, 0);
 
@@ -266,7 +262,7 @@
         width: 35vw;
       }
 
-      .gallery-item:not(.full){
+      .gallery-item {
         img {
           transform: scale3d(1.2, 1.2, 1)
         }

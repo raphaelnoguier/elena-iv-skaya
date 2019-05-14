@@ -48,7 +48,7 @@
       </div>
       <div class="serie-credits-wrapper">
         <div class="serie-credits">
-          <span>credits</span>
+          <span :class="credits[0].text[0].text.length === 0 && 'hide'">credits</span>
           <ul>
             <li v-for="(credit, i) in credits" :key="i">{{credit.text[0].text}}</li>
           </ul>
@@ -65,7 +65,6 @@
 <script>
 import SerieSlider from '~/components/SerieSlider'
 import reveal from "~/utils/reveal.js"
-import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
 import ZoomSerie from "~/components/ZoomSerie"
@@ -134,27 +133,26 @@ export default {
   },
   mounted() {
     this.$store.commit('SET_SERIE_LOADER_IMG', this.$store.getters.currentDoc.data.loader_image.url)
-    this.container = this.$el.ownerDocument.getElementById('smooth-component');
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item .relative-container')
-
-    window.addEventListener('resize', this.resize);
     this.$nextTick(() => {
+      this.$parent.$parent.calcScroll()
       if (window.innerWidth > 768 && browser.desktop){
-        scrollbar.listen(this.container, this.onScrollSerie)
-        scrollbar.resetPosition(this.container)
+        window.addEventListener('scroll', this.onScrollSerie);
         this.calcOffset()
         this.initParallax()
         this.toggleRaf()
       }
       this.revealSlider()
     });
+
+    window.addEventListener('resize', this.resize);
   },
   beforeDestroy () {
     if (browser.desktop && window.innerWidth > 768) {
       this.reveal.destroy()
       raf.remove(this.tick)
-      scrollbar.unlisten(this.container, this.onScrollSerie);
+      window.removeEventListener('scroll', this.onScrollSerie);
       window.removeEventListener('resize', this.resize);
     }
   },
@@ -207,7 +205,6 @@ export default {
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) {
-        scrollbar.listen(this.container, this.onScrollSerie);
         this.calcOffset();
       } else {
         this.resetParallax()
@@ -225,14 +222,14 @@ export default {
       )
     },
     onScrollSerie(status) {
-      this.offsetY = status.offset.y
+      this.offsetY = window.scrollY
       this.nav.classList.toggle('black-link' , this.offsetY > this.featuredImageOffset)
     },
     scrollDown() {
-      const container = this.$el.ownerDocument.getElementById('smooth-component');
-      const destination = this.$el.querySelector('.serie-gallery');
+      const destination = this.$el.ownerDocument.querySelector('.serie-gallery');
       let offset = calcOffset.get(destination).top;
-      scrollbar.scrollTo(container, offset, 1000)
+
+      window.scroll(0, offset)
     },
     setTheme(theme) {
       document.body.dataset.background = theme

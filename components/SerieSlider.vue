@@ -4,14 +4,16 @@
     <div class="serie-slider-title">
       <span>Gallery</span>
     </div>
-    <div ref="slider" class="serie-slider">
-      <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
-        <div class="serie-slider-mask left"></div>
-        <div class="link" v-on:click="navigate(`/serie/${item.serie. uid}`)">
-          <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" />
-          <img v-else :src="item.serie.data.cover_serie_image.url" />
+    <div class="mobile-overflow">
+      <div ref="slider" class="serie-slider">
+        <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
+          <div class="serie-slider-mask left"></div>
+          <div class="link" v-on:click="navigate(`/serie/${item.serie.uid}`, i)">
+            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" />
+            <img v-else :src="item.serie.data.cover_serie_image.url" />
+          </div>
+          <div class="serie-slider-mask right"></div>
         </div>
-        <div class="serie-slider-mask right"></div>
       </div>
     </div>
     <div class="slider-controls">
@@ -63,7 +65,8 @@ export default {
       sliderContent: null,
       titleContainer: null,
       running: false,
-      covers: null
+      covers: null,
+      timerId: null,
     }
   },
   mounted() {
@@ -74,6 +77,8 @@ export default {
     this.titleContainer = this.$refs.titlesWrapper
     this.progress = this.$refs.progress
     this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
+    this.mobileSliderWrapper = this.$el.querySelector('.mobile-overflow')
+    this.mobileSliderBounds = this.mobileSliderWrapper.getBoundingClientRect()
 
     this.$parent.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseenter', this.enter)
@@ -84,13 +89,13 @@ export default {
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
 
-    this.sliderContent.addEventListener('touchstart', this.down)
-    this.sliderContent.addEventListener('touchend', this.up)
-    this.sliderContent.addEventListener('touchmove', this.move)
+    if(window.innerWidth < 768) this.mobileSliderWrapper.addEventListener('scroll', this.mobileSlider)
   },
   beforeDestroy() {
     this.toggleRaf()
     this.toggleCursor()
+
+    if(window.innerWidth < 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider)
 
     this.$parent.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseenter', this.enter)
@@ -100,18 +105,15 @@ export default {
     this.$el.removeEventListener('mouseup', this.up)
     this.$el.removeEventListener('mousedown', this.down)
     this.$el.removeEventListener('mousemove', this.move)
-
-    this.sliderContent.removeEventListener('touchstart', this.down)
-    this.sliderContent.removeEventListener('touchend', this.up)
-    this.sliderContent.removeEventListener('touchmove', this.move)
   },
   methods: {
-    navigate(to) {
+    navigate(to, i) {
       this.$router.push({path: to})
+      this.covers[i].classList.add('active-link')
     },
     toggleRaf() {
       this.running = !this.running
-      if(this.running) raf.add(this.tick)
+      if(this.running && window.innerWidth > 768) raf.add(this.tick)
       else raf.remove(this.tick)
     },
     toggleCursor() {
@@ -126,6 +128,10 @@ export default {
       this.cursor.classList.add('visible')
     },
     up() {
+      if(this.isDrag) this.disableDrag()
+      else clearTimeout(this.timerId)
+    },
+    disableDrag() {
       this.isDrag = false
       this.cursor.classList.remove('focus')
       this.xPosition = this.index
@@ -137,6 +143,9 @@ export default {
       }
     },
     down(cursor) {
+      this.timerId = setTimeout(() => this.initDrag(cursor), 350)
+    },
+    initDrag(cursor) {
       this.cursor.classList.add('focus')
       this.isDrag = true
       browser.desktop ? this.downX = cursor.x : this.downX = cursor.touches[0].clientX
@@ -193,9 +202,18 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      this.isDrag = false
       this.up()
     },
+    mobileSlider() {
+      let offset = this.mobileSliderWrapper.scrollLeft
+      const scrollableWidth = this.mobileSliderWrapper.scrollWidth
+      const size = this.mobileSliderWrapper.clientWidth
+
+      let progress = Math.round(100 * offset / (scrollableWidth - size))
+
+      this.progress.style.width = `${progress}%`
+      this.titleContainer.style.transform = `translate3d(-${this.mobileSliderWrapper.scrollLeft}px, 0, 0)`
+    }
   },
   props: {nextSeries: Array}
 }

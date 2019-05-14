@@ -11,7 +11,6 @@
 </template>
 <script>
 import browser from '~/utils/browser.js'
-import scrollbar from "~/utils/scrollbar.js"
 import HomeHeader from "~/components/HomeHeader"
 import HomeGallery from "~/components/HomeGallery"
 import Footer from "~/components/Footer"
@@ -78,12 +77,12 @@ export default {
   },
 
   mounted () {
+    window.addEventListener('scroll', this.onScrollHome);
     window.addEventListener('resize', this.resize);
 
     this.lastPublication = this.formatDate(this.lastPublication)
     this.updateStatus = this.$refs.homeHeader.$refs.updateStatus
     this.cursor = this.$parent.$parent.$refs.cursor.$el
-    this.container = this.$el.ownerDocument.getElementById('smooth-component')
     this.galleryItems = this.$refs.homeGallery.$el.querySelectorAll('.gallery-item-wrapper')
     let scrollY = this.$store.state.position
 
@@ -91,19 +90,19 @@ export default {
       this.setTheme('white')
       this.calcOffset()
       setTimeout(() => {
-        if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
+        // if(scrollY > 0) scrollbar.setPosition(this.container, scrollY)
         if(browser.desktop && window.innerWidth > 768) {
           this.revealGalleryItems()
-          scrollbar.listen(this.container, this.onScrollHome)
         }
       }, 1)
     })
   },
 
   beforeDestroy () {
+    window.removeEventListener('scroll', this.onScrollHome);
+    window.removeEventListener('resize', this.resize);
     if (browser.desktop && window.innerWidth > 768) { 
-      scrollbar.unlisten(this.container, this.onScrollHome)
-      this.reveal.destroy()
+      // this.reveal.destroy()
     }
   },
 
@@ -124,10 +123,10 @@ export default {
     setTheme(theme) {
       document.body.dataset.background = theme
     },
-    onScrollHome(status) {
-      this.updateStatus.style.transform = `translate3d(0, ${status.offset.y}px, 0)`
-      this.$refs.homeGallery.offsetY = status.offset.y
-      if(status.offset.y > this.updateStatusOffset)  {
+    onScrollHome(e) {
+      this.$refs.homeGallery.offsetY = -window.scrollY
+
+      if(window.scrollY > this.updateStatusOffset)  {
         this.updateStatus.classList.add('animate')
         this.cursor.classList.add('visible')
         this.$refs.homeGallery.enter()
@@ -139,20 +138,17 @@ export default {
     revealGalleryItems() {
       let tmp = this.galleryItems
       const items = Array.from(tmp).map((item, i) => {
-      return {
-        dom: item,
-        ratioIn: 0.9,
-        ratioOut: 1,
-        update: () => {
-          this.$refs.homeGallery.index = i
+        return {
+          dom: item,
+          ratioIn: 0.5,
+          ratioOut: 1,
+          update: () => this.$refs.homeGallery.currentIndex = i
         }
-      }
-    })
-    this.reveal = reveal(items)
+      })
+      this.reveal = reveal(items)
     },
     resize () {
       if(browser.desktop && window.innerWidth > 768) {
-        scrollbar.listen(this.container, this.onScrollHome);
         this.calcOffset()
       }
     }

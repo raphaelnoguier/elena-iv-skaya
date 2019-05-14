@@ -1,8 +1,7 @@
 <template>
   <div class="transition-wrapper">
     <div class="image-transition">
-      <div class="transition-mask" :style="`background-image:url('${image}')`"></div>
-      <img v-lazy="image" style="display:none" alt="image transition">
+      <img :src="image" :alt="`image transition${image}`" data-load="preload">
     </div>
   </div>
 </template>
@@ -13,6 +12,9 @@ export default {
     return {
       image: ''
     }
+  },
+  mounted() {
+    this.image = this.$store.getters.currentDoc.data.loader_image.url
   },
   watch: {
     '$route'(to, from) {

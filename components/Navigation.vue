@@ -8,16 +8,15 @@
 </template>
 
 <script>
-import scrollbar from "~/utils/scrollbar.js";
 import calcOffset from '~/utils/offset.js';
 export default {
   methods: {
     scrollTop() {
       if(this.$route.name !== 'index') return
-      const container = this.$el.ownerDocument.getElementById('smooth-component');
-      const destination = container.querySelector('.page');
+      const destination = this.$el.ownerDocument.querySelector('.page');
       let offset = calcOffset.get(destination).top;
-      scrollbar.scrollTo(container, offset, 1500)
+
+      window.scroll(0, offset)
     }
   }
 }

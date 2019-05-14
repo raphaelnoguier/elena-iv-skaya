@@ -4,18 +4,41 @@
   box-sizing: border-box;
 }
 
+
 body {
-  @include min(md) {
-    overflow: hidden;
-  }
+  // @include min(md) {
+  //   overflow: hidden;
+  // }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
-#__nuxt, #__layout, #smooth-component, #app {
+
+// #__nuxt, #__layout, #smooth-component, #app {
+//   width: 100%;
+//   height: 100%;
+
+//   @include min(md) {
+//     overflow: hidden;
+//   }
+// }
+
+#app {
+  position: relative;
   width: 100%;
   height: 100%;
+}
 
-  @include min(md) {
-    overflow: hidden;
+.scroll-content {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  @include max(md) {
+    height: 100% !important;
+    position: relative;
   }
 }
 

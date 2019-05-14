@@ -2,7 +2,6 @@
 const pkg = require('./package')
 const Prismic = require('prismic-javascript');
 const prismicConfig = require('./prismic.config.js');
-const anime = require('./node_modules/animejs/lib/anime')
 
 
 module.exports = {

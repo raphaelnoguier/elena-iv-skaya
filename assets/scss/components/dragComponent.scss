@@ -1,12 +1,12 @@
 
 .drag-component {
-  opacity: 0;
-  position: absolute;
+  position: fixed;
   width: 100%;
   margin: auto;
   height: 100vh;
   pointer-events: none;
   transition: opacity 500ms ease;
+  opacity: 0;
 
   .drag-line {
     position: fixed;

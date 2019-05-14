@@ -23,7 +23,7 @@ let createTransition = () => {
           let navItems = nav.querySelectorAll('li')
           let transitionContainer = document.querySelector('.transition-wrapper')
           let imageContainer = transitionContainer.querySelector('.image-transition')
-          let mask = transitionContainer.querySelector('.image-transition .transition-mask')
+          let mask = transitionContainer.querySelector('.image-transition img')
 
           const tmp = new Image
 
@@ -43,6 +43,7 @@ let createTransition = () => {
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
+                if(to.name !== 'index') window.scroll(0, 0)
                 nav.classList.add('before-enter')
                 toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
                 fromSerie && !serieToSerie ? navItems[0].style.opacity = 1 : navItems[0].style.opacity = ''
@@ -67,9 +68,7 @@ let createTransition = () => {
           }
         },
         beforeEnter() {
-          this.$nextTick( () => {
-            this.$parent.domLoaded = true
-          })
+          setTimeout(() => this.$parent.domLoaded = true, 1)
         },
         enter(el, done) {
           let nav = this.$parent.$refs.nav.$el

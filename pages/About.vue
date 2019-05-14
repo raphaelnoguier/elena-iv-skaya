@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="about-content">
-        <div class="about-issue">
+        <div class="about-issue" ref="circle">
           <div class="circle">
             <span v-for="(letter, i) in issue" :key="i">{{letter}}</span>
           </div>
@@ -39,28 +39,27 @@
       </div>
     </div>
     <div class="about-footer">
-        <div class="agency-representations">
-          <span>Agency representations</span>
-          <ul>
-            <li v-for="(item, index) in agency_representations" :key="index">
-              {{item.region}} - <a :href="item.url">{{item.link_text}}</a>
-            </li>
-          </ul>
-        </div>
-        <div class="credits">
-          <span>Website credits</span>
-          <ul>
-            <li v-for="(item, index) in credits" :key="index">
-              {{item.role}} - <a :href="item.url">{{item.link_text}}</a>
-            </li>
-          </ul>
-        </div>
+      <div class="agency-representations">
+        <span>Agency representations</span>
+        <ul>
+          <li v-for="(item, index) in agency_representations" :key="index">
+            {{item.region}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
+          </li>
+        </ul>
       </div>
+      <div class="credits">
+        <span>Website credits</span>
+        <ul>
+          <li v-for="(item, index) in credits" :key="index">
+            {{item.role}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </section>
 </template>
 <script>
 import splittedText from "~/utils/splittedText.js"
-import scrollbar from "~/utils/scrollbar.js"
 import { nextTick } from 'q'
 import browser from '~/utils/browser.js'
 import math from '~/utils/math.js'
@@ -106,79 +105,60 @@ export default {
       ],
     }
   },
-  data() {
-    return {
-      contentBloc: null,
-      contentOffsetBottom: null,
-      paragraphBloc: null,
-      paragraphOffsetBottom: null
-    }
-  },
   mounted() {
-    window.addEventListener('resize', this.resize)
+    this.circle = this.$refs.circle
+    this.featuredImage = this.$el.querySelector('img')
+
     this.setTheme()
-    if(browser.desktop && window.innerWidth > 768) {
-      this.$nextTick(() => {
-        const container = this.$el.ownerDocument.getElementById('smooth-component')
-        scrollbar.listen(container, this.onScrollAbout)
-        scrollbar.resetPosition(container)
-        setTimeout(() => {
-          this.calcOffset()
-          this.resize()
-        }, 100);
-      })
-    }
+
+    window.addEventListener('scroll', this.onScrollAbout)
+    window.addEventListener('resize', this.resize)
+
+    setTimeout(() =>  {
+      if(browser.desktop && window.innerWidth > 768) this.calcOffset()
+      this.$parent.$parent.calcScroll()
+    }, 50)
   },
   beforeDestroy() {
-    if(browser.desktop && window.innerWidth > 768) {
-      const container = this.$el.ownerDocument.getElementById('smooth-component')
-      window.removeEventListener('resize', this.calcOffset)
-      scrollbar.unlisten(container, this.onScrollAbout)
-    }
+    window.removeEventListener('scroll', this.onScrollAbout)
+    window.removeEventListener('resize', this.resize)
   },
   methods: {
     setTheme() {
       document.body.dataset.background = 'dark'
     },
     resize() {
-      let circle = this.$el.querySelector('.circle')
-      let featuredImage = this.$el.querySelector('img')
-
-      circle.style.top = 0
-      featuredImage.style.transform = 'translate3d(0,0,0)'
-
-      if(browser.desktop && window.innerWidth > 768) {
-        const container = this.$el.ownerDocument.getElementById('smooth-component')
-        scrollbar.listen(container, this.onScrollAbout)
-        this.calcOffset()
-      }
+      if(browser.desktop && window.innerWidth > 768) this.calcOffset()
+      this.resetLayout()
     },
     calcOffset() {
-      let content = this.$el.querySelector('.about-wrapper')
+      let wrapper = this.$el.querySelector('.about-wrapper').getBoundingClientRect()
       let featuredImage = this.$el.querySelector('img').getBoundingClientRect()
-      let paragraphBloc = this.$el.querySelector('.about-right .social-links')
-      let circle = this.$el.querySelector('.circle').getBoundingClientRect()
 
-      this.contentBloc = content.getBoundingClientRect()
-      this.contentOffsetBottom = this.contentBloc.bottom - featuredImage.height - featuredImage.top
+      let socialLinks = this.$el.querySelector('.about-right .social-links').getBoundingClientRect()
+      let circle = this.circle.getBoundingClientRect()
 
-      this.paragraphBloc = paragraphBloc.getBoundingClientRect()
-      this.paragraphOffsetBottom = this.paragraphBloc.bottom - circle.height - circle.top
+      this.contentOffsetBottom = wrapper.bottom - (featuredImage.height + featuredImage.top)
+      this.socialLinksOffset = (socialLinks.top + socialLinks.height) - (circle.height + circle.top)
+
     },
-    onScrollAbout(status) {
-      let circle = this.$el.querySelector('.circle')
-      let featuredImage = this.$el.querySelector('img')
-      let offset = status.offset
-      let rotateOffset = math.map(offset.y, 0, this.paragraphOffsetBottom, 0, 360)
+    onScrollAbout() {
+      if(window.innerWidth < 768) return
 
-      if(this.contentOffsetBottom > offset.y) {
-        featuredImage.style.transform = `translate3d(0,${offset.y}px, 0)`
+      let rotateOffset = math.map(window.scrollY, 0, this.socialLinksOffset, 0, 360)
+
+      console.log(Math.round(this.contentOffsetBottom), window.scrollY)
+      if(this.contentOffsetBottom > window.scrollY) {
+        this.featuredImage.style.transform = `translate3d(0,${window.scrollY}px, 0)`
       }
 
-      if(this.paragraphOffsetBottom > offset.y) {
-        circle.style.transform = `rotate(${rotateOffset}deg)`
-        circle.style.top = (offset.y - 6) + 'px'
+      if(this.socialLinksOffset > window.scrollY) {
+        this.circle.style.transform = `translate3d(0, ${(window.scrollY - 4)}px, 0) rotate(${rotateOffset}deg)`
       }
+    },
+    resetLayout() {
+      this.circle.style.transform = 'translate3d(0,0,0)'
+      this.featuredImage.style.transform = 'translate3d(0,0,0)'
     }
   }
 }

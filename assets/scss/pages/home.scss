@@ -8,7 +8,7 @@
       padding-bottom: 6.25vw;
       opacity: 0;
       transform: translate3d(0, 100px, 0);
-      transition: opacity 500ms ease, transform 800ms $ease-in-out-quad;
+      transition: opacity 500ms ease;
 
       .loaded & {
         opacity: 1;

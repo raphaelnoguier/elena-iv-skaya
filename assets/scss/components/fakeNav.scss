@@ -1,0 +1,9 @@
+.fake-nav {
+  position: relative;
+  width: 100%;
+  height: 0;
+
+  @include max(md) {
+    display: none;
+  }
+}
