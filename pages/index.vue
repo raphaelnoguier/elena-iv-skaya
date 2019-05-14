@@ -84,13 +84,11 @@ export default {
     this.updateStatus = this.$refs.homeHeader.$refs.updateStatus
     this.cursor = this.$parent.$parent.$refs.cursor.$el
     this.galleryItems = this.$refs.homeGallery.$el.querySelectorAll('.gallery-item-wrapper')
-    let scrollY = this.$store.state.position
 
     this.$nextTick(() => {
       this.setTheme('white')
       this.calcOffset()
       setTimeout(() => {
-        if(scrollY > 0) window.scroll(0, scrollY)
         if(browser.desktop && window.innerWidth > 768) {
           this.revealGalleryItems()
         }

@@ -73,6 +73,7 @@ export default {
     if (window.innerWidth >= 768 && browser.desktop)  {
       // this.toggleRaf()
       window.removeEventListener('resize', this.resize)
+      window.removeEventListener('contextmenu', this.disableContextMenu)
       this.$el.parentNode.removeEventListener('mousedown', this.down)
       this.$el.parentNode.removeEventListener('mousemove', this.move)
       this.$el.parentNode.removeEventListener('mousemove', this.moveCursor)
@@ -81,6 +82,10 @@ export default {
     }
   },
   methods: {
+    disableContextMenu() {
+      clearTimeout(this.timerId)
+      this.isDrag = false
+    },
     calcHeights() {
       this.$parent.$parent.$parent.calcScroll()
       this.margin = this.vw(6.875)
@@ -88,6 +93,7 @@ export default {
     },
     // PARALLAX //
     addListeners() {
+      window.addEventListener('contextmenu', this.disableContextMenu)
       this.$el.parentNode.addEventListener('mousedown', this.down)
       this.$el.parentNode.addEventListener('mousemove', this.move)
       this.$el.parentNode.addEventListener('mousemove', this.moveCursor)
@@ -224,8 +230,9 @@ export default {
       this.setIndex(this.lerp.get())
     },
     up() {
-      if(this.isDrag) this.disableDrag()
-      else clearTimeout(this.timerId)
+      if(window.innerWidth < 768) return
+      this.disableDrag()
+      this.setPosScrollBar(this.currentIndex)
     },
     getSize(i) {
       console.log(i)
@@ -234,14 +241,15 @@ export default {
       if(this.galleryItems[i].classList.contains('landscape')) return this.vw(13.125)
     },
     setPosScrollBar(i) {
+      if(!this.isDrag) return
       const offset = calcOffset.get(this.galleryItems[this.currentIndex]).top - (window.innerHeight * 0.5)
       const itemOffset = this.getSize(i)
 
       window.scroll(0, (offset) + itemOffset)
     },
     disableDrag() {
+      clearTimeout(this.timerId)
       this.isDrag = false
-      this.setPosScrollBar(this.currentIndex)
       TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
 
       this.dragComponent.$el.classList.remove('active')
@@ -271,7 +279,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      // this.disableDrag()
+      this.disableDrag()
     },
   },
   props: { series: Array }

@@ -18,6 +18,13 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
   },
+  router: {
+    scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) {
+        return {x: 0, y: 0}
+      }
+    }
+  },
   /*
   ** Global CSS
   */

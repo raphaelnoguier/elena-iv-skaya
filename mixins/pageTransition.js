@@ -44,6 +44,8 @@ let createTransition = () => {
               height: '100%',
               complete: () => {
                 if(to.name !== 'index') window.scroll(0, 0)
+                if(from && from.name === 'serie-slug' && to.name === 'index') window.scroll(0, this.$store.state.position)
+
                 nav.classList.add('before-enter')
                 toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
                 fromSerie && !serieToSerie ? navItems[0].style.opacity = 1 : navItems[0].style.opacity = ''
@@ -76,9 +78,7 @@ let createTransition = () => {
           el.classList.add('page-enter')
           done()
 
-          setTimeout(() => {
-            nav.classList.remove('before-enter')
-          }, 200);
+          setTimeout(() => nav.classList.remove('before-enter'), 200);
         }
       }
     },

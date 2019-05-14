@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     calcScroll() {
+      history.scrollRestoration = 'manual'
       this.$nextTick(() => {
         if(window.innerWidth > 768) raf.add(this.loopScrollAnimation)
         this.totalHeight = this.$refs.nuxt.$el.getBoundingClientRect().height

@@ -70,7 +70,6 @@
   }
 
   &.homepage {
-    z-index: -1;
     .circle {
       border: 2px solid#121212;
     }
@@ -83,7 +82,6 @@
     }
 
     &.focus {
-      z-index: 1;
       .arrows {
         svg g {
           fill: #FCF9F5;

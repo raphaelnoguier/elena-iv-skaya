@@ -3,12 +3,10 @@
   flex-direction: column;
   margin: auto;
   align-items: center;
-  cursor: -webkit-grab;
 
-  // & > * {
-  //   user-select: none;
-  //   pointer-events: none;
-  // }
+  & > * {
+    user-select: none;
+  }
 
   .gallery-item-wrapper {
     transform: translate3d(-12.5vw, 0, 0);
@@ -65,7 +63,7 @@
     transition: width 0ms $ease-in-out-quad, height 0ms $ease-in-out-quad;
 
     a {
-      // pointer-events: none;
+      user-select: none;
       display: block;
       overflow: hidden;
       height: 100%;
@@ -183,6 +181,8 @@
       object-position: center;
       transition: opacity 500ms ease, transform 500ms $ease-in-out-quad;
       transform: scale3d(1, 1, 1);
+      user-select: none;
+      pointer-events: none;
 
       &.active-link {
         opacity: 0.75;
@@ -263,7 +263,10 @@
   }
 
   &.drag {
-    cursor: -webkit-grabbing;
+
+    & > * {
+      pointer-events: none;
+    }
 
     .gallery-item-wrapper {
       transform: translate3d(0, 0, 0);
