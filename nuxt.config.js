@@ -49,7 +49,7 @@ module.exports = {
     routes: function (callback) {
       Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken })
       .then((api) => {
-        return api.query("");
+        return api.query("", { pageSize : 100 });
       }).then((response) => {
         let routes = response.results.map((doc) => {
           if(doc.type === 'page' || doc.type === 'about') {
