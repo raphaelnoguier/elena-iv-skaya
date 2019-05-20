@@ -161,7 +161,7 @@ export default {
     initDrag(cursor) {
       this.isDrag = true
       this.calcPositions()
-      this.resetParallax()
+      // this.resetParallax()
 
       this.sliderContent.classList.add('drag', 'no-events')
       this.cursor.classList.add('focus')
@@ -177,7 +177,6 @@ export default {
       for (let i = 0; i < this.galleryItems.length; i++) {
         const position = this.margin * (this.currentIndex - i)
         if(i === 0) this.firstTransform = position
-        if(i === this.galleryItems.length) this.lastTransform = position
         TweenLite.to(this.galleryItems[i], 0.5, { y: position, ease: 'Quad.easeInOut', force3D: true });
       }
     },
@@ -193,7 +192,6 @@ export default {
       const pos = math.clamp(this.downPosition - mappedY, 0, this.series.length - 1)
 
       this.setPosition(pos)
-      this.dragParallax(mappedY)
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
@@ -209,17 +207,6 @@ export default {
       this.cursorX.update()
       this.cursorY.update()
       this.cursor.style.transform = `translate3d(${this.cursorX.get()}px, ${this.cursorY.get()}px, 0)`
-    },
-    dragParallax(y) {
-      let transform = math.clamp(y * 30, -30, 30)
-      for (let i = 0; i < this.galleryItems.length; i++) {
-        this.covers[i].style.transform = `translate3d(0,${transform}px, 0) scale3d(1.2, 1.2, 1)`
-      }
-    },
-    resetDragParallax() {
-      for (let i = 0; i < this.galleryItems.length; i++) {
-        this.covers[i].style.transform = ``
-      }
     },
     tick() {
       this.lerp.update(0.10)
@@ -243,7 +230,6 @@ export default {
       if(window.innerWidth < 768) return
       this.setPosScrollBar(this.currentIndex)
       this.disableDrag()
-      this.resetDragParallax()
       // this.initParallax()
     },
     getSize(i) {

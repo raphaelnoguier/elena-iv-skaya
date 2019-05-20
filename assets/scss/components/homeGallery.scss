@@ -62,6 +62,12 @@
     margin: auto;
     transition: width 0ms $ease-in-out-quad, height 0ms $ease-in-out-quad;
 
+    &:hover {
+      img {
+        transform: scale3d(1.2, 1.2, 1)
+      }
+    }
+
     a {
       user-select: none;
       display: block;

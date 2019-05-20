@@ -4,13 +4,6 @@
   box-sizing: border-box;
 }
 
-
-body {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 #app {
   position: relative;
   width: 100%;

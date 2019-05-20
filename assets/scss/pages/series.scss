@@ -249,6 +249,12 @@
     margin-bottom: 12.5vw;
     max-width: 72.5vw;
     position: relative;
+    opacity: 0;
+    transition: opacity 200ms $ease-in-out-quad 200ms;
+
+    .loaded & {
+      opacity: 1;
+    }
 
     @include max(md) {
       margin-top: 25.5vw;

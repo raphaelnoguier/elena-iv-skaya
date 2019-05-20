@@ -117,7 +117,7 @@
         }
       }
 
-      .link {
+      a {
         display: flex;
         justify-content: center;
         height: 100%;
@@ -157,6 +157,12 @@
     padding: 0 8vw 5vw;
     opacity: 0;
     transition: opacity 500ms ease 800ms;
+
+    &.drag {
+      .upper .titles .blur {
+        opacity: 1;
+      }
+    }
 
     .upper {
       display: flex;
@@ -299,14 +305,11 @@
 
       &.drag {
         .slider-item {
+          a {
+            pointer-events: none;
+          }
           .serie-slider-mask {
             transform: scaleX(0);
-          }
-        }
-
-        & + .slider-controls .titles {
-          .blur {
-            opacity: 1;
           }
         }
       }

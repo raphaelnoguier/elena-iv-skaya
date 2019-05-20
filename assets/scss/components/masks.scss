@@ -26,7 +26,7 @@
   margin: auto;
   display: block;
   z-index: 3;
-  transition: transform 500ms $ease-in-out-quad, background-color 1000ms ease;
+  transition: transform 500ms $ease-in-out-quad, background-color 500ms ease;
 
   [data-background="dark"] &  {
     background-color: #121212;

@@ -113,7 +113,6 @@ export default {
       featuredImageOffset: null,
       nav: null,
       offsetY: null,
-      sliderEnter: false,
       galleryItems: null,
       parallax: [],
       running: false
@@ -213,12 +212,18 @@ export default {
     },
     revealSlider() {
       this.reveal = reveal(
-        { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: () => {
+        { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: (status) => {
+          if(status.includes('down')) {
+            this.$refs.serieSlider.enableRaf()
+            this.$refs.serieSlider.enableCursor()
+            this.setTheme('dark')
+          } else {
+            if(status.includes('up-enter')) return
+            this.$refs.serieSlider.disableRaf()
+            this.$refs.serieSlider.disableCursor()
+            this.setTheme('white')
+          }
           this.toggleRaf()
-          this.$refs.serieSlider.toggleRaf()
-          this.$refs.serieSlider.toggleCursor()
-          this.sliderEnter = !this.sliderEnter
-          this.sliderEnter ? this.setTheme('dark') : this.setTheme('white')
         } }
       )
     },

@@ -8,15 +8,15 @@
       <div ref="slider" class="serie-slider">
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
           <div class="serie-slider-mask left"></div>
-          <div class="link" v-on:click="navigate(`/serie/${item.serie.uid}`, i)">
+          <nuxt-link v-on:click.native="navigate(i)" :to="`/serie/${item.serie.uid}`">
             <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" />
             <img v-else :src="item.serie.data.cover_serie_image.url" />
-          </div>
+          </nuxt-link>
           <div class="serie-slider-mask right"></div>
         </div>
       </div>
     </div>
-    <div class="slider-controls">
+    <div class="slider-controls" ref="controls">
       <div class="upper">
         <div class="play">
           <img data-load="preload" src="~/assets/img/ui/play.svg">
@@ -79,6 +79,7 @@ export default {
     this.covers = [].slice.call(this.sliderContent.querySelectorAll('.serie-slider .slider-item img'))
     this.mobileSliderWrapper = this.$el.querySelector('.mobile-overflow')
     this.mobileSliderBounds = this.mobileSliderWrapper.getBoundingClientRect()
+    this.controls = this.$refs.controls
 
     this.$parent.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseenter', this.enter)
@@ -92,8 +93,8 @@ export default {
     if(window.innerWidth < 768) this.mobileSliderWrapper.addEventListener('scroll', this.mobileSlider)
   },
   beforeDestroy() {
-    this.toggleRaf()
-    this.toggleCursor()
+    this.disableRaf()
+    this.disableCursor()
 
     if(window.innerWidth < 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider)
 
@@ -107,18 +108,21 @@ export default {
     this.$el.removeEventListener('mousemove', this.move)
   },
   methods: {
-    navigate(to, i) {
-      this.$router.push({path: to})
+    navigate(i) {
       this.covers[i].classList.add('active-link')
       document.body.style.overflow = 'hidden'
     },
-    toggleRaf() {
-      this.running = !this.running
-      if(this.running && window.innerWidth > 768) raf.add(this.tick)
-      else raf.remove(this.tick)
+    enableRaf() {
+      if(window.innerWidth > 768) raf.add(this.tick)
     },
-    toggleCursor() {
-      if(this.$route.name === 'serie-slug') this.cursor.classList.toggle('visible')
+    disableRaf() {
+      raf.remove(this.tick)
+    },
+    enableCursor() {
+      if(this.$route.name === 'serie-slug') this.cursor.classList.add('visible')
+    },
+    disableCursor() {
+      if(this.$route.name === 'serie-slug') this.cursor.classList.remove('visible')
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
@@ -135,6 +139,8 @@ export default {
     disableDrag() {
       this.isDrag = false
       this.cursor.classList.remove('focus')
+      this.sliderContent.classList.remove('drag')
+      this.controls.classList.remove('draf')
       this.xPosition = this.index
       this.lerp.set(this.index)
       this.sliderContent.classList.remove('no-events')
@@ -148,8 +154,11 @@ export default {
     },
     initDrag(cursor) {
       this.cursor.classList.add('focus')
+      this.sliderContent.classList.add('drag')
+      this.controls.classList.add('drag')
+
       this.isDrag = true
-      browser.desktop ? this.downX = cursor.x : this.downX = cursor.touches[0].clientX
+      this.downX = cursor.x
       this.downPosition = this.xPosition
     },
     move(cursor) {
@@ -179,7 +188,6 @@ export default {
       this.lerp.set(x)
     },
     tick() {
-      this.sliderContent.classList.toggle('drag', this.isDrag)
       this.lerp.update(0.10)
 
       const percentTranslate = math.map(this.lerp.get(), 0, this.nextSeries.length - 1, 0, 1)
@@ -196,7 +204,7 @@ export default {
     },
     resize () {
       this.containerBounds = this.$el.getBoundingClientRect()
-      this.sliderContentBounds =  this.sliderContent.getBoundingClientRect()
+      this.sliderContentBounds = this.sliderContent.getBoundingClientRect()
     },
     vw(v) {
       var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
