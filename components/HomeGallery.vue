@@ -2,12 +2,14 @@
   <div class="gallery-wrapper" ref="gallery">
     <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && ''">
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
-        <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`">
-          <img :src="serie.serie.data.cover_serie_image.url" alt="home-gallery-cover" />
-        </nuxt-link>
-        <div class="item-title">
-          <h3>{{serie.serie.data.title[0].text}}</h3>
-          <span>{{serie.serie.data.category}}</span>
+        <div class="gallery-item-content">
+          <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`">
+            <img :src="serie.serie.data.cover_serie_image.url" alt="home-gallery-cover" />
+          </nuxt-link>
+          <div class="item-title">
+            <h3>{{serie.serie.data.title[0].text}}</h3>
+            <span>{{serie.serie.data.category}}</span>
+          </div>
         </div>
       </div>
     </div>

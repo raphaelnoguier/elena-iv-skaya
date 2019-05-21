@@ -63,9 +63,20 @@
     transition: width 0ms $ease-in-out-quad, height 0ms $ease-in-out-quad;
 
     &:hover {
-      img {
-        transform: scale3d(1.2, 1.2, 1)
+      .gallery-item-content {
+        transform: scale3d(0.95, 0.95, 1);
+
+        img {
+          transform: scale3d(1.15, 1.15, 1)
+        }
       }
+    }
+
+    .gallery-item-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 500ms $ease-in-out-quad;
     }
 
     a {

@@ -18,7 +18,7 @@
           <div class="social-links">
             <ul>
               <li v-for="(item, index) in social_links" :key="index">
-                <a :href="item.url">{{item.link_text}}</a>
+                <a :href="item.url" target="_blank">{{item.link_text}}</a>
               </li>
             </ul>
           </div>
@@ -120,7 +120,7 @@ export default {
     }, 50)
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onScrollAbout)
+    window.removeEventListener('wheel', this.onScrollAbout)
     window.removeEventListener('resize', this.resize)
   },
   methods: {
@@ -140,7 +140,7 @@ export default {
       let circle = this.circle.getBoundingClientRect()
 
       this.contentOffsetBottom = wrapper.bottom - (featuredImage.height + featuredImage.top)
-      this.socialLinksOffset = (socialLinks.top + socialLinks.height) - (circle.height + circle.top)
+      this.socialLinksOffset = (socialLinks.top + socialLinks.height) - (circle.height + wrapper.top)
 
     },
     onScrollAbout() {
@@ -148,19 +148,18 @@ export default {
 
       let rotateOffset = math.map(window.scrollY, 0, this.socialLinksOffset, 0, 180)
 
-      console.log(Math.round(this.contentOffsetBottom), window.scrollY)
-      if(this.contentOffsetBottom > window.scrollY) {
-        this.featuredImage.style.transform = `translate3d(0,${window.scrollY}px, 0)`
-      }
+      // if(this.contentOffsetBottom > window.scrollY) {
+      //   this.featuredImage.style.transform = `translate3d(0,${window.scrollY}px, 0)`
+      // }
 
-      if(this.socialLinksOffset > window.scrollY) {
-        this.circle.style.transform = `translate3d(0, ${(window.scrollY - 4)}px, 0) rotate(${rotateOffset}deg)`
-      }
+      // if(this.socialLinksOffset > window.scrollY) {
+      //   this.circle.style.transform = `rotate(${rotateOffset}deg)`
+      // }
     },
     resetLayout() {
       this.circle.style.transform = 'translate3d(0,0,0)'
       this.featuredImage.style.transform = 'translate3d(0,0,0)'
-    }
+    },
   }
 }
 </script>

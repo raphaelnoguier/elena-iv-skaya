@@ -71,6 +71,7 @@ import ZoomSerie from "~/components/ZoomSerie"
 import { pageTransition } from '~/mixins/pageTransition.js'
 import math from '~/utils/math.js'
 import raf from '~/utils/raf.js'
+import TweenLite from 'gsap'
 
 export default {
   async asyncData ({ app, params, error, store}) {
@@ -137,11 +138,11 @@ export default {
     this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item .relative-container')
     this.$nextTick(() => {
       this.$parent.$parent.calcScroll()
-      if (window.innerWidth > 768 && browser.desktop){
+      if (window.innerWidth > 768){
         window.addEventListener('scroll', this.onScrollSerie);
         this.calcOffset()
         this.initParallax()
-        this.toggleRaf()
+        this.enableRaf()
       }
       this.revealSlider()
     });
@@ -157,10 +158,11 @@ export default {
     }
   },
   methods: {
-    toggleRaf() {
-      this.running = !this.running
-      if(this.running) raf.add(this.tick)
-      else raf.remove(this.tick)
+    enableRaf() {
+      raf.add(this.tick)
+    },
+    disableRaf() {
+      raf.remove(this.tick)
     },
     initParallax() {
       this.galleryItems.forEach((item, i) => {
@@ -169,7 +171,7 @@ export default {
       });
     },
     transform(item, y) {
-      item.style.transform = `translate3d(0, ${y}px, 0)`
+      TweenLite.set(item, {y: y, force3D: true })
     },
     resetParallax() {
       for (let i = 0; i < this.parallax.length; i++) {
@@ -179,10 +181,9 @@ export default {
     },
     tick() {
       const wHeight =  window.innerHeight
-
       for (let i = 0; i < this.parallax.length; i++) {
         const item = this.parallax[i].parallax
-        const offsetTop = -this.offsetY + this.parallax[i].offsetTop
+        const offsetTop = (-this.offsetY) + this.parallax[i].offsetTop
 
         const min = (-wHeight * 0.5) - wHeight * 0.75
         const max = wHeight + (wHeight * 0.75)
@@ -200,30 +201,27 @@ export default {
       }
     },
     calcOffset() {
-      let image = this.$el.querySelector('.featured-image').getBoundingClientRect()
-      this.featuredImageOffset = image.height
+      this.featuredImageOffset = this.$el.querySelector('.featured-image').getBoundingClientRect().height
     },
     resize() {
-      if(browser.desktop && window.innerWidth > 768) {
-        this.calcOffset();
-      } else {
-        this.resetParallax()
-      }
+      if(window.innerWidth > 768) this.calcOffset()
+      else this.resetParallax()
     },
     revealSlider() {
       this.reveal = reveal(
         { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: (status) => {
           if(status.includes('down')) {
+            this.disableRaf()
             this.$refs.serieSlider.enableRaf()
             this.$refs.serieSlider.enableCursor()
             this.setTheme('dark')
           } else {
             if(status.includes('up-enter')) return
+            this.enableRaf()
             this.$refs.serieSlider.disableRaf()
             this.$refs.serieSlider.disableCursor()
             this.setTheme('white')
           }
-          this.toggleRaf()
         } }
       )
     },

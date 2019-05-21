@@ -59,7 +59,7 @@ export default {
       downPosition: 0,
       downX: 0,
       isDrag: false,
-      dragStep: browser.desktop ? 250 : 150,
+      dragStep: 150,
       lerp: lerp(),
       containerBounds: null,
       sliderContent: null,
@@ -140,7 +140,7 @@ export default {
       this.isDrag = false
       this.cursor.classList.remove('focus')
       this.sliderContent.classList.remove('drag')
-      this.controls.classList.remove('draf')
+      this.controls.classList.remove('drag')
       this.xPosition = this.index
       this.lerp.set(this.index)
       this.sliderContent.classList.remove('no-events')
