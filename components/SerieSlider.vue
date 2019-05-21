@@ -90,13 +90,13 @@ export default {
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
 
-    if(window.innerWidth < 768) this.mobileSliderWrapper.addEventListener('scroll', this.mobileSlider)
+    if(window.innerWidth <= 768) this.mobileSliderWrapper.addEventListener('scroll', this.mobileSlider)
   },
   beforeDestroy() {
     this.disableRaf()
     this.disableCursor()
 
-    if(window.innerWidth < 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider)
+    if(window.innerWidth <= 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider)
 
     this.$parent.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseenter', this.enter)

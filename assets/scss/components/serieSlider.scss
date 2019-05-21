@@ -51,8 +51,24 @@
   }
 
   .mobile-overflow {
+
     @include max(md) {
+      padding-right: 54vw;
+      padding-left: 0;
       overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    @include max(sm) {
+      padding-right: 20vw;
+      padding-left: 10vw;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
+
       &::-webkit-scrollbar {
         display: none;
       }
@@ -169,8 +185,9 @@
       justify-content: space-between;
       color: white;
 
-      @include max(md) {
+      @include max(sm) {
         width: 100%;
+        padding-left: 10.01vw;
       }
 
       .titles {
@@ -190,6 +207,8 @@
           opacity: 0;
           background: linear-gradient(to left, #121212, transparent 30%),
           linear-gradient(to right, #121212, transparent 30%);
+          background: -webkit-gradient(linear, right top, left top, from(#121212), color-stop(30%, rgba(18,18,18,0))),
+          -webkit-gradient(linear, left top, right top, from(#121212), color-stop(30%, rgba(18,18,18,0)));
           transition: opacity 200ms;
 
           @include max(md) {
@@ -296,7 +315,7 @@
       left: 40vw;
 
       @include max(md) {
-        left: 23vw;
+        left: 25vw;
       }
 
       @include max(sm) {

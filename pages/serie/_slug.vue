@@ -192,20 +192,28 @@ export default {
           let y = null
 
           item.classList.contains('duo') ?
-          y = math.map(offsetTop, min, max, -100, 650)
+          y = math.map(offsetTop, min, max, -this.vw(6.944), this.vw(45.139))
           :
-          y = math.map(offsetTop, min, max, -50, 350)
+          y = math.map(offsetTop, min, max, -this.vw(3.472), this.vw(24.306))
 
           this.transform(item, y)
         }
       }
     },
     calcOffset() {
-      this.featuredImageOffset = this.$el.querySelector('.featured-image').getBoundingClientRect().height
+      let image = this.$el.querySelector('.featured-image').getBoundingClientRect()
+      this.featuredImageOffset = image.height
     },
     resize() {
-      if(window.innerWidth > 768) this.calcOffset()
-      else this.resetParallax()
+      if(window.innerWidth > 768) {
+        this.calcOffset()
+        raf.remove(this.tick)
+        raf.add(this.tick)
+      }
+      else {
+        this.resetParallax()
+        raf.remove(this.tick)
+      }
     },
     revealSlider() {
       this.reveal = reveal(
@@ -248,6 +256,10 @@ export default {
       if(ratio.includes('Duo')){
         return 'duo'
       }
+    },
+    vw(v) {
+      var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+      return (v * w) / 100
     },
   }
 };

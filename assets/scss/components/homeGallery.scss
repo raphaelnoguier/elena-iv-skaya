@@ -60,14 +60,15 @@
     width: 100%;
     position: relative;
     margin: auto;
-    transition: width 0ms $ease-in-out-quad, height 0ms $ease-in-out-quad;
 
     &:hover {
-      .gallery-item-content {
-        transform: scale3d(0.95, 0.95, 1);
+      @include min(md) {
+        .gallery-item-content {
+          transform: scale3d(0.95, 0.95, 1);
 
-        img {
-          transform: scale3d(1.15, 1.15, 1)
+          img {
+            transform: scale3d(1.15, 1.15, 1)
+          }
         }
       }
     }
