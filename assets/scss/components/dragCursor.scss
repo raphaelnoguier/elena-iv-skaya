@@ -8,6 +8,7 @@
   pointer-events: none;
   transition: opacity 200ms ease;
   opacity: 0;
+  transform: translate3d(50vw, 50vh, 0);
 
   @include max(md) {
     display: none;

@@ -10,7 +10,7 @@
 
   .gallery-item-wrapper {
     transform: translate3d(-12.5vw, 0, 0);
-    transition: transform 500ms $ease-in-out-quad;
+    transition: transform 500ms $ease-in-out-quad, height 500ms $ease-in-out-quad;
 
     @include max(md) {
       transform: translate3d(-7.8vw,0,0);
@@ -21,7 +21,7 @@
     }
 
     &:not(:first-child) {
-      margin-top: 6.875vw;
+      margin-top: 9.375vw;
 
       @include max(md) {
         margin-top: 13.021vw;
@@ -46,8 +46,11 @@
 
     &.full {
       transform: translate3d(0, 0, 0);
-      transition: width 800ms ease;
       width: 100%;
+
+      .gallery-item-content {
+        transition: transform 500ms $ease-reverse !important;
+      }
 
       @include max(md) {
         margin-top: 26.042vw;
@@ -281,20 +284,26 @@
   }
 
   &.drag {
-
     & > * {
       pointer-events: none;
     }
-
     .gallery-item-wrapper {
       transform: translate3d(0, 0, 0);
 
-      .full, .landscape {
+      &.full, .landscape {
+        transform: scale3d(0.422, 1, 1);
         height: 43.75vw;
-        width: 35vw;
       }
 
       .gallery-item {
+        &.full {
+          .gallery-item-content {
+            //height: 43.75vw;
+            transition: transform 500ms $ease-in-out-quad-reverse !important;
+            transform: scale3d(calc(1/ 0.422), 1, 1);
+          }
+        }
+
         img {
           transform: scale3d(1.2, 1.2, 1)
         }

@@ -16,6 +16,8 @@ import HomeGallery from "~/components/HomeGallery"
 import Footer from "~/components/Footer"
 import math from "~/utils/math.js"
 import reveal from "~/utils/reveal.js"
+import lerp from '~/utils/lerp.js'
+import raf from '~/utils/raf.js'
 import { pageTransition } from '~/mixins/pageTransition.js'
 
 export default {
@@ -71,14 +73,18 @@ export default {
     return {
       container: null,
       cursor: null,
+      cursorX: lerp(),
+      cursorY: lerp(),
       updateStatus: null,
       updateStatusOffset: null,
+      hasMoved: false
     }
   },
 
   mounted () {
     window.addEventListener('scroll', this.onScrollHome);
     window.addEventListener('resize', this.resize);
+    this.$el.addEventListener('mousemove', this.moveCursor)
 
     this.lastPublication = this.formatDate(this.lastPublication)
     this.updateStatus = this.$refs.homeHeader.$refs.updateStatus
@@ -92,6 +98,7 @@ export default {
       setTimeout(() => {
         if(browser.desktop && window.innerWidth > 768) {
           this.revealGalleryItems()
+          raf.add(this.tickCursor)
         }
       }, 1)
     })
@@ -100,8 +107,11 @@ export default {
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScrollHome);
     window.removeEventListener('resize', this.resize);
-    if (window.innerWidth > 768) { 
+    this.$el.removeEventListener('mousemove', this.moveCursor)
+
+    if (window.innerWidth > 768) {
       this.reveal.destroy()
+      raf.remove(this.tickCursor)
     }
   },
 
@@ -132,6 +142,17 @@ export default {
         this.updateStatus.classList.remove('animate')
         this.cursor.classList.remove('visible')
        }
+    },
+    tickCursor() {
+      this.cursorX.update()
+      this.cursorY.update()
+      this.cursor.style.transform = `translate3d(${this.cursorX.get()}px, ${this.cursorY.get()}px, 0)`
+    },
+    moveCursor(cursor) {
+      if(window.innerWidth < 768) return
+      this.hasMoved = true
+      this.cursorX.set(cursor.x - (this.cursor.clientWidth / 2))
+      this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
     },
     revealGalleryItems() {
       let tmp = this.galleryItems

@@ -1,6 +1,6 @@
 <template>
   <div class="gallery-wrapper" ref="gallery">
-    <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && ''">
+    <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && 'full'">
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
         <div class="gallery-item-content">
           <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`">
@@ -27,8 +27,6 @@ import raf from '~/utils/raf.js'
 export default {
   data() {
     return {
-      cursorX: lerp(),
-      cursorY: lerp(),
       parallax: [],
       offsetY: 0,
       running: false,
@@ -68,21 +66,21 @@ export default {
 
     if (window.innerWidth >= 768 && browser.desktop) {
       this.addListeners()
+      // this.initParallax()
     } else  {
       this.$parent.$parent.$parent.calcScroll()
     }
   },
   beforeDestroy() {
     if (window.innerWidth >= 768 && browser.desktop)  {
-      // this.toggleRaf()
       window.removeEventListener('resize', this.resize)
       window.removeEventListener('contextmenu', this.disableContextMenu)
       window.removeEventListener('scroll', this.lockScroll)
       this.$el.parentNode.removeEventListener('mousedown', this.down)
+      this.$el.parentNode.removeEventListener('mouseover', this.enter)
       this.$el.parentNode.removeEventListener('mousemove', this.move)
-      this.$el.parentNode.removeEventListener('mousemove', this.moveCursor)
       this.$el.parentNode.removeEventListener('mouseup', this.up)
-      this.$el.parentNode.removeEventListener('mouseleave', this.exit)
+      this.$el.parentNode.removeEventListener('mouseout', this.exit)
     }
   },
   methods: {
@@ -92,19 +90,18 @@ export default {
     },
     calcHeights() {
       this.$parent.$parent.$parent.calcScroll()
-      this.margin = this.vw(6.875)
+      this.margin = this.vw(9.375)
       this.totalHeightOnDrag = this.vw(43.75) * this.galleryItems.length
     },
-    // PARALLAX //
     addListeners() {
       window.addEventListener('contextmenu', this.disableContextMenu)
+      this.$el.parentNode.addEventListener('mouseover', this.enter)
       this.$el.parentNode.addEventListener('mousedown', this.down)
       this.$el.parentNode.addEventListener('mousemove', this.move)
-      this.$el.parentNode.addEventListener('mousemove', this.moveCursor)
       this.$el.parentNode.addEventListener('mouseup', this.up)
       this.$el.parentNode.addEventListener('mouseleave', this.exit)
-      // this.initParallax()
     },
+    // PARALLAX //
     initParallax() {
       raf.add(this.tickPrlx)
       this.galleryItems.forEach((item, i) => {
@@ -143,7 +140,7 @@ export default {
     },
     getClass(ratio) {
       if(ratio.includes('Big')){
-        return 'portrait'
+        return 'full'
       }
       if (ratio.includes('Landscape')) {
         return 'portrait'
@@ -154,7 +151,7 @@ export default {
     },
     // DRAG //
     enter() {
-      raf.add(this.tickCursor)
+      if(this.$parent.hasMoved) this.cursor.classList.add('visible')
     },
     down(cursor) {
       if(window.innerWidth < 768) return
@@ -195,20 +192,9 @@ export default {
 
       this.setPosition(pos)
     },
-    moveCursor(cursor) {
-      if(window.innerWidth < 768) return
-      if(!this.cursor.classList.contains('visible')) this.cursor.classList.add('visible')
-      this.cursorX.set(cursor.x - (this.cursor.clientWidth / 2))
-      this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
-    },
     setPosition (y) {
       this.yPosition = y
       this.lerp.set(y)
-    },
-    tickCursor() {
-      this.cursorX.update()
-      this.cursorY.update()
-      this.cursor.style.transform = `translate3d(${this.cursorX.get()}px, ${this.cursorY.get()}px, 0)`
     },
     tick() {
       this.lerp.update(0.10)
@@ -243,19 +229,22 @@ export default {
       if(!this.isDrag) return
       const offset = calcOffset.get(this.galleryItems[this.currentIndex]).top - (window.innerHeight * 0.5)
       const itemOffset = this.getSize(i)
+      console.log(itemOffset)
 
       window.scroll(0, (offset) + itemOffset)
     },
-    disableDrag() {
+    disableDrag(exit) {
       clearTimeout(this.timerId)
       this.isDrag = false
       TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
 
       this.dragComponent.$el.classList.remove('active')
-      this.cursor.classList.remove('focus', 'visible')
       this.sliderContent.classList.remove('no-events', 'drag')
       this.$parent.setTheme('white')
       this.progressDrag.style.transform = 'scale3d(1, 0, 1)'
+
+      if(exit) this.cursor.classList.remove('focus', 'visible')
+      else this.cursor.classList.remove('focus')
 
       raf.remove(this.tick)
     },
@@ -278,7 +267,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      this.disableDrag()
+      // this.disableDrag(true)
     },
   },
   props: { series: Array }

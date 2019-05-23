@@ -165,13 +165,13 @@ export default {
       raf.remove(this.tick)
     },
     initParallax() {
+      this.parallax = []
       this.galleryItems.forEach((item, i) => {
-        if(i = 0) return
         this.parallax.push({ offsetTop: item.offsetTop, parallax: item })
       });
     },
     transform(item, y) {
-      TweenLite.set(item, {y: y, force3D: true })
+      item.style.transform = `translate3d(0, ${y}vw, 0)`
     },
     resetParallax() {
       for (let i = 0; i < this.parallax.length; i++) {
@@ -192,9 +192,9 @@ export default {
           let y = null
 
           item.classList.contains('duo') ?
-          y = math.map(offsetTop, min, max, -this.vw(6.944), this.vw(45.139))
+          y = math.map(offsetTop, min, max, -6.944, 45.139)
           :
-          y = math.map(offsetTop, min, max, -this.vw(3.472), this.vw(24.306))
+          y = math.map(offsetTop, min, max, -3.472, 24.306)
 
           this.transform(item, y)
         }
@@ -207,8 +207,7 @@ export default {
     resize() {
       if(window.innerWidth > 768) {
         this.calcOffset()
-        raf.remove(this.tick)
-        raf.add(this.tick)
+        this.initParallax()
       }
       else {
         this.resetParallax()

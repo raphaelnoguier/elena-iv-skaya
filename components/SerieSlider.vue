@@ -86,6 +86,7 @@ export default {
     this.$el.addEventListener('mouseleave', this.exit)
 
     window.addEventListener('resize', this.resize)
+    window.addEventListener('contextmenu', this.disableContextMenu)
     this.$el.addEventListener('mouseup', this.up)
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
@@ -101,6 +102,7 @@ export default {
     this.$parent.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseenter', this.enter)
     this.$el.removeEventListener('mouseleave', this.exit)
+    window.removeEventListener('contextmenu', this.disableContextMenu)
 
     window.removeEventListener('resize', this.resize)
     this.$el.removeEventListener('mouseup', this.up)
@@ -108,6 +110,10 @@ export default {
     this.$el.removeEventListener('mousemove', this.move)
   },
   methods: {
+    disableContextMenu() {
+      clearTimeout(this.timerId)
+      this.isDrag = false
+    },
     navigate(i) {
       this.covers[i].classList.add('active-link')
       document.body.style.overflow = 'hidden'

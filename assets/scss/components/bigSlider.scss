@@ -29,7 +29,6 @@
     .image {
       height: 100%;
       width: 100%;
-      pointer-events: none;
 
       &::before {
         content: '';
@@ -48,6 +47,7 @@
         object-fit: cover;
         object-position: center;
         transition: opacity 500ms ease;
+        pointer-events: none;
 
         &.active-link {
           opacity: 0.5;

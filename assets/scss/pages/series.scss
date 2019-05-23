@@ -20,6 +20,7 @@
       height: 100vh;
       transform: translate3d(-8vw, 0, 0);
       overflow: hidden;
+      pointer-events: none;
 
       @include max(md) {
         width: 100%;
