@@ -3,6 +3,11 @@
   flex-direction: column;
   margin: auto;
   align-items: center;
+  padding-top: 12.5vw;
+
+  @include max(md) {
+    padding-top: 0;
+  }
 
   & > * {
     user-select: none;

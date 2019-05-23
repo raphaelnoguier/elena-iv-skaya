@@ -57,7 +57,12 @@ export default {
           hid: "description",
           name: "description",
           content: this.seo.description
-        }
+        },
+        {
+          hid: `og:image`,
+          property: 'og:image',
+          content: this.$store.getters.currentDoc.data.loader_image.url
+        },
       ],
       link: [
         {

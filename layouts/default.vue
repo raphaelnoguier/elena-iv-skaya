@@ -2,7 +2,7 @@
   <div id="app">
     <Loader/>
     <DragComponent v-if="$route.name === 'index'" :series="series" ref="dragComponent"/>
-    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" :class="[$route.name === 'index' ? 'homepage' : '']" />
+    <DragCursor ref="cursor" v-if="!$route.path.includes('about')" :class="[$route.name === 'index' ? 'homepage' : 'visible']" />
     <FakeNav ref="fakeNav"/>
     <div ref="smoothComponent" :class="domLoaded ? 'loaded': ''" class="scroll-content">
       <nuxt ref="nuxt"/>

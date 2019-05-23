@@ -127,7 +127,12 @@ export default {
           rel: 'icon',
           type: 'image/png',
           href: this.featuredImage.url
-        }
+        },
+        {
+          hid: `og:image`,
+          property: 'og:image',
+          content: this.featuredImage.url
+        },
       ],
     }
   },
