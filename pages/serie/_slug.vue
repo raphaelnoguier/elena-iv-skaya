@@ -122,16 +122,23 @@ export default {
   head() {
     return{
       title: 'Elena Iv-Skaya - ' + this.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.description
+        },
+        {
+          hid: `og:image`,
+          property: 'og:image',
+          content: this.$store.getters.currentDoc.data.loader_image.url
+        },
+      ],
       link: [
         {
           rel: 'icon',
           type: 'image/png',
           href: this.featuredImage.url
-        },
-        {
-          hid: `og:image`,
-          property: 'og:image',
-          content: this.featuredImage.url
         },
       ],
     }
