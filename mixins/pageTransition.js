@@ -12,6 +12,7 @@ let createTransition = () => {
         name: 'page',
         css: false,
         beforeLeave() {
+          document.body.classList.add('lock')
           if(fromSerie) {
             imgTransition = this.$store.getters.serieLoaderImg
           } else {
@@ -72,6 +73,7 @@ let createTransition = () => {
           }
         },
         beforeEnter() {
+          document.body.classList.remove('lock')
           setTimeout(() => this.$parent.domLoaded = true, 1)
         },
         enter(el, done) {

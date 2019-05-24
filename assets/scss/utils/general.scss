@@ -12,9 +12,15 @@
 
 .scroll-content {
   position: fixed;
+  will-change: transform;
   width: 100%;
   top: 0;
   left: 0;
+
+  &.safari {
+    position: relative;
+    will-change: none;
+  }
 
   @include max(md) {
     height: 100% !important;

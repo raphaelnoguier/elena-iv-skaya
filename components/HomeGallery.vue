@@ -3,8 +3,8 @@
     <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && 'full'">
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
         <div class="gallery-item-content">
-          <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`">
-            <img :src="serie.serie.data.cover_serie_image.url" alt="home-gallery-cover" />
+          <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`" draggable="false">
+            <img :src="serie.serie.data.cover_serie_image.url" :alt="serie.serie.data.title[0].text" />
           </nuxt-link>
           <div class="item-title">
             <h3>{{serie.serie.data.title[0].text}}</h3>
@@ -58,7 +58,7 @@ export default {
     this.galleryItems = this.$refs.gallery.querySelectorAll('.gallery-item')
     this.covers = this.$refs.gallery.querySelectorAll('.gallery-item img')
     this.firstTransform = 0
-    this.cursor.classList.remove('visible')
+    this.cursor.classList.add('homepage')
 
     this.calcHeights()
 
@@ -136,7 +136,6 @@ export default {
     updateTransitionImg(serieCover, index) {
       this.galleryItems[index].querySelector('img').classList.add('active-link')
       this.$store.getters.currentDoc.data.loader_image.url = serieCover
-      document.body.style.overflow = 'hidden'
     },
     getClass(ratio) {
       if(ratio.includes('Big')){
@@ -239,7 +238,7 @@ export default {
       TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
 
       this.dragComponent.$el.classList.remove('active')
-      this.sliderContent.classList.remove('no-events', 'drag')
+      this.sliderContent.classList.remove('drag', 'no-events')
       this.$parent.setTheme('white')
       this.progressDrag.style.transform = 'scale3d(1, 0, 1)'
 

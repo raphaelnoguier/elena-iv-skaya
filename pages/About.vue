@@ -2,8 +2,11 @@
   <section class="page about">
     <div class="about-wrapper">
       <div class="about-image">
-        <div class="image-mask"></div>
-        <img :src="main_image" data-load="preload" alt="elena portrait" />
+        <div class="image-mask" ref="aboutMask"></div>
+        <div class="about-mask" ref="aboutMask">
+          <img :src="main_image" data-load="preload" alt="elena portrait" />
+        </div>
+        <img :src="main_image" data-load="preload" alt="elena portrait" ref="aboutImage" class="gray" />
         <div class="about-quote">
           <h3>{{title}}</h3>
         </div>
@@ -35,25 +38,25 @@
               </div>
             </div>
           </div>
+          <div class="about-footer">
+            <div class="agency-representations">
+              <span>Agency representations</span>
+              <ul>
+                <li v-for="(item, index) in agency_representations" :key="index">
+                  {{item.region}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="credits">
+              <span>Website credits</span>
+              <ul>
+                <li v-for="(item, index) in credits" :key="index">
+                  {{item.role}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="about-footer">
-      <div class="agency-representations">
-        <span>Agency representations</span>
-        <ul>
-          <li v-for="(item, index) in agency_representations" :key="index">
-            {{item.region}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="credits">
-        <span>Website credits</span>
-        <ul>
-          <li v-for="(item, index) in credits" :key="index">
-            {{item.role}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
-          </li>
-        </ul>
       </div>
     </div>
   </section>
@@ -112,17 +115,15 @@ export default {
   },
   mounted() {
     this.circle = this.$refs.circle
-    this.featuredImage = this.$el.querySelector('img')
+    this.mask = this.$refs.aboutMask
+    this.aboutImageH = this.$refs.aboutImage.getBoundingClientRect().height
 
     this.setTheme()
+    this.$parent.$parent.calcScroll()
 
     window.addEventListener('scroll', this.onScrollAbout)
     window.addEventListener('resize', this.resize)
 
-    setTimeout(() =>  {
-      if(browser.desktop && window.innerWidth > 768) this.calcOffset()
-      this.$parent.$parent.calcScroll()
-    }, 50)
   },
   beforeDestroy() {
     window.removeEventListener('wheel', this.onScrollAbout)
@@ -131,39 +132,23 @@ export default {
   methods: {
     setTheme() {
       document.body.dataset.background = 'dark'
-      document.body.style.overflow = 'auto'
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) this.calcOffset()
       this.resetLayout()
     },
-    calcOffset() {
-      let wrapper = this.$el.querySelector('.about-wrapper').getBoundingClientRect()
-      let featuredImage = this.$el.querySelector('img').getBoundingClientRect()
-
-      let socialLinks = this.$el.querySelector('.about-right .social-links').getBoundingClientRect()
-      let circle = this.circle.getBoundingClientRect()
-
-      this.contentOffsetBottom = wrapper.bottom - (featuredImage.height + featuredImage.top)
-      this.socialLinksOffset = (socialLinks.top + socialLinks.height) - (circle.height + wrapper.top)
-
-    },
     onScrollAbout() {
       if(window.innerWidth < 768) return
 
-      let rotateOffset = math.map(window.scrollY, 0, this.socialLinksOffset, 0, 180)
+      let rotateOffset = math.map(window.scrollY, 0, this.aboutImageH, 0, 180)
+      let maskOffset = math.map(window.scrollY, 0, this.aboutImageH, 100, 0)
 
-      // if(this.contentOffsetBottom > window.scrollY) {
-      //   this.featuredImage.style.transform = `translate3d(0,${window.scrollY}px, 0)`
-      // }
+      console.log(maskOffset)
 
-      // if(this.socialLinksOffset > window.scrollY) {
-      //   this.circle.style.transform = `rotate(${rotateOffset}deg)`
-      // }
+      this.circle.style.transform = `rotate(${rotateOffset}deg)`
+      this.mask.style.clipPath = `inset(0 0 ${maskOffset}% 0)`
     },
     resetLayout() {
-      this.circle.style.transform = 'translate3d(0,0,0)'
-      this.featuredImage.style.transform = 'translate3d(0,0,0)'
     },
   }
 }

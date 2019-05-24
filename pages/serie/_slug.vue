@@ -37,11 +37,11 @@
       <div ref="serieGallery" class="serie-gallery">
         <div class="gallery-item" v-for="(image, i) in gallery" :key="i" :class="getClass(image.ratio)">
           <div class="relative-container">
-            <img v-lazy="image.image.url" :alt="`image-serie-${i}`">
+            <img v-lazy="image.image.url" :alt="`Serie ${title}#${i}`">
             <div class="placeholder"></div>
           </div>
           <div class="relative-container duo" v-if="image.ratio === 'Duo'">
-            <img v-lazy="image.duo_image.url" :alt="`image-serie-${i}`">
+            <img v-lazy="image.duo_image.url" :alt="`Serie ${title}#${i}`">
             <div class="placeholder"></div>
           </div>
         </div>
@@ -144,10 +144,11 @@ export default {
     }
   },
   mounted() {
-    document.body.style.overflow = 'auto'
     this.$store.commit('SET_SERIE_LOADER_IMG', this.$store.getters.currentDoc.data.loader_image.url)
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item .relative-container')
+    document.body.classList.remove('lock')
+    
     this.$nextTick(() => {
       this.$parent.$parent.calcScroll()
       if (window.innerWidth > 768){
@@ -232,7 +233,6 @@ export default {
           if(status.includes('down')) {
             this.disableRaf()
             this.$refs.serieSlider.enableRaf()
-            this.$refs.serieSlider.enableCursor()
             this.setTheme('dark')
           } else {
             if(status.includes('up-enter')) return

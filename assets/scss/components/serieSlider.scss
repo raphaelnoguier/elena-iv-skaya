@@ -164,6 +164,7 @@
 
         &.active-link {
           opacity: 0.25;
+          cursor: wait;
         }
       }
     }
@@ -328,7 +329,7 @@
             pointer-events: none;
           }
           .serie-slider-mask {
-            transform: scaleX(0);
+            transform: scale3d(0, 1, 1);
           }
         }
       }

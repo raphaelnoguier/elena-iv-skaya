@@ -94,7 +94,6 @@ export default {
     this.lastPublication = this.formatDate(this.lastPublication)
     this.updateStatus = this.$refs.homeHeader.$refs.updateStatus
     this.cursor = this.$parent.$parent.$refs.cursor.$el
-    document.body.style.overflow = 'auto'
     this.galleryItems = this.$refs.homeGallery.$el.querySelectorAll('.gallery-item-wrapper')
 
     this.$nextTick(() => {

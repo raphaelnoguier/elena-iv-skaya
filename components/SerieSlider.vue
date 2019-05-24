@@ -8,7 +8,7 @@
       <div ref="slider" class="serie-slider">
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
           <div class="serie-slider-mask left"></div>
-          <nuxt-link v-on:click.native="navigate(i)" :to="`/serie/${item.serie.uid}`">
+          <nuxt-link v-on:click.native="navigate(i)" :to="`/serie/${item.serie.uid}`" draggable="false">
             <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" />
             <img v-else :src="item.serie.data.cover_serie_image.url" />
           </nuxt-link>
@@ -80,9 +80,9 @@ export default {
     this.mobileSliderWrapper = this.$el.querySelector('.mobile-overflow')
     this.mobileSliderBounds = this.mobileSliderWrapper.getBoundingClientRect()
     this.controls = this.$refs.controls
+    this.cursor.classList.remove('homepage')
 
-    this.$parent.$el.addEventListener('mousemove', this.moveCursor)
-    this.$el.addEventListener('mouseenter', this.enter)
+    this.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseleave', this.exit)
 
     window.addEventListener('resize', this.resize)
@@ -100,7 +100,6 @@ export default {
     if(window.innerWidth <= 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider)
 
     this.$parent.$el.removeEventListener('mousemove', this.moveCursor)
-    this.$el.removeEventListener('mouseenter', this.enter)
     this.$el.removeEventListener('mouseleave', this.exit)
     window.removeEventListener('contextmenu', this.disableContextMenu)
 
@@ -116,7 +115,6 @@ export default {
     },
     navigate(i) {
       this.covers[i].classList.add('active-link')
-      document.body.style.overflow = 'hidden'
     },
     enableRaf() {
       if(window.innerWidth > 768) raf.add(this.tick)
@@ -124,19 +122,14 @@ export default {
     disableRaf() {
       raf.remove(this.tick)
     },
-    enableCursor() {
-      if(this.$route.name === 'serie-slug') this.cursor.classList.add('visible')
-    },
     disableCursor() {
       if(this.$route.name === 'serie-slug') this.cursor.classList.remove('visible')
     },
     moveCursor(cursor) {
       if(window.innerWidth < 768) return
+      if(!this.cursor.classList.contains('visible')) setTimeout(() => this.cursor.classList.add('visible'), 200);
       this.cursorX.set(cursor.x - (this.cursor.clientWidth / 2))
       this.cursorY.set(cursor.y - (this.cursor.clientHeight / 2))
-    },
-    enter(cursor) {
-      this.cursor.classList.add('visible')
     },
     up() {
       if(this.isDrag) this.disableDrag()
@@ -159,6 +152,7 @@ export default {
       this.timerId = setTimeout(() => this.initDrag(cursor), 350)
     },
     initDrag(cursor) {
+      this.sliderContent.classList.add('no-events')
       this.cursor.classList.add('focus')
       this.sliderContent.classList.add('drag')
       this.controls.classList.add('drag')
@@ -169,8 +163,8 @@ export default {
     },
     move(cursor) {
       if(!this.isDrag) return
-      this.sliderContent.classList.add('no-events')
-      browser.desktop ? this.moveX = cursor.x : this.moveX = cursor.touches[0].clientX
+      this.moveX = cursor.x
+
       const translateX = this.moveX - this.downX
       const mappedX = translateX > 0 ? math.map(translateX, 0, this.dragStep, 0, 1) : math.map(translateX, 0, -this.dragStep, 0, -1)
       const pos = math.clamp(this.downPosition - mappedX, 0, this.nextSeries.length - 1)
@@ -189,8 +183,10 @@ export default {
     setPosition (x) {
       const intPos = Math.round(x)
       this.xPosition = x
+
       if (intPos !== this.index) this.index = intPos
       this.$refs.index.innerHTML = this.index + 1
+
       this.lerp.set(x)
     },
     tick() {
@@ -217,6 +213,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
+      this.cursor.classList.remove('visible')
       this.up()
     },
     mobileSlider() {
