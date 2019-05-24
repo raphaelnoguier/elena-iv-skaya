@@ -1,6 +1,8 @@
 <template>
   <div class="gallery-wrapper" ref="gallery">
     <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && 'full'">
+      <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask left"></div>
+      <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask right"></div>
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
         <div class="gallery-item-content">
           <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`" draggable="false">

@@ -3,10 +3,7 @@
     <div class="about-wrapper">
       <div class="about-image">
         <div class="image-mask" ref="aboutMask"></div>
-        <div class="about-mask" ref="aboutMask">
-          <img :src="main_image" data-load="preload" alt="elena portrait" />
-        </div>
-        <img :src="main_image" data-load="preload" alt="elena portrait" ref="aboutImage" class="gray" />
+        <img :src="main_image" data-load="preload" alt="elena portrait" ref="aboutImage"/>
         <div class="about-quote">
           <h3>{{title}}</h3>
         </div>
@@ -103,6 +100,26 @@ export default {
           property: 'og:image',
           content: this.$store.getters.currentDoc.data.loader_image.url
         },
+        {
+          hid: `twitter:card`,
+          property: `twitter:card`,
+          content: 'summary_large_image'
+        },
+        {
+          hid: `twitter:title`,
+          property: `twitter:title`,
+          content: "About - Elena Iv-Skaya"
+        },
+        {
+          hid: `twitter:description`,
+          property: `twitter:description`,
+          content: this.first_paragraph
+        },
+        {
+          hid: `twitter:image`,
+          property: `twitter:image`,
+          content: this.$store.getters.currentDoc.data.loader_image.url
+        },
       ],
       link: [
         {
@@ -141,12 +158,7 @@ export default {
       if(window.innerWidth < 768) return
 
       let rotateOffset = math.map(window.scrollY, 0, this.aboutImageH, 0, 180)
-      let maskOffset = math.map(window.scrollY, 0, this.aboutImageH, 100, 0)
-
-      console.log(maskOffset)
-
       this.circle.style.transform = `rotate(${rotateOffset}deg)`
-      this.mask.style.clipPath = `inset(0 0 ${maskOffset}% 0)`
     },
     resetLayout() {
     },

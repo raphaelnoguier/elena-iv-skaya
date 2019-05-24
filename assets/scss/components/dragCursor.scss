@@ -23,6 +23,7 @@
 
     svg {
       width: 0.75vw;
+      max-width: 40px;
       position: relative;
       transition: transform 500ms $ease-in-out-quad;
 
@@ -40,6 +41,8 @@
   .circle {
     width: 4vw;
     height: 4vw;
+    max-width: 90px;
+    max-height: 90px;
     border-radius: 20vw;
     border: 2px solid #FCF9F5;
     background: transparent;

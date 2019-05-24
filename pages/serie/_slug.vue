@@ -133,6 +133,26 @@ export default {
           property: 'og:image',
           content: this.$store.getters.currentDoc.data.loader_image.url
         },
+        {
+          hid: `twitter:card`,
+          property: `twitter:card`,
+          content: 'summary_large_image'
+        },
+        {
+          hid: `twitter:title`,
+          property: `twitter:title`,
+          content: 'Elena Iv-Skaya - ' + this.title
+        },
+        {
+          hid: `twitter:description`,
+          property: `twitter:description`,
+          content: this.description
+        },
+        {
+          hid: `twitter:image`,
+          property: `twitter:image`,
+          content: this.$store.getters.currentDoc.data.loader_image.url
+        },
       ],
       link: [
         {
