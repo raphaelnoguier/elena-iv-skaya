@@ -134,6 +134,16 @@ export default {
           content: 'Elena Iv-Skaya - ' + this.title,
         },
         {
+          hid: `og:url`,
+          property: 'og:url',
+          content: window.location.href
+        },
+        {
+          hid: `og:type`,
+          property: 'og:type',
+          content: "website"
+        },
+        {
           hid: `og:description`,
           property: 'og:description',
           content: this.description
@@ -147,6 +157,11 @@ export default {
           hid: `twitter:card`,
           property: `twitter:card`,
           content: 'summary_large_image'
+        },
+        {
+          hid: `twitter:url`,
+          property: `twitter:url`,
+          content: window.location.href
         },
         {
           hid: `twitter:title`,
