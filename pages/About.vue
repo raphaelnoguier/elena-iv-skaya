@@ -96,6 +96,16 @@ export default {
           content: this.first_paragraph
         },
         {
+          hid: `og:title`,
+          property: 'og:title',
+          content: "About - Elena Iv-Skaya"
+        },
+        {
+          hid: `og:description`,
+          property: 'og:description',
+          content: this.first_paragraph
+        },
+        {
           hid: `og:image`,
           property: 'og:image',
           content: this.$store.getters.currentDoc.data.loader_image.url

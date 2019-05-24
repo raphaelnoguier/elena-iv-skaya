@@ -129,6 +129,16 @@ export default {
           content: this.description
         },
         {
+          hid: `og:title`,
+          property: 'og:title',
+          content: 'Elena Iv-Skaya - ' + this.title,
+        },
+        {
+          hid: `og:description`,
+          property: 'og:description',
+          content: this.description
+        },
+        {
           hid: `og:image`,
           property: 'og:image',
           content: this.$store.getters.currentDoc.data.loader_image.url
