@@ -66,7 +66,7 @@ export default {
         {
           hid: `og:url`,
           property: 'og:url',
-          content: window.location.href
+          content: `https://ivskaya.com/${this.$route.path}`
         },
         {
           hid: `og:type`,
@@ -91,7 +91,7 @@ export default {
         {
           hid: `twitter:url`,
           property: `twitter:url`,
-          content: window.location.href
+          content: `https://ivskaya.com/${this.$route.path}`
         },
         {
           hid: `twitter:title`,
