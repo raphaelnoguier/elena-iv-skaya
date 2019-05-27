@@ -1,9 +1,9 @@
 <template>
   <div class="gallery-wrapper" ref="gallery">
     <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && 'full'">
-      <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask left"></div>
-      <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask right"></div>
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
+        <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask left"></div>
+        <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask right"></div>
         <div class="gallery-item-content">
           <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`" draggable="false">
             <img :src="serie.serie.data.cover_serie_image.url" :alt="serie.serie.data.title[0].text" />
@@ -31,17 +31,14 @@ export default {
     return {
       parallax: [],
       offsetY: 0,
-      running: false,
       currentIndex: 0,
-      yPosition: 0,
-      scrollPosition: 0,
       downPosition: 0,
       downY: 0,
       isDrag: false,
       dragStep: 75,
       lerp: lerp(),
       timerId: null,
-      spacings: [],
+      speedUp: 4
     }
   },
   mounted () {
@@ -144,7 +141,7 @@ export default {
         return 'full'
       }
       if (ratio.includes('Landscape')) {
-        return 'portrait'
+        return 'landscape'
       }
       if (ratio.includes('Portrait')) {
         return 'portrait'
@@ -165,19 +162,20 @@ export default {
 
       this.sliderContent.classList.add('drag', 'no-events')
       this.cursor.classList.add('focus')
-      this.dragComponent.$el.classList.add('active')
       this.$parent.setTheme('dark')
 
       this.downY = cursor.y
       this.downPosition = this.currentIndex
       this.lerp.immediateSet(this.currentIndex)
       raf.add(this.tick)
+
+      setTimeout(() => this.dragComponent.$el.classList.add('active'), 200)
     },
     calcPositions() {
       for (let i = 0; i < this.galleryItems.length; i++) {
         const position = this.margin * (this.currentIndex - i)
         if(i === 0) this.firstTransform = position
-        TweenLite.to(this.galleryItems[i], 0.5, { y: position, ease: 'Quad.easeInOut', force3D: true });
+        TweenLite.to(this.galleryItems[i], 0.5, { y: position, ease: 'Quad.easeInOut', force3D: true })
       }
     },
     resetDrag() {
@@ -189,22 +187,24 @@ export default {
 
       const translateY = this.moveY - this.downY
       const mappedY = translateY > 0 ? math.map(translateY, 0, this.dragStep, 0, 1) : math.map(translateY, 0, -this.dragStep, 0, -1)
-      const pos = math.clamp(this.downPosition - mappedY, 0, this.series.length - 1)
+      const pos = math.clamp(this.downPosition - mappedY, 0, this.galleryItems.length - 1)
 
       this.setPosition(pos)
     },
     setPosition (y) {
-      this.yPosition = y
       this.lerp.set(y)
     },
     tick() {
       this.lerp.update(0.10)
 
-      const percentTranslate = math.map(this.lerp.get(), 0, this.series.length, 0, 1)
+      const percentTranslate = math.map(this.lerp.get(), 0, this.galleryItems.length, 0, 1)
       const percentTranslateTexts = math.map(this.lerp.get(), 0, 1, 0, 1.75)
       const percentTranslateCover = math.map(this.lerp.get(), 0, 1, 0, 43.75)
       const size = this.totalHeightOnDrag
       let y = percentTranslate * size
+      const offset = calcOffset.get(this.sliderContent).top + this.firstTransform - (window.innerHeight * 0.5) + this.vw(21.875)
+
+      this.checkLimitZone()
 
       this.progressDrag.style.transform = `scale3d(1, ${percentTranslate}, 1)`
       this.titleMask.style.transform = `translate3d(0, -${percentTranslateTexts}vw, 0)`
@@ -212,8 +212,19 @@ export default {
       this.coverLeft.style.transform = `translate3d(0, -${percentTranslateCover}vw, 0)`
       this.coverRight.style.transform = `translate3d(0, -${percentTranslateCover}vw, 0)`
 
-      window.scroll(0, y + (calcOffset.get(this.sliderContent).top + this.firstTransform - (window.innerHeight * 0.5) + this.vw(21.875)))
+      window.scroll(0, y + (offset))
       this.setIndex(this.lerp.get())
+    },
+    checkLimitZone() {
+      const cursor = {y: this.moveY }
+      if(this.moveY < 100 ) {
+        this.downY += this.speedUp
+        this.move(cursor)
+      }
+      else if(this.moveY > (window.innerHeight - 100)) {
+        this.downY -= this.speedUp
+        this.move(cursor)
+      }
     },
     up() {
       if(window.innerWidth < 768) return
@@ -230,7 +241,6 @@ export default {
       if(!this.isDrag) return
       const offset = calcOffset.get(this.galleryItems[this.currentIndex]).top - (window.innerHeight * 0.5)
       const itemOffset = this.getSize(i)
-      console.log(itemOffset)
 
       window.scroll(0, (offset) + itemOffset)
     },

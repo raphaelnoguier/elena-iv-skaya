@@ -13,10 +13,26 @@
     position: fixed;
     top:50%;
     transform: translateY(-50%);
-    height: 1px;
-    background: #F9F9F9;
     width: 100%;
     opacity: 0.1;
+    margin: auto;
+    right: 0;
+    left: 0;
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      width: calc(100% - 67vw);
+      height: 1px;
+      background: #F9F9F9;
+    }
+
+    &:before {
+      left: 0;
+    }
+    &:after {
+      right: 0;
+    }
   }
 
   .drag-component-wrapper {
@@ -145,6 +161,7 @@
       overflow: hidden;
       margin-top: 1vw;
       position: relative;
+      left: 0.28vw;
 
       .blur {
         top: 0;
