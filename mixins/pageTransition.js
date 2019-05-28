@@ -16,7 +16,8 @@ let createTransition = () => {
       const mask = transitionContainer.querySelector('.image-transition img')
       const fixedEls = document.querySelector('.fixed-elements')
       const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
-      const disable = function(e) {
+      
+      function disable(e) {
         e.preventDefault()
       }
 
@@ -101,15 +102,14 @@ let createTransition = () => {
           let nav = this.$parent.$refs.nav.$el
           el.classList.remove('page-leave')
           el.classList.add('page-enter')
-          done()
 
           app.removeEventListener('touchmove', disable, false)
           app.removeEventListener('scroll', disable, false)
           app.onmousewheel = app.onmousewheel = null
-          app.onwheel = null
-          document.body.classList.remove('lock')
+          app.onwheel = null;
 
-          setTimeout(() => nav.classList.remove('before-enter'), 200);
+          setTimeout(() => nav.classList.remove('before-enter'), 200)
+          done()
         }
       }
     },

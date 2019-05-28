@@ -23,6 +23,7 @@
       pointer-events: none;
 
       @include max(md) {
+        pointer-events: auto;
         width: 100%;
         transform: translate3d(0, 0, 0);
         height: 89.323vw;
