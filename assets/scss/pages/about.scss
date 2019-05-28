@@ -101,7 +101,6 @@
 
     .about-content {
       display: flex;
-      color:white;
       width: calc(65% - 11.25vw);
       margin-top: 25.75vw;
 
@@ -145,6 +144,7 @@
             left: 2.97vw;
             top: 0.35vw;
             transform-origin: bottom center;
+            color: white;
           }
         }
       }
@@ -159,6 +159,7 @@
           li {
             @include actaBook(2vw);
             line-height: 3.125vw;
+            color: white;
 
             @include max(md) {
               font-size: 4.688vw;
@@ -188,6 +189,10 @@
           @include actaBook(2vw);
           line-height: 3.125vw;
 
+          p {
+            color: white;
+          }
+
           @include max(md) {
             font-size: 4.688vw;
             line-height: 6.510vw;
@@ -203,6 +208,10 @@
           display: flex;
           justify-content: space-between;
           margin-top: 3.75vw;
+
+          p {
+            color: white;
+          }
 
           @include max(md) {
             margin-top: 12.370vw;
@@ -272,6 +281,7 @@
       letter-spacing: 0.125vw;
       text-transform: uppercase;
       margin-bottom: 0.625vw;
+      color: white;
 
       @include max(md) {
         font-size: 2.083vw;
@@ -289,6 +299,7 @@
     ul li {
       @include sofiaProLight(1.125vw);
       line-height: 1.875vw;
+      color: white;
 
       @include max(md){
         font-size: 2.604vw;

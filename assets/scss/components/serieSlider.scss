@@ -41,7 +41,10 @@
     @include actaDisplayLight(5.625vw);
     line-height: 6.250vw;
     text-align: center;
-    color:white;
+
+    span {
+      color:white;
+    }
 
     @include max(md) {
       font-size: 10.417vw;
@@ -260,6 +263,7 @@
           padding-left: 1.25vw;
           opacity: 1;
           transition: opacity 500ms ease;
+          color: white;
 
           @include max(md) {
             width: 41.406vw;
@@ -284,6 +288,10 @@
       .index {
         @include sofiaProMedium(0.875vw);
         line-height: 1.875vw;
+
+        span {
+          color: white;
+        }
 
         @include max(md) {
           font-size: 2.083vw;

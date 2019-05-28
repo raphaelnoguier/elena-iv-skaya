@@ -466,7 +466,10 @@
     @include verticalText(360);
 
     [data-background='dark'] & {
-      color:white;
+
+      span {
+        color:white;
+      }
 
       .line {
         border-color:white;
