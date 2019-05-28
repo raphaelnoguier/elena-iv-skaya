@@ -47,7 +47,7 @@
 <script>
 import anime from 'animejs'
 import HomeSlider from '~/components/HomeSlider'
-import calcOffset from '~/utils/offset.js';
+import calcOffset from '~/utils/offset.js'
 import BezierEasing from 'bezier-easing'
 import browser from '~/utils/browser.js'
 
@@ -66,33 +66,30 @@ export default {
   },
   mounted() {
     this.$parent.$parent.$parent.$refs.fixedElements.$el.appendChild(this.$refs.updateStatus)
+    this.sliders = this.$el.querySelectorAll('.home-slider-wrapper')
   },
   methods: {
     slide(direction) {
-      let sliderWrapper = this.$el.querySelectorAll('.home-slider-wrapper');
 
-      sliderWrapper.forEach(slider => {
-        let slides = slider.querySelectorAll(".slide");
-        let activeSlide = slider.querySelector(".active");
-        let activeSlideIndex = activeSlide.dataset.slide;
-        let isSmallSlider = slider.classList.contains('small-slider');
+      for (let i = 0; i < this.sliders.length; i++) {
+        const slider = this.sliders[i];
+
+        let slides = slider.querySelectorAll(".slide")
+        let activeSlide = slider.querySelector(".active")
+        let activeSlideIndex = activeSlide.dataset.slide
+        let isSmallSlider = slider.classList.contains('small-slider')
         const easingBottom = BezierEasing(isSmallSlider ? 0.85 : 0.7, 0.200, 0.175, 1)
 
-        direction === 'next' ? activeSlideIndex++ : activeSlideIndex--;
+        direction === 'next' ? ++activeSlideIndex : --activeSlideIndex
 
         if (activeSlideIndex > slides.length) activeSlideIndex = 1
+        if(activeSlideIndex < 1) activeSlideIndex = slides.length
+        this.slideIndex = activeSlideIndex
 
-        if(activeSlideIndex < 1) activeSlideIndex = slides.length;
+        let nextSlide = slider.querySelector(".slide[data-slide='" + activeSlideIndex + "']")
+        nextSlide.classList.add('behind')
 
-        this.slideIndex = activeSlideIndex;
-
-        let nextSlide = slider.querySelector(".slide[data-slide='" + activeSlideIndex + "']");
-
-        nextSlide.classList.add('behind');
-
-        let values = {
-          x: direction === 'next' ? 0 : 100,
-        }
+        let values = { x: direction === 'next' ? 0 : 100 }
 
         anime({
           targets: values,
@@ -105,11 +102,11 @@ export default {
             const easeBottom = easingBottom(values.x / 100)
 
             if(direction === 'next') {
-              if(this.isSafari) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
-              else activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
+              if(this.isSafari) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
+              else activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
             } else {
-              if(this.isSafari) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
-              else activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
+              if(this.isSafari) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
+              else activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
             }
           },
           complete: () => {
@@ -121,7 +118,7 @@ export default {
         })
 
         this.slideText(direction)
-      });
+      }
     },
     slideText(direction){
       this.transitioning = true
@@ -139,7 +136,7 @@ export default {
         skewX: '-5deg',
         translateX: [0 , '9vw'],
         complete: () => {
-          this.textIndex = this.slideIndex;
+          this.textIndex = this.slideIndex
           if(direction === 'prev') {
             this.transitioning = false
           }
@@ -163,8 +160,8 @@ export default {
       })
     },
     scrollDown() {
-      const destination = this.$el.ownerDocument.querySelector('.page-content');
-      let offset = calcOffset.get(destination).top;
+      const destination = this.$el.ownerDocument.querySelector('.page-content')
+      let offset = calcOffset.get(destination).top
 
       window.scroll(0, offset)
     }

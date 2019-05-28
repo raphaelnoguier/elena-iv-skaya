@@ -1,6 +1,11 @@
 .small-slider-wrapper {
   height: 17.5%;
+  width: 100%;
   position: relative;
+
+  .small-slider {
+    transform: translate3d(0, 0, 0)
+  }
 
   [data-background='dark'] & {
     opacity: 0;
@@ -12,12 +17,6 @@
 
   @include max(sm) {
     height: 30.667vw;
-  }
-
-  .home-slider-wrapper {
-    overflow: hidden;
-    position: relative;
-    height: 100%;
   }
 
   .slide {
@@ -32,7 +31,6 @@
     .image {
       height: 100%;
       width: 100%;
-      pointer-events: none;
 
       &::before {
         content: '';
@@ -50,6 +48,7 @@
         height: 100%;
         object-fit: cover;
         object-position: center;
+        pointer-events: none;
         transition: opacity 500ms ease;
       }
     }
