@@ -149,6 +149,7 @@ export default {
       raf.remove(this.tick)
     },
     updateTransitionImg(serieCover, index) {
+      document.body.classList.add('no-links')
       this.galleryItems[index].querySelector('img').classList.add('active-link')
       this.$store.getters.currentDoc.data.loader_image.url = serieCover
     },

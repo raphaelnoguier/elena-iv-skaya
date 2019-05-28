@@ -53,11 +53,6 @@
         object-fit: cover;
         object-position: center;
         transition: opacity 500ms ease;
-
-        &.active-link {
-          opacity: 0.5;
-          cursor: wait;
-        }
       }
     }
   }

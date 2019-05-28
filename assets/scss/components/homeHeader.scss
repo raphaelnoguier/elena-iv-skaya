@@ -19,6 +19,12 @@
   .home-slider-wrapper {
     transition: opacity 800ms ease;
     opacity: 1;
+
+    &.active-link {
+      opacity: 0.5;
+      cursor: wait;
+    }
+
     [data-background='dark'] & {
       opacity: 0;
     }

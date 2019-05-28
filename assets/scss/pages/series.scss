@@ -165,10 +165,6 @@
         z-index: 2;
         width: 100%;
 
-        @include min(xxl) {
-          margin-top: 1.25vw;
-        }
-
         @include max(md) {
           position: relative;
           margin-top: 11vw;

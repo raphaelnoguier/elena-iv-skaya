@@ -2,6 +2,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
+
+  ::selection {
+    background: #121212; /* WebKit/Blink Browsers */
+    color: white;
+  }
+  ::-moz-selection {
+    background: #121212; /* Gecko Browsers */
+    color: white;
+  }
 }
 
 #app {

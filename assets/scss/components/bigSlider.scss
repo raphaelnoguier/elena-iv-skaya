@@ -48,11 +48,6 @@
         object-position: center;
         transition: opacity 500ms ease;
         pointer-events: none;
-
-        &.active-link {
-          opacity: 0.5;
-          cursor: wait;
-        }
       }
     }
   }

@@ -52,6 +52,7 @@ let createTransition = () => {
                 nav.classList.add('before-enter')
 
                 document.body.style.transitionDuration = '0ms'
+                document.body.classList.remove('no-links')
                 if(toAbout) {
                   document.body.dataset.background = 'dark'
                 } else {

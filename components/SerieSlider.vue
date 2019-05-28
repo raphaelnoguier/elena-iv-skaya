@@ -114,6 +114,7 @@ export default {
       this.isDrag = false
     },
     navigate(i) {
+      document.body.classList.add('no-links')
       this.covers[i].classList.add('active-link')
     },
     enableRaf() {
