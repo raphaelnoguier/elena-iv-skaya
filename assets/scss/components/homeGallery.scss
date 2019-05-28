@@ -64,10 +64,14 @@
         top: -1px;
         width: calc(100% - 50.85vw);
         height: 100%;
-        transform: scale3d(0, 1.5, 1);
+        transform: scale3d(0, 1, 1);
         opacity: 1;
         background-color: #FCF9F5;
         transition: transform 500ms $ease-in-out-quad, background-color 500ms ease;
+
+        @include min(xxl) {
+          width: calc(100% - 51.2vw);
+        }
 
         &.left {
           transform-origin: left;
@@ -80,6 +84,7 @@
       }
 
       @include max(md) {
+        height: auto;
         margin-top: 26.042vw;
         margin-bottom: 13.021vw;
       }
@@ -158,13 +163,13 @@
     }
 
     &.landscape {
-      max-width: 35vw;
+      width: 35vw;
       height: 26.250vw;
       transition: height 500ms $ease-in-out-quad;
 
       @include max(md) {
         width: 64.063vw;
-        max-height: none;
+        height: auto;
       }
 
       @include max(sm) {
@@ -179,7 +184,6 @@
 
     &.full {
       transform: translate3d(0,0,0);
-      overflow: hidden;
       height: 100%;
 
       a {

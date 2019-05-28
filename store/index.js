@@ -8,7 +8,8 @@ export const state = () => ({
   allSeries: {},
   homeSeries: {},
   position: {x : 0, y : 0},
-  serieLoaderImg: {}
+  serieLoaderImg: {},
+  commons: {}
 })
 
 export const getters = {
@@ -27,6 +28,9 @@ export const getters = {
   serieLoaderImg(state) {
     return state.serieLoaderImg
   },
+  commons(state) {
+    return state.commons
+  }
 }
 
 export const mutations = {
@@ -45,11 +49,16 @@ export const mutations = {
   SET_SERIE_LOADER_IMG(state, img) {
     state.serieLoaderImg = img
   },
+  SET_COMMONS(state, commons) {
+    state.commons = commons
+  },
 }
 
 export const actions = {
   async nuxtServerInit ({ commit }, { req }) {
     let series = null;
+    let commons = null;
+
     await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
       return api.query(
         Prismic.Predicates.at('document.type', 'page'),
@@ -59,9 +68,19 @@ export const actions = {
       });
     });
 
-    if (series) {
+    await Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken }).then((api) => {
+      return api.query(
+        Prismic.Predicates.at('document.type', 'commons'),
+        { fetchLinks : ['about.loader_image'] }
+      ).then((response) => {
+        commons = response.results[0]
+      });
+    });
+
+    if (series && commons ) {
       commit('SET_HOME_SERIES', series)
-      return series;
+      commit('SET_COMMONS', commons)
+      return { series, commons };
     }
   },
   async GET_DOC({ commit, error }, params) {

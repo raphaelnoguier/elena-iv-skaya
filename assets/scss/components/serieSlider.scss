@@ -5,6 +5,10 @@
 
   * {
     user-select: none;
+
+    .lock & {
+      pointer-events: none;
+    }
   }
 
   @include max(md) {
@@ -210,10 +214,13 @@
           linear-gradient(to right, #121212, transparent 30%);
           background: -webkit-gradient(linear, right top, left top, from(#121212), color-stop(30%, rgba(18,18,18,0))),
           -webkit-gradient(linear, left top, right top, from(#121212), color-stop(30%, rgba(18,18,18,0)));
-          transition: opacity 200ms;
+          transition: opacity 200ms ease;
 
-          @include max(md) {
-            opacity: 1;
+          [data-background='dark'] & {
+            @include max(md) {
+              transition-delay: 500ms;
+              opacity: 1;
+            }
           }
         }
 

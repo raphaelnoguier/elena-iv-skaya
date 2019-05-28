@@ -3,6 +3,8 @@
     <div class="image-transition">
       <img :src="image" :alt="`image transition${image}`" data-load="preload">
     </div>
+
+    <img style="display:none" alt='about-loader-commons' :src="aboutImg" data-load="preload"/>
   </div>
 </template>
 
@@ -10,7 +12,8 @@
 export default {
   data() {
     return {
-      image: ''
+      image: '',
+      aboutImg:  this.$store.getters.commons.data.about.data.loader_image.url
     }
   },
   mounted() {

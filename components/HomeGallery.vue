@@ -38,7 +38,7 @@ export default {
       dragStep: 75,
       lerp: lerp(),
       timerId: null,
-      speedUp: 4
+      speedUp: 3
     }
   },
   mounted () {
@@ -57,6 +57,8 @@ export default {
     this.galleryItems = this.$refs.gallery.querySelectorAll('.gallery-item')
     this.covers = this.$refs.gallery.querySelectorAll('.gallery-item img')
     this.firstTransform = 0
+    this.itemsPos = []
+    this.nav = this.$parent.$parent.$parent.$refs.nav.$el
     this.cursor.classList.add('homepage')
 
     this.calcHeights()
@@ -91,6 +93,20 @@ export default {
       this.$parent.$parent.$parent.calcScroll()
       this.margin = this.vw(9.375)
       this.totalHeightOnDrag = this.vw(43.75) * this.galleryItems.length
+      this.sizes = {full: this.vw(27), portrait: this.vw(21.875), landscape: this.vw(13.125)}
+
+      this.calcItemsPos()
+    },
+    calcItemsPos() {
+      this.itemsPos = []
+
+      for (let i = 0; i < this.galleryItems.length; i++) {
+        const element = this.galleryItems[i];
+        this.itemsPos.push({top: calcOffset.get(element).top, offset: this.getSize(element)})
+      }
+    },
+    getSize(item) {
+      return this.sizes[item.classList[1]]
     },
     addListeners() {
       window.addEventListener('contextmenu', this.disableContextMenu)
@@ -161,6 +177,7 @@ export default {
       // this.resetParallax()
 
       this.sliderContent.classList.add('drag', 'no-events')
+      TweenLite.set(this.nav, { opacity: 0})
       this.cursor.classList.add('focus')
       this.$parent.setTheme('dark')
 
@@ -169,7 +186,7 @@ export default {
       this.lerp.immediateSet(this.currentIndex)
       raf.add(this.tick)
 
-      setTimeout(() => this.dragComponent.$el.classList.add('active'), 200)
+      TweenLite.to(this.dragComponent.$el, 0.3, { delay: 0.3, opacity: 1, ease: 'Quad.easeInOut'})
     },
     calcPositions() {
       for (let i = 0; i < this.galleryItems.length; i++) {
@@ -216,7 +233,7 @@ export default {
       this.setIndex(this.lerp.get())
     },
     checkLimitZone() {
-      const cursor = {y: this.moveY }
+      const cursor = { y: this.moveY }
       if(this.moveY < 100 ) {
         this.downY += this.speedUp
         this.move(cursor)
@@ -232,24 +249,21 @@ export default {
       this.disableDrag()
       // this.initParallax()
     },
-    getSize(i) {
-      if(this.galleryItems[i].classList.contains('full')) return this.vw(25)
-      if(this.galleryItems[i].classList.contains('portrait')) return this.vw(21.875)
-      if(this.galleryItems[i].classList.contains('landscape')) return this.vw(13.125)
-    },
     setPosScrollBar(i) {
       if(!this.isDrag) return
-      const offset = calcOffset.get(this.galleryItems[this.currentIndex]).top - (window.innerHeight * 0.5)
-      const itemOffset = this.getSize(i)
+      const itemPos = (this.itemsPos[i].top - (window.innerHeight * 0.5)) + this.itemsPos[i].offset
 
-      window.scroll(0, (offset) + itemOffset)
+      window.scroll(0, itemPos)
     },
     disableDrag(exit) {
       clearTimeout(this.timerId)
       this.isDrag = false
-      TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
+      this.moveY = window.innerHeight * 0.5
 
-      this.dragComponent.$el.classList.remove('active')
+      TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
+      TweenLite.to(this.dragComponent.$el, 0.3, { opacity: 0, ease: 'Quad.easeInOut'})
+      TweenLite.set(this.nav, { opacity: 1, clearProps: 'opacity'})
+
       this.sliderContent.classList.remove('drag', 'no-events')
       this.$parent.setTheme('white')
       this.progressDrag.style.transform = 'scale3d(1, 0, 1)'
@@ -263,7 +277,6 @@ export default {
       this.currentIndex = Math.round(i)
     },
     resize () {
-      /* DRAG */
       if (window.innerWidth <= 768)  {
         this.resetDrag()
       }
@@ -278,7 +291,7 @@ export default {
       return (v * w) / 100
     },
     exit() {
-      this.disableDrag(true)
+      // this.disableDrag(true)
     },
   },
   props: { series: Array }

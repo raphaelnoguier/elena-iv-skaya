@@ -88,7 +88,7 @@
       .serie-title {
         flex-direction: column;
         max-width: 43vw;
-        margin-top: 3.25vw;
+        margin-top: 3vw;
 
         @include max(md) {
           margin-top: 0;
@@ -161,7 +161,7 @@
         display: flex;
         justify-content: space-between;
         padding-right: 3.75vw;
-        margin-top: 3.25vw;
+        margin-top: 3vw;
         z-index: 2;
         width: 100%;
 
@@ -181,7 +181,7 @@
 
         &-column {
           &.description {
-            flex-basis: 45%;
+            flex-basis: 55%;
 
             @include max(md) {
               flex-basis: 75%;
@@ -360,7 +360,7 @@
           }
 
           @include max(sm) {
-            max-width: calc(100% - 2vw);
+            max-width: 100%;
           }
         }
 

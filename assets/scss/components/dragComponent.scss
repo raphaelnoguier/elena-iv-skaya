@@ -5,7 +5,6 @@
   margin: auto;
   height: 100vh;
   pointer-events: none;
-  transition: opacity 500ms ease;
   opacity: 0;
   z-index: 9;
 
@@ -123,8 +122,6 @@
       height: 100%;
       overflow: hidden;
       position: relative;
-      opacity: 0;
-      transition: opacity 500ms $ease-in-out-quad;
 
       &.right {
         transform: rotate(180deg)
@@ -205,14 +202,6 @@
           letter-spacing: 0.125vw;
         }
       }
-    }
-  }
-
-  &.active {
-    opacity: 1;
-
-    .zoom {
-      opacity: 1;
     }
   }
 }

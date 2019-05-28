@@ -50,7 +50,14 @@ let createTransition = () => {
                 if(from && from.name === 'serie-slug' && to.name === 'index') window.scroll(0, this.$store.state.position)
 
                 nav.classList.add('before-enter')
-                toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
+
+                document.body.style.transitionDuration = '0ms'
+                if(toAbout) {
+                  document.body.dataset.background = 'dark'
+                } else {
+                  document.body.dataset.background = 'white'
+                }
+
                 fromSerie && !serieToSerie ? navItems[0].style.opacity = 1 : navItems[0].style.opacity = ''
 
                 mask.style.top = 0
@@ -73,6 +80,7 @@ let createTransition = () => {
           }
         },
         beforeEnter() {
+          document.body.style.transitionDuration = ''
           document.body.classList.remove('lock')
           setTimeout(() => this.$parent.domLoaded = true, 1)
         },

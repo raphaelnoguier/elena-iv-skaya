@@ -218,6 +218,11 @@ export default {
     resize () {
       if(browser.desktop && window.innerWidth > 768) {
         this.calcOffset()
+        this.revealGalleryItems()
+        raf.add(this.tickCursor)
+      } else {
+        if(this.reveal) this.reveal.destroy()
+        raf.remove(this.tickCursor)
       }
     }
   },
