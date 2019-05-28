@@ -8,6 +8,10 @@
   opacity: 0;
   z-index: 9;
 
+  @include max(md) {
+    display: none;
+  }
+
   .drag-line {
     position: fixed;
     top:50%;

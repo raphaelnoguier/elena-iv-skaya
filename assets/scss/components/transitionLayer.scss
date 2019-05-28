@@ -6,6 +6,7 @@
   overflow: hidden;
   z-index: 11;
   pointer-events: none;
+  will-change: height;
 
   &.hide {
     display: none;
@@ -20,6 +21,7 @@
     width: 100%;
     z-index: 3;
     overflow: hidden;
+    will-change: height;
 
     .back & {
       top: 0;

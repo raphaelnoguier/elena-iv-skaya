@@ -5,6 +5,7 @@
   overflow: hidden;
   z-index: 6;
   cursor: wait;
+  will-change: height;
 
   &.hide {
     display: none;
@@ -60,7 +61,7 @@
         transition: opacity 500ms ease;
 
         @include max(md) {
-          bottom: 25vw;
+          bottom: 30vw;
         }
 
         &.fade-in {
@@ -109,6 +110,7 @@
     width: 100%;
     z-index: 3;
     overflow: hidden;
+    will-change: height;
 
     img {
       position: absolute;

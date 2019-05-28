@@ -29,6 +29,10 @@
     top: 0;
     z-index: -1;
 
+    a {
+      position: relative;
+    }
+
     .image {
       height: 100%;
       width: 100%;

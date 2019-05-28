@@ -15,6 +15,42 @@
   }
 }
 
+body {
+  line-height: 1;
+  background-color: #FCF9F5;
+
+  @include max(md) {
+    position: relative;
+  }
+
+	&.no-links {
+		#app {
+			* {
+				pointer-events: none;
+			}
+		}
+	}
+
+	&.lock {
+		overflow: hidden;
+
+		.drag-cursor {
+			opacity: 0;
+		}
+	}
+
+	&[data-background="white"] {
+		transition: background-color 500ms ease;
+    background-color: #FCF9F5;;
+  }
+
+  &[data-background="dark"] {
+		transition: background-color 500ms ease;
+    background-color: #121212;
+  }
+}
+
+
 #app {
   position: relative;
   width: 100%;

@@ -30,36 +30,6 @@ html, body {
 	box-sizing: border-box;
 	overscroll-behavior-y: none;
 }
-body {
-  line-height: 1;
-	background-color: #FCF9F5;
-
-	&.no-links {
-		#app {
-			* {
-				pointer-events: none;
-			}
-		}
-	}
-
-	&.lock {
-		overflow: hidden;
-
-		.drag-cursor {
-			opacity: 0;
-		}
-	}
-
-	&[data-background="white"] {
-		transition: background-color 500ms ease;
-    background-color: #FCF9F5;;
-  }
-
-  &[data-background="dark"] {
-		transition: background-color 500ms ease;
-    background-color: #121212;
-  }
-}
 ol, ul {
 	list-style: none;
 }
