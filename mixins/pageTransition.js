@@ -8,11 +8,12 @@ let createTransition = () => {
       let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
 
+      if(to || from) document.body.classList.add('lock')
+
       return {
         name: 'page',
         css: false,
         beforeLeave() {
-          document.body.classList.add('lock')
           if(fromSerie) {
             imgTransition = this.$store.getters.serieLoaderImg
           } else {

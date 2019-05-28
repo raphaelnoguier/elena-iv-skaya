@@ -3,7 +3,7 @@
     <Loader/>
     <DragComponent v-if="$route.name === 'index'" :series="series" ref="dragComponent"/>
     <DragCursor ref="cursor" v-if="!$route.path.includes('about')"/>
-    <FakeNav ref="fakeNav" v-if="!isSafari"/>
+    <no-ssr><FakeNav ref="fakeNav" v-if="!isSafari"/></no-ssr>
     <div ref="smoothComponent" :class="[domLoaded ? 'loaded': '', isSafari && 'safari']" class="scroll-content">
       <nuxt ref="nuxt"/>
     </div>
@@ -46,10 +46,12 @@ export default {
     }
   },
   mounted() {
-    if(!this.isSafari) this.calcScroll()
     window.addEventListener('resize', this.resize)
     window.addEventListener('scroll', this.onScrollDefault)
 
+    document.body.classList.remove('lock')
+
+    if(!this.isSafari) this.calcScroll()
     if(this.$refs.cursor) this.$refs.cursor.$el.classList.remove('visible')
   },
   beforeDestroy() {
@@ -60,7 +62,8 @@ export default {
     calcScroll() {
       history.scrollRestoration = 'manual'
       this.$nextTick(() => {
-        if(window.innerWidth > 768 && !this.isSafari) raf.add(this.loopScrollAnimation)
+        if(window.innerWidth < 768 || this.isSafari) return
+        raf.add(this.loopScrollAnimation)
         this.totalHeight = this.$refs.nuxt.$el.getBoundingClientRect().height
         TweenLite.set(this.$refs.smoothComponent, { height: this.totalHeight });
         TweenLite.set(this.$refs.fakeNav.$el, { height: this.totalHeight });
@@ -84,7 +87,7 @@ export default {
       raf.remove(this.loopScrollAnimation)
     },
     resize () {
-      if(window.innerWidth > 768) this.calcScroll()
+      if(window.innerWidth > 768 && !this.isSafari) this.calcScroll()
       else this.resetScroll()
     },
   },

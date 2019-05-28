@@ -61,15 +61,12 @@ export default {
     this.nav = this.$parent.$parent.$parent.$refs.nav.$el
     this.cursor.classList.add('homepage')
 
-    this.calcHeights()
-
     window.addEventListener('resize', this.resize)
 
     if (window.innerWidth >= 768 && browser.desktop) {
       this.addListeners()
+      this.calcHeights()
       // this.initParallax()
-    } else  {
-      this.$parent.$parent.$parent.calcScroll()
     }
   },
   beforeDestroy() {

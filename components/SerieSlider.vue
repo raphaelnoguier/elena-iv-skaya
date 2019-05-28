@@ -80,7 +80,7 @@ export default {
     this.mobileSliderWrapper = this.$el.querySelector('.mobile-overflow')
     this.mobileSliderBounds = this.mobileSliderWrapper.getBoundingClientRect()
     this.controls = this.$refs.controls
-    this.cursor.classList.remove('homepage')
+    this.cursor.classList.remove('homepage', 'visible')
 
     this.$el.addEventListener('mousemove', this.moveCursor)
     this.$el.addEventListener('mouseleave', this.exit)

@@ -60,7 +60,7 @@
         transition: opacity 500ms ease;
 
         @include max(md) {
-          bottom: 16vw;
+          bottom: 25vw;
         }
 
         &.fade-in {

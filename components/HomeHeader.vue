@@ -49,6 +49,7 @@ import anime from 'animejs'
 import HomeSlider from '~/components/HomeSlider'
 import calcOffset from '~/utils/offset.js';
 import BezierEasing from 'bezier-easing'
+import browser from '~/utils/browser.js'
 
 export default {
   components: {
@@ -59,6 +60,8 @@ export default {
       slideIndex: 1,
       textIndex: 1,
       transitioning: false,
+      isSafari: browser.safari,
+      easingTop: BezierEasing(0.85, 0.015, 0.175, 0.9)
     }
   },
   mounted() {
@@ -69,11 +72,11 @@ export default {
       let sliderWrapper = this.$el.querySelectorAll('.home-slider-wrapper');
 
       sliderWrapper.forEach(slider => {
-
         let slides = slider.querySelectorAll(".slide");
         let activeSlide = slider.querySelector(".active");
         let activeSlideIndex = activeSlide.dataset.slide;
         let isSmallSlider = slider.classList.contains('small-slider');
+        const easingBottom = BezierEasing(isSmallSlider ? 0.85 : 0.7, 0.200, 0.175, 1)
 
         direction === 'next' ? activeSlideIndex++ : activeSlideIndex--;
 
@@ -91,46 +94,44 @@ export default {
           x: direction === 'next' ? 0 : 100,
         }
 
-        let easingTop = BezierEasing(0.85, 0.015, 0.175, 0.9);
-        let easingBottom = BezierEasing(isSmallSlider ? 0.85 : 0.7, 0.200, 0.175, 1)
-
         anime({
           targets: values,
-          duration: 1000,
+          duration: 1100,
           x: direction === 'next' ? 100 : 0,
           easing: 'easeInOutQuad',
-          delay: isSmallSlider ? 200 : 0,
+          delay: isSmallSlider && window.innerWidth > 768 ? 200 : 0,
           update: (anime) => {
-            const easeTop = easingTop(values.x / 100)
+            const easeTop = this.easingTop(values.x / 100)
             const easeBottom = easingBottom(values.x / 100)
 
             if(direction === 'next') {
-              activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
-              activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
+              if(this.isSafari) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
+              else activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 101% 0%, 101% 101%, ${easeBottom * values.x}% 101%)`
             } else {
-              activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
-              activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
+              if(this.isSafari) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
+              else activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0%, ${values.x * easeTop}% 101%, 0 101%)`
             }
           },
           complete: () => {
-            activeSlide.style.clipPath = '';
-            activeSlide.classList.remove('active');
-            nextSlide.classList.remove('behind');
-            nextSlide.classList.add('active');
+            this.isSafari ? activeSlide.style.webkitClipPath = '' : activeSlide.style.clipPath = ''
+            activeSlide.classList.remove('active')
+            nextSlide.classList.remove('behind')
+            nextSlide.classList.add('active')
           }
         })
-        this.slideText(direction);
+
+        this.slideText(direction)
       });
     },
     slideText(direction){
-      this.transitioning = true;
+      this.transitioning = true
 
       let serieInfos = this.$el.querySelectorAll(".serie-infos .date, .serie-infos .title")
       let tl = anime.timeline({
         easing: 'easeInOutQuart',
         duration: 1000,
         direction: direction === 'next' ? 'normal' : 'reverse'
-      });
+      })
 
       tl.add({
         targets: serieInfos,
@@ -140,7 +141,7 @@ export default {
         complete: () => {
           this.textIndex = this.slideIndex;
           if(direction === 'prev') {
-            this.transitioning = false;
+            this.transitioning = false
           }
         }
       })
@@ -154,9 +155,9 @@ export default {
           return delay
         },
         complete: () => {
-          this.textIndex = this.slideIndex;
+          this.textIndex = this.slideIndex
           if(direction === 'next') {
-            this.transitioning = false;
+            this.transitioning = false
           }
         }
       })

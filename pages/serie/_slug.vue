@@ -273,6 +273,7 @@ export default {
     revealSlider() {
       this.reveal = reveal(
         { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: (status) => {
+          if(document.body.classList.contains('lock')) return
           if(status.includes('down')) {
             this.disableRaf()
             this.$refs.serieSlider.enableRaf()
