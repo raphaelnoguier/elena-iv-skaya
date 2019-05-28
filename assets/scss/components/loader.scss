@@ -25,7 +25,6 @@
       align-items: center;
       justify-content: center;
       padding: 0 8vw;
-      color:white;
       height: 100%;
 
       .percent {
@@ -34,6 +33,7 @@
         line-height: 37.5vw;
         opacity: 0;
         transition: opacity 500ms ease;
+        color: white;
 
         @include max(md) {
           font-size: 52vw;
@@ -60,11 +60,7 @@
         transition: opacity 500ms ease;
 
         @include max(md) {
-          bottom: 15vw;
-        }
-
-        @include max(sm) {
-          bottom: 40vw;
+          bottom: 16vw;
         }
 
         &.fade-in {
@@ -75,6 +71,7 @@
           @include sofiaProBold(0.875vw);
           letter-spacing: 0.125vw;
           line-height: 1.313vw;
+          color: white;
 
           @include max(md) {
             font-size: 2.083vw;
@@ -89,6 +86,7 @@
           @include sofiaProMedium(0.875vw);
           letter-spacing: 0.125vw;
           line-height: 1.875vw;
+          color: white;
 
           @include max(md) {
             font-size: 2.083vw;

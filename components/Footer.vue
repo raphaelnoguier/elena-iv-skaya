@@ -8,8 +8,8 @@
       </a>
       <div>
         <span>&</span>
-        <a href="http://raphael-aitelalim.fr" target="_blank">
-          raphael ait-el-alim
+        <a href="http://raphaelnoguier.com" target="_blank">
+          raphael noguier
         </a>
       </div>
     </p>

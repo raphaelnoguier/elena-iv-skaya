@@ -69,6 +69,10 @@
         background-color: #FCF9F5;
         transition: transform 500ms $ease-in-out-quad, background-color 500ms ease;
 
+        @include max(md) {
+          display: none;
+        }
+
         @include min(xxl) {
           width: calc(100% - 51.2vw);
         }
@@ -87,6 +91,12 @@
         height: auto;
         margin-top: 26.042vw;
         margin-bottom: 13.021vw;
+      }
+    }
+
+    &:last-child {
+      @include max(md) {
+        margin-bottom: 0;
       }
     }
   }
