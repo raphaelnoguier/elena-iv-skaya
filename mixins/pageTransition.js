@@ -8,7 +8,23 @@ let createTransition = () => {
       let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
 
-      if(to || from) document.body.classList.add('lock')
+      const app = document.getElementById('app')
+      const nav = document.querySelector('.nav')
+      const navItems = nav.querySelectorAll('li')
+      const transitionContainer = document.querySelector('.transition-wrapper')
+      const imageContainer = transitionContainer.querySelector('.image-transition')
+      const mask = transitionContainer.querySelector('.image-transition img')
+      const fixedEls = document.querySelector('.fixed-elements')
+      const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
+
+      /* disable scroll */
+      if(to && from)  {
+        app.addEventListener('touchmove', (e) => e.preventDefault(), false)
+        app.addEventListener('scroll', (e) => e.preventDefault(), false)
+        app.onwheel = (e) => e.preventDefault()
+        app.onmousewheel = app.onmousewheel = (e) => e.preventDefault()
+        document.body.classList.add('lock')
+      }
 
       return {
         name: 'page',
@@ -21,19 +37,10 @@ let createTransition = () => {
           }
         },
         leave(el, done) {
-          let nav = document.querySelector('.nav')
-          let navItems = nav.querySelectorAll('li')
-          let transitionContainer = document.querySelector('.transition-wrapper')
-          let imageContainer = transitionContainer.querySelector('.image-transition')
-          let mask = transitionContainer.querySelector('.image-transition img')
-          let fixedEls = document.querySelector('.fixed-elements')
-
           const tmp = new Image
-
           tmp.src = imgTransition
 
           tmp.onload = () => {
-            const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
 
             fromSerie ? navItems[0].style.opacity  = 0 : null
 
@@ -54,6 +61,7 @@ let createTransition = () => {
 
                 document.body.style.transitionDuration = '0ms'
                 document.body.classList.remove('no-links')
+
                 if(toAbout) {
                   document.body.dataset.background = 'dark'
                 } else {
@@ -73,9 +81,9 @@ let createTransition = () => {
                 this.$parent.domLoaded = false
 
                 imageContainer.style.height = 0
-                transitionContainer.style.height = '100vh'
+                transitionContainer.style.height = ''
                 mask.style.top = ''
-                mask.style.transform = "translate3d(0, 0, 0)"
+                mask.style.transform = ""
                 done()
               }
             })
@@ -87,10 +95,17 @@ let createTransition = () => {
           setTimeout(() => this.$parent.domLoaded = true, 1)
         },
         enter(el, done) {
+          const app = document.getElementById('app')
           let nav = this.$parent.$refs.nav.$el
           el.classList.remove('page-leave')
           el.classList.add('page-enter')
           done()
+
+          app.removeEventListener('touchmove', (e) => e.preventDefault(), false)
+          app.removeEventListener('scroll', (e) => e.preventDefault(), false)
+          app.onmousewheel = app.onmousewheel = null
+          app.onwheel = null
+          document.body.classList.remove('lock')
 
           setTimeout(() => nav.classList.remove('before-enter'), 200);
         }
