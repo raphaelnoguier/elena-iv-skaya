@@ -52,6 +52,7 @@ module.exports = {
         return api.query("", { pageSize : 100 });
       }).then((response) => {
         let routes = response.results.map((doc) => {
+          if(doc.type === 'commons') return ''
           if(doc.type === 'page' || doc.type === 'about') {
             return '/about' , '/'
           }
