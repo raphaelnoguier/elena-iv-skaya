@@ -9,8 +9,8 @@
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
           <div class="serie-slider-mask left"></div>
           <nuxt-link v-on:click.native="navigate(i)" :to="`/serie/${item.serie.uid}`" draggable="false">
-            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" />
-            <img v-else :src="item.serie.data.cover_serie_image.url" />
+            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" :alt="`gallery-slider-cover-${i}`" />
+            <img v-else :src="item.serie.data.cover_serie_image.url" :alt="`gallery-slider-cover-${i}`"/>
           </nuxt-link>
           <div class="serie-slider-mask right"></div>
         </div>
@@ -19,7 +19,7 @@
     <div class="slider-controls" ref="controls">
       <div class="upper">
         <div class="play">
-          <img data-load="preload" src="~/assets/img/ui/play.svg">
+          <img data-load="preload" src="~/assets/img/ui/play.svg" alt="direction-icon">
         </div>
         <div class="titles">
           <div class="blur"></div>

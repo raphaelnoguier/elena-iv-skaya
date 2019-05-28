@@ -6,7 +6,7 @@
         <HomeSlider :type="'Small'" :featured="featured" :index="slideIndex"/>
         <div class="controls" :class="transitioning ? 'disabled' : ''">
           <div v-on:click="slide('prev')" class="left">
-            <img src="~assets/img/ui/arrow.svg" data-load="preload">
+            <img src="~assets/img/ui/arrow.svg" data-load="preload" alt="chevron prev">
             <span>previous</span>
           </div>
           <div class="index">
@@ -15,7 +15,7 @@
           </div>
           <div v-on:click="slide('next')" class="right">
             <span>next</span>
-            <img src="~assets/img/ui/arrow.svg" data-load="preload">
+            <img src="~assets/img/ui/arrow.svg" data-load="preload" alt="chevron next">
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div v-on:click="scrollDown" class="chevron">
-        <img src="~assets/img/ui/chevron.svg" data-load="preload">
+        <img src="~assets/img/ui/chevron.svg" data-load="preload" alt="chevron down">
       </div>
       <div class="update-status" ref="updateStatus">
         <div class="line"><div class="progress" ref="progressDrag"></div></div>

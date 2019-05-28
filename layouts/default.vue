@@ -3,7 +3,7 @@
     <Loader/>
     <DragComponent v-if="$route.name === 'index'" :series="series" ref="dragComponent"/>
     <DragCursor ref="cursor" v-if="!$route.path.includes('about')"/>
-    <FakeNav ref="fakeNav"/>
+    <FakeNav ref="fakeNav" v-if="!isSafari"/>
     <div ref="smoothComponent" :class="[domLoaded ? 'loaded': '', isSafari && 'safari']" class="scroll-content">
       <nuxt ref="nuxt"/>
     </div>

@@ -14,7 +14,7 @@
         <div class="zoom right">
           <div class="cover">
             <div class="cover-wrapper" ref="coverWrapperRight">
-              <img v-for="(serie, i) in series" :key="i" :src="serie.serie.data.cover_serie_image.url" />
+              <img v-for="(serie, i) in series" :key="i" :src="serie.serie.data.cover_serie_image.url" :alt="`drag-component-cover${i}`" />
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="zoom left">
           <div class="cover">
             <div class="cover-wrapper" ref="coverWrapperLeft">
-              <img v-for="(serie, i) in series" :key="i" :src="serie.serie.data.cover_serie_image.url" />
+              <img v-for="(serie, i) in series" :key="i" :src="serie.serie.data.cover_serie_image.url" :alt="`drag-component-cover${i}`"/>
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="loader-wrapper" :class="hideLoader ? 'hide' : ''">
-    <div class="loader">
+    <div class="loader" ref="loader">
       <div class="content">
-        <span class="percent">0</span>
+        <span class="percent" ref="percent">0</span>
         <div class="title">
           <h1>
             elena iv-skaya
@@ -13,8 +13,8 @@
         </div>
       </div>
     </div>
-    <div class="image-loader">
-      <img :src="imageLoader" data-load="preload" alt="image-loader">
+    <div class="image-loader" ref="imageLoader">
+      <img :src="imageLoader" data-load="preload" alt="image-loader" ref="mask">
     </div>
   </div>
 </template>
@@ -34,16 +34,15 @@ export default {
       mask: null
     }
   },
-  beforeMount() {
-    this.loadingContainer = this.$el
-    this.loaderContent = this.loadingContainer.querySelector('.loader')
-    this.imageContainer = this.loadingContainer.querySelector('.image-loader')
-    this.mask = this.loadingContainer.querySelector('.image-loader img')
-  },
   mounted() {
     let doc = this.$store.getters.currentDoc.data
 
     this.imageLoader = doc.loader_image.url
+    this.loadingContainer = this.$el
+    this.loaderContent = this.$refs.loader
+    this.imageContainer = this.$refs.imageLoader
+    this.mask = this.$refs.mask
+    this.percent = this.$refs.percent
 
     this.$nextTick(() => {
       this.disableScroll()
@@ -108,9 +107,8 @@ export default {
     updateLoadProgress(loaded, total) {
       return new Promise(resolve => {
         let progress = Math.round((95 / total) * loaded )
-        const percent = this.loadingContainer.querySelector(".percent")
 
-        percent.innerHTML = this.round5(progress)
+        this.percent.innerHTML = this.round5(progress)
         if (progress >= 95 && loaded === total) {
           resolve()
           setTimeout(() => {

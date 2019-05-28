@@ -4,13 +4,13 @@
       <div class="serie-page-header">
         <div class="featured-image">
           <div class="image-mask"></div>
-          <img data-load="preload" :src="featuredImage.url">
+          <img data-load="preload" :src="featuredImage.url" :alt="`main-image-${title}`">
         </div>
         <div class="serie-hero">
           <div class="row">
             <div class="back-link">
               <nuxt-link to="/">
-                <img data-load="preload" src="~assets/img/ui/arrow.svg">
+                <img data-load="preload" src="~assets/img/ui/arrow.svg" alt='chevron-prev icon'>
                 <span>Back to gallery </span>
               </nuxt-link>
             </div>
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div v-on:click="scrollDown" class="chevron">
-            <img data-load="preload" src="~assets/img/ui/chevron.svg">
+            <img data-load="preload" src="~assets/img/ui/chevron.svg" alt="chevron-down icon">
           </div>
         </div>
       </div>
@@ -67,7 +67,6 @@ import SerieSlider from '~/components/SerieSlider'
 import reveal from "~/utils/reveal.js"
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
-import ZoomSerie from "~/components/ZoomSerie"
 import { pageTransition } from '~/mixins/pageTransition.js'
 import math from '~/utils/math.js'
 import raf from '~/utils/raf.js'
@@ -104,8 +103,7 @@ export default {
     }
   },
   components: {
-    SerieSlider,
-    ZoomSerie
+    SerieSlider
   },
   mixins: [ pageTransition ],
   data() {

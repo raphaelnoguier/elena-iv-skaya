@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-    <title>Combined Shape</title>
-    <desc>Created with Sketch.</desc>
-    <g id="💻-Desktop-Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="SERIE" transform="translate(-1042.000000, -2118.000000)" fill="#000000">
-            <g id="GRID" transform="translate(0.000000, 1120.000000)">
-                <g id="cursorPlus" transform="translate(1032.000000, 988.000000)">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-1042.000000, -2118.000000)" fill="#000000">
+            <g transform="translate(0.000000, 1120.000000)">
+                <g transform="translate(1032.000000, 988.000000)">
                     <path d="M20.0307907,19.1165771 L25.3340916,24.419878 L23.919878,25.8340916 L18.6165771,20.5307907 L13.3132763,25.8340916 L11.8990627,24.419878 L17.2023636,19.1165771 L11.8990627,13.8132763 L13.3132763,12.3990627 L18.6165771,17.7023636 L23.919878,12.3990627 L25.3340916,13.8132763 L20.0307907,19.1165771 Z" id="Combined-Shape" transform="translate(18.616577, 19.116577) scale(1, -1) rotate(45.000000) translate(-18.616577, -19.116577) "></path>
                 </g>
             </g>
