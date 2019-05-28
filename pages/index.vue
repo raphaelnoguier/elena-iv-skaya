@@ -143,13 +143,11 @@ export default {
 
     this.$nextTick(() => {
       this.setTheme('white')
-      this.calcOffset()
-      setTimeout(() => {
-        if(browser.desktop && window.innerWidth > 768) {
-          this.revealGalleryItems()
-          raf.add(this.tickCursor)
-        }
-      }, 1)
+      if(browser.desktop && window.innerWidth > 768) {
+        this.calcOffset()
+        this.revealGalleryItems()
+        raf.add(this.tickCursor)
+      }
     })
   },
 
@@ -183,6 +181,7 @@ export default {
     },
     onScrollHome(e) {
       this.$refs.homeGallery.offsetY = -window.scrollY
+      this.$refs.homeGallery.showAllItems = true
 
       if(window.scrollY > this.updateStatusOffset)  {
         this.updateStatus.classList.add('animate')

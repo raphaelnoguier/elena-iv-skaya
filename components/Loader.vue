@@ -21,17 +21,12 @@
 
 <script>
 import anime from 'animejs'
-import browser from '~/utils/browser.js'
 
 export default {
   data() {
     return {
       hideLoader: false,
-      imageLoader: '',
-      loadingContainer: null,
-      loaderContent: null,
-      imageContainer: null,
-      mask: null
+      imageLoader: ''
     }
   },
   mounted() {
@@ -139,7 +134,9 @@ export default {
         height: 0,
         complete: () => {
           this.hideLoader = true
-          this.enableScroll()
+          setTimeout(() => {
+            this.enableScroll()
+          }, 5000);
         }
       })
     },

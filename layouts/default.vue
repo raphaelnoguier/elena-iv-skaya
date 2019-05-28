@@ -81,6 +81,7 @@ export default {
       TweenLite.set(this.$refs.smoothComponent, { y: this.scroll.y, force3D: true });
     },
     resetScroll() {
+      if(!this.$refs.fakeNav) return
       TweenLite.set(this.$refs.smoothComponent, { height: '', y: 0 });
       TweenLite.set(this.$refs.fakeNav.$el, { height: '' });
 

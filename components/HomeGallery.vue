@@ -1,5 +1,5 @@
 <template>
-  <div class="gallery-wrapper" ref="gallery">
+  <div class="gallery-wrapper" ref="gallery" :class="isMobile && !showAllItems && 'only-first'">
     <div v-for="(serie, index) in series" :key="index" class="gallery-item-wrapper" :class="serie.serie.data.cover_ratio.includes('Big') && 'full'">
       <div class="gallery-item" :class="getClass(serie.serie.data.cover_ratio)">
         <div v-if="serie.serie.data.cover_ratio.includes('Big')" class="full-mask left"></div>
@@ -38,7 +38,9 @@ export default {
       dragStep: 75,
       lerp: lerp(),
       timerId: null,
-      speedUp: 3
+      speedUp: 3,
+      showAllItems: false,
+      isMobile: !browser.desktop
     }
   },
   mounted () {

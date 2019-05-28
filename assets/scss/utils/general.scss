@@ -74,6 +74,10 @@ body {
 .page {
   margin: auto;
 
+  @include max(md) {
+    overflow: hidden;
+  }
+
   &.serie {
     padding:0 8vw;
 

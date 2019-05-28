@@ -12,6 +12,7 @@
   }
 
   .loader {
+    overflow: hidden;
     position: absolute;
     background:#121212;
     top:0;
@@ -61,7 +62,7 @@
         transition: opacity 500ms ease;
 
         @include max(md) {
-          bottom: 30vw;
+          bottom: 20vh;
         }
 
         &.fade-in {

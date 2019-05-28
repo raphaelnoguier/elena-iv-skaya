@@ -9,6 +9,15 @@
     padding-top: 0;
   }
 
+
+  &.only-first {
+    .gallery-item-wrapper:not(:first-child) {
+      @include max(md) {
+        display: none;
+      }
+    }
+  }
+
   & > * {
     user-select: none;
   }

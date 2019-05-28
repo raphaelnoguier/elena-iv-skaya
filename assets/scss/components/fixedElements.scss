@@ -1,0 +1,5 @@
+.fixed-elements {
+  @include max(md) {
+    display: none;
+  }
+}
