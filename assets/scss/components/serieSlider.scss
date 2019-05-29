@@ -176,6 +176,16 @@
           cursor: wait;
         }
       }
+
+      .loading-progress {
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        background: #FCF9F5;
+        width: 100%;
+        transform: scale3d(0, 1, 1);
+        transform-origin: left;
+      }
     }
   }
 

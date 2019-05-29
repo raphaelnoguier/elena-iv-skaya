@@ -7,6 +7,7 @@
         <div class="gallery-item-content">
           <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`" draggable="false">
             <img :src="serie.serie.data.cover_serie_image.url" :alt="serie.serie.data.title[0].text" />
+            <div class="loading-progress"></div>
           </nuxt-link>
           <div class="item-title">
             <h3>{{serie.serie.data.title[0].text}}</h3>
@@ -37,6 +38,7 @@ export default {
       isDrag: false,
       dragStep: 75,
       lerp: lerp(),
+      lerpLoading: lerp(),
       timerId: null,
       speedUp: 10,
       showAllItems: false,
@@ -151,6 +153,22 @@ export default {
       document.body.classList.add('no-links')
       this.galleryItems[index].querySelector('img').classList.add('active-link')
       this.$store.getters.currentDoc.data.loader_image.url = serieCover
+
+      this.loadingItem = this.galleryItems[index].querySelector('img')
+
+      raf.add(this.tickProgress)
+    },
+    tickProgress() {
+      console.log('run gallery')
+      const progressBar = this.loadingItem.nextElementSibling
+      const progress = this.$nuxt.$loading.percent / 100
+
+      if(progress >= 100 ) raf.remove(this.tickProgress)
+
+      this.lerpLoading.update()
+      this.lerpLoading.set(progress)
+
+      progressBar.style.transform = `scale3d(${this.lerpLoading.get()}, 1, 1)`
     },
     getClass(ratio) {
       if(ratio.includes('Big')){

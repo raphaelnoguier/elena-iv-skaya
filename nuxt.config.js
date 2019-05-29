@@ -6,7 +6,6 @@ const prismicConfig = require('./prismic.config.js');
 
 module.exports = {
   mode: 'universal',
-  loading: false,
   /*
   ** Headers
   */

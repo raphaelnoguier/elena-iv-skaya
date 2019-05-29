@@ -95,7 +95,6 @@ export default {
   watch: {
     '$route'(to, from) {
       this.$nextTick(() => {
-        console.log('transition')
         if(this.$refs.cursor) this.$refs.cursor.$el.classList.remove('visible', 'focus')
         if(from.name === 'index' && browser.desktop && window.innerWidth > 768) {
           let position = window.scrollY

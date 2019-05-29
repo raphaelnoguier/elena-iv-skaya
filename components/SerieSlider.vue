@@ -11,6 +11,7 @@
           <nuxt-link v-on:click.native="navigate(i)" :to="`/serie/${item.serie.uid}`" draggable="false">
             <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" :alt="`gallery-slider-cover-${i}`" />
             <img v-else :src="item.serie.data.cover_serie_image.url" :alt="`gallery-slider-cover-${i}`"/>
+            <div class="loading-progress"></div>
           </nuxt-link>
           <div class="serie-slider-mask right"></div>
         </div>
@@ -54,6 +55,7 @@ export default {
       cursor: null,
       cursorX: lerp(),
       cursorY: lerp(),
+      lerpLoading: lerp(),
       progress: 0,
       xPosition: 0,
       downPosition: 0,
@@ -116,6 +118,20 @@ export default {
     navigate(i) {
       document.body.classList.add('no-links')
       this.covers[i].classList.add('active-link')
+      this.indexLoading = i
+
+      raf.add(this.tickProgress)
+    },
+    tickProgress() {
+      const progressBar = this.covers[this.indexLoading].nextElementSibling
+      const progress = this.$nuxt.$loading.percent / 100
+
+      if(progress >= 100 ) raf.remove(this.tickProgress)
+
+      this.lerpLoading.update()
+      this.lerpLoading.set(progress)
+
+      progressBar.style.transform = `scale3d(${this.lerpLoading.get()}, 1, 1)`
     },
     enableRaf() {
       if(window.innerWidth > 768) raf.add(this.tick)
@@ -222,6 +238,8 @@ export default {
       let offset = this.mobileSliderWrapper.scrollLeft
       const scrollableWidth = this.mobileSliderWrapper.scrollWidth
       const size = this.mobileSliderWrapper.clientWidth
+
+      console.log(offset)
 
       let progress = Math.round(100 * offset / (scrollableWidth - size))
 
