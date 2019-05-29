@@ -1,4 +1,5 @@
 import anime from 'animejs'
+import TweenLite from 'gsap'
 
 let createTransition = () => {
   return {
@@ -8,6 +9,7 @@ let createTransition = () => {
       let toSerie = to.name === 'serie-slug'
       let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
+      let isChromeIos = navigator.userAgent.match('CriOS')
 
       if(document.querySelector('.error-wrapper')) return
 
@@ -73,8 +75,8 @@ let createTransition = () => {
 
                 toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
 
-                mask.style.top = '0'
-                mask.style.transform = 'translate3d(0, -200px, 0)'
+                TweenLite.set(mask, {top: 0})
+                TweenLite.to(mask, 0.5, {y: -200, force3D: true, ease: 'Quad.easeInOut'})
               }
             }).add({
               targets: transitionContainer,
@@ -85,8 +87,7 @@ let createTransition = () => {
 
                 imageContainer.style.height = ''
                 transitionContainer.style.height = ''
-                mask.style.top = ''
-                mask.style.transform = ''
+                TweenLite.set(mask, {top: '', y: ''})
 
                 done()
               }

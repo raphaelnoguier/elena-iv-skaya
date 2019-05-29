@@ -119,7 +119,7 @@
       height: 100vh;
       object-fit: cover;
       object-position: center;
-      transition: transform 500ms $ease-in-out-quad 100ms;
+      transform: translate3d(0, 0, 0);
     }
   }
 }

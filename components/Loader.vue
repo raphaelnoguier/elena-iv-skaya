@@ -21,6 +21,7 @@
 
 <script>
 import anime from 'animejs'
+import TweenLite from 'gsap'
 
 export default {
   data() {
@@ -124,8 +125,8 @@ export default {
         top: 0,
         height: '100%',
         complete: () => {
-          this.mask.style.top = 0;
-          this.mask.style.transform = 'translate3d(0, -200px, 0)'
+          TweenLite.set(this.mask, {top: 0})
+          TweenLite.to(this.mask, 0.5, {y: -200, force3D: true, ease: 'Quad.easeInOut'})
           this.$parent.domLoaded = true
         }
       })
