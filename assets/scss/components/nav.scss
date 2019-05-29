@@ -12,7 +12,7 @@
   z-index: 5;
   opacity: 0;
   transform: translate3d(0, 100px, 0);
-  transition: opacity 500ms ease-in-out 200ms, transform 1000ms ease-in-out, color 500ms ease;
+  transition: opacity 500ms ease-in-out 200ms, transform 1000ms ease-in-out;
 
   [data-background='dark'] &:not(.home) {
     li a {
@@ -96,6 +96,7 @@
 
       a {
         text-decoration: none;
+        transition: color 500ms ease;
       }
     }
   }

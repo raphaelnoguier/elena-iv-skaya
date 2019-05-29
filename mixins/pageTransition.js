@@ -5,6 +5,7 @@ let createTransition = () => {
     transition(to, from) {
       let toAbout = to.name === 'about' || to.name === 'About'
       let fromSerie = from && from.name === 'serie-slug' && to.name !== 'serie-slug'
+      let toSerie = to.name === 'serie-slug'
       let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
 
@@ -50,7 +51,7 @@ let createTransition = () => {
           nextImg.src = imgTransition
 
           nextImg.onload = () => {
-            fromSerie ? navItems[0].style.opacity  = 0 : null
+            toSerie ? navItems[0].style.opacity = 0 : navItems[0].style.opacity = ''
 
             el.classList.remove('page-enter', 'page-leave')
             el.classList.add('page-leave')
@@ -62,7 +63,6 @@ let createTransition = () => {
               height: '100%',
               complete: () => {
                 if(isDesktop) fixedEls.innerHTML = ''
-                if(fromSerie && !serieToSerie) navItems[0].style.opacity = 1
 
                 if(to.name !== 'index') window.scroll(0, 0)
                 if(from && from.name === 'serie-slug' && to.name === 'index') window.scroll(0, this.$store.state.position)
@@ -107,6 +107,7 @@ let createTransition = () => {
         },
         enter(el, done) {
           let nav = this.$parent.$refs.nav.$el;
+          navItems[0].style.opacity = ''
           el.classList.remove('page-leave')
           el.classList.add('page-enter')
           setTimeout(() => nav.classList.remove('before-enter'), 200)

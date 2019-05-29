@@ -158,7 +158,7 @@ export default {
   mounted() {
     this.circle = this.$refs.circle
     this.mask = this.$refs.aboutMask
-    this.aboutImageH = this.$refs.aboutImage.getBoundingClientRect().height
+    this.aboutImageH = this.$refs.aboutImage.getBoundingClientRect().top
 
     this.setTheme()
     this.$parent.$parent.calcScroll()
@@ -177,15 +177,12 @@ export default {
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) this.calcOffset()
-      this.resetLayout()
     },
     onScrollAbout() {
       if(window.innerWidth < 768) return
 
       let rotateOffset = math.map(window.scrollY, 0, this.aboutImageH, 0, 180)
       this.circle.style.transform = `rotate(${rotateOffset}deg)`
-    },
-    resetLayout() {
     },
   }
 }
