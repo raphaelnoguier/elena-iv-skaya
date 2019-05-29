@@ -17,23 +17,21 @@ let createTransition = () => {
       const fixedEls = document.querySelector('.fixed-elements')
       const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
 
-      let disableScroll = function(e) {
-        e.preventDefault()
-      }
-
-      /* disable scroll */
-      if(to && from)  {
-        app.addEventListener('touchmove', disableScroll, false )
-        app.addEventListener('scroll', disableScroll, false )
-        app.onwheel = disableScroll
-        app.onmousewheel = app.onmousewheel = disableScroll
-        document.body.classList.add('lock')
-      }
+      let disableScroll = (e) => e.preventDefault()
 
       return {
         name: 'page',
         css: false,
         beforeLeave() {
+          /* disable scroll */
+          if(to && from)  {
+            app.addEventListener('scroll', disableScroll, false )
+            app.addEventListener('touchmove', disableScroll, false )
+            app.onwheel = disableScroll
+            app.onmousewheel = app.onmousewheel = disableScroll
+            document.body.classList.add('lock')
+          }
+
           if(fromSerie) {
             imgTransition = this.$store.getters.serieLoaderImg
           } else {
@@ -88,19 +86,20 @@ let createTransition = () => {
                 transitionContainer.style.height = ''
                 mask.style.top = ''
                 mask.style.transform = ""
+
+                if(to && from)  {
+                  app.removeEventListener('scroll', disableScroll, false)
+                  app.removeEventListener('touchmove', disableScroll, false)
+                  app.onmousewheel = app.onmousewheel = null
+                  app.onwheel = null
+                }
+
                 done()
               }
             })
           }
         },
         beforeEnter() {
-          if(to && from)  {
-            app.removeEventListener('touchmove', disableScroll, false)
-            app.removeEventListener('scroll', disableScroll, false)
-            app.onmousewheel = app.onmousewheel = null
-            app.onwheel = null
-          }
-
           document.body.style.transitionDuration = ''
           document.body.classList.remove('lock')
           setTimeout(() => this.$parent.domLoaded = true, 1)
