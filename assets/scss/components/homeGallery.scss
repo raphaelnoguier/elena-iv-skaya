@@ -276,6 +276,11 @@
       width: 100%;
       transform: scale3d(0, 1, 1);
       transform-origin: left;
+      transition: transform 500ms ease;
+
+      @include max(md) {
+        bottom: 1px;
+      }
     }
 
     .item-title {

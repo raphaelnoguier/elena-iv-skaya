@@ -55,7 +55,6 @@ export default {
       cursor: null,
       cursorX: lerp(),
       cursorY: lerp(),
-      lerpLoading: lerp(),
       progress: 0,
       xPosition: 0,
       downPosition: 0,
@@ -126,12 +125,8 @@ export default {
       const progressBar = this.covers[this.indexLoading].nextElementSibling
       const progress = this.$nuxt.$loading.percent / 100
 
-      if(progress >= 100 ) raf.remove(this.tickProgress)
-
-      this.lerpLoading.update()
-      this.lerpLoading.set(progress)
-
-      progressBar.style.transform = `scale3d(${this.lerpLoading.get()}, 1, 1)`
+      if(progress >= 1 ) raf.remove(this.tickProgress)
+      progressBar.style.transform = `scale3d(${progress}, 1, 1)`
     },
     enableRaf() {
       if(window.innerWidth > 768) raf.add(this.tick)

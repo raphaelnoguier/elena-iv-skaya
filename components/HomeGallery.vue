@@ -38,7 +38,6 @@ export default {
       isDrag: false,
       dragStep: 75,
       lerp: lerp(),
-      lerpLoading: lerp(),
       timerId: null,
       speedUp: 10,
       showAllItems: false,
@@ -163,12 +162,8 @@ export default {
       const progressBar = this.loadingItem.nextElementSibling
       const progress = this.$nuxt.$loading.percent / 100
 
-      if(progress >= 100 ) raf.remove(this.tickProgress)
-
-      this.lerpLoading.update()
-      this.lerpLoading.set(progress)
-
-      progressBar.style.transform = `scale3d(${this.lerpLoading.get()}, 1, 1)`
+      if(progress >= 1 ) raf.remove(this.tickProgress)
+      progressBar.style.transform = `scale3d(${progress}, 1, 1)`
     },
     getClass(ratio) {
       if(ratio.includes('Big')){

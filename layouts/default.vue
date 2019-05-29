@@ -77,7 +77,6 @@ export default {
     },
     loopScrollAnimation() {
       this.scroll.y = this.roundTwo(0.1 * (this.scrolled - this.scroll.y) + this.scroll.y)
-      window.smoothOffsetY = this.scroll.y
       TweenLite.set(this.$refs.smoothComponent, { y: this.scroll.y, force3D: true });
     },
     resetScroll() {

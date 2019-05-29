@@ -185,6 +185,7 @@
         width: 100%;
         transform: scale3d(0, 1, 1);
         transform-origin: left;
+        transition: transform 500ms ease;
       }
     }
   }
