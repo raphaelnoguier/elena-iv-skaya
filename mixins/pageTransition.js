@@ -51,7 +51,7 @@ let createTransition = () => {
           nextImg.src = imgTransition
 
           nextImg.onload = () => {
-            toSerie ? navItems[0].style.opacity = 0 : navItems[0].style.opacity = ''
+            toSerie && isDesktop ? navItems[0].style.opacity = 0 : navItems[0].style.opacity = ''
 
             el.classList.remove('page-enter', 'page-leave')
             el.classList.add('page-leave')
@@ -73,8 +73,8 @@ let createTransition = () => {
 
                 toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
 
-                mask.style.top = 0
-                mask.style.transform = 'translateY(-200px)'
+                mask.style.top = '0'
+                mask.style.transform = 'translate3d(0, -200px, 0)'
               }
             }).add({
               targets: transitionContainer,

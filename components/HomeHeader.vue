@@ -60,7 +60,7 @@ export default {
       slideIndex: 1,
       textIndex: 1,
       transitioning: false,
-      isSafari: browser.safari,
+      isMobile: !browser.desktop,
       easingTop: BezierEasing(0.85, 0.015, 0.175, 0.9)
     }
   },
@@ -102,15 +102,15 @@ export default {
             const easeBottom = easingBottom(values.x / 100)
 
             if(direction === 'next') {
-              if(this.isSafari) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
+              if(this.isMobile) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
               else activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
             } else {
-              if(this.isSafari) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
+              if(this.isMobile) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
               else activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
             }
           },
           complete: () => {
-            this.isSafari ? activeSlide.style.webkitClipPath = '' : activeSlide.style.clipPath = ''
+            this.isMobile ? activeSlide.style.webkitClipPath = '' : activeSlide.style.clipPath = ''
             activeSlide.classList.remove('active')
             nextSlide.classList.remove('behind')
             nextSlide.classList.add('active')

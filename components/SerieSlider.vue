@@ -212,6 +212,7 @@ export default {
       this.sliderContent.style.transform = `translate3d(-${x}px, 0, 0)`
       this.titleContainer.style.transform = `translate3d(-${x}px, 0, 0)`
       this.progress.style.width = `${percentTranslate * 100}%`
+      this.progress.style.transform = `scale3d(${percentTranslate}, 1, 1)`
 
       this.cursorX.update()
       this.cursorY.update()
@@ -234,9 +235,9 @@ export default {
       const scrollableWidth = this.mobileSliderWrapper.scrollWidth
       const size = this.mobileSliderWrapper.clientWidth
 
-      let progress = Math.round(100 * offset / (scrollableWidth - size))
+      let progress = Math.round(100 * offset / (scrollableWidth - size)) / 100
 
-      this.progress.style.width = `${progress}%`
+      this.progress.style.transform = `scale3d(${progress}, 1, 1)`
       this.titleContainer.style.transform = `translate3d(-${offset}px, 0, 0)`
     }
   },

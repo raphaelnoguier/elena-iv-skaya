@@ -331,8 +331,10 @@
       }
 
       .progress {
-        width: 0;
+        width: 100%;
         height: 100%;
+        transform-origin: left;
+        transform: scale3d(0, 1, 1);
         background-color: #FCF9F5;
       }
     }
