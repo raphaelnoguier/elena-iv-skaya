@@ -170,6 +170,7 @@
         position: none;
         pointer-events: none;
         transition: transform 600ms ease-in-out, opacity 500ms ease;
+        -webkit-transition: transform 600ms ease-in-out, opacity 500ms ease;
 
         &.active-link {
           opacity: 0.25;

@@ -76,8 +76,10 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    extend(config, ctx) {
-
-    }
+    postcss: [
+      require('autoprefixer')({
+        browsers: ['> 5%']
+      })
+    ]
   }
 }
