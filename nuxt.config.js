@@ -6,6 +6,9 @@ const prismicConfig = require('./prismic.config.js');
 
 module.exports = {
   mode: 'universal',
+  loading: {
+    color: "rgba(255, 0, 255, 0)"
+  },
   /*
   ** Headers
   */
