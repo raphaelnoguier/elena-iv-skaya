@@ -8,6 +8,8 @@ let createTransition = () => {
       let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
 
+      if(document.querySelector('.error-wrapper')) return
+
       const app = document.getElementById('app')
       const nav = document.querySelector('.nav')
       const navItems = nav.querySelectorAll('li')
@@ -16,6 +18,7 @@ let createTransition = () => {
       const mask = transitionContainer.querySelector('.image-transition img')
       const fixedEls = document.querySelector('.fixed-elements')
       const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
+      const isDesktop = window.innerWidth > 768
 
       const disableScroll = function(e) {
         e.preventDefault()
@@ -33,7 +36,9 @@ let createTransition = () => {
       return {
         name: 'page',
         css: false,
-        beforeLeave() {
+        beforeLeave(el) {
+          el.style.transform = 'transform: translate3d(0, 0, 0)'
+
           if(fromSerie) {
             imgTransition = this.$store.getters.serieLoaderImg
           } else {
@@ -41,11 +46,10 @@ let createTransition = () => {
           }
         },
         leave(el, done) {
-          const tmp = new Image
-          tmp.src = imgTransition
+          const nextImg = new Image
+          nextImg.src = imgTransition
 
-          tmp.onload = () => {
-
+          nextImg.onload = () => {
             fromSerie ? navItems[0].style.opacity  = 0 : null
 
             el.classList.remove('page-enter', 'page-leave')
@@ -57,25 +61,20 @@ let createTransition = () => {
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
-                fixedEls.innerHTML = ''
+                if(isDesktop) fixedEls.innerHTML = ''
+                if(fromSerie && !serieToSerie) navItems[0].style.opacity = 1
+
                 if(to.name !== 'index') window.scroll(0, 0)
                 if(from && from.name === 'serie-slug' && to.name === 'index') window.scroll(0, this.$store.state.position)
 
-                nav.classList.add('before-enter')
-
                 document.body.style.transitionDuration = '0ms'
                 document.body.classList.remove('no-links')
+                nav.classList.add('before-enter')
 
-                if(toAbout) {
-                  document.body.dataset.background = 'dark'
-                } else {
-                  document.body.dataset.background = 'white'
-                }
-
-                fromSerie && !serieToSerie ? navItems[0].style.opacity = 1 : navItems[0].style.opacity = ''
+                toAbout ? document.body.dataset.background = 'dark' : document.body.dataset.background = 'white'
 
                 mask.style.top = 0
-                mask.style.transform = 'translate3d(0, -200px, 0)'
+                mask.style.transform = 'translateY(-200px)'
               }
             }).add({
               targets: transitionContainer,
@@ -84,10 +83,10 @@ let createTransition = () => {
                 this.$parent.transitioning = false
                 this.$parent.domLoaded = false
 
-                imageContainer.style.height = 0
+                imageContainer.style.height = ''
                 transitionContainer.style.height = ''
                 mask.style.top = ''
-                mask.style.transform = ""
+                mask.style.transform = ''
 
                 done()
               }
@@ -104,14 +103,12 @@ let createTransition = () => {
           app.onmousewheel = app.onmousewheel = null
           app.onwheel = null
 
-          setTimeout(() => this.$parent.domLoaded = true, 1)
+          this.$parent.domLoaded = true
         },
         enter(el, done) {
-
-          let nav = this.$parent.$refs.nav.$el
+          let nav = this.$parent.$refs.nav.$el;
           el.classList.remove('page-leave')
           el.classList.add('page-enter')
-
           setTimeout(() => nav.classList.remove('before-enter'), 200)
           done()
         }

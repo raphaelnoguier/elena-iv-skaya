@@ -234,8 +234,6 @@ export default {
       const scrollableWidth = this.mobileSliderWrapper.scrollWidth
       const size = this.mobileSliderWrapper.clientWidth
 
-      console.log(offset)
-
       let progress = Math.round(100 * offset / (scrollableWidth - size))
 
       this.progress.style.width = `${progress}%`

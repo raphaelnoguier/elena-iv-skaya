@@ -18,7 +18,6 @@
       align-items: center;
       justify-content: center;
       padding: 0 8vw;
-      color:white;
       height: 100%;
 
       .number {
@@ -26,6 +25,7 @@
         position: relative;
         line-height: 37.5vw;
         opacity: 0;
+        color:white;
 
         @include max(md) {
           font-size: 52vw;
@@ -59,6 +59,7 @@
           letter-spacing: 0.125vw;
           line-height: 1.313vw;
           text-decoration: none;
+          color:white;
 
           @include max(md) {
             font-size: 2.083vw;

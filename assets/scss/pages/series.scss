@@ -462,11 +462,9 @@
     text-align: center;
     display: flex;
     align-items: center;
-    transition: color 1000ms ease;
     @include verticalText(360);
 
     [data-background='dark'] & {
-
       span {
         color:white;
       }
@@ -482,6 +480,8 @@
       line-height: 0.875vw;
       letter-spacing: 0.125vw;
       display: block;
+      color: #121212;
+      transition: color 500ms ease;
 
       @include max(md) {
         font-size: 1.823vw;

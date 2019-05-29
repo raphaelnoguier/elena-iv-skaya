@@ -18,6 +18,7 @@
 body {
   line-height: 1;
   background-color: #FCF9F5;
+  transition: background-color 500ms ease;
 
   @include max(md) {
     position: relative;
@@ -38,12 +39,10 @@ body {
 	}
 
 	&[data-background="white"] {
-		transition: background-color 500ms ease;
     background-color: #FCF9F5;;
   }
 
   &[data-background="dark"] {
-		transition: background-color 500ms ease;
     background-color: #121212;
   }
 }

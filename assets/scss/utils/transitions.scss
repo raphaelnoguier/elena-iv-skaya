@@ -2,6 +2,10 @@
   transition: opacity 1000ms ease-in-out, transform 1000ms ease-in-out;
   transform: translate3d(0, -200px, 0);
   opacity: 0;
+
+  @include max(md) {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .page-enter, .page-enter-active {

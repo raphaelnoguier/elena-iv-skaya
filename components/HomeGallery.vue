@@ -158,7 +158,6 @@ export default {
       raf.add(this.tickProgress)
     },
     tickProgress() {
-      console.log('run gallery')
       const progressBar = this.loadingItem.nextElementSibling
       const progress = this.$nuxt.$loading.percent / 100
 
