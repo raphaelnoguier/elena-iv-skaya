@@ -136,6 +136,7 @@
 
     a {
       user-select: none;
+      -moz-user-select: -moz-none;
       display: block;
       overflow: hidden;
       height: 100%;

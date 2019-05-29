@@ -219,7 +219,11 @@
       line-height: 0.875vw;
       text-transform: uppercase;
       display: block;
-      transition: transform 800ms $ease-in-out-quad, opacity 600ms $ease-in-out-quad;
+      transition: transform 800ms $ease-in-out-quad, opacity 600ms $ease-in-out-quad, color 500ms ease;
+
+      [data-background='dark'] & {
+        color: white;
+      }
 
       &.last-updated {
         opacity: 1;

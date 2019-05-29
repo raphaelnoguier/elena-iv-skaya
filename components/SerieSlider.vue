@@ -150,6 +150,7 @@ export default {
       }
     },
     down(cursor) {
+      cursor.preventDefault()
       this.timerId = setTimeout(() => this.initDrag(cursor), 350)
     },
     initDrag(cursor) {
@@ -225,7 +226,7 @@ export default {
       let progress = Math.round(100 * offset / (scrollableWidth - size))
 
       this.progress.style.width = `${progress}%`
-      this.titleContainer.style.transform = `translate3d(-${this.mobileSliderWrapper.scrollLeft}px, 0, 0)`
+      this.titleContainer.style.transform = `translate3d(-${offset}px, 0, 0)`
     }
   },
   props: {nextSeries: Array}

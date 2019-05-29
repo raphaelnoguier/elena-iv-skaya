@@ -16,7 +16,7 @@ let createTransition = () => {
       const mask = transitionContainer.querySelector('.image-transition img')
       const fixedEls = document.querySelector('.fixed-elements')
       const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
-      
+
       let disableScroll = function(e) {
         e.preventDefault()
       }

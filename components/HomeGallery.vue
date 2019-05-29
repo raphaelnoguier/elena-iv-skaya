@@ -38,7 +38,7 @@ export default {
       dragStep: 75,
       lerp: lerp(),
       timerId: null,
-      speedUp: 3,
+      speedUp: 10,
       showAllItems: false,
       isMobile: !browser.desktop
     }
@@ -168,6 +168,7 @@ export default {
       if(this.$parent.hasMoved) this.cursor.classList.add('visible')
     },
     down(cursor) {
+      cursor.preventDefault()
       if(window.innerWidth < 768) return
       this.timerId = setTimeout(() => this.initDrag(cursor), 350)
     },
@@ -175,7 +176,6 @@ export default {
       this.isDrag = true
       this.calcPositions()
       // this.resetParallax()
-
       this.sliderContent.classList.add('drag', 'no-events')
       TweenLite.set(this.nav, { opacity: 0})
       this.cursor.classList.add('focus')
@@ -217,7 +217,7 @@ export default {
       const percentTranslate = math.map(this.lerp.get(), 0, this.galleryItems.length, 0, 1)
       const percentTranslateTexts = math.map(this.lerp.get(), 0, 1, 0, 1.75)
       const percentTranslateCover = math.map(this.lerp.get(), 0, 1, 0, 43.75)
-      const size = this.totalHeightOnDrag
+      const size = this.vw(43.75) * this.galleryItems.length
       let y = percentTranslate * size
       const offset = calcOffset.get(this.sliderContent).top + this.firstTransform - (window.innerHeight * 0.5) + this.vw(21.875)
 
