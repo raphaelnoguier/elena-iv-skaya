@@ -17,21 +17,23 @@ let createTransition = () => {
       const fixedEls = document.querySelector('.fixed-elements')
       const tl = anime.timeline({ easing: 'easeInOutQuad', duration: 750 })
 
-      let disableScroll = (e) => e.preventDefault()
+      const disableScroll = function(e) {
+        e.preventDefault()
+      }
+
+      if(from && to) {
+        /* disable scroll */
+        app.addEventListener('scroll', disableScroll, false )
+        app.ontouchmove = disableScroll
+        app.onwheel = disableScroll
+        app.onmousewheel = app.onmousewheel = disableScroll
+        document.body.classList.add('lock')
+      }
 
       return {
         name: 'page',
         css: false,
         beforeLeave() {
-          /* disable scroll */
-          if(to && from)  {
-            app.addEventListener('scroll', disableScroll, false )
-            app.addEventListener('touchmove', disableScroll, false )
-            app.onwheel = disableScroll
-            app.onmousewheel = app.onmousewheel = disableScroll
-            document.body.classList.add('lock')
-          }
-
           if(fromSerie) {
             imgTransition = this.$store.getters.serieLoaderImg
           } else {
@@ -87,13 +89,6 @@ let createTransition = () => {
                 mask.style.top = ''
                 mask.style.transform = ""
 
-                if(to && from)  {
-                  app.removeEventListener('scroll', disableScroll, false)
-                  app.removeEventListener('touchmove', disableScroll, false)
-                  app.onmousewheel = app.onmousewheel = null
-                  app.onwheel = null
-                }
-
                 done()
               }
             })
@@ -102,9 +97,17 @@ let createTransition = () => {
         beforeEnter() {
           document.body.style.transitionDuration = ''
           document.body.classList.remove('lock')
+
+          app.removeEventListener('scroll', disableScroll, false)
+          app.removeEventListener('touchmove', disableScroll, false)
+          app.ontouchmove = null
+          app.onmousewheel = app.onmousewheel = null
+          app.onwheel = null
+
           setTimeout(() => this.$parent.domLoaded = true, 1)
         },
         enter(el, done) {
+
           let nav = this.$parent.$refs.nav.$el
           el.classList.remove('page-leave')
           el.classList.add('page-enter')
