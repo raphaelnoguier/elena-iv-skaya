@@ -61,6 +61,7 @@ export default {
       textIndex: 1,
       transitioning: false,
       isMobile: !browser.desktop,
+      isSafari: browser.safari,
       easingTop: BezierEasing(0.85, 0.015, 0.175, 0.9)
     }
   },
@@ -102,10 +103,10 @@ export default {
             const easeBottom = easingBottom(values.x / 100)
 
             if(direction === 'next') {
-              if(this.isMobile) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
+              if(this.isMobile || this.isSafari) activeSlide.style.webkitClipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
               else activeSlide.style.clipPath = `polygon(${values.x * easeTop}% 0, 100% 0, 100% 100%, ${easeBottom * values.x}% 100%)`
             } else {
-              if(this.isMobile) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
+              if(this.isMobile || this.isSafari) activeSlide.style.webkitClipPath =  `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
               else activeSlide.style.clipPath = `polygon(0 0, ${values.x * easeBottom}% 0, ${values.x * easeTop}% 100%, 0 100%)`
             }
           },

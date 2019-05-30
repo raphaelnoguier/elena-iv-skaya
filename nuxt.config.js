@@ -43,6 +43,10 @@ module.exports = {
     {
       src: '~/plugins/vue-lazyload',
       ssr: false
+    },
+    {
+      src: '~/plugins/ga.js',
+      ssr: false
     }
   ],
   /*
@@ -76,10 +80,8 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    postcss: [
-      require('autoprefixer')({
-        browsers: ['> 5%']
-      })
-    ]
+    extend(config, ctx) {
+
+    }
   }
 }

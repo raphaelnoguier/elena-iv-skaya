@@ -191,7 +191,7 @@ export default {
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item .relative-container')
     document.body.classList.remove('lock')
-    
+
     this.$nextTick(() => {
       this.$parent.$parent.calcScroll()
       if (window.innerWidth > 768){
