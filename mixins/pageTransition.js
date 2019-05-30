@@ -54,7 +54,6 @@ let createTransition = () => {
           nextImg.src = imgTransition
 
           nextImg.onload = () => {
-            console.log(activeProgressBar)
             if(activeProgressBar) activeProgressBar.style.transform = 'scale3d(1, 1, 1)'
             toSerie && isDesktop ? navItems[0].style.opacity = 0 : navItems[0].style.opacity = ''
 
