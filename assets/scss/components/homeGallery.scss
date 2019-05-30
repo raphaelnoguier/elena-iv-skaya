@@ -140,7 +140,8 @@
       transition: transform 500ms $ease-in-out-quad;
       cursor: pointer;
 
-      .layer {
+      &:before {
+        content: '';
         z-index: -1;
         background: #121212;
         position: absolute;
@@ -149,6 +150,7 @@
         width: 100%;
         height: 100%;
         transition: opacity 100ms ease;
+        transform: scale3d(0.995, 0.995, 1);
       }
     }
 

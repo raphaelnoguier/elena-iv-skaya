@@ -43,10 +43,10 @@
     height: 4vw;
     max-width: 90px;
     max-height: 90px;
-    border-radius: 20vw;
+    border-radius: 50px;
     border: 2px solid #FCF9F5;
     background: transparent;
-    margin: 0 0.2vw;
+    margin: 0 5px;
     transition: transform 500ms $ease-in-out-quad, border 500ms ease;
   }
 
@@ -74,7 +74,7 @@
 
   &.homepage {
     .circle {
-      border: 1px solid#121212;
+      border: 2px solid#121212;
     }
 
     .arrows {
@@ -91,7 +91,7 @@
         }
       }
       .circle {
-        border: 1px solid#FCF9F5;
+        border: 2px solid#FCF9F5;
       }
     }
   }

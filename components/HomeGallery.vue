@@ -7,7 +7,6 @@
         <div class="gallery-item-content">
           <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`" draggable="false">
             <img :src="serie.serie.data.cover_serie_image.url" :alt="serie.serie.data.title[0].text" />
-            <div class="layer"></div>
             <div class="loading-progress"></div>
           </nuxt-link>
           <div class="item-title">
@@ -40,7 +39,7 @@ export default {
       dragStep: 75,
       lerp: lerp(),
       timerId: null,
-      speedUp: 10,
+      speedUp: 3,
       showAllItems: false,
       isMobile: !browser.desktop
     }
