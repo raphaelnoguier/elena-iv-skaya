@@ -25,7 +25,7 @@
     &:before, &:after {
       content: '';
       position: absolute;
-      width: calc(100% - 67vw);
+      width: calc((100% - 35vw) / 2);
       height: 1px;
       background: #F9F9F9;
     }

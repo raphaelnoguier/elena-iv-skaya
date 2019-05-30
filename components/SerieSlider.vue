@@ -115,17 +115,19 @@ export default {
       this.isDrag = false
     },
     navigate(i) {
+      this.indexLoading = i
       document.body.classList.add('no-links')
       this.covers[i].classList.add('active-link')
-      this.indexLoading = i
 
+      const progressBar = this.covers[this.indexLoading].nextElementSibling
+      progressBar.classList.add('active')
       raf.add(this.tickProgress)
     },
     tickProgress() {
       const progressBar = this.covers[this.indexLoading].nextElementSibling
-      const progress = this.$nuxt.$loading.percent / 100
+      const progress = math.clamp(this.$nuxt.$loading.percent / 100, 0, 0.8)
 
-      if(progress >= 1 ) raf.remove(this.tickProgress)
+      if(progress === 0.8) raf.remove(this.tickProgress)
       progressBar.style.transform = `scale3d(${progress}, 1, 1)`
     },
     enableRaf() {

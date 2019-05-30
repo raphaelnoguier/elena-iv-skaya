@@ -127,7 +127,8 @@ export default {
         complete: () => {
           TweenLite.set(this.mask, {top: 0})
           TweenLite.to(this.mask, 0.5, {y: -200, force3D: true, ease: 'Quad.easeInOut'})
-          this.$parent.domLoaded = true
+
+          this.$nextTick(() => this.$parent.domLoaded = true)
         }
       })
       .add({

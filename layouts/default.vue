@@ -65,9 +65,13 @@ export default {
         if(window.innerWidth < 768 || this.isSafari) return
         raf.add(this.loopScrollAnimation)
         this.totalHeight = this.$refs.nuxt.$el.getBoundingClientRect().height
-        TweenLite.set(this.$refs.smoothComponent, { height: this.totalHeight });
-        TweenLite.set(this.$refs.fakeNav.$el, { height: this.totalHeight });
+        TweenLite.set(this.$refs.smoothComponent, { height: this.totalHeight })
+        TweenLite.set(this.$refs.fakeNav.$el, { height: this.totalHeight })
       })
+    },
+    adjustHeight(valueToAdd, release) {
+      TweenLite.set(this.$refs.smoothComponent, { height: this.totalHeight + (!release ? valueToAdd : 0) })
+      TweenLite.set(this.$refs.fakeNav.$el, { height: this.totalHeight + (!release ? valueToAdd : 0)})
     },
     onScrollDefault() {
       this.scrolled = -window.scrollY;

@@ -7,6 +7,7 @@
         <div class="gallery-item-content">
           <nuxt-link v-on:click.native="updateTransitionImg(serie.serie.data.cover_serie_image.url, index)" :to="`/serie/${serie.serie.uid}`" draggable="false">
             <img :src="serie.serie.data.cover_serie_image.url" :alt="serie.serie.data.title[0].text" />
+            <div class="layer"></div>
             <div class="loading-progress"></div>
           </nuxt-link>
           <div class="item-title">
@@ -118,10 +119,13 @@ export default {
     },
     // PARALLAX //
     initParallax() {
+      this.parallax = []
+
+      for (let i = 0; i < this.galleryItems.length; i++) {
+        const element = this.galleryItems[i];
+        this.parallax.push({ offsetTop: element.offsetTop, bloc: element})
+      }
       raf.add(this.tickPrlx)
-      this.galleryItems.forEach((item, i) => {
-        this.parallax.push({ offsetTop: calcOffset.get(item).top, height: item.getBoundingClientRect().height, bloc: item})
-      })
     },
     tickPrlx() {
       const wHeight =  window.innerHeight
@@ -129,17 +133,17 @@ export default {
       const max = wHeight + (wHeight * 0.75)
 
       for (let i = 0; i < this.parallax.length; i++) {
-        const bloc = this.parallax[i].bloc
+        const item = this.parallax[i].bloc
         const offsetTop = this.offsetY + this.parallax[i].offsetTop
 
         if (offsetTop > min && offsetTop < max) {
-          const y = math.map(offsetTop, min, max, 0, 450)
-          this.transform(bloc, y)
+          const y = math.map(offsetTop, min, max, -20, 50)
+          this.transform(item, y)
         }
       }
     },
     transform(bloc, y) {
-      bloc.style.transform = `translate3d(0px, ${y}px, 0)`
+      bloc.style.transform = `translate3d(0px, ${y}vw, 0)`
     },
     resetParallax() {
       for (let i = 0; i < this.parallax.length; i++) {
@@ -187,7 +191,7 @@ export default {
     initDrag(cursor) {
       this.isDrag = true
       this.calcPositions()
-      // this.resetParallax()
+      this.resetParallax()
       this.sliderContent.classList.add('drag', 'no-events')
       TweenLite.set(this.nav, { opacity: 0})
       this.cursor.classList.add('focus')
@@ -197,8 +201,10 @@ export default {
       this.downPosition = this.currentIndex
       this.lerp.immediateSet(this.currentIndex)
       raf.add(this.tick)
+      // raf.remove(this.tickPrlx)
 
-      TweenLite.to(this.dragComponent.$el, 0.3, { delay: 0.3, opacity: 1, ease: 'Quad.easeInOut'})
+      this.$parent.$parent.$parent.adjustHeight(this.firstTransform, false)
+      TweenLite.to(this.dragComponent.$el, 0.5, { opacity: 1, ease: 'Quad.easeInOut'})
     },
     calcPositions() {
       for (let i = 0; i < this.galleryItems.length; i++) {
@@ -229,7 +235,7 @@ export default {
       const percentTranslate = math.map(this.lerp.get(), 0, this.galleryItems.length, 0, 1)
       const percentTranslateTexts = math.map(this.lerp.get(), 0, 1, 0, 1.75)
       const percentTranslateCover = math.map(this.lerp.get(), 0, 1, 0, 43.75)
-      const size = this.vw(43.75) * this.galleryItems.length
+      const size = this.totalHeightOnDrag
       let y = percentTranslate * size
       const offset = calcOffset.get(this.sliderContent).top + this.firstTransform - (window.innerHeight * 0.5) + this.vw(21.875)
 
@@ -273,8 +279,9 @@ export default {
       this.moveY = window.innerHeight * 0.5
 
       TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
-      TweenLite.to(this.dragComponent.$el, 0.3, { opacity: 0, ease: 'Quad.easeInOut'})
+      TweenLite.to(this.dragComponent.$el, 0.3, { opacity: 0, ease: 'Quad.easeInOut', clearProps: 'opacity'})
       TweenLite.set(this.nav, { opacity: 1, clearProps: 'opacity'})
+      this.$parent.$parent.$parent.adjustHeight(this.firstTransform, true)
 
       this.sliderContent.classList.remove('drag', 'no-events')
       this.$parent.setTheme('white')
@@ -284,6 +291,7 @@ export default {
       else this.cursor.classList.remove('focus')
 
       raf.remove(this.tick)
+      // raf.add(this.tickPrlx)
     },
     setIndex(i) {
       this.currentIndex = Math.round(i)

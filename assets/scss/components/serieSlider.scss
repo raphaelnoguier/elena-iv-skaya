@@ -173,16 +173,17 @@
         -webkit-transition: transform 600ms ease-in-out, opacity 500ms ease;
 
         &.active-link {
-          opacity: 0.25;
+          opacity: 0.8;
           cursor: wait;
         }
       }
 
       .loading-progress {
         position: absolute;
-        bottom: 0;
+        top: 0;
+        left: 0;
         height: 2px;
-        background: #FCF9F5;
+        background: white;
         width: 100%;
         transform: scale3d(0, 1, 1);
         transform-origin: left;

@@ -157,7 +157,7 @@ export default {
     this.$el.removeEventListener('mousemove', this.moveCursor)
 
     if (window.innerWidth > 768) {
-      this.reveal.destroy()
+      this.reveal && this.reveal.destroy()
       raf.remove(this.tickCursor)
     }
   },

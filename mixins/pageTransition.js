@@ -49,10 +49,13 @@ let createTransition = () => {
           }
         },
         leave(el, done) {
+          const activeProgressBar = document.querySelector('.loading-progress.active')
           const nextImg = new Image
           nextImg.src = imgTransition
 
           nextImg.onload = () => {
+            console.log(activeProgressBar)
+            if(activeProgressBar) activeProgressBar.style.transform = 'scale3d(1, 1, 1)'
             toSerie && isDesktop ? navItems[0].style.opacity = 0 : navItems[0].style.opacity = ''
 
             el.classList.remove('page-enter', 'page-leave')
