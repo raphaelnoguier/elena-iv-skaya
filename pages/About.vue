@@ -18,7 +18,7 @@
           <div class="social-links">
             <ul>
               <li v-for="(item, index) in social_links" :key="index">
-                <a :href="item.url" target="_blank">{{item.link_text}}</a>
+                <a :href="item.url" target="_blank" rel="noopener">{{item.link_text}}</a>
               </li>
             </ul>
           </div>
@@ -40,7 +40,7 @@
               <span>Agency representations</span>
               <ul>
                 <li v-for="(item, index) in agency_representations" :key="index">
-                  {{item.region}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
+                  {{item.region}} - <a :href="item.url" target="_blank" rel="noopener">{{item.link_text}}</a>
                 </li>
               </ul>
             </div>
@@ -48,7 +48,7 @@
               <span>Website credits</span>
               <ul>
                 <li v-for="(item, index) in credits" :key="index">
-                  {{item.role}} - <a :href="item.url" target="_blank">{{item.link_text}}</a>
+                  {{item.role}} - <a :href="item.url" target="_blank" rel="noopener">{{item.link_text}}</a>
                 </li>
               </ul>
             </div>

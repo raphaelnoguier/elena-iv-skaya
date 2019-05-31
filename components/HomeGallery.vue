@@ -41,7 +41,8 @@ export default {
       timerId: null,
       speedUp: 3,
       showAllItems: false,
-      isMobile: !browser.desktop
+      isMobile: !browser.desktop,
+      isSafari: browser.safari
     }
   },
   mounted () {
@@ -202,7 +203,7 @@ export default {
       raf.add(this.tick)
       // raf.remove(this.tickPrlx)
 
-      this.$parent.$parent.$parent.adjustHeight(this.firstTransform, false)
+      if(!this.isSafari) this.$parent.$parent.$parent.adjustHeight(this.firstTransform, false)
       TweenLite.to(this.dragComponent.$el, 0.5, { opacity: 1, ease: 'Quad.easeInOut'})
     },
     calcPositions() {
@@ -280,7 +281,7 @@ export default {
       TweenLite.to(this.galleryItems, 0.5, { y: 0, ease: 'Quad.easeInOut', force3D: true })
       TweenLite.to(this.dragComponent.$el, 0.3, { opacity: 0, ease: 'Quad.easeInOut', clearProps: 'opacity'})
       TweenLite.set(this.nav, { opacity: 1, clearProps: 'opacity'})
-      this.$parent.$parent.$parent.adjustHeight(this.firstTransform, true)
+      if(!this.isSafari) this.$parent.$parent.$parent.adjustHeight(this.firstTransform, true)
 
       this.sliderContent.classList.remove('drag', 'no-events')
       this.$parent.setTheme('white')
