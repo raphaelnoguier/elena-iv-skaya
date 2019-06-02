@@ -102,8 +102,11 @@
         height: 100%;
         width: 100%;
         z-index: 9;
-        background: linear-gradient(to bottom, #121212, transparent 30%),
-        linear-gradient(to top, #121212, transparent 30%);
+        background: linear-gradient(to bottom, #121212, transparent 25%),
+        linear-gradient(to top, #121212, transparent 25%);
+
+        background-image: -webkit-linear-gradient(top, #121212, rgba(18, 18, 18, 0) 25%),
+        -webkit-linear-gradient(bottom, #121212, rgba(18, 18, 18, 0) 25%);
         opacity: 0;
 
         [data-background='dark'] & {
@@ -174,8 +177,11 @@
         width: 100%;
         z-index: 9;
         opacity: 0;
-        background: linear-gradient(to bottom, #121212, transparent 30%),
-        linear-gradient(to top, #121212, transparent 30%);
+        background-image: linear-gradient(to bottom, #121212, transparent 25%),
+        linear-gradient(to top, #121212, transparent 25%);
+
+        background-image: -webkit-linear-gradient(top, #121212, rgba(18, 18, 18, 0) 25%),
+        -webkit-linear-gradient(bottom, #121212, rgba(18, 18, 18, 0) 25%);
 
         [data-background='dark'] & {
           transition: opacity 200ms ease 800ms;

@@ -8,7 +8,7 @@
     url('~assets/fonts/#{$name}/#{$name}.ttf') format('truetype'),
     url('~assets/fonts/#{$name}/#{$name}.eot?#iefix') format('embedded-opentype');
     font-weight: normal;
-    font-display: block;
+    font-display: swap;
     font-style: normal;
   }
 }

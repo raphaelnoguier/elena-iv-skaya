@@ -55,18 +55,18 @@ export default {
     },
     disableScroll() {
       if (this.loadingContainer.addEventListener) {
-        this.loadingContainer.addEventListener('touchmove', this.preventDefault, {passive: true})
+        this.loadingContainer.addEventListener('touchmove', this.preventDefault, false)
         this.loadingContainer.addEventListener('scroll', this.preventDefault, false)
-        this.loadingContainer.addEventListener('wheel', this.preventDefault, {passive: true})
-        this.loadingContainer.addEventListener('mousewheel', this.preventDefault, {passive: true})
+        this.loadingContainer.addEventListener('wheel', this.preventDefault, false)
+        this.loadingContainer.addEventListener('mousewheel', this.preventDefault, false)
       }
     },
     enableScroll() {
       if (this.loadingContainer.removeEventListener) {
-        this.loadingContainer.removeEventListener('touchmove', this.preventDefault, {passive: true})
+        this.loadingContainer.removeEventListener('touchmove', this.preventDefault, false)
         this.loadingContainer.removeEventListener('scroll', this.preventDefault, false)
-        this.loadingContainer.removeEventListener('wheel', this.preventDefault, {passive: true})
-        this.loadingContainer.removeEventListener('mousewheel', this.preventDefault, {passive: true})
+        this.loadingContainer.removeEventListener('wheel', this.preventDefault, false)
+        this.loadingContainer.removeEventListener('mousewheel', this.preventDefault, false)
       }
     },
     launchLoading() {

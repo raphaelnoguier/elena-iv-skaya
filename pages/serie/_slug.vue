@@ -192,6 +192,7 @@ export default {
     this.$store.commit('SET_SERIE_LOADER_IMG', this.$store.getters.currentDoc.data.loader_image.url)
     this.nav = this.$parent.$parent.$el.querySelector('.nav');
     this.galleryItems = this.$refs.serieGallery.querySelectorAll('.gallery-item .relative-container')
+    this.nav.classList.add('serie-page')
     document.body.classList.remove('lock')
 
     this.$nextTick(() => {
@@ -274,7 +275,7 @@ export default {
     },
     revealSlider() {
       this.reveal = reveal(
-        { dom: this.$refs.serieSlider.$el, ratioIn: 0.1, update: (status) => {
+        { dom: this.$refs.serieSlider.$el, ratioIn: 0,  update: (status) => {
           if(document.body.classList.contains('lock')) return
           if(status.includes('down')) {
             this.disableRaf()
@@ -292,7 +293,8 @@ export default {
     },
     onScrollSerie(status) {
       this.offsetY = window.scrollY
-      this.nav.classList.toggle('black-link' , this.offsetY > this.featuredImageOffset)
+      if(this.offsetY > this.featuredImageOffset) this.nav.classList.add('black-link')
+      else this.nav.classList.remove('black-link')
     },
     scrollDown() {
       const destination = this.$el.ownerDocument.querySelector('.serie-gallery');

@@ -7,6 +7,7 @@ let createTransition = () => {
       let toAbout = to.name === 'about' || to.name === 'About'
       let fromSerie = from && from.name === 'serie-slug' && to.name !== 'serie-slug'
       let toSerie = to.name === 'serie-slug'
+      let toHome = to.name === 'index'
       let serieToSerie = from && to && to.name === 'serie-slug' && from.name === 'serie-slug'
       let imgTransition = null
       let isChromeIos = navigator.userAgent.match('CriOS')
@@ -15,6 +16,7 @@ let createTransition = () => {
 
       const app = document.getElementById('app')
       const nav = document.querySelector('.nav')
+      const navBlack = nav.classList.contains('black-link')
       const navItems = nav.querySelectorAll('li')
       const transitionContainer = document.querySelector('.transition-wrapper')
       const imageContainer = transitionContainer.querySelector('.image-transition')
@@ -53,9 +55,10 @@ let createTransition = () => {
           const nextImg = new Image
           nextImg.src = imgTransition
 
+          if(fromSerie && !navBlack) navItems[0].style.opacity = '0'
+
           nextImg.onload = () => {
             if(activeProgressBar) activeProgressBar.style.transform = 'scale3d(1, 1, 1)'
-            toSerie && isDesktop ? navItems[0].style.opacity = 0 : navItems[0].style.opacity = ''
 
             el.classList.remove('page-enter', 'page-leave')
             el.classList.add('page-leave')
@@ -66,7 +69,7 @@ let createTransition = () => {
               scale: [1.1, 1],
               height: '100%',
               complete: () => {
-                if(isDesktop) fixedEls.innerHTML = ''
+                fixedEls.innerHTML = ''
 
                 if(to.name !== 'index') window.scroll(0, 0)
                 if(from && from.name === 'serie-slug' && to.name === 'index') window.scroll(0, this.$store.state.position)
@@ -110,9 +113,11 @@ let createTransition = () => {
         },
         enter(el, done) {
           let nav = this.$parent.$refs.nav.$el;
-          navItems[0].style.opacity = ''
+          if(fromSerie) navItems[0].style.opacity = ''
+
           el.classList.remove('page-leave')
           el.classList.add('page-enter')
+
           setTimeout(() => nav.classList.remove('before-enter'), 200)
           done()
         }

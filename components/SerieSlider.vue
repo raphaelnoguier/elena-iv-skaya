@@ -12,6 +12,7 @@
             <img v-if="item.serie.data.cover_ratio.includes('Landscape')" v-lazy="item.serie.data.fallback_landscape_cover.url" :alt="`gallery-slider-cover-${i}`" />
             <img v-else v-lazy="item.serie.data.cover_serie_image.url" :alt="`gallery-slider-cover-${i}`"/>
             <div class="loading-progress"></div>
+            <div class="placeholder"></div>
           </nuxt-link>
           <div class="serie-slider-mask right"></div>
         </div>
@@ -19,8 +20,8 @@
     </div>
     <div class="slider-controls" ref="controls">
       <div class="upper">
-        <div class="play">
-          <img data-load="preload" src="~/assets/img/ui/play.svg" alt="direction-icon">
+        <div class="copyright">
+          <span>©</span>
         </div>
         <div class="titles">
           <div class="blur"></div>
@@ -236,8 +237,13 @@ export default {
       let offset = this.mobileSliderWrapper.scrollLeft
       const scrollableWidth = this.mobileSliderWrapper.scrollWidth
       const size = this.mobileSliderWrapper.clientWidth
-
       let progress = Math.round(100 * offset / (scrollableWidth - size)) / 100
+      let index = null
+
+      if(window.innerWidth > 375) {
+        index = Math.round(math.map(progress * 100, 0, 100, 0, this.nextSeries.length))
+        this.$refs.index.innerHTML = index
+      }
 
       this.progress.style.transform = `scale3d(${progress}, 1, 1)`
       this.titleContainer.style.transform = `translate3d(-${offset}px, 0, 0)`

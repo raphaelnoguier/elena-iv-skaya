@@ -8,7 +8,7 @@
       <nuxt ref="nuxt"/>
     </div>
     <FixedElements ref="fixedElements"/>
-    <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name === 'index' && 'home',$route.name.toLowerCase() === 'serie-slug' && 'serie-page']"/>
+    <Navigation ref="nav" :class="[transitioning && 'transitioning', $route.name === 'index' && 'home']"/>
     <ImageTransition/>
   </div>
 </template>

@@ -10,8 +10,14 @@
             <div class="loading-progress"></div>
           </nuxt-link>
           <div class="item-title">
-            <h3>{{serie.serie.data.title[0].text}}</h3>
-            <span>{{serie.serie.data.category}}</span>
+            <div class="content">
+              <h3>{{serie.serie.data.title[0].text}}</h3>
+              <span>{{serie.serie.data.category}}</span>
+            </div>
+            <div class="hover-title">
+              <h3>explore</h3>
+              <span>the project</span>
+            </div>
           </div>
         </div>
       </div>
@@ -30,7 +36,6 @@ import raf from '~/utils/raf.js'
 export default {
   data() {
     return {
-      parallax: [],
       offsetY: 0,
       currentIndex: 0,
       downPosition: 0,
@@ -70,7 +75,6 @@ export default {
     if (window.innerWidth >= 768 && browser.desktop) {
       this.addListeners()
       this.calcHeights()
-      // this.initParallax()
     }
   },
   beforeDestroy() {
@@ -117,44 +121,10 @@ export default {
       this.$el.parentNode.addEventListener('mouseup', this.up)
       this.$el.parentNode.addEventListener('mouseleave', this.exit)
     },
-    // PARALLAX //
-    initParallax() {
-      this.parallax = []
-
-      for (let i = 0; i < this.galleryItems.length; i++) {
-        const element = this.galleryItems[i];
-        this.parallax.push({ offsetTop: element.offsetTop, bloc: element})
-      }
-      raf.add(this.tickPrlx)
-    },
-    tickPrlx() {
-      const wHeight =  window.innerHeight
-      const min = (-wHeight * 0.5) - wHeight * 0.75
-      const max = wHeight + (wHeight * 0.75)
-
-      for (let i = 0; i < this.parallax.length; i++) {
-        const item = this.parallax[i].bloc
-        const offsetTop = this.offsetY + this.parallax[i].offsetTop
-
-        if (offsetTop > min && offsetTop < max) {
-          const y = math.map(offsetTop, min, max, -20, 50)
-          this.transform(item, y)
-        }
-      }
-    },
-    transform(bloc, y) {
-      bloc.style.transform = `translate3d(0px, ${y}vw, 0)`
-    },
-    resetParallax() {
-      for (let i = 0; i < this.parallax.length; i++) {
-        const bloc = this.parallax[i].bloc
-        bloc.style.transform = 'translate3d(0, 0, 0)'
-      }
-      raf.remove(this.tick)
-    },
     updateTransitionImg(serieCover, index) {
       document.body.classList.add('no-links')
       this.galleryItems[index].querySelector('img').classList.add('active-link')
+      this.galleryItems[index].querySelector('a').classList.add('active-link')
       this.$store.getters.currentDoc.data.loader_image.url = serieCover
 
       this.loadingItem = this.galleryItems[index].querySelector('img')
@@ -191,7 +161,6 @@ export default {
     initDrag(cursor) {
       this.isDrag = true
       this.calcPositions()
-      this.resetParallax()
       this.sliderContent.classList.add('drag', 'no-events')
       TweenLite.set(this.nav, { opacity: 0})
       this.cursor.classList.add('focus')
@@ -201,7 +170,6 @@ export default {
       this.downPosition = this.currentIndex
       this.lerp.immediateSet(this.currentIndex)
       raf.add(this.tick)
-      // raf.remove(this.tickPrlx)
 
       if(!this.isSafari) this.$parent.$parent.$parent.adjustHeight(this.firstTransform, false)
       TweenLite.to(this.dragComponent.$el, 0.5, { opacity: 1, ease: 'Quad.easeInOut'})
@@ -265,7 +233,6 @@ export default {
       if(window.innerWidth < 768) return
       this.setPosScrollBar(this.currentIndex)
       this.disableDrag()
-      // this.initParallax()
     },
     setPosScrollBar(i) {
       if(!this.isDrag) return
@@ -291,7 +258,6 @@ export default {
       else this.cursor.classList.remove('focus')
 
       raf.remove(this.tick)
-      // raf.add(this.tickPrlx)
     },
     setIndex(i) {
       this.currentIndex = Math.round(i)
@@ -303,7 +269,6 @@ export default {
       else  {
         this.calcHeights()
         this.addListeners()
-        // this.initParallax()
       }
     },
     vw(v) {
