@@ -16,7 +16,7 @@
             </div>
             <div class="hover-title">
               <h3>explore</h3>
-              <span>the project</span>
+              <span>the serie</span>
             </div>
           </div>
         </div>

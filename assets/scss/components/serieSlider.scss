@@ -114,6 +114,12 @@
       cursor: pointer;
       transition: opacity 500ms ease, transform 500ms $ease-in-out-quad;
 
+      &:hover {
+        .serie-slider-mask {
+          transform: scale3d(0.5, 1, 1);
+        }
+      }
+
       @include max(md) {
         width: 41.406vw;
         height: 51.563vw;
