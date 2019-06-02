@@ -6,7 +6,6 @@
 
 @mixin actaLight($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Light";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -14,7 +13,6 @@
 
 @mixin actaMedium($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Medium";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -22,7 +20,6 @@
 
 @mixin actaBook($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Book";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -36,7 +33,6 @@
 
 @mixin actaDisplayMedium($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Medium";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -44,7 +40,6 @@
 
 @mixin actaDisplay($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Regular";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -52,7 +47,6 @@
 
 @mixin actaDisplayLight($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Acta-Display-Light";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -66,7 +60,6 @@
 
 @mixin sofiaProLight($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Sofia-Pro-Light";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -74,7 +67,6 @@
 
 @mixin sofiaProMedium($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Sofia-Pro-Medium";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;
@@ -82,7 +74,6 @@
 
 @mixin sofiaProBold($size: 0.875vw, $lineHeight: normal, $letterSpacing: 0) {
   font-family: "Sofia-Pro-Bold";
-  font-display: swap;
   font-size: $size;
   line-height: $lineHeight;
   letter-spacing: $letterSpacing;

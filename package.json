@@ -18,6 +18,7 @@
     "gsap": "^2.1.2",
     "intersection-observer": "^0.5.1",
     "nuxt": "^2.4.5",
+    "nuxt-netlify-http2-server-push": "^0.1.2",
     "patch-package": "^6.0.5",
     "prismic-javascript": "^2.0.1",
     "raf": "^3.4.1",

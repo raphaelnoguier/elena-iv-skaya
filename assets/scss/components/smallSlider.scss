@@ -105,8 +105,13 @@
       }
     }
 
-    .left img {
-      top: 0.125vw;
+    .left, .right {
+      display: flex;
+      align-items: center;
+    }
+
+    .left svg {
+      top: -0.125vw;
       position: relative;
       margin-right: 1.25vw;
       width: 1.2vw;
@@ -134,8 +139,8 @@
       }
     }
 
-    .right img {
-      top: 0.125vw;
+    .right svg {
+      top: -0.125vw;
       position: relative;
       margin-left: 1.25vw;
       transform: rotate(180deg);

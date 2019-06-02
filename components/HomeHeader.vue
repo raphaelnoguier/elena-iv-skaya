@@ -6,7 +6,7 @@
         <HomeSlider :type="'Small'" :featured="featured" :index="slideIndex"/>
         <div class="controls" :class="transitioning ? 'disabled' : ''">
           <div v-on:click="slide('prev')" class="left">
-            <img src="~assets/img/ui/arrow.svg" data-load="preload" alt="chevron prev">
+            <Arrow />
             <span>previous</span>
           </div>
           <div class="index">
@@ -15,7 +15,7 @@
           </div>
           <div v-on:click="slide('next')" class="right">
             <span>next</span>
-            <img src="~assets/img/ui/arrow.svg" data-load="preload" alt="chevron next">
+            <Arrow />
           </div>
         </div>
       </div>
@@ -47,13 +47,15 @@
 <script>
 import anime from 'animejs'
 import HomeSlider from '~/components/HomeSlider'
+import Arrow from '~/components/Arrow'
 import calcOffset from '~/utils/offset.js'
 import BezierEasing from 'bezier-easing'
 import browser from '~/utils/browser.js'
 
 export default {
   components: {
-    HomeSlider
+    HomeSlider,
+    Arrow
   },
   data() {
     return {

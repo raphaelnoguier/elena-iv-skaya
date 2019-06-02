@@ -132,7 +132,7 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('scroll', this.onScrollHome);
+    window.addEventListener('scroll', this.onScrollHome, false);
     window.addEventListener('resize', this.resize);
     this.$el.addEventListener('mousemove', this.moveCursor)
 

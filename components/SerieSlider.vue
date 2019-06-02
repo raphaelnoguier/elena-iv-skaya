@@ -9,8 +9,8 @@
         <div class="slider-item" v-for="(item, i) in nextSeries" :key="i">
           <div class="serie-slider-mask left"></div>
           <nuxt-link v-on:click.native="navigate(i)" :to="`/serie/${item.serie.uid}`" draggable="false">
-            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" :src="item.serie.data.fallback_landscape_cover.url" :alt="`gallery-slider-cover-${i}`" />
-            <img v-else :src="item.serie.data.cover_serie_image.url" :alt="`gallery-slider-cover-${i}`"/>
+            <img v-if="item.serie.data.cover_ratio.includes('Landscape')" v-lazy="item.serie.data.fallback_landscape_cover.url" :alt="`gallery-slider-cover-${i}`" />
+            <img v-else v-lazy="item.serie.data.cover_serie_image.url" :alt="`gallery-slider-cover-${i}`"/>
             <div class="loading-progress"></div>
           </nuxt-link>
           <div class="serie-slider-mask right"></div>
@@ -92,13 +92,13 @@ export default {
     this.$el.addEventListener('mousedown', this.down)
     this.$el.addEventListener('mousemove', this.move)
 
-    if(window.innerWidth <= 768) this.mobileSliderWrapper.addEventListener('scroll', this.mobileSlider)
+    if(window.innerWidth <= 768) this.mobileSliderWrapper.addEventListener('scroll', this.mobileSlider, false)
   },
   beforeDestroy() {
     this.disableRaf()
     this.disableCursor()
 
-    if(window.innerWidth <= 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider)
+    if(window.innerWidth <= 768) this.mobileSliderWrapper.removeEventListener('scroll', this.mobileSlider, false)
 
     this.$parent.$el.removeEventListener('mousemove', this.moveCursor)
     this.$el.removeEventListener('mouseleave', this.exit)
@@ -189,7 +189,7 @@ export default {
       this.setPosition(pos)
     },
     parralax(x) {
-      let transform = math.clamp(x * 20, -20, 20)
+      let transform = math.clamp(x * 20, -25, 25)
 
       for (let i = 0; i < this.covers.length; i++) {
         this.covers[i].style.transform = `translate3d(${transform}px,0, 0)`

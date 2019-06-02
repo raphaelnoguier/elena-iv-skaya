@@ -10,7 +10,7 @@
           <div class="row">
             <div class="back-link">
               <nuxt-link to="/">
-                <img data-load="preload" src="~assets/img/ui/arrow.svg" alt='chevron-prev icon'>
+                <Arrow />
                 <span>Back to gallery </span>
               </nuxt-link>
             </div>
@@ -64,6 +64,7 @@
 </template>
 <script>
 import SerieSlider from '~/components/SerieSlider'
+import Arrow from '~/components/Arrow'
 import reveal from "~/utils/reveal.js"
 import calcOffset from '~/utils/offset.js';
 import browser from '~/utils/browser.js';
@@ -103,7 +104,8 @@ export default {
     }
   },
   components: {
-    SerieSlider
+    SerieSlider,
+    Arrow
   },
   mixins: [ pageTransition ],
   data() {
@@ -195,7 +197,7 @@ export default {
     this.$nextTick(() => {
       this.$parent.$parent.calcScroll()
       if (window.innerWidth > 768){
-        window.addEventListener('scroll', this.onScrollSerie);
+        window.addEventListener('scroll', this.onScrollSerie, false);
         this.calcOffset()
         this.initParallax()
         this.enableRaf()
@@ -209,7 +211,7 @@ export default {
     if (browser.desktop && window.innerWidth > 768) {
       this.reveal.destroy()
       raf.remove(this.tick)
-      window.removeEventListener('scroll', this.onScrollSerie);
+      window.removeEventListener('scroll', this.onScrollSerie,false);
       window.removeEventListener('resize', this.resize);
     }
   },

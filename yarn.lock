@@ -4955,6 +4955,11 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+nuxt-netlify-http2-server-push@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/nuxt-netlify-http2-server-push/-/nuxt-netlify-http2-server-push-0.1.2.tgz#376b45815baa1af2808ce52fe5d400f2636993ab"
+  integrity sha512-V0xod302Jd6OKnAK5dNTxvK3DS8UeSmkXlKXe2c1ql12eLJSDcw+jSb+V7kkEDDa+1KBL7Cim2ev0kvpORW5Cw==
+
 nuxt@^2.4.5:
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.4.5.tgz#3f3256c47e78038ef8081e522181aa2578bddcea"

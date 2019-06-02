@@ -162,15 +162,13 @@
       }
 
       img{
-        min-width: 125%;
-        width: 125%;
+        min-width: 130%;
+        width: 130%;
         height: 100%;
         object-fit: cover;
         object-position: top;
-        position: none;
         pointer-events: none;
-        transition: transform 600ms ease-in-out, opacity 500ms ease;
-        -webkit-transition: transform 600ms ease-in-out, opacity 500ms ease;
+        transition: transform 500ms ease, opacity 500ms ease;
 
         &.active-link {
           opacity: 0.8;

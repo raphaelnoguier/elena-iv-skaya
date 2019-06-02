@@ -29,7 +29,7 @@ let createTransition = () => {
 
       if(from && to) {
         /* disable scroll */
-        app.addEventListener('scroll', disableScroll, false )
+        app.addEventListener('scroll', disableScroll, false)
         app.ontouchmove = disableScroll
         app.onwheel = disableScroll
         app.onmousewheel = app.onmousewheel = disableScroll

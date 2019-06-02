@@ -47,7 +47,7 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.resize)
-    window.addEventListener('scroll', this.onScrollDefault)
+    window.addEventListener('scroll', this.onScrollDefault, false)
 
     document.body.classList.remove('lock')
 
@@ -55,7 +55,7 @@ export default {
     if(this.$refs.cursor) this.$refs.cursor.$el.classList.remove('visible')
   },
   beforeDestroy() {
-    window.removeEventListener('scroll', this.onScrollDefault)
+    window.removeEventListener('scroll', this.onScrollDefault, false)
     window.removeEventListener('resize', this.resize)
   },
   methods: {

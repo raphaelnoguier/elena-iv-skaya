@@ -1,13 +1,14 @@
 @mixin font-face($font, $family) {
-  $name : '#{$font}-#{$family}';
+  $name: '#{$font}-#{$family}';
 
   @font-face {
     font-family: $name;
     src:
-      url('~assets/fonts/#{$font}/#{$name}/#{$name}.eot?#iefix') format('embedded-opentype'),
-      url('~assets/fonts/#{$font}/#{$name}/#{$name}.otf') format('opentype'),
-      url('~assets/fonts/#{$font}/#{$name}/#{$name}.ttf') format('truetype');
+    url('~assets/fonts/#{$name}/#{$name}.otf') format('opentype'),
+    url('~assets/fonts/#{$name}/#{$name}.ttf') format('truetype'),
+    url('~assets/fonts/#{$name}/#{$name}.eot?#iefix') format('embedded-opentype');
     font-weight: normal;
+    font-display: block;
     font-style: normal;
   }
 }

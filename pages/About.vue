@@ -163,7 +163,7 @@ export default {
     this.setTheme()
     this.$parent.$parent.calcScroll()
 
-    window.addEventListener('scroll', this.onScrollAbout)
+    window.addEventListener('scroll', this.onScrollAbout, false)
     window.addEventListener('resize', this.resize)
 
   },
