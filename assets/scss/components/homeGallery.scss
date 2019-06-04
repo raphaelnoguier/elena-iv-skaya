@@ -319,6 +319,11 @@
     .content {
       display: flex;
       transition: transform 500ms $ease-in-out-quad, opacity 500ms ease;
+
+      @include max(md) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
 
     .item-title {

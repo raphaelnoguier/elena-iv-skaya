@@ -138,7 +138,7 @@ export default {
           this.hideLoader = true
           setTimeout(() => {
             this.enableScroll()
-          }, 5000);
+          }, 500);
         }
       })
     },
