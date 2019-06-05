@@ -2,7 +2,6 @@
   width: 40%;
   height: 100%;
   position: relative;
-  overflow: hidden;
   transform: translate3d(-8vw, 0, 0);
 
   @include max(md) {
