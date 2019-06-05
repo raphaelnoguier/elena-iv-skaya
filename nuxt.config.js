@@ -58,7 +58,7 @@ module.exports = {
     routes: function (callback) {
       Prismic.getApi(prismicConfig.apiEndpoint, { accessToken: prismicConfig.accessToken })
       .then((api) => {
-        return api.query("", { pageSize : 100 });
+        return api.query("", { pageSize : 80 });
       }).then((response) => {
         let routes = response.results.map((doc) => {
           if(doc.type === 'commons') return ''
