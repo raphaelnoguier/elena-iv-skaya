@@ -168,7 +168,7 @@ export default {
 
   },
   beforeDestroy() {
-    window.removeEventListener('wheel', this.onScrollAbout)
+    window.removeEventListener('scroll', this.onScrollAbout)
     window.removeEventListener('resize', this.resize)
   },
   methods: {
