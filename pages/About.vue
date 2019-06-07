@@ -158,10 +158,10 @@ export default {
   mounted() {
     this.circle = this.$refs.circle
     this.mask = this.$refs.aboutMask
-    this.aboutImageH = this.$refs.aboutImage.getBoundingClientRect().top
 
     this.setTheme()
     this.$parent.$parent.calcScroll()
+    this.calcOffset()
 
     window.addEventListener('scroll', this.onScrollAbout, false)
     window.addEventListener('resize', this.resize)
@@ -174,6 +174,9 @@ export default {
   methods: {
     setTheme() {
       document.body.dataset.background = 'dark'
+    },
+    calcOffset() {
+      this.aboutImageH = this.$refs.aboutImage.getBoundingClientRect().top
     },
     resize() {
       if(browser.desktop && window.innerWidth > 768) this.calcOffset()

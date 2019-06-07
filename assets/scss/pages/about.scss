@@ -266,9 +266,8 @@
     }
 
     .agency-representations, .credits {
-      @include max(md) {
-        width: 50%;
-      }
+      width: calc(50% - 1.25vw);
+
       @include max(sm) {
         width: 100%;
       }
