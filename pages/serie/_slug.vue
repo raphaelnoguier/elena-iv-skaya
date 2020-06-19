@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="serie-infos">
-            <div class="serie-infos-column description">
+            <div class="serie-infos-column description" v-if="description">
               <span>about the serie</span>
               <p>{{description}}</p>
             </div>
