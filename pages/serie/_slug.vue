@@ -92,7 +92,7 @@ export default {
 
       return {
         title: data.title[0].text,
-        description: data.about_serie[0].text,
+        description: data.about_serie[0] ? data.about_serie[0].text : '',
         date: data.date,
         credits: data.credits,
         featuredImage: data.cover_serie_image,
