@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="serie-credits-wrapper">
+      <div class="serie-credits-wrapper" v-if="credits.length > 0">
         <div class="serie-credits">
           <span :class="credits[0].text[0].text.length === 0 && 'hide'">credits</span>
           <ul>
